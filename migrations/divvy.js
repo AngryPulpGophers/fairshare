@@ -5,9 +5,9 @@ exports.up = function(knex,Promise){
       table.increments('id').primary();
       table.string('name');
       table.string('username', 16).unique();
-      table.string('password', 16)
+      table.string('password', 16);
       table.string('email');
-      table.string('img_url')
+      table.string('img_url');
     }),
 
     knex.schema.createTable('groups', function(table){
@@ -40,8 +40,8 @@ exports.up = function(knex,Promise){
 
     knex.schema.createTable('payments', function(table){
       table.increments('id').primary();
-      table.string('payee').references('id').inTable('users');
-      table.string('recipient').references('id').inTable('users');
+      table.integer('payee').references('id').inTable('users');
+      table.integer('recipient').references('id').inTable('users');
       table.decimal('amount', 2);
       table.text('note', 200);
     }),
@@ -49,11 +49,11 @@ exports.up = function(knex,Promise){
     knex.schema.createTable('sessions', function(table){
       table.increments('id').primary();
       table.string('session_id');
-      table.string('user_id').references('user_id').inTable('users');
+      table.integer('user_id').references('id').inTable('users');
       table.string('token');
     })
   ]);
-}
+};
 
 exports.down = function(knex,Promise){
 
@@ -66,4 +66,4 @@ exports.down = function(knex,Promise){
     knex.schema.dropTable('payments'),
     knex.schema.dropTable('sessions')
    ]);
-}
+};
