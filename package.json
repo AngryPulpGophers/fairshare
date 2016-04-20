@@ -18,6 +18,7 @@
   "homepage": "https://github.com/AngryPulpGophers/divvy#readme",
   "dependencies": {
     "express": "^4.13.4",
-    "knex": "^0.10.0"
+    "knex": "^0.10.0",
+    "pg": "^4.5.3"
   }
 }
