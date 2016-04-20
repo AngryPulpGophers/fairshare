@@ -1,6 +1,6 @@
-import config from '../knexfile.js';
+var config = require('../knexfile.js');
 var env = 'development';
-import knex   from  'knex'(config[env]);
+var knex = require('knex')(config[env]);
 
 module.exports = knex;
 

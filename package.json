@@ -2,15 +2,16 @@
   "name": "divvy",
   "version": "1.0.0",
   "description": "Keep track of IOUs within a group of friends",
-  "main": "server.js",
+  "main": "server/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server/ --ignore client/",
+    "test": "./test/run.sh"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AngryPulpGophers/divvy.git"
   },
-  "author": "",
+  "author": "APG",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/AngryPulpGophers/divvy/issues"
@@ -20,5 +21,16 @@
     "express": "^4.13.4",
     "knex": "^0.10.0",
     "pg": "^4.5.3"
-  }
+  },
+  "devDependencies": {
+    "chai": "^3.4.0",
+    "mocha": "^2.3.3",
+    "nodemon": "^1.3.7",
+    "supertest": "^1.1.0"
+  },
+  "keywords": [
+    "boilerplate",
+    "browserify",
+    "express"
+  ]
 }
