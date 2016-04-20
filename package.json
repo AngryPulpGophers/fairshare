@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/AngryPulpGophers/divvy/issues"
   },
-  "homepage": "https://github.com/AngryPulpGophers/divvy#readme"
+  "homepage": "https://github.com/AngryPulpGophers/divvy#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "knex": "^0.10.0"
+  }
 }
