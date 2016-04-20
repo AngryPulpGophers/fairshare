@@ -1,4 +1,4 @@
-# Bill-Buddy
+# Divvy
 
 ## Press Release
 
@@ -26,11 +26,11 @@ Just make an account, add your buddies to your trip and get going.
 
 ### Customer Quote
 
-'Bill-Buddy sure did stop us from having silly arguements and let us have more time for good times'
+'Divvy sure did stop us from having silly arguements and let us have more time for good times'
 
 ### Closing and Call to Action
 
-Go download Bill-Buddy now and let us keep track of all the boring stuff for you today!
+Go download Divvy now and let us keep track of all the boring stuff for you today!
 
 ## Contributing
 
@@ -39,8 +39,8 @@ Go download Bill-Buddy now and let us keep track of all the boring stuff for you
 Clone the project's development branch on github
 
 ```
-git clone -b development https://github.com/AngryPulpGophers/bill-buddy.git
-cd bill-buddy
+git clone -b development https://github.com/AngryPulpGophers/divvy.git
+cd divvy
 ```
 
 ### Create a new branch
