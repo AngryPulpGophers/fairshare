@@ -1,14 +1,22 @@
 module.exports = {
 
   development:{
-    client: 'postgresql',
+    client: 'pg',
     connnection:{
-      host:'127.0.0.1',
+      host:'localhost',
+      user:'blah',
+      password:'blah',
       database: 'divvy'
+    },
+    pool: {
+      min: 0,
+      max: 7
     },
     migrations:{
       directory: __dirname + '/migrations'
+    },
+    seeds:{
+      directory:__dirname + '/seeds'
     }
-    seeds:{}
   }
 }
