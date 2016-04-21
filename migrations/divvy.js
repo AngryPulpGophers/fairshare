@@ -24,6 +24,8 @@ exports.up = function(knex, Promise){
 
     knex.schema.createTable('expenses', function(table){
       table.increments('id').primary();
+      table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+      table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
       table.string('title', 16);
       table.decimal('amount', 8, 2);
       table.integer('group_id').references('id').inTable('groups');
@@ -40,6 +42,9 @@ exports.up = function(knex, Promise){
 
     knex.schema.createTable('payments', function(table){
       table.increments('id').primary();
+      table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+      table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
+      table.integer('group_id').references('id').inTable('groups');
       table.integer('payee').references('id').inTable('users');
       table.integer('recipient').references('id').inTable('users');
       table.decimal('amount', 8, 2);

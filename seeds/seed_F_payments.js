@@ -8,19 +8,22 @@ exports.seed = function(knex, Promise) {
       payee: 1, 
     	recipient: 2,
     	amount: 20.00,
-    	note: 'twenty spot'
+    	note: 'twenty spot',
+      group_id: 1
     }),
     knex('payments').insert({
       payee: 2, 
     	recipient: 1,
     	amount: 40.00,
-    	note: 'sorry--slipped my mind'
+    	note: 'sorry--slipped my mind',
+      group_id: 3
     }),
     knex('payments').insert({
       payee: 3, 
     	recipient: 1,
     	amount: 25.00,
-    	note: 'To your health!'
+    	note: 'To your health!',
+      group_id: 2,
     })
   );
 };
