@@ -1,4 +1,4 @@
-exports.up = function(knex,Promise){
+exports.up = function(knex, Promise){
 
   return Promise.all([
     knex.schema.createTable('users', function(table){
@@ -16,7 +16,7 @@ exports.up = function(knex,Promise){
       table.text('desc', 100);
     }),
 
-      knex.schema.creatTable('user_groups', function(table){
+    knex.schema.createTable('user_groups', function(table){
       table.increments('id').primary();
       table.integer('user_id').references('id').inTable('users');
       table.integer('group_id').references('id').inTable('groups');
@@ -25,7 +25,7 @@ exports.up = function(knex,Promise){
     knex.schema.createTable('expenses', function(table){
       table.increments('id').primary();
       table.string('title', 16);
-      table.decimal('amount', 2);
+      table.decimal('amount', 8, 2);
       table.integer('group_id').references('id').inTable('groups');
       table.integer('user_id').references('id').inTable('users');
       table.string('img_url');
@@ -42,7 +42,7 @@ exports.up = function(knex,Promise){
       table.increments('id').primary();
       table.integer('payee').references('id').inTable('users');
       table.integer('recipient').references('id').inTable('users');
-      table.decimal('amount', 2);
+      table.decimal('amount', 8, 2);
       table.text('note', 200);
     }),
 
@@ -55,15 +55,15 @@ exports.up = function(knex,Promise){
   ]);
 };
 
-exports.down = function(knex,Promise){
+exports.down = function(knex, Promise){
 
   return Promise.all([
     knex.schema.dropTable('users'),
     knex.schema.droptTable('user_expenses'),
-    knex.schema.dropTable('user_groups')
+    knex.schema.dropTable('user_groups'),
     knex.schema.dropTable('groups'),
     knex.schema.dropTable('expenses'),
     knex.schema.dropTable('payments'),
     knex.schema.dropTable('sessions')
-   ]);
+  ]);
 };
