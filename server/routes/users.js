@@ -11,42 +11,91 @@ var router = express.Router();
 //   console.log('authenticatin in some way:', req.method, req.url);
 //   next();
 // })
+module.exports = router;
 
-// router.params('username',function(req, res, next, username){
-// 	//validation here of username
+router.param('username',function(req, res, next, username){
+	//validation here of username
+  console.log('validating username:', username);
+  //reassign req.query.username to req.username;
+  req.username = username;
+	next();
+})
 
-// 	console.log('validating username:', username);
+router.get('/', function(req, res){
+	Users.getById(req.user)
+	  .then(function(data){
+	  	var userInfo = data[0]
+	  	delete userInfo.password;
+	    res.status(200).send(userInfo);
+	  })
+	  .catch(function(err){
+	  	res.status(400).send({err: err});
+	  })
+});
 
-// 	//reassign req.query.username to req.username;
-
-// 	req.username = username;
-// 	next();
-
-// })
-
-router.get('/:username', function(req, res){
-	//db query to get user profile info something like--knex('users').select().where('username', '=', req.username);
-	console.log('getting user info from DB with following:', req.query.username);
-	if(data){
-    res.status(200).send({user: data});
-  }else{
-    res.status(400).send('incorrect username/ username doesn\'t exist');
-  }
+router.get('/username', function(req, res){
+	console.log('username:', req.username);
+	if(req.username === 'all'){
+		Users.getAll()
+		  .then(function(data){
+		  	data = data.map(function(obj){
+		  		delete obj.password;
+		  		return obj;
+		  	});
+		  	res.status(200).send(data);
+		  })
+		  .catch(function(err){
+		  	res.status(400).send({err:err});
+		  })
+	}else{
+	  Users.getByUsername(req.username)
+	    .then(function(data){
+				if(data[0]){
+					delete data[0].password
+			    res.status(200).send({user:data[0]});
+			  }else{
+			    res.status(400).send('incorrect username/username doesn\'t exist');
+			  }
+		  })
+		  .catch(function(err){
+		    console.error(err);
+		  })
+	}
 });
 
 router.post('/', function(req, res){
-	//check db for values that already exist--username, password, etc. 
-	console.log('checking for duplicates in database of following:' req.body.username, req.body.password);
-	//no duplicates insert into users tables--knex('users').insert(req.body);
-	res.status(200).send('new user created');
+	var profile = req.body;
+
+	Users.getByUsername(profile.username) 
+	  .then(function(data){
+	    if(data[0]){
+	    	res.status(400).send('username already exists');
+	    }else{
+	    	Users.create(profile)
+	    	  .then(function(id){
+	    	  	res.status(200).send('user created');
+	    	  })
+	    	  .catch(function(err){
+	    	  	res.status(400).send({err:err})
+	    	  })
+	    }
+	  })
+	  .catch(function(err){
+	  	res.status(400).send({err:err})
+	  }) 
 })
 
 router.put('/username', function(req, res){
-	//db update query---we can get the userid from req.user with passport.
-	// to get full db entry and locate exact record
-	req.body.id = req.user.id;
-	//update in database--knex('users').where('id', '=', req.body.id).update(req.body);
-	res.status(200).send('updated user profile');
+	//req.body.id = req.user.id;
+	Users.editProfile(req.body)
+	  .then(function(){
+	  	res.status(200).send('profile updated');
+	  })
+	  .catch(function(err){
+	  	res.status(400).send({err:err})
+	  })
 })
 
-module.exports = router;
+
+
+
