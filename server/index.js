@@ -11,12 +11,8 @@ var groups     = require('./routers/groups.js');
 var assetFolder = Path.resolve(__dirname, '../client');
 
 if (process.env.NODE_ENV !== 'test') {
-
-
-  //
-  // We're in development or production mode;
+  // We're in development or production mode
   // create and run a real server.
-  //
   var app = express();
 
   // Parse incoming request bodies as JSON
