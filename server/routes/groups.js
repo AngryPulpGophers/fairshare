@@ -2,14 +2,11 @@ var Groups = require('../models/groups.js');
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function(req, res, next){
-
-  console.log("in GET /groups");
+router.get('/', function(req, res){
   Groups.getAllGroups()
     .then(function(data){
-      console.log("data:", data);
+      console.log("data in 'GET' /groups:", data);
       res.send(data);
-      res.end();
     });
 });
 

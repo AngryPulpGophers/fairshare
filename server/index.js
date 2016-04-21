@@ -10,6 +10,7 @@ var users      = require('./routes/users.js');
 var groups     = require('./routes/groups.js');
 
 var assetFolder = Path.resolve(__dirname, '../client');
+routes.use( express.static(assetFolder) );
 
 if (process.env.NODE_ENV !== 'test') {
   // We're in development or production mode
@@ -18,18 +19,13 @@ if (process.env.NODE_ENV !== 'test') {
 
   // Parse incoming request bodies as JSON
   app.use( bodyParser.json() );
-  app.use( express.static(assetFolder) );
 
-  // app.get('/groups', function(){
-  //   console.log("pj");
-  // });
 
   // Mount our routes
-  app.use('/', routes);
   app.use('/auth', auth);
   app.use('/users', users);
   app.use('/groups', groups);
-
+  app.use('/', routes);
   
   // Start the server!
   var port = process.env.PORT || 4000;
