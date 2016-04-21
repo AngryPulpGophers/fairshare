@@ -1,29 +1,17 @@
 var express    = require('express');
 var bodyParser = require('body-parser');
-var browserify = require('browserify-middleware');
 var Path       = require('path');
+// var browserify = require('browserify-middleware');
 // var passport   = require('passport');
 
-var routes     = express.Router();
-
-routes.get('/app-bundle.js', browserify('./client/app.js'));
-
-routes.get('/api/tags-example', function(req, res) {
-  res.send(['node', 'express', 'browserify', 'react', 'postgresql']);
-});
+var routes     = require('./routers/index.js');
+var users      = require('./routers/users.js');
+var groups     = require('./routers/groups.js');
 
 var assetFolder = Path.resolve(__dirname, '../client');
-routes.use(express.static(assetFolder));
 
 if (process.env.NODE_ENV !== 'test') {
-  //
-  // The Catch-all Route
-  // This is for supporting browser history pushstate.
-  // NOTE: Make sure this route is always LAST.
-  //
-  routes.get('/*', function(req, res){
-    res.sendFile( assetFolder + '/index.html' );
-  });
+
 
   //
   // We're in development or production mode;
@@ -33,9 +21,12 @@ if (process.env.NODE_ENV !== 'test') {
 
   // Parse incoming request bodies as JSON
   app.use( bodyParser.json() );
+  app.use( express.static(assetFolder) );
 
-  // Mount our main router
+  // Mount our routes
   app.use('/', routes);
+  app.use('/users', users);
+  app.use('/groups', groups);
 
   // Start the server!
   var port = process.env.PORT || 4000;
