@@ -2,9 +2,9 @@
 var db          = require('../db.js');
 var Promise     = require('bluebird');
 var uuid        = require('uuid');
-var bcrypt      = require('bcryptjs');
+// var bcrypt      = require('bcryptjs');
 
-var compare = Promise.promisify(bcrypt.compare);
-var hash    = Promise.promisify(bcrypt.hash);
+// var compare = Promise.promisify(bcrypt.compare);
+// var hash    = Promise.promisify(bcrypt.hash);
 
 var Auth = module.exports;

@@ -4,10 +4,10 @@ var Path       = require('path');
 // var browserify = require('browserify-middleware');
 // var passport   = require('passport');
 
-var routes     = require('./routers/index.js');
-var auth       = require('.routers/auth.js');
-var users      = require('./routers/users.js');
-var groups     = require('./routers/groups.js');
+var routes     = require('./routes/index.js');
+var auth       = require('./routes/auth.js');
+var users      = require('./routes/users.js');
+var groups     = require('./routes/groups.js');
 
 var assetFolder = Path.resolve(__dirname, '../client');
 
@@ -20,12 +20,17 @@ if (process.env.NODE_ENV !== 'test') {
   app.use( bodyParser.json() );
   app.use( express.static(assetFolder) );
 
+  // app.get('/groups', function(){
+  //   console.log("pj");
+  // });
+
   // Mount our routes
   app.use('/', routes);
   app.use('/auth', auth);
   app.use('/users', users);
   app.use('/groups', groups);
 
+  
   // Start the server!
   var port = process.env.PORT || 4000;
   app.listen(port);
