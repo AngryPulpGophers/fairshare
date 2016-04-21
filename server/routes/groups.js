@@ -1,5 +1,7 @@
+var Groups = require('../models/groups.js');
 var express = require('express');
 var router = express.Router();
+
 
 router.get('/', function(req, res, next){
 

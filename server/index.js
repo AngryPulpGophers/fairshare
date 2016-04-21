@@ -5,6 +5,7 @@ var Path       = require('path');
 // var passport   = require('passport');
 
 var routes     = require('./routers/index.js');
+var auth       = require('.routers/auth.js');
 var users      = require('./routers/users.js');
 var groups     = require('./routers/groups.js');
 
@@ -21,6 +22,7 @@ if (process.env.NODE_ENV !== 'test') {
 
   // Mount our routes
   app.use('/', routes);
+  app.use('/auth', auth);
   app.use('/users', users);
   app.use('/groups', groups);
 
