@@ -25,7 +25,7 @@ if (process.env.NODE_ENV !== 'test') {
   app.use('/users', users);
   app.use('/groups', groups);
   app.use('/', routes);
-  
+
   // Start the server!
   var port = process.env.PORT || 4000;
   app.listen(port);

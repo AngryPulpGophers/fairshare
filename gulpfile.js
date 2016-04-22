@@ -40,7 +40,7 @@ gulp.task('dev', function () {
     script: 'server/index.js',
     ext: 'js html',
     env: { 'NODE_ENV': 'development' }
-  })
+  });
 });
 
 gulp.task('default', ['webpack','sass','dev'], function() {
