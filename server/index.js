@@ -20,7 +20,6 @@ if (process.env.NODE_ENV !== 'test') {
   // Parse incoming request bodies as JSON
   app.use( bodyParser.json() );
 
-
   // Mount our routes
   app.use('/auth', auth);
   app.use('/users', users);
