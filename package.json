@@ -31,6 +31,12 @@
     "babel-preset-react": "^6.5.0",
     "body-parser": "^1.15.0",
     "chai": "^3.4.0",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean-css": "^2.0.6",
+    "gulp-load-plugins": "^1.1.0",
+    "gulp-nodemon": "^2.0.6",
+    "gulp-sass": "^2.1.0",
     "html-webpack-plugin": "^2.15.0",
     "knex": "^0.10.0",
     "mocha": "^2.3.3",
@@ -38,7 +44,8 @@
     "pg": "^4.5.3",
     "supertest": "^1.1.0",
     "webpack": "^1.12.15",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "webpack-stream": "^3.1.0"
   },
   "keywords": [
     "boilerplate",
