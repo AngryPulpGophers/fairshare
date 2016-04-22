@@ -64,7 +64,7 @@ router.get('/username', function(req, res){
 router.post('/', function(req, res){
 	var profile = req.body;
 
-	Users.getByUsername(profile.username) 
+	Users.getByUsername(profile.username)
 	  .then(function(data){
 	    if(data[0]){
 	    	res.status(400).send('username already exists');
