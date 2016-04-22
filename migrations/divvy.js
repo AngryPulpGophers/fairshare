@@ -29,7 +29,7 @@ exports.up = function(knex, Promise){
       table.string('title', 16);
       table.decimal('amount', 8, 2);
       table.integer('group_id').references('id').inTable('groups');
-      table.integer('user_id').references('id').inTable('users');
+      table.integer('paid_by').references('id').inTable('users');
       table.string('img_url');
       table.text('note', 200);
     }),
