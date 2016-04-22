@@ -1,3 +1,10 @@
+var webpack = require('webpack')
+var webpackDevMiddleware = require('webpack-dev-middleware')
+var webpackHotMiddleware = require('webpack-hot-middleware')
+var config = require('../webpack.config')
+//var serveStatic = require('serve-static');
+// above added by sam to bring in r3 boilerplate
+
 var express    = require('express');
 var bodyParser = require('body-parser');
 var Path       = require('path');
@@ -16,9 +23,13 @@ if (process.env.NODE_ENV !== 'test') {
   // We're in development or production mode
   // create and run a real server.
   var app = express();
-
+  var compiler = webpack(config)
   // Parse incoming request bodies as JSON
   app.use( bodyParser.json() );
+
+  //webpack middleware for dev/debugging
+  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
+  app.use(webpackHotMiddleware(compiler))
 
   // Mount our routes
   app.use('/auth', auth);
@@ -27,7 +38,7 @@ if (process.env.NODE_ENV !== 'test') {
   app.use('/', routes);
 
   // Start the server!
-  var port = process.env.PORT || 4000;
+  var port = process.env.WEBPACK_PORT || 3000;
   app.listen(port);
   console.log('Listening on port', port);
 } else {
