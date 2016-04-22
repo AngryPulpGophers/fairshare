@@ -1,6 +1,7 @@
-var Groups = require('../models/groups.js');
+var Groups  = require('../models/groups.js');
+var Users   = require('../models/users.js');
 var express = require('express');
-var router = express.Router();
+var router  = express.Router();
 
 module.exports = router;
 
@@ -14,15 +15,23 @@ router.get('/', function(req, res){
 
 router.get('/activity', function(req, res){
   var activity = [];
+
   Groups.getExpensesByGroupId(1)
-    .then(function(expenses){
-      expenses.forEach(function(val){
-        val.type = 'expense';
-        activity.push(val);
+    .then(function(data){
+      var expenses = data.map(function(val){
+        return Users.getUsersByExpenseId(val.id)
+        .then(function(data){
+          val.type = 'expense';
+          val.members = data;
+          return val;
+        });
       });
-      return expenses;
+      return Promise.all(expenses);
     })
-    .then(function(){
+    .then(function(expenses){
+      expenses.forEach(function(expense){
+        activity.push(expense);
+      });
       Groups.getPaymentsByGroupId(1)
         .then(function(payments){
           payments.forEach(function(val){

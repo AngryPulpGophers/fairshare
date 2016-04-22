@@ -17,7 +17,7 @@ Groups.getGroupsByUserId = function(userID) {
   return db('groups')
     .innerJoin('user_groups', 'groups.id', 'user_groups.group_id')
     .where({
-      user_id: userID 
+      user_id: userID
     });
 };
 
