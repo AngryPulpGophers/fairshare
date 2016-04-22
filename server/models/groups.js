@@ -22,11 +22,10 @@ Groups.getGroupsByUserId = function(userID) {
 };
 
 Groups.createGroup = function(groupAttrs) {
-  db('groups')
-    .returning('id')
-    .insert(groupAttrs)
-    .then(function(ID){
-      return Groups.getGroupByGroupId(ID);
+  return db('groups')
+    .insert(groupAttrs, 'id')
+    .then(function(id){
+      return Groups.getGroupById(id[0]);
     });
 };
 
@@ -45,11 +44,22 @@ Groups.getExpensesByGroupId = function(groupId){
 };
 
 Groups.createExpense = function(expenseAttrs){
-  db('expenses')
-    .returning('id')
-    .insert(expenseAttrs)
-    .then(function(ID){
-      return Groups.getExpenseById(ID);
+  return db('expenses')
+    .insert(expenseAttrs, 'id')
+    .then(function(id){
+      return Groups.getExpenseById(id[0]);
+    });
+};
+
+Groups.updateExpense = function(expenseAttrs, expenseId){
+  expenseAttrs.updated_at = db.fn.now();
+  return db('expenses')
+    .where({
+      id: expenseId
+    })
+    .update(expenseAttrs)
+    .then(function(id){
+      return Groups.getExpenseById(id);
     });
 };
 
@@ -68,10 +78,21 @@ Groups.getPaymentsByGroupId = function(groupId){
 };
 
 Groups.createPayment = function(paymentAttrs) {
-  db('payments')
-    .returning('id')
-    .insert(paymentAttrs)
-    .then(function(ID){
-      return Groups.getPaymentById(ID);
+  return db('payments')
+    .insert(paymentAttrs, 'id')
+    .then(function(id){
+      return Groups.getPaymentById(id[0]);
+    });
+};
+
+Groups.updatePayment = function(paymentAttrs, paymentId){
+  paymentAttrs.updated_at = db.fn.now();
+  return db('payments')
+    .where({
+      id: paymentId
+    })
+    .update(paymentAttrs)
+    .then(function(id){
+      return Groups.getPaymentById(id);
     });
 };
