@@ -39,20 +39,20 @@ module.exports = function get () {
 };
 
 passport.use(new TwitterStrategy({
-    consumerKey: authKeys.twitterClient,
-    consumerSecret: authKeys.twitterSecret,
-    callbackURL: "http://localhost:4000/auth/twitter/callback"
-  },
-  function(accessToken, tokenSecret, profile, done) {
-    console.log("in construction:", arguments);
-    twitProfileInfo.pic = profile.photos[0].value;
-    twitProfileInfo.name = profile.displayName;
-    thisUser = profile;
-    thisUser.id =1;
-    // User.findOrCreate({ twitterId: profile.id }, function (err, user) {
-    return done(null, thisUser);
-    }
-  ));
+  consumerKey: authKeys.twitterClient,
+  consumerSecret: authKeys.twitterSecret,
+  callbackURL: "http://localhost:4000/auth/twitter/callback"
+},
+function(accessToken, tokenSecret, profile, done) {
+  console.log("in construction:", arguments);
+  twitProfileInfo.pic = profile.photos[0].value;
+  twitProfileInfo.name = profile.displayName;
+  thisUser = profile;
+  thisUser.id =1;
+  // User.findOrCreate({ twitterId: profile.id }, function (err, user) {
+  return done(null, thisUser);
+  }
+));
 
 // passport.use(new InstagramStrategy({
 //     clientID: INSTAGRAM_CLIENT_ID,

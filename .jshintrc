@@ -10,6 +10,6 @@
   "shadow": true,
   "strict": false,
   "undef": true,
-  "unused": true,
+  "unused": false,
   "noyield": true
 }
