@@ -52,7 +52,7 @@ router.get('/activity', function(req, res){
 
 router.post('/', function(req, res){
   console.log("req.body", req.body);
-  Groups.createGroup( req.body )
+  Groups.createGroup(req.body)
     .then(function(data){
       console.log("data in 'POST' /groups ", data);
       res.send(data);
@@ -63,7 +63,7 @@ router.post('/expenses', function(req, res){
   Groups.createExpense( req.body )
     .then(function(data){
       console.log("data in 'POST' /groups/expenses", data);
-      res.send(data);
+      res.send(data[0]);
     });
 });
 
