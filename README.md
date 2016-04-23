@@ -43,6 +43,43 @@ git clone -b development https://github.com/AngryPulpGophers/divvy.git
 cd divvy
 ```
 
+### Start the Database
+
+If you don't have Postgres on your computer run
+```
+brew install postgres
+```
+Run npm install
+and then run:
+```
+npm install -g knex
+```
+Then to start your database run:
+```
+postgres -D /usr/local/var/postgres
+```
+To create your tables and seed data run in a new tab:
+```
+createdb divvy
+knex migrate:latest
+knex seed:run
+```
+Do not CTRL-C to stop Postgres
+To stop your database:
+```
+pg_ctl -D /usr/local/var/postgres stop -s -m fast
+```
+
+To start the server, run in a new tab:
+```
+npm run start
+```
+
+To drop the database, stop your server and run:
+```
+dropdb divvy
+```
+
 ### Create a new branch
 
 Checkout a new branch for what you're working on:
