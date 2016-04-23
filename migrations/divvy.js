@@ -7,6 +7,7 @@ exports.up = function(knex, Promise){
       table.string('username', 16).unique();
       table.string('password', 16);
       table.string('email');
+      table.string('facebookId');
       table.string('img_url');
     }),
 

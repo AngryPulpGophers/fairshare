@@ -1,68 +1,77 @@
 var passport = require('passport');
 var FacebookStrategy  = require('passport-facebook').Strategy;
-// var InstagramStrategy = require('passport-instagram').Strategy;
-var TwitterStrategy   = require('passport-twitter').Strategy;
-var authKeys = require('./auth');
+var User = require('../models/users');
+var authKeys = require('./auth_secrets.js');
 
-var fbProfileInfo = {};
-var twitProfileInfo = {};
-var thisUser;
-var FacebookStrategy  = require('passport-facebook').Strategy;
+
+
+module.exports = function(app,express){
+
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 
 passport.serializeUser(function(user, done) {
   return done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  return done(null, thisUser);
+  User.getById({id: id})
+  .then(function(userProfile){
+    delete userProfile.username;
+    delete userProfile.password;
+    done(null, userProfile);
+  })
+  .catch(function(err){
+    console.warn("at deserialize err:", err);
+  })
 });
 
 passport.use(new FacebookStrategy(
   {
-    clientID: authKeys.facebookClient,
-    clientSecret: authKeys.facebookSecret,
-    callbackURL: "http://localhost:4000/auth/facebook/callback",
-    profileFields: ['id', 'displayName', 'picture.type(large)']
+    clientID: authKeys.FACEBOOK_APP_ID,
+    clientSecret: authKeys.FACEBOOK_APP_SECRET,
+    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    profileFields: ['id', 'displayName', 'picture.type(large)','email']
   },
-  function(accessToken, refreshToken, profile, done) {
-    console.log("in construction:", profile.photos[0].value, profile.displayName);
-    fbProfileInfo.pic = profile.photos[0].value;
-    fbProfileInfo.name = profile.displayName;
-    thisUser = profile;
-    thisUser.id = 1;
-    return done(null, thisUser);
-  }
-));
+  function(accessToken, refreshToken, profile, cb) {
 
-module.exports = function get () {
-  return [fbProfileInfo, twitProfileInfo];
-};
+    console.log('profile:', profile);
 
-passport.use(new TwitterStrategy({
-  consumerKey: authKeys.twitterClient,
-  consumerSecret: authKeys.twitterSecret,
-  callbackURL: "http://localhost:4000/auth/twitter/callback"
-},
-function(accessToken, tokenSecret, profile, done) {
-  console.log("in construction:", arguments);
-  twitProfileInfo.pic = profile.photos[0].value;
-  twitProfileInfo.name = profile.displayName;
-  thisUser = profile;
-  thisUser.id =1;
-  // User.findOrCreate({ twitterId: profile.id }, function (err, user) {
-  return done(null, thisUser);
-  }
-));
+    User.getByFacebookId(profile.id)
+      .then(function(user){
+        if(user[0]){
+          delete user[0].username;
+          delete user[0].password;
+          return cb(null, user[0]);
+        }else{
+          var userProfile = {
+            name: profile.displayName,
+            username:'',
+            password:'',
+            email: profile.emails[0].value, 
+            facebookId: profile.id,
+            img_url: '' 
+          }
+        }
+        User.create(userProfile)
+        .then(function(id){
+          userProfile.id = id[0];
+          delete userProfile.username;
+          delete userProfile.password;
+          return cb(null, userProfile);
+        })
+      })
+      .catch(function(err){
+        console.warn('at facebook strategy err:', err);
+      })
+  }));
+}
+// module.exports = function get () {
+//   return [fbProfileInfo, twitProfileInfo];
+// };
 
-// passport.use(new InstagramStrategy({
-//     clientID: INSTAGRAM_CLIENT_ID,
-//     clientSecret: INSTAGRAM_CLIENT_SECRET,
-//     callbackURL: "http://localhost:4000/auth/instagram/callback"
-//   },
-//   function(accessToken, refreshToken, profile, done) {
-//     console.log("in construction:", arguments);
-//     User.findOrCreate({ instagramId: profile.id }, function (err, user) {
-//       return done(err, user);
-//     });
-//   }
-// ));
+
