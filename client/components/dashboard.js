@@ -30,8 +30,13 @@ export default class Dashboard extends Component {
     })
     return (
       <div className="dashboard">
-      <h3><i className="fa fa-4 fa-comments"></i> Notifications</h3>
-      {[...calloutElements]}
+        <div className="row">
+          <div className="small-12 large-centered columns text-center">
+            <h1>Welcome to Divvy</h1>
+            <Link to='/login' title="Get Started" className="button primary"><i className="fa fa-balance-scale"></i>Get Started</Link>
+          </div>
+        </div>
+        {[...calloutElements]}
       </div>
     )
   }

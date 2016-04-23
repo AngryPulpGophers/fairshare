@@ -2,6 +2,7 @@
 
 /// include all modules of foundation
 @include foundation-everything;
+@import 'app';
 
 /// or use just particular mouldes
 // @include foundation-global-styles;
