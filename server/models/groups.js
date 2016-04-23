@@ -22,9 +22,20 @@ Groups.getGroupsByUserId = function(userID) {
 };
 
 Groups.createGroup = function(groupAttrs) {
+  var members = groupAttrs.members;
+
+  delete groupAttrs.members;
   return db('groups')
     .insert(groupAttrs, 'id')
     .then(function(id){
+      members.forEach(function(memberId){
+        db('user_groups')
+          .returning()
+          .insert({
+            user_id: memberId,
+            group_id: id[0]
+          });
+      });
       return Groups.getGroupById(id[0]);
     });
 };
@@ -44,9 +55,22 @@ Groups.getExpensesByGroupId = function(groupId){
 };
 
 Groups.createExpense = function(expenseAttrs){
+var members = expenseAttrs.members;
+
+  delete expenseAttrs.members;
   return db('expenses')
     .insert(expenseAttrs, 'id')
     .then(function(id){
+      console.log("pj", id, members);
+      members.forEach(function(memberId){
+        db('user_expenses')
+          .returning('id')
+          .insert({
+            user_id: memberId,
+            expense_id: id[0]
+          })
+          .then(function(val){console.log("pj", val);});
+      });
       return Groups.getExpenseById(id[0]);
     });
 };
