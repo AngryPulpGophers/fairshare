@@ -4,6 +4,7 @@ import { combineReducers } from 'redux'
 import update from 'react-addons-update'
 
 function notifications(state = {callouts: []}, action) {
+  console.log('pj1',action)
   switch (action.type) {
 
     case ActionTypes.CREATE_CALLOUT:
@@ -19,9 +20,23 @@ function notifications(state = {callouts: []}, action) {
   }
 }
 
+function groups(state= {groups: []}, action) {
+  console.log('pj0',action)
+  switch (action.type) {
+
+    case ActionTypes.GET_GROUPS:
+    console.log('pjpjpj1')
+      return update(state, {groups: {$set: action.payload.groups}})
+
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   routing: routeReducer,
-  notifications
+  notifications,
+  groups
 })
 
 export default rootReducer

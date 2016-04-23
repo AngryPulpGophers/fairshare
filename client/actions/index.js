@@ -1,3 +1,6 @@
+// The middleware to call the API for quotes
+import { CALL_API } from '../middleware'
+
 export const CREATE_CALLOUT = 'CREATE_CALLOUT'
 export function createCallout(type) {
   const types = ['primary', 'secondary', 'success', 'warning', 'alert']
@@ -22,5 +25,24 @@ export function removeCallout(id) {
     payload: {
       id: id
     }
+  }
+}
+export const GET_GROUPS = 'GET_GROUPS'
+export function getGroups(id) {
+  // console.log('got an id:', id)
+  return {
+    type: GET_GROUPS,
+    payload: {
+      [CALL_API]: {
+        endpoint: 'groups',
+        id: id
+      }
+    }
+    // [CALL_API]: {
+    //   type: GET_GROUPS,
+    //   endpoint: 'groups',
+    //   id: id
+    // }
+
   }
 }

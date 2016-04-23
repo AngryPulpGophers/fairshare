@@ -12,6 +12,7 @@ class PageLogin extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log('mapstatetprops called:',state);
   return {
   }
 }
