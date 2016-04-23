@@ -1,47 +1,42 @@
 {
-  "name": "divvy",
+  "name": "r3-foundation",
   "version": "1.0.0",
-  "description": "Keep track of IOUs within a group of friends",
-  "main": "server/index.js",
+  "description": "redux-react-router and foundation boilerplate",
+  "keywords": [
+    "redux",
+    "react",
+    "router",
+    "routing",
+    "frontend",
+    "client",
+    "webpack",
+    "babel",
+    "sass",
+    "foundation",
+    "postcss"
+  ],
+  "main": "index.js",
   "scripts": {
-    "production": "webpack -p",
-    "start": "nodemon server/",
-    "test": "./test/run.sh"
+    "start": "node server"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AngryPulpGophers/divvy.git"
-  },
-  "author": "APG",
+  "author": "Anton Wilhelm",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/AngryPulpGophers/divvy/issues"
-  },
-  "homepage": "https://github.com/AngryPulpGophers/divvy#readme",
   "dependencies": {
-    "body-parser": "^1.15.0",
     "classnames": "^2.2.0",
-    "express": "^4.13.4",
     "font-awesome": "^4.3.0",
     "foundation-sites": "^6.1.2",
-    "react": "^15.0.1",
+    "react": "^0.14.5",
     "react-addons-update": "^0.14.7",
-    "react-dom": "^15.0.1",
-    "react-router": "^2.3.0",
+    "react-dom": "^0.14.7",
+    "react-router": "2.0.0-rc5",
     "react-router-redux": "^2.1.0",
     "redux": "^3.2.1",
     "redux-logger": "^2.5.2",
     "redux-thunk": "^1.0.3",
     "what-input": "^1.1.4"
   },
+  "optionalDependencies": {},
   "devDependencies": {
-    "body-parser": "^1.15.0",
-    "chai": "^3.4.0",
-    "gulp-sass": "^2.1.0",
-    "knex": "^0.10.0",
-    "mocha": "^2.3.3",
-    "nodemon": "^1.3.7",
-    "pg": "^4.5.3",
     "autoprefixer": "^6.3.2",
     "babel-core": "^6.3.15",
     "babel-loader": "^6.2.0",
@@ -66,9 +61,5 @@
     "webpack": "^1.9.11",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-hot-middleware": "^2.2.0"
-  },
-  "keywords": [
-    "boilerplate",
-    "express"
-  ]
+  }
 }
