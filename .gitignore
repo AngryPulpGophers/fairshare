@@ -37,7 +37,7 @@ bower_components/
 .node_repl_history
 
 # authentication keys
-server/config/auth.js
+server/config/auth_secrets.js
 
 # mac files
 .DS_Store
