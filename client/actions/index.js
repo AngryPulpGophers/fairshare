@@ -31,18 +31,18 @@ export const GET_GROUPS = 'GET_GROUPS'
 export function getGroups(id) {
   // console.log('got an id:', id)
   return {
-    type: GET_GROUPS,
-    payload: {
-      [CALL_API]: {
-        endpoint: 'groups',
-        id: id
-      }
-    }
-    // [CALL_API]: {
-    //   type: GET_GROUPS,
-    //   endpoint: 'groups',
-    //   id: id
+    // type: GET_GROUPS,
+    // payload: {
+    //   [CALL_API]: {
+    //     endpoint: 'groups',
+    //     id: id
+    //   }
     // }
+    [CALL_API]: {
+      type: GET_GROUPS,
+      endpoint: 'groups',
+      id: id
+    }
 
   }
 }
