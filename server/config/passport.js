@@ -1,5 +1,10 @@
 var passport = require('passport');
 var FacebookStrategy  = require('passport-facebook').Strategy;
+var session = require('express-session');
+var pg = require('pg');
+var pgSession = require('connect-pg-simple')(session);
+var uuid = require('node-uuid');
+var cookieParser = require('cookie-parser');
 var User = require('../models/users');
 var authKeys = require('./auth_secrets.js');
 
@@ -7,12 +12,26 @@ var authKeys = require('./auth_secrets.js');
 
 module.exports = function(app,express){
 
+var database_url = process.env.database_url || 'localhost';
 
+var sessionConfig = {
+  genid: function(){
+    return uuid.v1();
+  },
+  store:  new pgSession({
+            pg : pg,                                 
+            conString : 'postgresql://' + database_url +'/divvy', 
+            tableName: 'sessions'             
+          }),
+  secret: 'kitkat',
+  resave: false,
+  saveUninitialized: false
+};
 
+app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
-
-
+app.use(cookieParser('kitkat'));
 
 passport.serializeUser(function(user, done) {
   return done(null, user.id);
@@ -26,7 +45,7 @@ passport.deserializeUser(function(id, done) {
     done(null, userProfile);
   })
   .catch(function(err){
-    console.warn("at deserialize err:", err);
+    console.warn("err at deserialize:", err);
   })
 });
 
@@ -37,9 +56,9 @@ passport.use(new FacebookStrategy(
     callbackURL: "http://localhost:3000/auth/facebook/callback",
     profileFields: ['id', 'displayName', 'picture.type(large)','email']
   },
-  function(accessToken, refreshToken, profile, cb) {
-
-    console.log('profile:', profile);
+  function(accessToken, refreshToken,params, profile, cb) {
+    console.log('params in fb strat:', params)
+    // console.log('profile:', profile);
 
     User.getByFacebookId(profile.id)
       .then(function(user){

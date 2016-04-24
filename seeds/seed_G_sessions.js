@@ -5,19 +5,19 @@ exports.seed = function(knex, Promise) {
 
     // Inserts seed entries
     knex('sessions').insert({
-      session_id:'aaa-bbb-ccc-ddd',
-      user_id: 1,
-      token  : 'sfslajflsjglslg'
+      sess:'aaa-bbb-ccc-ddd',
+      sid: 1,
+      expire  : (new Date).toISOString()
     }),
     knex('sessions').insert({
-      session_id:'bbb-ccc-ddd-eee',
-      user_id: 2,
-      token  : 'rtyjprtkyperktyp'
+      sess:'bbb-ccc-ddd-eee',
+      sid: 2,
+      expire  : (new Date).toISOString()
     }),
     knex('sessions').insert({
-      session_id:'ddd-eee-fff-ggg',
-      user_id: 1,
-      token  : 'sgoeroeroteroute'
+      sess:'ddd-eee-fff-ggg',
+      sid: 1,
+      expire : (new Date).toISOString()
     })
   );
 };

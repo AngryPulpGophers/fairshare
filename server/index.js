@@ -2,8 +2,7 @@ var webpack = require('webpack');
 var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpackHotMiddleware = require('webpack-hot-middleware');
 var config = require('../webpack.config');
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
+//var cookieParser = require('cookie-parser');
 //var serveStatic = require('serve-static');
 // above added by sam to bring in r3 boilerplate
 
@@ -26,9 +25,9 @@ if (process.env.NODE_ENV !== 'test') {
   var authConfig = require('./config/passport.js')(app,express);
   var compiler = webpack(config);
   // Parse incoming request bodies as JSON
-  app.use(session({secret: 'kitkat'}));
+  // app.use(session({secret: 'kitkat'}));
   app.use( bodyParser.json() );
-  app.use(cookieParser('kitkat'));
+  //app.use(cookieParser('kitkat'));
 
   //webpack middleware for dev/debugging
   app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
