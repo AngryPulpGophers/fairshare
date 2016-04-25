@@ -12,7 +12,7 @@ Users.getByFacebookId = function(id){
   return db('users')
     .select()
     .where('users.facebookId', '=', id);
-}
+};
 
 Users.getByUsername = function(username){
   return db('users')

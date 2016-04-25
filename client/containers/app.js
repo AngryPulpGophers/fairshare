@@ -1,27 +1,27 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import Navigation from '../components/navigation'
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import Navigation from '../components/navigation';
 
 import {
   createCallout
-} from '../actions'
+} from '../actions';
 
-import '../styles/index.css'
-import '../styles/foundation.scss'
+import '../styles/index.css';
+import '../styles/foundation.scss';
 
 // load jquery and foundation in the window scope
-import 'script!jquery'
-import 'script!what-input'
-import 'script!foundation-sites'
+import 'script!jquery';
+import 'script!what-input';
+import 'script!foundation-sites';
 
 class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
     // children are components which defined in the routes as children of App
-    const { children } = this.props
+    const { children } = this.props;
     return (
       <div>
         <Navigation createCallout={this.props.createCallout} />

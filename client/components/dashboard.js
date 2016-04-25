@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
-import { Link } from 'react-router'
+import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
+import { Link } from 'react-router';
 
 export default class Dashboard extends Component {
 
   renderCalout(data) {
-    const refName = `callout-${data.id}`
+    const refName = `callout-${data.id}`;
     return (
       <div className={"callout "+data.type} ref={refName} key={refName}>
         <h5>{data.header}</h5>

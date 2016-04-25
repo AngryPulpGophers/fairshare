@@ -19,14 +19,14 @@ var trimProfile = function(obj){
   delete obj.password;
   delete obj.facebookId;
   return obj;
-}
+};
 
 var sessionConfig = {
   genid: () => uuid.v1(),
   store:  new pgSession({
-            pg : pg,                                 
-            conString : 'postgresql://' + database_url +'/divvy', 
-            tableName: 'sessions'             
+            pg : pg,
+            conString : 'postgresql://' + database_url +'/divvy',
+            tableName: 'sessions'
           }),
   secret: 'kitkat',
   resave: false,
@@ -51,7 +51,7 @@ passport.deserializeUser(function(id, done) {
   })
   .catch(function(err){
     console.warn("err at deserialize:", err);
-  })
+  });
 });
 
 passport.use(new FacebookStrategy(
@@ -68,32 +68,32 @@ passport.use(new FacebookStrategy(
     //ELSE create profile, store in DB, execute cb->lines 70-85
     User.getByFacebookId(profile.id)
       .then(function(userObj){
-        if(userObj){
-          cleanProfile = trimProfile(userObj[0])
+        if(userObj[0]){
+          var cleanProfile = trimProfile(userObj[0]);
           return cb(null, cleanProfile);
         }else{
           var userProfile = {
             name: profile.displayName,
             username:'',
             password:'',
-            email: profile.emails[0].value, 
+            email: profile.emails[0].value,
             facebookId: profile.id,
             img_url: profile.photos[0].value
-          }
+          };
         }
         User.create(userProfile)
         .then(function(id){
           //attach app ID to userProfile for use in fn serializeUser->line 34
           userProfile.id = id[0];
-          cleanProfile = trimProfile(userProfile)
+          cleanProfile = trimProfile(userProfile);
           return cb(null, cleanProfile);
-        })
+        });
       })
       .catch(function(err){
         console.warn('at facebook strategy err:', err);
-      })
+      });
   }));
-}
+};
 
 // module.exports = function get () {
 //   return [fbProfileInfo, twitProfileInfo];
