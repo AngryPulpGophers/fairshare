@@ -7,9 +7,10 @@ function puke (obj) {
 }
 
 export default class GroupList extends Component {
-  // componentWillMount: function (){
+  // componentWillMount(){
+  //   console.log('get groups!:',this.props.getGroups(1))
   //   //console.log('componentWillMount');
-  // },
+  // }
   render(){
     console.log('get groups!:',this.props.getGroups(1))
     return(

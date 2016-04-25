@@ -2,7 +2,7 @@ import { UPDATE_LOCATION } from 'react-router-redux'
 const BASE_URL = 'http://localhost:3000/'
 
 let config = {};
-console.log('made it to middleware:')
+//console.log('made it to middleware:')
 
 function callApi(endpoint, id){
   console.log('got an id:', id)
@@ -38,14 +38,16 @@ export default store => next => action => {
     return next(action)
   }
   
-  let { endpoint, id } = callAPI
+  let { endpoint, types, id } = callAPI
+  const [ requestType, successType, errorType ] = types
   
   // const [ requestType, successType, errorType ] = types
   
   // Passing the authenticated boolean back in our data will let us distinguish between normal and secret quotes
-  return callApi(endpoint, id).then(
+  return callApi(endpoint, types, id).then(
     response => next({
-      response
+      response,
+      type: successType
     }),
     error => next({
       error: error.message || 'There was an error.'
