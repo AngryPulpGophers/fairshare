@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Navigation from '../components/navigation';
-import { createCallout } from '../actions';
+import { createCallout } from '../actions/calloutActions';
 
 import '../styles/index.css';
 import '../styles/foundation.scss';

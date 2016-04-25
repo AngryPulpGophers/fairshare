@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { removeCallout, getGroups } from '../actions';
+import { removeCallout } from '../actions/calloutActions';
+import { getGroups } from '../actions/groupActions';
 import Dashboard from '../components/dashboard';
 
 class PageDashboard extends Component {
@@ -27,6 +28,8 @@ PageDashboard.propTypes = {
 }
 
 function mapStateToProps(state) {
+console.log('state notifications:',state.notifications)
+  
   return {
     url: state.routing.location.pathname,
     callouts: state.notifications.callouts,
