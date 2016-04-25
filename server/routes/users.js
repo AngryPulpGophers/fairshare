@@ -20,7 +20,7 @@ router.param('username',function(req, res, next, username){
 });
 
 router.get('/', function(req, res){
-	Users.getById(req.user)
+	Users.getById( {id: 1} ) // req.user
 	  .then(function(data){
 	  	var userInfo = data[0];
 	  	delete userInfo.password;

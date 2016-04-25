@@ -3,7 +3,7 @@
 require(TEST_HELPER); // <--- This must be at the top of every test file.
 
 var request = require('supertest-as-promised');
-var routes  = require(__server + '/index.js');
+var routes  = require(__server + '/routes/index.js');
 
 describe('The Server', function() {
 
@@ -11,14 +11,10 @@ describe('The Server', function() {
   app.use('/', routes);
   app.testReady();
 
-  it("serves an example endpoint", function * () {
+  it_("serves an example endpoint", function * () {
 
-    //
-    // Notice how we're in a generator function (indicated by the the *)
-    // See test/test-helper.js for details of why this works.
-    //
     yield request(app)
-      .get('/api/tags-example')
+      .get('/example')
       .expect(200)
       .expect(function(response) {
         expect(response.body).to.include('node');
