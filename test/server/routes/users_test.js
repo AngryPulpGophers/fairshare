@@ -12,9 +12,15 @@ describe("Users API", function() {
   app.use('/users', routes);
   app.testReady();
 
+  beforeEach(function(done){
+    TestHelper.setup()
+      .then(function(){
+        done();
+      });
+  });
 
   it_("returns a user", function * () {
-    // yield Users.create({ name: 'Alice' });
+    yield Users.create({ name: 'Alice', username: 'MyUsername' });
 
     yield request(app)
       .get('/users')
@@ -35,5 +41,4 @@ describe("Users API", function() {
         expect( message ).to.equal('username already exists');
       });
   });
-
 });

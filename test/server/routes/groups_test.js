@@ -6,18 +6,15 @@ var routes   = require(__server + '/routes/groups.js');
 var Users    = require(__server + '/models/users.js');
 var Groups   = require(__server + '/models/groups.js');
 
-
 describe("Groups API", function() {
 
   var app = TestHelper.createApp();
   app.use('/groups', routes);
   app.testReady();
 
-  beforeEach_(function(done){
-    // drop database
-
-    // recreate database
-
+  beforeEach(function(done){
+    TestHelper.setup();
+    done();
   });
 
   it_("returns a user's groups", function * () {
@@ -36,5 +33,4 @@ describe("Groups API", function() {
         expect(response.body).to.have.length( 3 );
       });
   });
-
 });

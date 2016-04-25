@@ -27,6 +27,12 @@ global.expect = chai.expect;
 // several test files.
 global.TestHelper = {};
 
+var db       = require('../server/db.js');
+
+TestHelper.setup = function(){
+  return db.deleteEverything();
+};
+
 //
 // Mock apps for API testing
 //
