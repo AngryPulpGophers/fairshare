@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
+import GroupList from './groupList';
+
 
 export default class Dashboard extends Component {
 
@@ -25,10 +27,17 @@ export default class Dashboard extends Component {
   }
 
   render() {
+  // setting this to bypas the need for authentication
+  const isAuthed = true;
     const calloutElements = this.props.callouts.map((data) => {
       return this.renderCalout(data);
     })
-    return (
+    return isAuthed ? (
+      <div className="dashboard">
+        <GroupList getGroups={this.props.getGroups} groups={this.props.groups}/>
+      </div>
+      ) 
+      : (
       <div className="dashboard">
         <div className="row">
           <div className="small-12 large-centered columns text-center">
@@ -44,5 +53,6 @@ export default class Dashboard extends Component {
 
 Dashboard.propTypes = {
   callouts: PropTypes.array.isRequired,
-  removeCallout: PropTypes.func.isRequired
+  removeCallout: PropTypes.func.isRequired,
+  getGroups: PropTypes.func.isRequired
 }
