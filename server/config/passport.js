@@ -1,3 +1,5 @@
+"use strict"
+
 var passport          = require('passport');
 var FacebookStrategy  = require('passport-facebook').Strategy;
 var session           = require('express-session');
@@ -10,24 +12,24 @@ var authKeys          = require('./auth_secrets.js');
 
 
 
-module.exports = function(app,express){
+module.exports = (app,express) => {
 
-var database_url = process.env.DATABASE_URL || 'localhost';
+let database_url = process.env.DATABASE_URL || 'localhost';
 
-var trimProfile = function(obj){
+const trimProfile = obj => {
   delete obj.username;
   delete obj.password;
   delete obj.facebookId;
   return obj;
 };
 
-var sessionConfig = {
+const sessionConfig = {
   genid: () => uuid.v1(),
   store:  new pgSession({
-            pg : pg,
-            conString : 'postgresql://' + database_url +'/divvy',
-            tableName: 'sessions'
-          }),
+    pg       : pg,                                 
+    conString: 'postgresql://' + database_url +'/divvy', 
+    tableName: 'sessions'             
+  }),
   secret: 'kitkat',
   resave: false,
   saveUninitialized: false
@@ -38,18 +40,18 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser('kitkat'));
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser((user, cb) => {
 
-  return done(null, user.id);
+  return cb(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
+passport.deserializeUser((id, cb) => {
   User.getById({id: id})
-  .then(function(userObj){
+  .then( userObj => {
     var cleanProfile = trimProfile(userObj[0]);
-    done(null, cleanProfile);
+      cb(null, cleanProfile);
   })
-  .catch(function(err){
+  .catch( err => {
     console.warn("err at deserialize:", err);
   });
 });
@@ -61,18 +63,19 @@ passport.use(new FacebookStrategy(
     callbackURL: "http://localhost:3000/auth/facebook/callback",
     profileFields: ['id', 'displayName', 'picture.type(large)','email']
   },
-  function(accessToken, refreshToken,params, profile, cb) {
-     //console.log('params in fb strat:', params)
+  (accessToken, refreshToken,params, profile, cb) => {
+     console.log('params in fb strat:', params)
 
     //check DB for user--IF exists, execute cb->line 68
     //ELSE create profile, store in DB, execute cb->lines 70-85
     User.getByFacebookId(profile.id)
-      .then(function(userObj){
+      .then( userObj => {
         if(userObj[0]){
-          var cleanProfile = trimProfile(userObj[0]);
+          let cleanProfile = trimProfile(userObj[0])
+          console.log('cleanProfile from getByFaceBookId:', cleanProfile);
           return cb(null, cleanProfile);
-        }else{
-          var userProfile = {
+        }
+          let userProfile = {
             name: profile.displayName,
             username:'',
             password:'',
@@ -80,23 +83,21 @@ passport.use(new FacebookStrategy(
             facebookId: profile.id,
             img_url: profile.photos[0].value
           };
-        }
         User.create(userProfile)
-        .then(function(id){
+        .then( id => {
           //attach app ID to userProfile for use in fn serializeUser->line 34
           userProfile.id = id[0];
-          cleanProfile = trimProfile(userProfile);
+          let cleanProfile = trimProfile(userProfile)
+          console.log('cleanProfile in create:', cleanProfile);
           return cb(null, cleanProfile);
         });
       })
-      .catch(function(err){
+      .catch( err => {
         console.warn('at facebook strategy err:', err);
       });
   }));
 };
 
-// module.exports = function get () {
-//   return [fbProfileInfo, twitProfileInfo];
-// };
+
 
 
