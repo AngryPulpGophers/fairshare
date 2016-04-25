@@ -36,7 +36,7 @@ function groups(state = { isFetching: false, groups: []}, action) {
       console.log('got our type and resp:', action.response)
       return update(state, {
         isFetching: {$set: false},
-        groups: {$set: action.response}
+        groups: {$set: JSON.parse(action.response)}
       })
     case GROUPS_FAILURE:
       return update(state, {

@@ -23,7 +23,7 @@ PageDashboard.propTypes = {
   callouts: PropTypes.array.isRequired,
   removeCallout: PropTypes.func.isRequired,
   getGroups: PropTypes.func.isRequired,
-  //groups:PropTypes.array.isRequired
+  groups:PropTypes.array.isRequired
 }
 
 function mapStateToProps(state) {

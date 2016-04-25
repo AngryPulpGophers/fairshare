@@ -33,7 +33,7 @@ export default class Dashboard extends Component {
     })
     return isAuthed ? (
       <div className="dashboard">
-        <GroupList getGroups={this.props.getGroups} />
+        <GroupList getGroups={this.props.getGroups} groups={this.props.groups}/>
       </div>
       ) 
       : (
