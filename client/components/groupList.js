@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
 
-function puke (obj) {
-  return <pre>{JSON.stringify(obj, 2, ' ')}</pre>
-}
+// function puke (obj) {
+//   return <pre>{JSON.stringify(obj, 2, ' ')}</pre>
+// }
 
 
 
@@ -20,7 +20,11 @@ export default class GroupList extends Component {
         <h2>Groups</h2>
          {this.props.groups.map(function(group){
             return <div className="callout secondary">
-                    <p>{group.name} <button className="float-right tiny button">View</button></p>
+           
+            
+                    <p>{group.name} <Link  to='/groupView' title="groupView" className="button primary float-left tiny button">View Group</Link> </p>
+                 
+                   
                   </div>;
           })}
         {/*puke(this.props.groups)*/}

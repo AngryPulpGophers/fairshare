@@ -1,5 +1,5 @@
 import * as ActionTypes from '../actions';
-import { GROUPS_REQUEST, GROUPS_SUCCESS, GROUPS_FAILURE} from '../actions';
+import { GROUPS_REQUEST, GROUPS_SUCCESS, GROUPS_FAILURE,ACTIVITY_REQUEST, ACTIVITY_SUCCESS, ACTIVITY_FAILURE} from '../actions';
 import { routeReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import update from 'react-addons-update';
@@ -22,9 +22,9 @@ function notifications(state = {callouts: []}, action) {
   }
 }
 
-
+//types: [ACTIVITY_REQUEST, ACTIVITY_SUCCESS, ACTIVITY_FAILURE]
 // The quotes reducer
-function groups(state = { isFetching: false, groups: []}, action) {
+function groups(state = { isFetching: false, groups: [],activity : []}, action) {
   //console.log('groups actions:', action)
   switch (action.type) {
     case GROUPS_REQUEST:
@@ -42,6 +42,21 @@ function groups(state = { isFetching: false, groups: []}, action) {
     case GROUPS_FAILURE:
       return update(state, {
         isFetching: {$set: false}})
+
+    case ACTIVITY_REQUEST:
+      return update(state, {isFetching: {$set: true}})
+
+    case ACTIVITY_SUCCESS:
+      return update(state, {
+        isFetching: {$set: false},
+        activity: {$set: JSON.parse(action.response)}
+      })
+
+    case ACTIVITY_FAILURE:
+      return update(state, {
+        isFetching: {$set: false}})
+
+
 
     default:
       return state
