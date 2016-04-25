@@ -18,11 +18,12 @@ export default class GroupList extends Component {
     return(
       <div>
         <h2>Groups</h2>
-        {puke(this.props.groups)}
-        {/*<div className="callout secondary">
-          <p>{this.props.title}</p>
-        </div>
-      */}
+         {this.props.groups.map(function(group){
+            return <div className="callout secondary">
+                    <p>{group.name} <button className="float-right tiny button">View</button></p>
+                  </div>;
+          })}
+        {/*puke(this.props.groups)*/}
       </div>
     )
   }
