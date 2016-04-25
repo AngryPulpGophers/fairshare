@@ -1,9 +1,9 @@
-import React, { Component, PropTypes } from 'react'
-import { Link } from 'react-router'
+import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 
 export default class Navigation extends Component {
   render() {
-    const instance = this
+    const instance = this;
     return (
       <div>
         <div className="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">

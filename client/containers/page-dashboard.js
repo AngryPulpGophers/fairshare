@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { removeCallout, getGroups } from '../actions'
-import Dashboard from '../components/dashboard'
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { removeCallout, getGroups } from '../actions';
+import Dashboard from '../components/dashboard';
 
 class PageDashboard extends Component {
 
