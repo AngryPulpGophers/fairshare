@@ -15,7 +15,7 @@ router.get('/', function(req, res){
 
 router.get('/activity', function(req, res){
   var activity = [];
-
+console.log('pjpjpjpj',req)
   Groups.getExpensesByGroupId(1)
     .then(function(data){
       var expenses = data.map(function(val){

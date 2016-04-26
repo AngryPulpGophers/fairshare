@@ -33,7 +33,7 @@ Users.editProfile = function(reqObj){
 };
 
 Users.getAll = function(){
-  return db('users').select();
+  return db('users').select('username','id');
 };
 
 Users.getUsersByExpenseId = function(expenseId){
