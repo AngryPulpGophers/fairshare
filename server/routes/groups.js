@@ -16,23 +16,35 @@ router.param('user', function(req, res, next, user){
 });
 
 router.get('/', function(req, res){
+  console.log("getting data...");
   Groups.getAllGroups()
     .then(function(data){
       res.send(data);
+    })
+    .catch(function(err){
+      res.status(400).send({err: err});
     });
 });
 
 router.get('/:user', function(req, res){
+  console.log("wrong endpoint 1");
   Groups.getGroupsByUserId( req.user )
     .then(function(data){
       res.send(data);
+    })
+    .catch(function(err){
+      res.status(400).send({err: err});
     });
 });
 
 router.get('/users/:group', function(req, res){
+  console.log("wrong endpoint 2");
   Users.getUsersByGroupId( req.group )
     .then(function(data){
       res.send(data);
+    })
+    .catch(function(err){
+      res.status(400).send({err: err});
     });
 });
 
@@ -74,6 +86,9 @@ router.get('/activity/:group', function(req, res){
             return b.created_at - a.created_at;
           });
           res.send(activity);
+        })
+        .catch(function(err){
+          res.status(400).send({err: err});
         });
     });
 });
@@ -82,6 +97,9 @@ router.post('/', function(req, res){
   Groups.createGroup(req.body)
     .then(function(data){
       res.send(data);
+    })
+    .catch(function(err){
+      res.status(400).send({err: err});
     });
 });
 
@@ -89,6 +107,9 @@ router.post('/expenses', function(req, res){
   Groups.createExpense( req.body )
     .then(function(data){
       res.send(data[0]);
+    })
+    .catch(function(err){
+      res.status(400).send({err: err});
     });
 });
 
@@ -96,6 +117,9 @@ router.post('/payments', function(req, res){
   Groups.createPayment( req.body )
     .then(function(data){
       res.send(data);
+    })
+    .catch(function(err){
+      res.status(400).send({err: err});
     });
 });
 
@@ -103,12 +127,18 @@ router.put('/expenses', function(req, res){
   Groups.updateExpense( req.body )
     .then(function(data){
       res.send(data);
+    })
+    .catch(function(err){
+      res.status(400).send({err: err});
     });
 });
 
 router.put('/payments', function(req, res){
   Groups.updatePayment( req.body )
-  .then(function(data){
-    res.send(data);
-  });
+    .then(function(data){
+      res.send(data);
+    })
+    .catch(function(err){
+      res.status(400).send({err: err});
+    });
 });

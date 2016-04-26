@@ -16,7 +16,7 @@ export default class GroupList extends Component {
   componentWillMount(){
     //call our get groups function
     this.props.getUserInfo()
-    //this.props.getGroups()
+    this.props.getGroups()
   }
 
   render(){
@@ -25,11 +25,11 @@ export default class GroupList extends Component {
       <div>
          {this.props.groups.map(function(group){
             return <div className="callout secondary">
-           
-                  
+
+
                     <p>{group.name} <Link  to={{pathname:'/groupView',query:{ id: group.id }}} title="groupView"  className="button primary float-left tiny button">View Group</Link> </p>
-                 
-                   
+
+
                   </div>;
           })}
         {/*puke(this.props.groups)*/}
