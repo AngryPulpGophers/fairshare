@@ -48,7 +48,7 @@ req.body = {
 // 'GET' /groups/users/:group
   // get all users by group id
 
-//'GET' /groups/activity/:groupid
+// 'GET' /groups/activity/:group
   // get all activity by group id
 
 // 'POST' to /groups

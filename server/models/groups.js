@@ -24,7 +24,6 @@ Groups.getGroupsByUserId = function(userID) {
 
 Groups.createGroup = function(groupAttrs) {
   var members = groupAttrs.members;
-
   delete groupAttrs.members;
   return db('groups')
     .insert(groupAttrs, 'id')
@@ -37,7 +36,10 @@ Groups.createGroup = function(groupAttrs) {
             group_id: id[0]
           });
       });
-      return Groups.getGroupById(id[0]);
+      return Groups.getGroupById(id[0])
+        .then(function(resp){
+          return resp[0];
+        });
     });
 };
 
@@ -68,8 +70,7 @@ var members = expenseAttrs.members;
           .insert({
             user_id: memberId,
             expense_id: id[0]
-          })
-          .then(function(val){console.log("pj", val);});
+          });
       });
       return Groups.getExpenseById(id[0]);
     });

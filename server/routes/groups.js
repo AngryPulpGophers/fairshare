@@ -32,7 +32,6 @@ router.get('/:user', function(req, res){
 router.get('/users/:group', function(req, res){
   Users.getUsersByGroupId( req.group )
     .then(function(data){
-      console.log("data:", data);
       res.send(data);
     });
 });
@@ -80,7 +79,6 @@ router.get('/activity/:group', function(req, res){
 });
 
 router.post('/', function(req, res){
-  console.log("req.body", req.body);
   Groups.createGroup(req.body)
     .then(function(data){
       res.send(data);

@@ -17,7 +17,7 @@ module.exports = {
       database: 'divvy-test'
     },
     migrations:{
-      directory: __dirname + '/migrations'
+      directory: __dirname + '/test/migrations'
     }
   }
 };
