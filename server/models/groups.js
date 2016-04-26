@@ -61,7 +61,6 @@ var members = expenseAttrs.members;
   return db('expenses')
     .insert(expenseAttrs, 'id')
     .then(function(id){
-      console.log("pj", id, members);
       members.forEach(function(memberId){
         db('user_expenses')
           .returning('id')

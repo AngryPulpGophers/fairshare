@@ -13,18 +13,20 @@ describe("Groups API", function() {
   app.testReady();
 
   beforeEach(function(done){
-    TestHelper.setup();
-    done();
+    TestHelper.setup()
+      .then(function(){
+        done();
+      });
   });
 
-  it_("returns a user's groups", function * () {
-    // yield Users.create({ name: 'Federico'});
-    // yield Users.create({ name: 'Samuel'});
-    // yield Users.create({ name: 'Peter'});
+  xit_("returns a user's groups", function * () {
+    yield Users.create({ name: 'Federico'});
+    yield Users.create({ name: 'Samuel'});
+    yield Users.create({ name: 'Peter'});
     yield Groups.createGroup({
       name: 'Group 1',
       desc: 'Travel Group',
-      members: [1, 2, 3]
+      members: [1,2,3]
     });
 
     yield request(app)

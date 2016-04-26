@@ -19,26 +19,27 @@ describe("Users API", function() {
       });
   });
 
-  it_("returns a user", function * () {
+  it_("creates a new user", function * () {
+
+    yield request(app)
+      .post('/users')
+      .send({ username: 'aliceinchains', name: 'Alice' })
+      .expect(function (response) {
+        var message = response.text;
+        console.log("text", message);
+        expect( message ).to.equal('user created');
+      });
+  });
+
+  xit_("returns a user", function * () {
     yield Users.create({ name: 'Alice', username: 'MyUsername' });
 
     yield request(app)
       .get('/users')
       .expect(function (response) {
         var user = response.body;
-        expect(user.name).to.equal( 'posdnuos' );
+        expect(user.name).to.equal( 'Alice' );
       });
   });
 
-  it_("creates a user", function * () {
-
-    yield request(app)
-      .post('/users')
-      .send({ username: 'somethingnew2', name: 'Alice' })
-      .expect(function (response) {
-        var message = response.text;
-        console.log("text", message);
-        expect( message ).to.equal('username already exists');
-      });
-  });
 });

@@ -6,7 +6,7 @@ var router  = express.Router();
 module.exports = router;
 
 router.get('/', function(req, res){
-  Groups.getGroupsByUserId(1)
+  Groups.getGroupsByUserId(1) // replace with group id
     .then(function(data){
       console.log("data in 'GET' /groups", data);
       res.send(data);
@@ -15,10 +15,12 @@ router.get('/', function(req, res){
 
 router.get('/activity', function(req, res){
   var activity = [];
-console.log('pjpjpjpj',req)
-  Groups.getExpensesByGroupId(1)
+
+  // Get all expenses in your group
+  Groups.getExpensesByGroupId(1) // replace with group id
     .then(function(data){
       var expenses = data.map(function(val){
+        // Get all users that are a part of that expense
         return Users.getUsersByExpenseId(val.id)
         .then(function(data){
           val.type = 'expense';
@@ -29,11 +31,14 @@ console.log('pjpjpjpj',req)
       return Promise.all(expenses);
     })
     .then(function(expenses){
+      // Push all the mapped expenses into the activity feed
       expenses.forEach(function(expense){
         activity.push(expense);
       });
-      Groups.getPaymentsByGroupId(1)
+      // Get all payments that are a part of that group
+      Groups.getPaymentsByGroupId(1) // replace with group id
         .then(function(payments){
+          // Add type and push all payments into activity feed
           payments.forEach(function(val){
             val.type = 'payment';
             activity.push(val);
@@ -41,6 +46,7 @@ console.log('pjpjpjpj',req)
           return activity;
         })
         .then(function(activity){
+          // Sort the activity by reverse date created
           activity = activity.sort(function(a, b){
             return b.created_at - a.created_at;
           });
@@ -76,7 +82,7 @@ router.post('/payments', function(req, res){
 });
 
 router.put('/expenses', function(req, res){
-  Groups.updateExpense( req.body, 1)
+  Groups.updateExpense( req.body, 1) // replace with expense id
     .then(function(data){
       console.log("data in 'PUT' /groups/expenses", data);
       res.send(data);
@@ -84,7 +90,7 @@ router.put('/expenses', function(req, res){
 });
 
 router.put('/payments', function(req, res){
-  Groups.updatePayment( req.body, 1)
+  Groups.updatePayment( req.body, 1) //replace with payment id
   .then(function(data){
     console.log("data in 'PUT' /groups/payments", data);
     res.send(data);
