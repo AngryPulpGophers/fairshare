@@ -5,19 +5,37 @@ var router  = express.Router();
 
 module.exports = router;
 
+router.param('group', function(req, res, next, group){
+  req.group = group;
+  next();
+});
+
+router.param('user', function(req, res, next, user){
+  req.user = user;
+  next();
+});
+
 router.get('/', function(req, res){
-  Groups.getGroupsByUserId(1) // replace with group id
+  Groups.getAllGroups()
     .then(function(data){
       console.log("data in 'GET' /groups", data);
       res.send(data);
     });
 });
 
-router.get('/activity', function(req, res){
+router.get('/:user', function(req, res){
+  Groups.getGroupsByUserId( req.user )
+    .then(function(data){
+      console.log("data in 'GET' /groups/:groupID", data);
+      res.send(data);
+    });
+});
+
+router.get('/activity/:group', function(req, res){
   var activity = [];
 
   // Get all expenses in your group
-  Groups.getExpensesByGroupId(1) // replace with group id
+  Groups.getExpensesByGroupId(req.group)
     .then(function(data){
       var expenses = data.map(function(val){
         // Get all users that are a part of that expense
@@ -36,7 +54,7 @@ router.get('/activity', function(req, res){
         activity.push(expense);
       });
       // Get all payments that are a part of that group
-      Groups.getPaymentsByGroupId(1) // replace with group id
+      Groups.getPaymentsByGroupId(req.group)
         .then(function(payments){
           // Add type and push all payments into activity feed
           payments.forEach(function(val){
