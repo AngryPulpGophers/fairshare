@@ -6,7 +6,7 @@
   "scripts": {
     "production": "webpack -p",
     "start": "nodemon server/",
-    "test": "./test/run.sh"
+    "test": "NODE_ENV=test ./test/run.sh"
   },
   "repository": {
     "type": "git",
