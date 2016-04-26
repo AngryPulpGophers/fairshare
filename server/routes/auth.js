@@ -8,7 +8,7 @@ module.exports = router;
 router.get('/facebook', passport.authenticate('facebook', {scope: ['email']}));
 
 router.get('/facebook/callback', passport.authenticate('facebook', 
-  {failureRedirect: '/facebook', successRedirect: '/index'}))
+  {failureRedirect: '/facebook', successRedirect: '/'}))
 
 router.get(('/logout'),function(req,res){
 	console.log('req.session before nullified:', req.session.cookie);

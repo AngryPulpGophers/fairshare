@@ -1,5 +1,6 @@
 import { groups } from './groupReducers';
 import { notifications } from './calloutReducers';
+import { auth } from './authReducers';
 import { routeReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
 // import * as ActionTypes from '../actions';
@@ -12,7 +13,8 @@ import { combineReducers } from 'redux';
 const rootReducer = combineReducers({
   routing: routeReducer,
   notifications,
-  groups
+  groups,
+  auth
 });
 
 export default rootReducer;

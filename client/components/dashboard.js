@@ -36,7 +36,7 @@ export default class Dashboard extends Component {
       <div className="dashboard">
         <h2>Groups</h2>
         <Link to='/create-group' className="success button expand">+ New Group</Link>
-        <GroupList getGroups={this.props.getGroups} groups={this.props.groups}/>
+        <GroupList getGroups={this.props.getGroups} setAuth={this.props.setAuth} groups={this.props.groups}/>
       </div>
       ) 
       : (
@@ -56,5 +56,6 @@ export default class Dashboard extends Component {
 Dashboard.propTypes = {
   callouts: PropTypes.array.isRequired,
   removeCallout: PropTypes.func.isRequired,
-  getGroups: PropTypes.func.isRequired
+  getGroups: PropTypes.func.isRequired,
+  setAuth: PropTypes.func.isRequired
 }
