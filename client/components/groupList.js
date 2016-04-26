@@ -6,13 +6,19 @@ import { Link } from 'react-router'
 // function puke (obj) {
 //   return <pre>{JSON.stringify(obj, 2, ' ')}</pre>
 // }
+function puke (obj) {
+  return <pre>{JSON.stringify(obj, 2, ' ')}</pre>
+}
+
 
 
 export default class GroupList extends Component {
   componentWillMount(){
     //call our get groups function
-    this.props.getGroups()
+    this.props.getUserInfo()
+    //this.props.getGroups()
   }
+
   render(){
     //console.log('get groups!:',this.props.groups)
     return (
@@ -31,3 +37,4 @@ export default class GroupList extends Component {
     )
   }
 }
+

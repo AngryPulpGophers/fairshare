@@ -2,10 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { removeCallout } from '../actions/calloutActions';
 import { getGroups } from '../actions/groupActions';
+import { getUserInfo } from '../actions/authActions';
 import Dashboard from '../components/dashboard';
 
 class PageDashboard extends Component {
-
   render() {
     return (
       <Dashboard
@@ -13,6 +13,7 @@ class PageDashboard extends Component {
         callouts={this.props.callouts}
         removeCallout={this.props.removeCallout}
         getGroups={this.props.getGroups}
+        getUserInfo = {this.props.getUserInfo}
         groups={this.props.groups}
       />
     )
@@ -24,6 +25,7 @@ PageDashboard.propTypes = {
   callouts: PropTypes.array.isRequired,
   removeCallout: PropTypes.func.isRequired,
   getGroups: PropTypes.func.isRequired,
+  getUserInfo: PropTypes.func.isRequired,
   groups:PropTypes.array.isRequired
 }
 
@@ -38,5 +40,5 @@ console.log('state notifications:',state.notifications)
 }
 
 export default connect(mapStateToProps, {
-  removeCallout, getGroups
+  removeCallout, getGroups, getUserInfo
 })(PageDashboard)

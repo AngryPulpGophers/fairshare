@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Navigation from '../components/navigation';
 import { createCallout } from '../actions/calloutActions';
-
+import { getFacebookAuth } from '../actions/authActions';
 import '../styles/index.css';
 import '../styles/foundation.scss';
 
@@ -47,5 +47,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  createCallout
+  createCallout, getFacebookAuth
 })(App)

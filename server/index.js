@@ -2,7 +2,6 @@ var webpack = require('webpack');
 var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpackHotMiddleware = require('webpack-hot-middleware');
 var config = require('../webpack.config');
-//var cookieParser = require('cookie-parser');
 //var serveStatic = require('serve-static');
 // above added by sam to bring in r3 boilerplate
 
@@ -26,8 +25,13 @@ if (process.env.NODE_ENV !== 'test') {
   var compiler = webpack(config);
   // Parse incoming request bodies as JSON
   // app.use(session({secret: 'kitkat'}));
+  app.use(bodyParser.urlencoded ({extended:true}));
   app.use( bodyParser.json() );
-  //app.use(cookieParser('kitkat'));
+  app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+  });
 
   //webpack middleware for dev/debugging
   app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));

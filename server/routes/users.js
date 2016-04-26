@@ -1,16 +1,22 @@
 var Users = require('../models/users.js');
 var express = require('express');
 var router = express.Router();
+var Middleware = require('../middleware');
 
 //router.get('/', function(req, res, next){
 
-//middleware called on every request--most likely authentication;
+
 // router.use(function(req, res, next){
-//   console.log('authenticatin in some way:', req.method, req.url);
-//   next();
+//  console.log('req in middleware:', req);
+//   if(req.isAuthenticated()){
+//   	return next();
+//   }else{
+//   	res.status(401).send('user not authenticated')
+//   }
 // })
 module.exports = router;
 
+//console.log('middleware.checkAuth:', Middleware.checkAuth);
 router.param('username',function(req, res, next, username){
 	//validation here of username
   // console.log('validating username:', username);

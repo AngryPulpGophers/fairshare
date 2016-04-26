@@ -10,13 +10,15 @@ export default class Login extends Component {
             <h4 className="subheader">Take yer pick</h4>
             <div className="row">
               <div className="small-12 large-4 columns">
-                <button className="large primary button"><i className="fa fa-facebook-square"></i> Facebook</button>
+                <a href= 'auth/facebook' className="large primary button"><i className="fa fa-facebook-square"></i> Facebook</a>
               </div>
               <div className="small-12 large-4 columns">
                 <button className="large alert button"><i className="fa fa-google-plus-square"></i> Google +</button>
               </div>
               <div className="small-12 large-4 columns">
                 <button className="large secondary button"><i className="fa fa-github-square"></i> GitHub</button>
+              </div>
+              <div>
               </div>
             </div>
           </div>
@@ -25,3 +27,4 @@ export default class Login extends Component {
     )
   }
 }
+
