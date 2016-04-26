@@ -10,6 +10,8 @@ class PageGroupView extends Component {
       <GroupView
         getActivity={this.props.getActivity}
         activity={this.props.activity}
+        currentGroup = {this.props.currentGroup}
+        url = {this.props.url}
       />
     )
   }
@@ -17,13 +19,16 @@ class PageGroupView extends Component {
 
 PageGroupView.propTypes = {
   getActivity: PropTypes.func.isRequired,
-  activity:PropTypes.array.isRequired
+  activity:PropTypes.array.isRequired,
 }
 
 function mapStateToProps(state) {
+  console.log('page-groupview',state)
   return {
     //I have no idea if this is right
-    activity: state.groups.activity
+    activity: state.groups.activity,
+    currentGroup: state.groups.currentGroup,
+    url: state.routing
   }
 }
 

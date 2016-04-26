@@ -21,8 +21,8 @@ export default class GroupList extends Component {
          {this.props.groups.map(function(group){
             return <div className="callout secondary">
            
-            
-                    <p>{group.name} <Link  to='/groupView' title="groupView" className="button primary float-left tiny button">View Group</Link> </p>
+                  
+                    <p>{group.name} <Link  to={{pathname:'/groupView',query:{ id: group.id }}} title="groupView"  className="button primary float-left tiny button">View Group</Link> </p>
                  
                    
                   </div>;

@@ -24,7 +24,7 @@ function notifications(state = {callouts: []}, action) {
 
 //types: [ACTIVITY_REQUEST, ACTIVITY_SUCCESS, ACTIVITY_FAILURE]
 // The quotes reducer
-function groups(state = { isFetching: false, groups: [],activity : []}, action) {
+function groups(state = { isFetching: false, groups: [],activity : [], currentGroup: ''}, action) {
   //console.log('groups actions:', action)
   switch (action.type) {
     case GROUPS_REQUEST:
@@ -47,8 +47,10 @@ function groups(state = { isFetching: false, groups: [],activity : []}, action) 
       return update(state, {isFetching: {$set: true}})
 
     case ACTIVITY_SUCCESS:
+    console.log('PJPJPJPJ',action.id)
       return update(state, {
         isFetching: {$set: false},
+        currentGroup: {$set: action.id},
         activity: {$set: JSON.parse(action.response)}
       })
 
