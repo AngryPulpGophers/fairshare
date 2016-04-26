@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import MemberList from './memberList';
 
+
 export default class CreateGroup extends Component {
   render() {
     return (
@@ -18,7 +19,6 @@ export default class CreateGroup extends Component {
               <div className="row">
                 <div className="small-7 columns">
                   <label>Add someone to the group
-                  
                     <input placeholder="evensteven@email.com" className="input-group-field" type="email" />
                   
                   </label>

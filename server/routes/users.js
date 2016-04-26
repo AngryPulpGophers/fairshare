@@ -31,6 +31,16 @@ router.get('/', function(req, res){
 	  });
 });
 
+router.get('/allusers', function(req,res){
+	Users.getAll()
+		  .then(function(data){
+		  	res.status(200).send(data);
+		  })
+		  .catch(function(err){
+		  	res.status(400).send({err:err});
+		  });
+})
+
 router.get('/username', function(req, res){
 	console.log('username:', req.username);
 	if(req.username === 'all'){
