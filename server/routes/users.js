@@ -20,55 +20,27 @@ router.param('username',function(req, res, next, username){
 });
 
 router.get('/', function(req, res){
-	Users.getById( {id: 1} ) // req.user
+	Users.getAll()
 	  .then(function(data){
-	  	var userInfo = data[0];
-	  	delete userInfo.password;
-	    res.status(200).send(userInfo);
+	    res.status(200).send(data);
 	  })
 	  .catch(function(err){
 	  	res.status(400).send({err: err});
 	  });
 });
 
-router.get('/allusers', function(req, res){
-	Users.getAll()
-		  .then(function(data){
-		  	res.status(200).send(data);
-		  })
-		  .catch(function(err){
-		  	res.status(400).send({err:err});
-		  });
-});
-
-router.get('/username', function(req, res){
-	console.log('username:', req.username);
-	if(req.username === 'all'){
-		Users.getAll()
-		  .then(function(data){
-		  	data = data.map(function(obj){
-		  		delete obj.password;
-		  		return obj;
-		  	});
-		  	res.status(200).send(data);
-		  })
-		  .catch(function(err){
-		  	res.status(400).send({err:err});
-		  });
-	}else{
-	  Users.getByUsername(req.username)
-	    .then(function(data){
-				if(data[0]){
-					delete data[0].password;
-			    res.status(200).send({user:data[0]});
-			  }else{
-			    res.status(400).send('incorrect username/username doesn\'t exist');
-			  }
-		  })
-		  .catch(function(err){
-		    console.error(err);
-		  });
-	}
+router.get('/:username', function(req, res){
+  Users.getByUsername(req.username)
+    .then(function(data){
+			if(data[0]){
+		    res.status(200).send(data[0]);
+		  }else{
+		    res.status(400).send('incorrect username or username doesn\'t exist');
+		  }
+	  })
+	  .catch(function(err){
+	    console.error(err);
+	  });
 });
 
 router.post('/', function(req, res){
@@ -94,7 +66,6 @@ router.post('/', function(req, res){
 });
 
 router.put('/username', function(req, res){
-	//req.body.id = req.user.id;
 	Users.editProfile(req.body)
 	  .then(function(){
 	  	res.status(200).send('profile updated');

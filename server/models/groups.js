@@ -75,11 +75,11 @@ var members = expenseAttrs.members;
     });
 };
 
-Groups.updateExpense = function(expenseAttrs, expenseId){
+Groups.updateExpense = function(expenseAttrs){
   expenseAttrs.updated_at = db.fn.now();
   return db('expenses')
     .where({
-      id: expenseId
+      id: expenseAttrs.id
     })
     .update(expenseAttrs)
     .then(function(id){
@@ -109,11 +109,11 @@ Groups.createPayment = function(paymentAttrs) {
     });
 };
 
-Groups.updatePayment = function(paymentAttrs, paymentId){
+Groups.updatePayment = function(paymentAttrs){
   paymentAttrs.updated_at = db.fn.now();
   return db('payments')
     .where({
-      id: paymentId
+      id: paymentAttrs.id
     })
     .update(paymentAttrs)
     .then(function(id){

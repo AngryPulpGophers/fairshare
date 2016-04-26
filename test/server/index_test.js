@@ -11,6 +11,13 @@ describe('The Server', function() {
   app.use('/', routes);
   app.testReady();
 
+  beforeEach(function(done){
+    TestHelper.setup()
+      .then(function(){
+        done();
+      });
+  });
+
   it_("serves an example endpoint", function * () {
 
     yield request(app)

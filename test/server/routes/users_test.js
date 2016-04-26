@@ -31,8 +31,8 @@ describe("Users API", function() {
       });
   });
 
-  xit_("returns a user", function * () {
-    yield Users.create({ name: 'Alice', username: 'MyUsername' });
+  it_("returns a user", function * () {
+    // yield Users.create({ name: 'Alice', username: 'AliceInChains' });
 
     yield request(app)
       .get('/users')

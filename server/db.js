@@ -16,6 +16,7 @@ knex.deleteEverything = function () {
   knex('expenses').del().then();
   knex('user_expenses').del().then();
   knex('payments').del().then();
+  knex('knex_migrations_lock').del().then();
   return knex('sessions').del().then();
 };
 

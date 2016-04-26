@@ -108,7 +108,7 @@ router.post('/payments', function(req, res){
 });
 
 router.put('/expenses', function(req, res){
-  Groups.updateExpense( req.body, 1) // replace with expense id
+  Groups.updateExpense( req.body )
     .then(function(data){
       console.log("data in 'PUT' /groups/expenses", data);
       res.send(data);
@@ -116,7 +116,7 @@ router.put('/expenses', function(req, res){
 });
 
 router.put('/payments', function(req, res){
-  Groups.updatePayment( req.body, 1) //replace with payment id
+  Groups.updatePayment( req.body )
   .then(function(data){
     console.log("data in 'PUT' /groups/payments", data);
     res.send(data);
