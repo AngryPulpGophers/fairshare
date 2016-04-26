@@ -4,7 +4,7 @@ import update from 'react-addons-update';
 //console.log(ActionTypes);
 
 
-export function groups(state = { isFetching: false, groups: [],activity : [], currentGroup: ''}, action) {
+export function groups(state = { isFetching: false, groups: [],activity : [], currentGroupUsers: []}, action) {
     //console.log('groups actions:', action)
     switch (action.type) {
       case ActionTypes.GROUPS_REQUEST:
@@ -28,13 +28,32 @@ export function groups(state = { isFetching: false, groups: [],activity : [], cu
       console.log('PJPJPJPJ',action.id)
         return update(state, {
           isFetching: {$set: false},
-          currentGroup: {$set: action.id},
           activity: {$set: JSON.parse(action.response)}
         })
 
       case ActionTypes.ACTIVITY_FAILURE:
         return update(state, {
           isFetching: {$set: false}})
+
+      case ActionTypes.USERBYGROUP_REQUEST:
+      return update(state, {isFetching: {$set: true}})
+
+        // return Object.assign({}, state, {
+        //   isFetching: true
+        // })
+      case ActionTypes.USERBYGROUP_SUCCESS:
+        console.log('got our type and resp:', action.response)
+        return update(state, {
+          isFetching: {$set: false},
+          currentGroupUsers: {$set: JSON.parse(action.response)}
+        })
+      case ActionTypes.USERBYGROUP_FAILURE:
+        return update(state, {
+          isFetching: {$set: false}})
+
+
+
+
 
       default:
         return state

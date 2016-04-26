@@ -13,7 +13,22 @@ export default class GroupView extends Component {
   }
   
   prettyDate(milliseconds){
-    console.log('samsam',this.props.location,'and pj', this.props.params)
+    var date = new Date(milliseconds)
+    //console.log('samsam',this.props.location,'and pj', this.props.params)
+    var am = "AM";
+var hours = date.getHours();
+var minutes = date.getMinutes();
+if (hours > 12) {
+  hours = hours - 12;
+  am = "PM";
+} else if (hours === 0){
+  hours = hours + 12;
+  am = "AM";
+} else if (hours === 12){
+  am = "PM";
+}
+var timeDay = hours + ":" + minutes + " " + am;
+
     var monthNames = [
       "January", "February", "March",
       "April", "May", "June", "July",
@@ -25,7 +40,7 @@ export default class GroupView extends Component {
     var day = date.getDate();
     var monthIndex = date.getMonth();
     var year = date.getFullYear();
-    var time = monthNames[monthIndex]+" "+day+", " +year;
+    var time = monthNames[monthIndex]+" "+day+", " +year+' '+ timeDay;
     return time;
 
   }
@@ -40,7 +55,7 @@ export default class GroupView extends Component {
     //var { query } = this.props.location
    // console.log('samsam',this.props,'and pj', this.props.params)
      //var what = new Date(this.props.activity[0].created_at)
-  //console.log(this.props.currentGroup)
+  console.log(this.props.activity)
      
   // setting this to bypas the need for authentication
     return(
