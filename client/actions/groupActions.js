@@ -37,10 +37,10 @@ export const USERBYGROUP_SUCCESS = 'USERBYGROUP_SUCCESS';
 export const USERBYGROUP_FAILURE = 'USERBYGROUP_FAILURE';
 
 export function getUserByGroup(id) {
-  // console.log('got an id:', id)
+   console.log('pj got an id:', id)
   return {
     [CALL_API]: {
-      endpoint: 'user/group/'+id,
+      endpoint: 'groups/users/'+id,
       id: id,
       types: [USERBYGROUP_REQUEST, USERBYGROUP_SUCCESS, USERBYGROUP_FAILURE]
     }
