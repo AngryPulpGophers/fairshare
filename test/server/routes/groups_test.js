@@ -19,20 +19,29 @@ describe("Groups API", function() {
       });
   });
 
-  xit_("returns a user's groups", function * () {
-    yield Users.create({ name: 'Federico'});
-    yield Users.create({ name: 'Samuel'});
-    yield Users.create({ name: 'Peter'});
+  it_("returns a group of users", function * () {
+    yield Users.create({ username: 'aliceinchains', name: 'Alice'});
+    yield Users.create({ username: 'bobthebuilder', name: 'Bob'});
+    yield Users.create({ username: 'icarly', name: 'Carly'});
+
     yield Groups.createGroup({
-      name: 'Group 1',
-      desc: 'Travel Group',
+      name: 'Japan Trip',
+      desc: 'Travel Group for going to Japan.',
       members: [1,2,3]
+    });
+
+    yield Groups.createGroup({
+      name: 'Room 404',
+      desc: 'Roommate expenses',
+      members: [1,3]
     });
 
     yield request(app)
       .get('/groups')
       .expect(function (response) {
-        expect(response.body).to.have.length( 3 );
+        console.log("response.status", response.status);
+        expect()
+        expect(response.body).to.have.length( 2 );
       });
   });
 });

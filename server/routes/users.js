@@ -13,7 +13,7 @@ module.exports = router;
 
 router.param('username',function(req, res, next, username){
 	//validation here of username
-  console.log('validating username:', username);
+  // console.log('validating username:', username);
   //reassign req.query.username to req.username;
   req.username = username;
 	next();
@@ -27,6 +27,20 @@ router.get('/', function(req, res){
 	  .catch(function(err){
 	  	res.status(400).send({err: err});
 	  });
+});
+
+router.get('/id', function(req, res){
+  Users.getById(req.user)
+    .then(function(data){
+      if(data[0]){
+        res.status(200).send(data[0]);
+      }else{
+        res.status(400).send('incorrect username or username doesn\'t exist');
+      }
+    })
+    .catch(function(err){
+      console.error(err);
+    });
 });
 
 router.get('/:username', function(req, res){

@@ -73,7 +73,7 @@ req.body = {
   members: ["id(number)", "id", "id"]
 };
 
-// 'PUT' to /groups/expenses (need expense id somehow)
+// 'PUT' to /groups/expenses
   // updates the properties of an expense
 
 req.body = {
@@ -81,7 +81,8 @@ req.body = {
   title: undefined,
   amount: undefined,
   img_url: undefined,
-  note: undefined
+  note: undefined,
+  // members: undefined (possibly will add this at some point, discuss?)
 };
 
 
