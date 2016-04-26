@@ -1,13 +1,13 @@
 import { UPDATE_LOCATION } from 'react-router-redux';
 const BASE_URL = 'http://localhost:3000/';
 
-let config = {};
+let config = {credentials : 'include' };
 //console.log('made it to middleware:')
 
 function callApi(endpoint, id){
   console.log('got an id:', id);
   config.id = id;
-  return fetch(BASE_URL + endpoint, config)
+  return fetch( BASE_URL + endpoint, config)
     .then(response => 
         response.text()
         .then(text => ({ text, response }))

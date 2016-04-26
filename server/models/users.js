@@ -21,6 +21,7 @@ Users.getByUsername = function(username){
 };
 
 Users.getById = function(reqObj){
+  console.log('in getById util:', reqObj);
   return db('users')
     .select('id', 'name', 'username', 'email', 'facebookId', 'img_url')
     .where('id', '=', reqObj.id);

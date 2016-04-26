@@ -3,11 +3,20 @@ import * as ActionTypes from '../actions/authActions';
 import update from 'react-addons-update';
 console.log(ActionTypes);
 
-export function auth(state = {authenticated: false}, action){
+export function auth(state = {isFetching: false, userInfo: null}, action){
 	switch (action.type){
-		case ActionTypes.FACEBOOK_AUTH:
+		case ActionTypes.USER_REQUEST:
 		console.log('in auth reducer')
-		return update(state, {authenticated: {$set: true}})
+		return update(state, {
+			isFetching: {$set: true}, 
+			userInfo: null
+		})
+    case ActionTypes.USER_SUCCESS:
+    
+	  return update(state, {
+	  	isFetching: {$set: false},
+	  	userInfo: {$set: JSON.parse(action.response)}
+	  })	
 
 		default: 
 			return state;

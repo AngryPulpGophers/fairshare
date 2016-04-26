@@ -15,9 +15,8 @@ function puke (obj) {
 export default class GroupList extends Component {
   componentWillMount(){
     //call our get groups function
-    console.log('in component did mount:', this.props.setAuth())
-    this.props.setAuth()
-    this.props.getGroups()
+    this.props.getUserInfo()
+    //this.props.getGroups()
   }
 
   render(){

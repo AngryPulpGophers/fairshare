@@ -23,7 +23,7 @@ const trimProfile = obj => {
   return obj;
 };
 
-const sessionConfig = {
+app.use(session({
   genid: () => uuid.v1(),
   store:  new pgSession({
     pg       : pg,                                 
@@ -31,25 +31,25 @@ const sessionConfig = {
     tableName: 'sessions'             
   }),
   secret: 'kitkat',
-  resave: false,
-  saveUninitialized: false
-};
+  resave: true,
+  saveUninitialized: true
+}));
 
-app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser('kitkat'));
 
-passport.serializeUser((user, cb) => {
-
-  return cb(null, user.id);
+passport.serializeUser((user, done) => {
+  console.log('in serialize:', user.id);
+  return done(null, user.id);
 });
 
-passport.deserializeUser((id, cb) => {
+passport.deserializeUser((id, done) => {
   User.getById({id: id})
   .then( userObj => {
     var cleanProfile = trimProfile(userObj[0]);
-      cb(null, cleanProfile);
+    console.log('in deserialize:', cleanProfile)
+      return done(null, cleanProfile);
   })
   .catch( err => {
     console.warn("err at deserialize:", err);
@@ -63,7 +63,7 @@ passport.use(new FacebookStrategy(
     callbackURL: "http://localhost:3000/auth/facebook/callback",
     profileFields: ['id', 'displayName', 'picture.type(large)','email']
   },
-  (accessToken, refreshToken,params, profile, cb) => {
+  (accessToken, refreshToken,params, profile, done) => {
      console.log('params in fb strat:', params)
 
     //check DB for user--IF exists, execute cb->line 68
@@ -73,7 +73,7 @@ passport.use(new FacebookStrategy(
         if(userObj[0]){
           let cleanProfile = trimProfile(userObj[0])
           console.log('cleanProfile from getByFaceBookId:', cleanProfile);
-          return cb(null, cleanProfile);
+          return done(null, cleanProfile);
         }
           let userProfile = {
             name: profile.displayName,
@@ -89,7 +89,7 @@ passport.use(new FacebookStrategy(
           userProfile.id = id[0];
           let cleanProfile = trimProfile(userProfile)
           console.log('cleanProfile in create:', cleanProfile);
-          return cb(null, cleanProfile);
+          return done(null, cleanProfile);
         });
       })
       .catch( err => {
