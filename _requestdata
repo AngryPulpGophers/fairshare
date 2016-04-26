@@ -2,15 +2,16 @@
 // USER ROUTES
 //
 
-'GET' /users
+// 'GET' /users
 
-'GET' /users/username
-// please send username as req.username
+// 'GET' /users/username
 
-'POST' /users
+// 'GET' /users/allusers
+
+// 'POST' /users
 
 {
-  username: ''
+  username: '',
   password: ''
 }
 

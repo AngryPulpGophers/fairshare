@@ -52,3 +52,12 @@ Users.getUsersByExpenseId = function(expenseId){
       return Promise.resolve(Promise.all(usersFull));
     });
 };
+
+Users.getUsersByGroupId = function(groupID){
+  return db('users')
+    .select('name', 'username', 'email', 'facebookId', 'img_url', 'user_id')
+    .innerJoin('user_groups', 'users.id', 'user_groups.user_id')
+    .where({
+      group_id: groupID
+    });
+};
