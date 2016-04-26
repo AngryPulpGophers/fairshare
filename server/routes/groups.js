@@ -18,7 +18,6 @@ router.param('user', function(req, res, next, user){
 router.get('/', function(req, res){
   Groups.getAllGroups()
     .then(function(data){
-      console.log("data in 'GET' /groups", data);
       res.send(data);
     });
 });
@@ -26,7 +25,6 @@ router.get('/', function(req, res){
 router.get('/:user', function(req, res){
   Groups.getGroupsByUserId( req.user )
     .then(function(data){
-      console.log("data in 'GET' /groups/:groupID", data);
       res.send(data);
     });
 });
@@ -76,7 +74,6 @@ router.get('/activity/:group', function(req, res){
           activity = activity.sort(function(a, b){
             return b.created_at - a.created_at;
           });
-          console.log("data in 'GET' /groups/activity", activity);
           res.send(activity);
         });
     });
@@ -86,7 +83,6 @@ router.post('/', function(req, res){
   console.log("req.body", req.body);
   Groups.createGroup(req.body)
     .then(function(data){
-      console.log("data in 'POST' /groups ", data);
       res.send(data);
     });
 });
@@ -94,7 +90,6 @@ router.post('/', function(req, res){
 router.post('/expenses', function(req, res){
   Groups.createExpense( req.body )
     .then(function(data){
-      console.log("data in 'POST' /groups/expenses", data);
       res.send(data[0]);
     });
 });
@@ -102,7 +97,6 @@ router.post('/expenses', function(req, res){
 router.post('/payments', function(req, res){
   Groups.createPayment( req.body )
     .then(function(data){
-      console.log("data in 'POST' /groups/payments", data);
       res.send(data);
     });
 });
@@ -110,7 +104,6 @@ router.post('/payments', function(req, res){
 router.put('/expenses', function(req, res){
   Groups.updateExpense( req.body )
     .then(function(data){
-      console.log("data in 'PUT' /groups/expenses", data);
       res.send(data);
     });
 });
@@ -118,7 +111,6 @@ router.put('/expenses', function(req, res){
 router.put('/payments', function(req, res){
   Groups.updatePayment( req.body )
   .then(function(data){
-    console.log("data in 'PUT' /groups/payments", data);
     res.send(data);
   });
 });

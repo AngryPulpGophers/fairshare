@@ -20,9 +20,9 @@ describe("Groups API", function() {
   });
 
   it_("returns a group of users", function * () {
-    yield Users.create({ username: 'aliceinchains', name: 'Alice'});
-    yield Users.create({ username: 'bobthebuilder', name: 'Bob'});
-    yield Users.create({ username: 'icarly', name: 'Carly'});
+    yield Users.create({ username: 'aliceinchains', name: 'Alice' });
+    yield Users.create({ username: 'bobthebuilder', name: 'Bob' });
+    yield Users.create({ username: 'icarly', name: 'Carly' });
 
     yield Groups.createGroup({
       name: 'Japan Trip',
@@ -39,9 +39,8 @@ describe("Groups API", function() {
     yield request(app)
       .get('/groups')
       .expect(function (response) {
-        console.log("response.status", response.status);
-        expect()
-        expect(response.body).to.have.length( 2 );
+        expect( response.status ).to.equal(200);
+        expect( response.body ).to.have.length(2);
       });
   });
 });
