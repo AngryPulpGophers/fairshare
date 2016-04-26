@@ -6,7 +6,6 @@ let config = {};
 
 function callApi(endpoint, id){
   console.log('got an id:', id);
-
   config.id = id;
   return fetch(BASE_URL + endpoint, config)
     .then(response => 
@@ -44,7 +43,9 @@ export default store => next => action => {
   return callApi(endpoint, types, id).then(
     response => next({
       response,
-      type: successType
+      type: successType,
+      id: id
+
     }),
     error => next({
       error: error.message || 'There was an error.'
