@@ -1,11 +1,13 @@
-import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
-import { Link } from 'react-router'
+import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
+import { Link } from 'react-router';
+import GroupList from './groupList';
+
 
 export default class Dashboard extends Component {
 
   renderCalout(data) {
-    const refName = `callout-${data.id}`
+    const refName = `callout-${data.id}`;
     return (
       <div className={"callout "+data.type} ref={refName} key={refName}>
         <h5>{data.header}</h5>
@@ -25,10 +27,19 @@ export default class Dashboard extends Component {
   }
 
   render() {
+  // setting this to bypas the need for authentication
+  const isAuthed = true;
     const calloutElements = this.props.callouts.map((data) => {
       return this.renderCalout(data);
     })
-    return (
+    return isAuthed ? (
+      <div className="dashboard">
+        <h2>Groups</h2>
+        <Link to='/create-group' className="success button expand">+ New Group</Link>
+        <GroupList getGroups={this.props.getGroups} getUserInfo={this.props.getUserInfo} groups={this.props.groups}/>
+      </div>
+      ) 
+      : (
       <div className="dashboard">
         <div className="row">
           <div className="small-12 large-centered columns text-center">
@@ -44,5 +55,7 @@ export default class Dashboard extends Component {
 
 Dashboard.propTypes = {
   callouts: PropTypes.array.isRequired,
-  removeCallout: PropTypes.func.isRequired
+  removeCallout: PropTypes.func.isRequired,
+  getGroups: PropTypes.func.isRequired,
+  getUserInfo: PropTypes.func.isRequired
 }

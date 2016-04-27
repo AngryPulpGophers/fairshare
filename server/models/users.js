@@ -8,26 +8,33 @@ Users.create = function(reqObj){
     .returning('id');
 };
 
+Users.getByFacebookId = function(id){
+  return db('users')
+    .select('id', 'name', 'username', 'email', 'facebookId', 'img_url')
+    .where('users.facebookId', '=', id);
+};
+
 Users.getByUsername = function(username){
   return db('users')
-    .select()
+    .select('id', 'name', 'username', 'email', 'facebookId', 'img_url')
     .where('users.username', '=', username);
 };
 
 Users.getById = function(reqObj){
   return db('users')
-    .select()
+    .select('id', 'name', 'username', 'email', 'facebookId', 'img_url')
     .where('id', '=', reqObj.id);
 };
 
-Users.editProfile = function(reqObj){
+Users.editProfile = function(profAttrs){
   return db('users')
-    .where('id', '=', reqObj.id)
-    .update(reqObj);
+    .where('id', '=', profAttrs.id)
+    .update(profAttrs);
 };
 
 Users.getAll = function(){
-  return db('users').select();
+  return db('users')
+    .select('id', 'name', 'username', 'email', 'facebookId', 'img_url');
 };
 
 Users.getUsersByExpenseId = function(expenseId){
@@ -44,5 +51,14 @@ Users.getUsersByExpenseId = function(expenseId){
           });
       });
       return Promise.resolve(Promise.all(usersFull));
+    });
+};
+
+Users.getUsersByGroupId = function(groupID){
+  return db('users')
+    .select('name', 'username', 'email', 'facebookId', 'img_url', 'user_id')
+    .innerJoin('user_groups', 'users.id', 'user_groups.user_id')
+    .where({
+      group_id: groupID
     });
 };

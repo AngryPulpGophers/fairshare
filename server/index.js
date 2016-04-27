@@ -16,13 +16,22 @@ var users      = require('./routes/users.js');
 var groups     = require('./routes/groups.js');
 var routes     = require('./routes/index.js');
 
+
 if (process.env.NODE_ENV !== 'test') {
   // We're in development or production mode
   // create and run a real server.
   var app = express();
+  var authConfig = require('./config/passport.js')(app,express);
   var compiler = webpack(config);
   // Parse incoming request bodies as JSON
+  // app.use(session({secret: 'kitkat'}));
+  app.use(bodyParser.urlencoded ({extended:true}));
   app.use( bodyParser.json() );
+  app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+  });
 
   //webpack middleware for dev/debugging
   app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));

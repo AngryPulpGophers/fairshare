@@ -80,6 +80,18 @@ To drop the database, stop your server and run:
 dropdb divvy
 ```
 
+### Setup Test Suite
+
+Create the test database
+```
+createdb divvy-test
+knex migrate:latest --env test
+```
+Run the test
+```
+npm run test
+```
+
 ### Create a new branch
 
 Checkout a new branch for what you're working on:
