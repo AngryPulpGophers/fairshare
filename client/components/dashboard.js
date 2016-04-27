@@ -28,7 +28,7 @@ export default class Dashboard extends Component {
 
   render() {
   // setting this to bypas the need for authentication
-  const isAuthed = true;
+  const isAuthed = this.props.isAuthed;
     const calloutElements = this.props.callouts.map((data) => {
       return this.renderCalout(data);
     })
@@ -56,5 +56,6 @@ export default class Dashboard extends Component {
 Dashboard.propTypes = {
   callouts: PropTypes.array.isRequired,
   removeCallout: PropTypes.func.isRequired,
-  getGroups: PropTypes.func.isRequired
+  getGroups: PropTypes.func.isRequired,
+  isAuthed: PropTypes.bool.isRequired
 }

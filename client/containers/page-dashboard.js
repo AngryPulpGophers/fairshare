@@ -5,7 +5,6 @@ import { getGroups } from '../actions/groupActions';
 import Dashboard from '../components/dashboard';
 
 class PageDashboard extends Component {
-
   render() {
     return (
       <Dashboard
@@ -13,6 +12,7 @@ class PageDashboard extends Component {
         callouts={this.props.callouts}
         removeCallout={this.props.removeCallout}
         getGroups={this.props.getGroups}
+        isAuthed={this.props.isAuthed}
         groups={this.props.groups}
       />
     )
@@ -24,7 +24,8 @@ PageDashboard.propTypes = {
   callouts: PropTypes.array.isRequired,
   removeCallout: PropTypes.func.isRequired,
   getGroups: PropTypes.func.isRequired,
-  groups:PropTypes.array.isRequired,
+  isAuthed: PropTypes.bool.isRequired,
+  groups:PropTypes.array.isRequired
 }
 
 function mapStateToProps(state) {
@@ -33,7 +34,8 @@ console.log('state notifications:',state.notifications)
   return {
     url: state.routing.location.pathname,
     callouts: state.notifications.callouts,
-    groups: state.groups.groups
+    groups: state.groups.groups,
+    isAuthed: state.auth.isAuthed
   }
 }
 

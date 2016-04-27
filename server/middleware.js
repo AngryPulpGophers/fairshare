@@ -4,7 +4,8 @@ var MiddleWare = module.exports;
 
 
 MiddleWare.checkAuth = function(req,res,next){
-	if(req.isAuthenticated()) { next(); }
+  //console.log('req in midware:', req)
+	if(req.isAuthenticated()) {return next();}
 	res.status(401).send('user not authenticated');
 };
 

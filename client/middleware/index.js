@@ -1,24 +1,27 @@
 import { UPDATE_LOCATION } from 'react-router-redux';
 const BASE_URL = 'http://localhost:3000/';
 
-let config = {};
+let config = {credentials : 'include' };
 //console.log('made it to middleware:')
 
 function callApi(endpoint, id){
   //console.log('got an id:', id);
   config.id = id;
-  return fetch(BASE_URL + endpoint, config)
+  return fetch( BASE_URL + endpoint, config)
     .then(response => 
         response.text()
         .then(text => ({ text, response }))
       )
     .then(({ text, response }) => {
-      //console.log('text:', text, 'response:', response)
+      console.log('text:', text, 'response:', response)
+      console.log('response.ok in middleware:', response.ok)
       if (!response.ok) {
-        return Promise.reject(text);
-      }
-      return text
-    }).catch(err => console.log('api error:',err));
+        // throw new Error (text);
+        return Promise.reject(text)
+      }else{
+        return text;
+      }  
+    })
 }
 
 export const CALL_API = Symbol('Call API');
@@ -48,8 +51,7 @@ export default store => next => action => {
 
     }),
     error => next({
-      error: error.message || 'There was an error.'
-
+      type: errorType
     })
   )
 

@@ -29,10 +29,8 @@ export function groups(state = { isFetching: false, groups: [],activity : [], cu
     switch (action.type) {
       case ActionTypes.GROUPS_REQUEST:
       return update(state, {isFetching: {$set: true}})
-
-        // return Object.assign({}, state, {
-        //   isFetching: true
-        // })
+      // return Object.assign({}, state, {
+      //   isFetching: true
       case ActionTypes.GROUPS_SUCCESS:
         console.log('got our type and resp:', action.response)
         return update(state, {
@@ -61,5 +59,4 @@ export function groups(state = { isFetching: false, groups: [],activity : [], cu
       default:
         return state
       }
-}
-
+    }

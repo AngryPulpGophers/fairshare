@@ -1,7 +1,7 @@
 module.exports = {
   development: {
     client: 'postgresql',
-    connection:{
+    connection: {
       database: 'divvy'
     },
     migrations:{
@@ -9,6 +9,15 @@ module.exports = {
     },
     seeds:{
       directory:__dirname + '/seeds'
+    }
+  },
+  test: {
+    client: 'postgresql',
+    connection: {
+      database: 'divvy-test'
+    },
+    migrations:{
+      directory: __dirname + '/test/migrations'
     }
   }
 };

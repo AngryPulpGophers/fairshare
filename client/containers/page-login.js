@@ -5,16 +5,23 @@ class PageLogin extends Component {
 
   render() {
     return (
-      <Login />
-    );
+      <Login
+     
+      />
+    )
   }
 
+};
+
+PageLogin.propTypes = {
+	
 }
 
 function mapStateToProps(state) {
   console.log('mapstatetprops called:',state);
   return {
-  };
+  
+  }
 }
 
 export default connect(mapStateToProps, {
