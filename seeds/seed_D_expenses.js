@@ -17,7 +17,7 @@ exports.seed = function(knex, Promise) {
       title: 'food',
       amount : 159.70,
       group_id: 1,
-      paid_by:  2,
+      paid_by:  3,
       img_url: 'http://www.image.com',
       note: 'Fine Dining 12/23'
     }),

@@ -16,16 +16,14 @@ router.param('user', function(req, res, next, user){
 });
 
 router.get('/', function(req, res){
-  console.log("getting data...");
   Groups.getAllGroups()
     .then(function(data){
       res.send(data);
     })
     .catch(function(err){
-      res.status(400).send({err: err});
+      res.status(400).send({err: err, text: 'Error in getting all groups'});
     });
 });
-
 
 router.get('/:user', function(req, res){
   Groups.getGroupsByUserId( req.user )
@@ -33,18 +31,17 @@ router.get('/:user', function(req, res){
       res.send(data);
     })
     .catch(function(err){
-      res.status(400).send({err: err});
+      res.status(400).send({err: err, text: 'Error in getting a users groups'});
     });
 });
 
 router.get('/users/:group', function(req, res){
-  console.log("wrong endpoint 2");
   Users.getUsersByGroupId( req.group )
     .then(function(data){
       res.send(data);
     })
     .catch(function(err){
-      res.status(400).send({err: err});
+      res.status(400).send({err: err, text: 'Error getting a groups users'});
     });
 });
 
@@ -88,7 +85,7 @@ router.get('/activity/:group', function(req, res){
           res.send(activity);
         })
         .catch(function(err){
-          res.status(400).send({err: err});
+          res.status(400).send({err: err, text: 'Error in activity'});
         });
     });
 });
@@ -96,7 +93,7 @@ router.get('/activity/:group', function(req, res){
 router.post('/', function(req, res){
   Groups.createGroup(req.body)
     .then(function(data){
-      res.send(data);
+      res.status(200).send(data);
     })
     .catch(function(err){
       res.status(400).send({err: err});
@@ -116,7 +113,7 @@ router.post('/expenses', function(req, res){
 router.post('/payments', function(req, res){
   Groups.createPayment( req.body )
     .then(function(data){
-      res.send(data);
+      res.send(data[0]);
     })
     .catch(function(err){
       res.status(400).send({err: err});
@@ -126,7 +123,7 @@ router.post('/payments', function(req, res){
 router.put('/expenses', function(req, res){
   Groups.updateExpense( req.body )
     .then(function(data){
-      res.send(data);
+      res.send(data[0]);
     })
     .catch(function(err){
       res.status(400).send({err: err});
@@ -136,7 +133,7 @@ router.put('/expenses', function(req, res){
 router.put('/payments', function(req, res){
   Groups.updatePayment( req.body )
     .then(function(data){
-      res.send(data);
+      res.send(data[0]);
     })
     .catch(function(err){
       res.status(400).send({err: err});

@@ -25,10 +25,27 @@ export function getActivity(id) {
   // console.log('got an id:', id)
   return {
     [CALL_API]: {
-      endpoint: 'groups/activity',
+      endpoint: 'groups/activity/'+id,
       id: id,
       req: 'GET',
       types: [ACTIVITY_REQUEST, ACTIVITY_SUCCESS, ACTIVITY_FAILURE]
+    }
+
+  }
+}
+
+export const USERBYGROUP_REQUEST = 'USERBYGROUP_REQUEST';
+export const USERBYGROUP_SUCCESS = 'USERBYGROUP_SUCCESS';
+export const USERBYGROUP_FAILURE = 'USERBYGROUP_FAILURE';
+
+export function getUserByGroup(id) {
+   console.log('pj got an id:', id)
+  return {
+    [CALL_API]: {
+      endpoint: 'groups/users/'+id,
+      id: id,
+      types: [USERBYGROUP_REQUEST, USERBYGROUP_SUCCESS, USERBYGROUP_FAILURE]
+
     }
 
   }
