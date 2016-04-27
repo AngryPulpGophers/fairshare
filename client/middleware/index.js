@@ -14,11 +14,14 @@ function callApi(endpoint, id){
       )
     .then(({ text, response }) => {
       console.log('text:', text, 'response:', response)
+      console.log('response.ok in middleware:', response.ok)
       if (!response.ok) {
-        return Promise.reject(text);
-      }
-      return text
-    }).catch(err => console.log('api error:',err));
+        // throw new Error (text);
+        return Promise.reject(text)
+      }else{
+        return text;
+      }  
+    })
 }
 
 export const CALL_API = Symbol('Call API');
@@ -48,8 +51,7 @@ export default store => next => action => {
 
     }),
     error => next({
-      error: error.message || 'There was an error.'
-
+      type: errorType
     })
   )
 

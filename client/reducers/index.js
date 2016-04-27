@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   routing: routeReducer,
   notifications,
   groups,
-  auth
+  auth,
 });
 
 export default rootReducer;

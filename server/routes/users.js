@@ -6,14 +6,14 @@ var Middleware = require('../middleware');
 //router.get('/', function(req, res, next){
 
 
-// router.use(function(req, res, next){
-//  console.log('req in middleware:', req);
-//   if(req.isAuthenticated()){
-//   	return next();
-//   }else{
-//   	res.status(401).send('user not authenticated')
-//   }
-// })
+router.use(function(req, res, next){
+ // console.log('req in middleware:', req);
+  if(req.isAuthenticated()){
+  	return next();
+  }else{
+  	res.status(401).send('user not authenticated')
+  }
+})
 module.exports = router;
 
 //console.log('middleware.checkAuth:', Middleware.checkAuth);
