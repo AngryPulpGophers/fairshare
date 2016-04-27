@@ -237,7 +237,7 @@ test(x,obj){
                 <div>{activity.title} Time:{this.prettyDate(activity.created_at)} Amount: ${activity.amount}    
                 <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
                   <div style={this.props.displayActive[index]}>
-                  <div>Note:{activity.note}</div>
+                  <div>Note: {activity.note}</div>
                   <div>Paid: {localGroupObj[activity.paid_by].name}</div>
                     <div>Members: 
                       {activity.members.map(function(member,index,members){
@@ -253,7 +253,7 @@ test(x,obj){
               <div>{localGroupObj[activity.payee].name} paid {localGroupObj[activity.recipient].name} ${activity.amount} Time:{this.prettyDate(activity.created_at)} 
                 <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
                  <div style={this.props.displayActive[index]}>
-                    {activity.note}
+                    Note: {activity.note}
                   </div>
               </div>
               } 
