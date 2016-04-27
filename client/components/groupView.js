@@ -19,6 +19,9 @@ export default class GroupView extends Component {
      console.log('maybe work', this.props.currentGroupUsers)
     //var clickedOnGroup = (this.props.url.location.query.id)
     this.props.getActivity(ID[1])
+    //the number on the next line should be the number of activities for the group but PJ had issues with that
+    //this number can be as big as you want, just takes up more space in state
+    this.props.startDisplay(100)
   }
   
   prettyDate(milliseconds){
@@ -191,6 +194,19 @@ makeGroupObj(){
   return makeGroupObject
 }
 
+test(x,obj){
+  console.log('holly', x,obj)
+  if (obj.display==='none'){
+    delete obj.display;
+    return {}
+  }
+  else{
+    return {
+      display: 'none'
+    }
+  }
+}
+
   render() {
     //var { query } = this.props.location
    // console.log('samsam',this.props,'and pj', this.props.params)
@@ -199,25 +215,47 @@ makeGroupObj(){
   console.log('maybe work222', this.props.currentGroupUsers)
   this.calcBalance();
   console.log('hi pj, stuff should be here^^^^')
-     var localGroupObj=this.makeGroupObj()
+    var localGroupObj=this.makeGroupObj()
+    var counter = 0;
+    var displayObj={};
+    for (var i = 0; i<this.props.activity.length ; i++){
+      displayObj[counter] = {
+        display: 'none'
+      }
+
+    }
   // setting this to bypas the need for authentication
     return(
       <div>
         <h2>Activity</h2>
         
-         {this.props.activity.map(function(activity){
+         {this.props.activity.map(function(activity,index){
             return <div className= {activity.type==='expense' ? "callout alert" :"callout success"}>
               
               {activity.type==='expense' ?
               <div>
-                <div>{activity.title} Time:{this.prettyDate(activity.created_at)} Amount: ${activity.amount} 
-           
-                </div>
-               
-                
+                <div>{activity.title} Time:{this.prettyDate(activity.created_at)} Amount: ${activity.amount}    
+                <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
+                  <div style={this.props.displayActive[index]}>
+                  <div>Note:{activity.note}</div>
+                  <div>Paid: {localGroupObj[activity.paid_by].name}</div>
+                    <div>Members: 
+                      {activity.members.map(function(member,index,members){
+                        return <span>
+                        {member.name}{index===members.length-1? "" : ", "}</span>
+                        })
+                      }
+                    </div>
+                  </div>
+                </div>  
               </div>
               :
-                <div>{localGroupObj[activity.payee].name} paid {localGroupObj[activity.recipient].name} Time:{this.prettyDate(activity.created_at)} Amount: ${activity.amount} </div>
+              <div>{localGroupObj[activity.payee].name} paid {localGroupObj[activity.recipient].name} ${activity.amount} Time:{this.prettyDate(activity.created_at)} 
+                <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
+                 <div style={this.props.displayActive[index]}>
+                    {activity.note}
+                  </div>
+              </div>
               } 
             </div>
           }.bind(this))}
