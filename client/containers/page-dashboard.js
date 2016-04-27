@@ -24,7 +24,7 @@ PageDashboard.propTypes = {
   callouts: PropTypes.array.isRequired,
   removeCallout: PropTypes.func.isRequired,
   getGroups: PropTypes.func.isRequired,
-  groups:PropTypes.array.isRequired
+  groups:PropTypes.array.isRequired,
 }
 
 function mapStateToProps(state) {
@@ -38,5 +38,6 @@ console.log('state notifications:',state.notifications)
 }
 
 export default connect(mapStateToProps, {
-  removeCallout, getGroups
+  removeCallout,
+  getGroups
 })(PageDashboard)

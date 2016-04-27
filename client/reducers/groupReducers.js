@@ -3,6 +3,26 @@ import * as ActionTypes from '../actions/groupActions';
 import update from 'react-addons-update';
 //console.log(ActionTypes);
 
+export function newGroup(state= {newGroup: {name:'',desc:'',members:[]}}, action){
+  switch (action.type) {
+    case ActionTypes.GROUPNAME_UPDATE :
+      return update(state, {
+        newGroup: {
+          name: {$set: action.name}
+        }
+      })
+
+    case ActionTypes.GROUPDESC_UPDATE :
+      return update(state, {
+        newGroup: {
+          desc: {$set: action.desc}
+        }
+      })
+    default:
+      return state
+    
+  }
+}
 
 export function groups(state = { isFetching: false, groups: [],activity : [], currentGroup: ''}, action) {
     //console.log('groups actions:', action)

@@ -5,7 +5,7 @@ let config = {};
 //console.log('made it to middleware:')
 
 function callApi(endpoint, id){
-  console.log('got an id:', id);
+  //console.log('got an id:', id);
   config.id = id;
   return fetch(BASE_URL + endpoint, config)
     .then(response => 
@@ -13,7 +13,7 @@ function callApi(endpoint, id){
         .then(text => ({ text, response }))
       )
     .then(({ text, response }) => {
-      console.log('text:', text, 'response:', response)
+      //console.log('text:', text, 'response:', response)
       if (!response.ok) {
         return Promise.reject(text);
       }

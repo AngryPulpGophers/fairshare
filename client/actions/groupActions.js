@@ -16,6 +16,7 @@ export function getGroups(id) {
   }
 }
 
+
 export const ACTIVITY_REQUEST = 'ACTIVITY_REQUEST';
 export const ACTIVITY_SUCCESS = 'ACTIVITY_SUCCESS';
 export const ACTIVITY_FAILURE = 'ACTIVITY_FAILURE';
