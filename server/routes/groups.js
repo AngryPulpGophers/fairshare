@@ -16,7 +16,6 @@ router.param('user', function(req, res, next, user){
 });
 
 router.get('/', function(req, res){
-  console.log("getting data...");
   Groups.getAllGroups()
     .then(function(data){
       res.send(data);
@@ -38,7 +37,6 @@ router.get('/:user', function(req, res){
 });
 
 router.get('/users/:group', function(req, res){
-  console.log("wrong endpoint 2");
   Users.getUsersByGroupId( req.group )
     .then(function(data){
       res.send(data);
