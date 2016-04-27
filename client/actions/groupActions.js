@@ -16,7 +16,6 @@ export function getGroups(id) {
   }
 }
 
-
 export const ACTIVITY_REQUEST = 'ACTIVITY_REQUEST';
 export const ACTIVITY_SUCCESS = 'ACTIVITY_SUCCESS';
 export const ACTIVITY_FAILURE = 'ACTIVITY_FAILURE';
@@ -33,3 +32,19 @@ export function getActivity(id) {
   }
 }
 
+export const CREATE_REQUEST = 'CREATE_REQUEST';
+export const CREATE_SUCCESS = 'CREATE_SUCCESS';
+export const CREATE_FAILURE = 'CREATE_FAILURE';
+
+export function createGroup(group,members) {
+  console.log('called actions with:', group, members)
+  // return {
+  //   [CALL_API]: {
+  //     endpoint: 'groups',
+  //     obj: obj,
+  //     req: post,
+  //     types: [CREATE_REQUEST, CREATE_SUCCESS, CREATE_FAILURE]
+  //   }
+
+  // }
+}

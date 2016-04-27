@@ -12,9 +12,13 @@
     /** The list receives the modifier class "display" when the select has focus */
     .select-search-box__select--display {
         display: block;
+        padding: 10px;
         position: absolute;
         background: #fff;
         width: 100%;
+        border-bottom: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-left: 1px solid #ccc;
     }
 
     /**
@@ -37,7 +41,8 @@
 
 /** The option (LI), look at the state classes below */
 .select-search-box__option {
-
+    padding: 5px;
+    font-size: 1.3em;
 }
 
     /** When the option has been selected */
@@ -47,5 +52,5 @@
 
     /** When the option is selected (when navigation with the arrow keys, up/down) */
     .select-search-box__option--hover, .select-search-box__option:hover {
-
+        background-color: #ccc;
     }

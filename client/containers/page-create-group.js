@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getUsers } from '../actions/userActions';
 import { addMember, removeMember } from '../actions/memberActions';
+import { createGroup } from '../actions/groupActions';
 import CreateGroup from '../components/createGroup';
 
 class PageCreateGroup extends Component {
@@ -30,6 +31,8 @@ class PageCreateGroup extends Component {
           members={this.props.members}
           newMem={this.state.newMem}
           handleNewMem={this.handleNewMem.bind(this)}
+          createGroup={this.props.createGroup}
+          curState ={this.state}
         />
       </div>
     );
@@ -41,6 +44,7 @@ PageCreateGroup.PropTypes = {
   users: PropTypes.array.isRequired,
   addMember: PropTypes.func.isRequired,
   removeMember: PropTypes.func.isRequired,
+  createGroup: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -54,5 +58,6 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, {
   getUsers,
   addMember,
-  removeMember
+  removeMember,
+  createGroup
 })(PageCreateGroup);

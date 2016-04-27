@@ -67,6 +67,8 @@ export default class CreateGroup extends Component {
             members={this.props.members}
             handleNewMem={this.props.handleNewMem}
             newMem={this.props.newMem}
+            createGroup={this.props.createGroup}
+            curState={this.props.state}
             />
         </div>
         <div className="small-12 large-5 columns"></div>
@@ -82,7 +84,8 @@ CreateGroup.propTypes = {
   submitting: PropTypes.bool.isRequired,
   addMember: PropTypes.func.isRequired,
   removeMember: PropTypes.func.isRequired,
-  handleNewMem: PropTypes.func.isRequired
+  handleNewMem: PropTypes.func.isRequired,
+  createGroup: PropTypes.func.isRequired
 }
 
 export default reduxForm({

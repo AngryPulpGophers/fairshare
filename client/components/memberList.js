@@ -4,22 +4,39 @@ import { Link } from 'react-router';
 import SelectSearch from 'react-select-search';
 export default class GroupList extends Component {
   
+  renderMembers(data) {
+    console.log('called', data)
+    //const refName = `callout-${data.id}`;
+    return (
+      <li>{data.name}</li>
+    )
+  }
   
   render(){
     const options = this.props.users
-    // function onValueChanged(option, state) {
-    //   console.log(option);
-    //   this.props.handleNewMem(option.value, option.name) 
-    // }
 
+    const memberElements = this.props.members.map((data) => {
+      return this.renderMembers(data);
+    })
+//     // Need to set the search field value because otherwise it is cleared when the value changes.
+//     this.SelectSearch.refs.search.value = getSelectedOptionDisplayName();
+//     this.SelectSearch.refs.search.select();
+//     // Trick the SelectSearch into acting like it was blurred.
+//     this.SelectSearch.onBlur();
+//     var $input = $(ReactDOM.findDOMNode(this.SelectSearch.refs.search));
+// // If it's the tab key, return true to let the event continue. Otherwise trick the SelectSearch to act like it was focused.
+//     $input.one('keydown', (event) => (event.which == 9 ? true : this.SelectSearch.onFocus()));
     return(
+
       <div className="row">
-        <div className="small-12 large-7">
-          <h2>Add some members</h2>
+        <div className="small-12 columns">
+          <h2>Add somone to the group:</h2>
+        </div>
+        <div className="small-12 large-6 columns">
           <label>
             { options.length === 0 ? null :  
               <div className="input-group">
-                <SelectSearch valueChanged={this.props.handleNewMem} options={options} name="users" />
+                <SelectSearch valueChanged={this.props.handleNewMem} options={options} name="users" refs="search" />
                 <a onClick={() => { this.props.addMember(this.props.newMem) }} className="input-group-button button">+ add</a>
 
               </div>
@@ -30,10 +47,16 @@ export default class GroupList extends Component {
               onChange={this.handleMemberChange}
             />*/}
           </label>
+        </div>
+        <div className="small-12 large-6 columns">
+          <h5>Current Members</h5>
           <ul>
-          
+            {[...memberElements]}
           </ul>
-        </div><div className="small-12 large-5"></div>
+        </div>
+        <div className="small-12 columns">
+          <a onClick={() => { this.props.createGroup(this.props.state, this.props.members) }} className="expanded success button">+ Create New Group!</a>
+        </div>
       </div>
 
     )
