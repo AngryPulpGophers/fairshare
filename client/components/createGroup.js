@@ -50,7 +50,7 @@ export default class CreateGroup extends Component {
               </label>
               <br />
               <button type="submit" disabled={submitting} className="expanded success button">
-                {submitting ? "Creating" : "+ Create Group"} Submit
+                Continue
               </button>
             </form>
           </div>
@@ -65,6 +65,8 @@ export default class CreateGroup extends Component {
             addMember={this.props.addMember}
             removeMember={this.props.removeMember}
             members={this.props.members}
+            handleNewMem={this.props.handleNewMem}
+            newMem={this.props.newMem}
             />
         </div>
         <div className="small-12 large-5 columns"></div>
@@ -79,7 +81,8 @@ CreateGroup.propTypes = {
   resetForm: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
   addMember: PropTypes.func.isRequired,
-  removeMember: PropTypes.func.isRequired
+  removeMember: PropTypes.func.isRequired,
+  handleNewMem: PropTypes.func.isRequired
 }
 
 export default reduxForm({

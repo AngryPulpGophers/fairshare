@@ -4,16 +4,14 @@ import { Link } from 'react-router';
 import SelectSearch from 'react-select-search';
 export default class GroupList extends Component {
   
-  onValueChanged(option, state) {
-    console.log(option);
-    this.newMem = option.value // {name: "English", value: "en"}
-
-    // If it's a multiple select, you can get all selected options with state.value
-  }
-
+  
   render(){
-    let newMem = 'test';
     const options = this.props.users
+    // function onValueChanged(option, state) {
+    //   console.log(option);
+    //   this.props.handleNewMem(option.value, option.name) 
+    // }
+
     return(
       <div className="row">
         <div className="small-12 large-7">
@@ -21,8 +19,8 @@ export default class GroupList extends Component {
           <label>
             { options.length === 0 ? null :  
               <div className="input-group">
-                <SelectSearch valueChanged={this.onValueChanged} options={options} name="users" />
-                <a onClick={() => { this.props.addMember(newMem) }} className="input-group-button button">+ add</a>
+                <SelectSearch valueChanged={this.props.handleNewMem} options={options} name="users" />
+                <a onClick={() => { this.props.addMember(this.props.newMem) }} className="input-group-button button">+ add</a>
 
               </div>
               }
@@ -32,6 +30,9 @@ export default class GroupList extends Component {
               onChange={this.handleMemberChange}
             />*/}
           </label>
+          <ul>
+          
+          </ul>
         </div><div className="small-12 large-5"></div>
       </div>
 
