@@ -19,7 +19,7 @@ describe("Users API", function() {
       });
   });
 
-  it_("returns a user", function * () {
+  xit_("returns a user", function * () {
     yield Users.create({ username: 'aliceinchains', name: 'Alice'});
 
     yield request(app)
@@ -30,7 +30,7 @@ describe("Users API", function() {
       });
   });
 
-  it_("creates a new user", function * () {
+  xit_("creates a new user", function * () {
     yield request(app)
       .post('/users')
       .send({ username: 'aliceinchains', name: 'Alice' })
