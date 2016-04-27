@@ -82,9 +82,9 @@ Groups.updateExpense = function(expenseAttrs){
     .where({
       id: expenseAttrs.id
     })
-    .update(expenseAttrs)
+    .update(expenseAttrs, 'id')
     .then(function(id){
-      return Groups.getExpenseById(id);
+      return Groups.getExpenseById(id[0]);
     });
 };
 
@@ -116,8 +116,8 @@ Groups.updatePayment = function(paymentAttrs){
     .where({
       id: paymentAttrs.id
     })
-    .update(paymentAttrs)
+    .update(paymentAttrs, 'id')
     .then(function(id){
-      return Groups.getPaymentById(id);
+      return Groups.getPaymentById(id[0]);
     });
 };

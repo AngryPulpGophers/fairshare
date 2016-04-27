@@ -123,7 +123,7 @@ router.post('/payments', function(req, res){
 router.put('/expenses', function(req, res){
   Groups.updateExpense( req.body )
     .then(function(data){
-      res.send(data);
+      res.send(data[0]);
     })
     .catch(function(err){
       res.status(400).send({err: err});
@@ -133,7 +133,7 @@ router.put('/expenses', function(req, res){
 router.put('/payments', function(req, res){
   Groups.updatePayment( req.body )
     .then(function(data){
-      res.send(data);
+      res.send(data[0]);
     })
     .catch(function(err){
       res.status(400).send({err: err});

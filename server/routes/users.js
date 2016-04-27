@@ -11,9 +11,9 @@ router.use(function(req, res, next){
   if(req.isAuthenticated()){
   	return next();
   }else{
-  	res.status(401).send('user not authenticated')
+  	res.status(401).send('user not authenticated');
   }
-})
+});
 module.exports = router;
 
 //console.log('middleware.checkAuth:', Middleware.checkAuth);

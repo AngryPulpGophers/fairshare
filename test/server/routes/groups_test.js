@@ -2,27 +2,20 @@
 require(TEST_HELPER); // <--- This must be at the top of every test file.
 
 var request  = require('supertest-as-promised');
-
-var auth     = require(__server + '/routes/auth.js');
-var users    = require(__server + '/routes/users.js');
 var groups   = require(__server + '/routes/groups.js');
-var routes   = require(__server + '/routes/index.js');
-
 var Users    = require(__server + '/models/users.js');
 var Groups   = require(__server + '/models/groups.js');
 
 describe("Groups API", function() {
 
   var app = TestHelper.createApp();
-  app.use('/auth', auth);
-  app.use('/users', users);
   app.use('/groups', groups);
-  app.use('/', routes);
   app.testReady();
 
   TestHelper.setup().then();
   var user1, user2, user3;
   var group1, group2;
+  var expense1, payment1;
 
   it_("returns all groups", function * () {
     yield Users.create({ username: 'aliceinchains', name: 'Alice' })
@@ -109,6 +102,7 @@ describe("Groups API", function() {
           members: [user1, user2, user3]
         })
         .expect(function(response){
+          expense1 = response.body.id;
           expect( response.status ).to.equal(200);
           expect( response.body.amount ).to.equal("150.31");
           expect( response.body.paid_by ).to.equal(user3);
@@ -127,6 +121,7 @@ describe("Groups API", function() {
           note: "paid back for dinner"
         })
         .expect(function(response){
+          payment1 = response.body.id;
           expect( response.status ).to.equal(200);
           expect( response.body.amount ).to.equal("123.45");
           expect( response.body.payee ).to.equal(user1);
@@ -134,14 +129,40 @@ describe("Groups API", function() {
         });
   });
 
-  it_("Returns a groups activity.", function * (){
+  it_("returns a groups activity.", function * (){
     yield request(app)
       .get('/groups/activity/' + group1)
       .expect(function(response){
+        expect( response.status ).to.equal(200);
         expect( response.body ).to.have.length(2);
         expect( response.body[0].group_id ).to.equal(group1);
       });
+  });
 
+  it_("updates a group expense", function * (){
+    yield request(app)
+      .put('/groups/expenses')
+      .send({
+        id: expense1,
+        amount: 160.31
+      })
+      .expect(function(response){
+        expect( response.status ).to.equal(200);
+        expect( response.body.amount ).to.equal("160.31");
+      });
+  });
+
+  it_("updates a payment", function * (){
+    yield request(app)
+      .put('/groups/payments')
+      .send({
+        id: payment1,
+        amount: 80.00
+      })
+      .expect(function(response){
+        expect( response.status ).to.equal(200);
+        expect( response.body.amount ).to.equal("80.00");
+      });
   });
 
 });
