@@ -12,7 +12,7 @@ export default class Root extends Component {
       <Provider store={store}>
         <div>
           <Router history={browserHistory} routes={routes} />
-          <DevTools />
+          {/*<DevTools  />*/}
         </div>
       </Provider>
     )

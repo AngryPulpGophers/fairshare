@@ -22,10 +22,6 @@ exports.seed = function(knex, Promise) {
     }),
     knex('user_expenses').insert({
       expense_id: 2,
-      user_id : 2
-    }),
-    knex('user_expenses').insert({
-      expense_id: 2,
       user_id : 3
     }),
     knex('user_expenses').insert({

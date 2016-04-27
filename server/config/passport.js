@@ -40,7 +40,7 @@ app.use(passport.session());
 app.use(cookieParser('kitkat'));
 
 passport.serializeUser((user, done) => {
-  console.log('in serialize:', user.id);
+  // console.log('in serialize:', user.id);
   return done(null, user.id);
 });
 
@@ -48,7 +48,7 @@ passport.deserializeUser((id, done) => {
   User.getById({id: id})
   .then( userObj => {
     var cleanProfile = trimProfile(userObj[0]);
-    console.log('in deserialize:', cleanProfile)
+    // console.log('in deserialize:', cleanProfile)
       return done(null, cleanProfile);
   })
   .catch( err => {

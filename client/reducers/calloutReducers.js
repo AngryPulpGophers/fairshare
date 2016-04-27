@@ -5,7 +5,7 @@ import { combineReducers } from 'redux';
 import update from 'react-addons-update';
 console.log(ActionTypes);
 
-export function notifications(state = {callouts: []}, action) {
+export function notifications(state = {callouts: [], displayActive: []}, action) {
   // console.log('pj1',action)
   switch (action.type) {
 
@@ -16,6 +16,25 @@ export function notifications(state = {callouts: []}, action) {
       const { id } = action.payload;
       const index = state.callouts.map(item => item.id).indexOf(id);
       return update(state, {callouts: {$splice: [[index, 1]]}});
+
+    case ActionTypes.START_DISPLAY:
+    var temp = []
+      for (var i = 0 ; i < action.payload.amount; i++){
+        temp.push({
+          display: 'none'
+        })
+      }
+      return update(state, {displayActive:{$set:temp}})
+
+    case ActionTypes.TOGGLE_DISPLAY:
+      if (state.displayActive[action.payload.id].display==='none'){
+
+        return update(state, {displayActive: {$splice: [[action.payload.id,1,{}]]} })  
+      }
+      else {
+        return update(state, {displayActive: {$splice: [[action.payload.id,1,{display: 'none'}]]} })
+      }
+
 
     default:
       return state;
