@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   users,
   groups,
   members,
-  form
+  form,
   groups,
   auth
 });

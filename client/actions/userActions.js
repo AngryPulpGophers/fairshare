@@ -8,7 +8,7 @@ export function getUsers() {
   // console.log('got an id:', id)
   return {
     [CALL_API]: {
-      endpoint: 'users/allusers',
+      endpoint: 'users',
       types: [USERS_REQUEST, USERS_SUCCESS, USERS_FAILURE]
     }
 

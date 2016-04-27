@@ -4,7 +4,6 @@ import { Link } from 'react-router';
 
 export default class Navigation extends Component {
   render() {
-    // const imgStyle = {'height':'70px', 'width': '70px', 'border-radius':'35px','margin-left': '2.5px'}
     const instance = this;
     const isAuthed = this.props.isAuthed;
     return isAuthed ? (
@@ -36,7 +35,7 @@ export default class Navigation extends Component {
               </li>
             </ul>
           </div>
-          <div className="top-bar-right" style={{'margin-right': '20px'}}>
+          <div className="top-bar-right" style={{marginRight: 20}}>
             <span> Welcome, {this.props.userInfo.name.split(' ')[0]}</span>
             <img className = 'roundCorner-image' src = {this.props.userInfo.img_url}/>
             <br></br>
