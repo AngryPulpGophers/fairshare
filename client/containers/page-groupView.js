@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {  getGroups, getActivity,getUserByGroup } from '../actions/groupActions';
 import GroupView from '../components/groupView';
+import { startDisplay, toggleDisplay } from '../actions/calloutActions';
 
 class PageGroupView extends Component {
 
@@ -13,6 +14,9 @@ class PageGroupView extends Component {
         currentGroupUsers = {this.props.currentGroupUsers}
         url = {this.props.url}
         getUserByGroup = {this.props.getUserByGroup}
+        startDisplay = {this.props.startDisplay}
+        toggleDisplay = {this.props.toggleDisplay}
+        displayActive = {this.props.displayActive}
       />
     )
   }
@@ -29,10 +33,11 @@ function mapStateToProps(state) {
     //I have no idea if this is right
     activity: state.groups.activity,
     currentGroupUsers: state.groups.currentGroupUsers,
-    url: state.routing
+    url: state.routing,
+    displayActive: state.notifications.displayActive
   }
 }
 
 export default connect(mapStateToProps, {
-  getActivity,getUserByGroup
+  getActivity,getUserByGroup,startDisplay,toggleDisplay
 })(PageGroupView)
