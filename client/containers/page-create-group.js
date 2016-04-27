@@ -6,17 +6,19 @@ import { createGroup } from '../actions/groupActions';
 import CreateGroup from '../components/createGroup';
 
 class PageCreateGroup extends Component {
+ 
   constructor(props){
     super(props)
     this.state = {newMem: {}}
   }
+
   handleNewMem(option, state){
-    console.log('our user object:',option)
-    console.log('passed in state', state === this.state)
+    //console.log('our user object:',option)
+   // console.log('passed in state', state === this.state)
    // this.state.newMem[option.id] = option.name;
     this.setState({ newMem: option})
    // this.props.newMem = option
-    console.log('our new state:',this.state)
+    //console.log('our new state:',this.state)
   }
 
   render() {
@@ -32,7 +34,8 @@ class PageCreateGroup extends Component {
           newMem={this.state.newMem}
           handleNewMem={this.handleNewMem.bind(this)}
           createGroup={this.props.createGroup}
-          curState ={this.state}
+          memState ={this.state}
+          groupForm={this.props.groupForm}
         />
       </div>
     );
@@ -51,7 +54,9 @@ function mapStateToProps(state) {
   console.log('current state:',state);
   return {
     users: state.users.users,
-    members: state.members.members
+    members: state.members.members,
+    isAuthed: state.auth.isAuthed,
+    groupForm: state.form.group,
   };
 }
 

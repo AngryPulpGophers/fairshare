@@ -11,6 +11,7 @@ export function getUserInfo (){
 	return {
 	  [CALL_API]:{
 	    endpoint: 'users/id',
+	    req: 'GET',
       types:[USER_REQUEST, USER_SUCCESS, USER_FAILURE]
 	  }
 	}
@@ -20,6 +21,7 @@ export function logoutUser (){
 	return {
 		[CALL_API]:{
 			endpoint: 'auth/logout',
+			req: 'GET',
 			types: [LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE]
 		}
 	}

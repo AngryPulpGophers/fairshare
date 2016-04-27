@@ -9,6 +9,7 @@ export function getUsers() {
   return {
     [CALL_API]: {
       endpoint: 'users',
+      req: 'GET',
       types: [USERS_REQUEST, USERS_SUCCESS, USERS_FAILURE]
     }
 

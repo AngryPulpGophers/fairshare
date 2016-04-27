@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import SelectSearch from 'react-select-search';
 export default class GroupList extends Component {
-  
+
   renderMembers(data) {
     console.log('called', data)
     //const refName = `callout-${data.id}`;
@@ -13,6 +13,7 @@ export default class GroupList extends Component {
   }
   
   render(){
+    const groupData = this.props.groupForm
     const options = this.props.users
 
     const memberElements = this.props.members.map((data) => {
@@ -37,7 +38,7 @@ export default class GroupList extends Component {
             { options.length === 0 ? null :  
               <div className="input-group">
                 <SelectSearch valueChanged={this.props.handleNewMem} options={options} name="users" refs="search" />
-                <a onClick={() => { this.props.addMember(this.props.newMem) }} className="input-group-button button">+ add</a>
+                <a onClick={() => { this.props.addMember(this.props.newMem, this.props.groupForm) }} className="input-group-button button">+ add</a>
 
               </div>
               }
@@ -55,7 +56,9 @@ export default class GroupList extends Component {
           </ul>
         </div>
         <div className="small-12 columns">
-          <a onClick={() => { this.props.createGroup(this.props.state, this.props.members) }} className="expanded success button">+ Create New Group!</a>
+          { groupData.length === 0 ? null :
+          <a onClick={() => { this.props.createGroup(this.props.members,groupData) }} className="expanded success button">+ Create New Group!</a>
+          }
         </div>
       </div>
 

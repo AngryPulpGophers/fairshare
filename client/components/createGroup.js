@@ -7,10 +7,6 @@ export const fields = [ 'groupName', 'groupDesc' ];
 let hide = false;
 
 export default class CreateGroup extends Component {
-  // componentWillMount(){
-  //   //call our get groups function
-  //   this.props.getUsers()
-  // }
 
   handleSubmit(data) {
     hide = true;
@@ -20,14 +16,14 @@ export default class CreateGroup extends Component {
     this.props.getUsers()
   }
   render() {
-
-    //console.log(this.props.newGroup)
+    console.log('createGroup prop',this.props.createGroup)
     const {
-      fields: { groupName, groupDesc },
-      handleSubmit,
-      resetForm,
-      submitting
+        fields: { groupName, groupDesc },
+        handleSubmit,
+        resetForm,
+        submitting
       } = this.props
+
     return !hide ? (  
       
         <div className="row">
@@ -68,7 +64,8 @@ export default class CreateGroup extends Component {
             handleNewMem={this.props.handleNewMem}
             newMem={this.props.newMem}
             createGroup={this.props.createGroup}
-            curState={this.props.state}
+            memState={this.props.state}
+            groupForm={this.props.groupForm}
             />
         </div>
         <div className="small-12 large-5 columns"></div>
@@ -89,7 +86,7 @@ CreateGroup.propTypes = {
 }
 
 export default reduxForm({
-  form: 'simple',
+  form: 'group',
   fields,
 
 })(CreateGroup)
