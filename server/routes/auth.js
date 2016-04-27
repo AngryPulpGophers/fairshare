@@ -16,7 +16,7 @@ router.get(('/logout'),function(req,res){
 	  req.sessionID = null;
 	  // console.log('req.session after nullified:', req.session.cookie)
 	  req.logout();
-	  res.redirect('/index')
+	  res.redirect('/')
   })
 })
 

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Navigation from '../components/navigation';
 import { createCallout } from '../actions/calloutActions';
-import { getFacebookAuth } from '../actions/authActions';
+import { getUserInfo } from '../actions/authActions';
 import '../styles/index.css';
 import '../styles/foundation.scss';
 
@@ -31,6 +31,11 @@ class App extends Component {
     )
   }
 
+  componentWillMount(){
+    this.props.getUserInfo()
+    
+  }
+
   componentDidMount() {
     $(document).foundation()
   }
@@ -38,7 +43,8 @@ class App extends Component {
 
 App.propTypes = {
   // Injected by React Router
-  children: PropTypes.node
+  children: PropTypes.node,
+  getUserInfo: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -47,5 +53,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  createCallout, getFacebookAuth
+  createCallout,getUserInfo
 })(App)

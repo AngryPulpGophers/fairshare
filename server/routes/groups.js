@@ -26,8 +26,8 @@ router.get('/', function(req, res){
     });
 });
 
+
 router.get('/:user', function(req, res){
-  console.log("wrong endpoint 1");
   Groups.getGroupsByUserId( req.user )
     .then(function(data){
       res.send(data);
