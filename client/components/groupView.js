@@ -39,7 +39,7 @@ export default class GroupView extends Component {
     } else if (hours === 12){
       am = "PM";
     }
-    var timeDay = hours + ":" + minutes + " " + am;
+    var timeDay = hours + ":" + (minutes>=10 ? minutes : ("0" + minutes))+ " " + am;
 
     var monthNames = [
       "January", "February", "March",
@@ -68,7 +68,7 @@ console.log('what is going on',this.props.currentGroupUsers)
   for (var i = 0 ; i < this.props.currentGroupUsers.length ; i++){
     groupObj[this.props.currentGroupUsers[i].user_id]=this.props.currentGroupUsers[i]
     groupObj[this.props.currentGroupUsers[i].user_id].balance = 0
-    groupObj[this.props.currentGroupUsers[i].user_id].tempBalance = 0
+    //groupObj[this.props.currentGroupUsers[i].user_id].tempBalance = 0
   }
 console.log('look at me mom',groupObj)
   for (var i = 0 ; i < this.props.activity.length ; i++){
@@ -126,7 +126,7 @@ console.log('look at me mom',groupObj)
   }
 
   //maybe can use user ID instead if it is available
-  
+ // console.log('balances should be here',groupObj)
 var sortedGroup = [];
   for (var user in groupObj){
     sortedGroup.push(groupObj[user])
@@ -137,22 +137,25 @@ var sortedGroup = [];
   // })
 sortedGroup = sortedGroup.sort(function(a,b){
   if (a.user_id){
-    console.log('user_id')
+   // console.log('user_id')
     return a.user_id - b.user_id;
   }
-  else{
-    console.log('id')
-    return a.id - b.id;
+  // else{
+  //   console.log('id')
+  //   return a.id - b.id;
+  // }
+  })
+console.log('so confused',sortedGroup)
+  for (var i=0 ; i<sortedGroup.length; i++){
+   sortedGroup[i].balance = round(sortedGroup[i].balance);
+   //console.log('pj',sortedGroup[i].balance)
+    sortedGroup[i].tempBalance = round(sortedGroup[i].balance);
+   // console.log('holly',sortedGroup[i].tempBalance)
+    sortedGroup[i].owed = [];
+   
   }
-  })
 
-  sortedGroup = sortedGroup.map(function(user){
-    console.log('pj',user)
-    user.tempBalance = user.balance;
-    user.owed = [];
-    return user;
-  })
-  console.log('current status', sortedGroup)
+  //console.log('current status', sortedGroup)
 //ADD user_ to all id below this point
 
   for (var p1 = 0; p1 < sortedGroup.length; p1++){
@@ -198,7 +201,7 @@ sortedGroup = sortedGroup.sort(function(a,b){
   sortedGroup.map(function(user){
     console.log(user.username,user.owed)
   })
-
+return sortedGroup;
 
 }
   
@@ -206,7 +209,7 @@ makeGroupObj(){
   var makeGroupObject = {}
   for (var i = 0 ; i < this.props.currentGroupUsers.length ; i++){
     makeGroupObject[this.props.currentGroupUsers[i].user_id]=this.props.currentGroupUsers[i]
-    makeGroupObject[this.props.currentGroupUsers[i].user_id].balance = 0
+    //makeGroupObject[this.props.currentGroupUsers[i].user_id].balance = 0
   }
 
   return makeGroupObject
@@ -231,7 +234,7 @@ test(x,obj){
      //var what = new Date(this.props.activity[0].created_at)
   //console.log(this.props.activity)
   console.log('maybe work222', this.props.currentGroupUsers)
-  this.calcBalance();
+  var showUserBalance=this.calcBalance();
   console.log('hi pj, stuff should be here^^^^')
     var localGroupObj=this.makeGroupObj()
     var counter = 0;
@@ -242,6 +245,7 @@ test(x,obj){
       }
 
     }
+
   // setting this to bypas the need for authentication
     return(
       <div>
