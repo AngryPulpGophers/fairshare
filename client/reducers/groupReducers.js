@@ -3,7 +3,6 @@ import * as ActionTypes from '../actions/groupActions';
 import update from 'react-addons-update';
 //console.log(ActionTypes);
 
-
 export function groups(state = { isFetching: false, groups: [],activity : [], currentGroupUsers: []}, action) {
     //console.log('groups actions:', action)
     switch (action.type) {
@@ -18,6 +17,20 @@ export function groups(state = { isFetching: false, groups: [],activity : [], cu
           groups: {$set: JSON.parse(action.response)}
         })
       case ActionTypes.GROUPS_FAILURE:
+        return update(state, {
+          isFetching: {$set: false}})
+
+      case ActionTypes.CREATE_REQUEST:
+        return update(state, {isFetching: {$set: true}})
+      // return Object.assign({}, state, {
+      //   isFetching: true
+      case ActionTypes.CREATE_SUCCESS:
+        console.log('got our type and resp:', action.response)
+        return update(state, {
+          isFetching: {$set: false},
+          newGroup: {$set: JSON.parse(action.response)}
+        })
+      case ActionTypes.CREATE_FAILURE:
         return update(state, {
           isFetching: {$set: false}})
 
@@ -50,10 +63,6 @@ export function groups(state = { isFetching: false, groups: [],activity : [], cu
       case ActionTypes.USERBYGROUP_FAILURE:
         return update(state, {
           isFetching: {$set: false}})
-
-
-
-
 
       default:
         return state

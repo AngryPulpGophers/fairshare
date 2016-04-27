@@ -1,6 +1,23 @@
 .dashboard,.login,.create-group{
   margin-top: 150px;
 }
+.input-group{
+  position: relative;
+}
+.input-group-button{
+  width: 75px;
+}
+input[type='search']{
+  margin-bottom: 0;
+}
 .add-member{
   margin: 24px 0 0 0;
 }
+
+.roundCorner-image{
+  height:50px;
+  width: 50px;
+  border-radius: 10px;
+  margin-left: 5px
+ }
+

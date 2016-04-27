@@ -40,5 +40,6 @@ console.log('state notifications:',state.notifications)
 }
 
 export default connect(mapStateToProps, {
-  removeCallout, getGroups
+  removeCallout,
+  getGroups
 })(PageDashboard)

@@ -4,9 +4,16 @@ const BASE_URL = 'http://localhost:3000/';
 let config = {credentials : 'include' };
 //console.log('made it to middleware:')
 
-function callApi(endpoint, id){
-  console.log('got an id:', id);
-  config.id = id;
+function callApi(endpoint, id, req, body){
+  //console.log('got an id:', id);
+  //config.header = { Accept: 'application/json'};
+  if(req === 'POST'){
+    config.method = req;
+    config.body = body;
+  } else {
+    config.id = id;
+  }
+
   return fetch( BASE_URL + endpoint, config)
     .then(response => 
         response.text()
@@ -40,10 +47,10 @@ export default store => next => action => {
     return next(action)
   }
   
-  let { endpoint, types, id } = callAPI
+  let { endpoint, types, id, req, body } = callAPI
   const [ requestType, successType, errorType ] = types
   
-  return callApi(endpoint, types, id).then(
+  return callApi(endpoint, types, id, req, body).then(
     response => next({
       response,
       type: successType,

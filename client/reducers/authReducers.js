@@ -5,6 +5,7 @@ console.log(ActionTypes);
 
 export function auth(state = {isFetching: false, isAuthed: false, userInfo: {}}, action){
 	switch (action.type){
+		
 		case ActionTypes.USER_LOGIN:
 		console.log('in auth reducer')
 		return update(state, {
@@ -12,6 +13,7 @@ export function auth(state = {isFetching: false, isAuthed: false, userInfo: {}},
 			isAuthed: {$set:false}, 
 			userInfo: {}
 		})
+    
     case ActionTypes.USER_SUCCESS:
     console.log('action.response in USER_SUCCESS:', action.response);
     return update(state, {
@@ -19,15 +21,27 @@ export function auth(state = {isFetching: false, isAuthed: false, userInfo: {}},
 	    isAuthed: {$set: true},
 	    userInfo: {$set: JSON.parse(action.response)}
 	  })
+    
     case ActionTypes.USER_FAILURE:
       return update(state, {
       isFetching:{$set: false},
-      isAuthed: {$set: false}})
+      isAuthed: {$set: false}
+    })
 	  
-	  case ActionTypes.USER_LOGOUT:
-	  return update(state, {
-	    isAuthed: {$set: false},
-	    userInfo: {$set: null}
+	  case ActionTypes.LOGOUT_REQUEST:
+	    return update(state, {
+	    isFetching: {$set: true}
+	  })
+	  
+	  case ActionTypes.LOGOUT_SUCCESS:
+	    return update(state, {
+	  	isAuthed: {$set: false},
+	    userInfo: {$set: {}}
+	  })
+	  
+	  case ActionTypes.LOGOUT_FAILURE:
+	    return update(state, {
+	  	isFetching: {$set: false}
 	  })	
 
 		default: 

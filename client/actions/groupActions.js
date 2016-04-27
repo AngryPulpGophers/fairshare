@@ -10,6 +10,7 @@ export function getGroups(id) {
     [CALL_API]: {
       endpoint: 'groups',
       id: id,
+      req: 'GET',
       types: [GROUPS_REQUEST, GROUPS_SUCCESS, GROUPS_FAILURE]
     }
 
@@ -26,6 +27,7 @@ export function getActivity(id) {
     [CALL_API]: {
       endpoint: 'groups/activity/'+id,
       id: id,
+      req: 'GET',
       types: [ACTIVITY_REQUEST, ACTIVITY_SUCCESS, ACTIVITY_FAILURE]
     }
 
@@ -43,12 +45,37 @@ export function getUserByGroup(id) {
       endpoint: 'groups/users/'+id,
       id: id,
       types: [USERBYGROUP_REQUEST, USERBYGROUP_SUCCESS, USERBYGROUP_FAILURE]
+
     }
 
   }
 }
 
+export const CREATE_REQUEST = 'CREATE_REQUEST';
+export const CREATE_SUCCESS = 'CREATE_SUCCESS';
+export const CREATE_FAILURE = 'CREATE_FAILURE';
 
+export function createGroup(members, formData) {
+  console.log('called actions with:', members, formData)
+  return {
+    [CALL_API]: {
+      endpoint: 'groups',
+      body: processGroup(members,formData),
+      req: 'POST',
+      types: [CREATE_REQUEST, CREATE_SUCCESS, CREATE_FAILURE]
+    }
 
+  }
+}
 
-
+function processGroup(members,formData){
+  console.log('all our stuff:', members, formData)
+  let groupObj = {};
+  groupObj.name = formData.groupName.value;
+  groupObj.desc = formData.groupDesc.value;
+  groupObj.members= [];
+  for(var i = 0; i < members.length; i++){
+    groupObj.members.push(Number(members[i].value))
+  }
+  return JSON.stringify(groupObj);
+}
