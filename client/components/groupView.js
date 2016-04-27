@@ -63,11 +63,12 @@ export default class GroupView extends Component {
       */
  
   calcBalance() {
-
+console.log('what is going on',this.props.currentGroupUsers)
   var groupObj = {}
   for (var i = 0 ; i < this.props.currentGroupUsers.length ; i++){
     groupObj[this.props.currentGroupUsers[i].user_id]=this.props.currentGroupUsers[i]
     groupObj[this.props.currentGroupUsers[i].user_id].balance = 0
+    groupObj[this.props.currentGroupUsers[i].user_id].tempBalance = 0
   }
 console.log('look at me mom',groupObj)
   for (var i = 0 ; i < this.props.activity.length ; i++){
@@ -125,16 +126,33 @@ console.log('look at me mom',groupObj)
   }
 
   //maybe can use user ID instead if it is available
-  var sortedGroup = this.props.currentGroupUsers.sort(function(a,b){
+  
+var sortedGroup = [];
+  for (var user in groupObj){
+    sortedGroup.push(groupObj[user])
+  }
+
+  //var sortedGroup = this.props.currentGroupUsers.sort(function(a,b){
+  //   return a.user_id - b.user_id;
+  // })
+sortedGroup = sortedGroup.sort(function(a,b){
+  if (a.user_id){
+    console.log('user_id')
     return a.user_id - b.user_id;
+  }
+  else{
+    console.log('id')
+    return a.id - b.id;
+  }
   })
 
   sortedGroup = sortedGroup.map(function(user){
-    console.log(user.user_id,user.balance)
+    console.log('pj',user)
     user.tempBalance = user.balance;
     user.owed = [];
     return user;
   })
+  console.log('current status', sortedGroup)
 //ADD user_ to all id below this point
 
   for (var p1 = 0; p1 < sortedGroup.length; p1++){
