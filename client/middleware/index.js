@@ -7,10 +7,18 @@ let config = {credentials : 'include' };
 function callApi(endpoint, id, req, body){
   //console.log('got an id:', id);
   //config.header = { Accept: 'application/json'};
+  // console.log(arguments);
   if(req === 'POST'){
+    // console.log('making POST req')
+    config.headers= {
+      "Content-Type":"application/json",
+      "Accept":"application/json"
+    }
     config.method = req;
     config.body = body;
   } else {
+    // console.log('making GET req')
+
     config.id = id;
   }
 
@@ -20,8 +28,8 @@ function callApi(endpoint, id, req, body){
         .then(text => ({ text, response }))
       )
     .then(({ text, response }) => {
-      console.log('text:', text, 'response:', response)
-      console.log('response.ok in middleware:', response.ok)
+      // console.log('text:', text, 'response:', response)
+      // console.log('response.ok in middleware:', response.ok)
       if (!response.ok) {
         // throw new Error (text);
         return Promise.reject(text)
@@ -41,16 +49,16 @@ export default store => next => action => {
   // return next(action)
 
   const callAPI = action[CALL_API]
-  
+  console.log('here is our callAPI', callAPI)
   // So the middleware doesn't get applied to every single action
   if (typeof callAPI === 'undefined') {
     return next(action)
   }
   
-  let { endpoint, types, id, req, body } = callAPI
+  let { endpoint, id, req, body, types } = callAPI
   const [ requestType, successType, errorType ] = types
   
-  return callApi(endpoint, types, id, req, body).then(
+  return callApi(endpoint, id, req, body, types).then(
     response => next({
       response,
       type: successType,
