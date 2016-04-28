@@ -1,28 +1,31 @@
 import React, { Component, PropTypes } from 'react';
 
 export default class Profile extends Component {
-  render() {
-    return (
-        <h3>Profile</h3>
-// username
-    <div> {this.props.userInfo} </div>
-    console.log("this.props within components/profile", this.props);
+    render() {
+        return (
+        <div>
+            <h2>{this.props.userInfo.name} Profile</h2>
 
-// password
+                    <div >name: {this.props.userInfo.name}</div>
 
+                    <div>email: {this.props.userInfo.email}</div>
 
-// real name
-
-// email
-
-// picture
-
-      
-    )
-  }
+                <div><img className="image" src={this.props.userInfo.img_url} /></div>
+        </div>
+        )
+    }
 }
 
 // requiring from parent comp.
 Profile.PropTypes = {
-    userInfo : PropTypes.object.isRequired
+    userInfo: PropTypes.object.isRequired
 }
+
+/*
+1. create a form
+2. default text is user's info from userInfo
+    editable field
+4. update info to db
+5. 
+
+*/
