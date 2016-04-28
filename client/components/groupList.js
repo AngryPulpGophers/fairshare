@@ -14,8 +14,10 @@ function puke (obj) {
 
 export default class GroupList extends Component {
   componentWillMount(){
-    //call our get groups function
-    this.props.getGroups()
+    //call our get groups function only if we haven't called it yet
+    if(this.props.groups.length === 0){
+      this.props.getGroups()
+    }
   }
 
   render(){
@@ -23,7 +25,7 @@ export default class GroupList extends Component {
     return (
       <div>
          {this.props.groups.map(function(group){
-            return <div className="callout secondary">
+            return <div className="callout">
 
 
                     <p>{group.name} <Link  to={{pathname:'/groupView',query:{ id: group.id }}} title="groupView"  className="button primary float-left tiny button">View Group</Link> </p>

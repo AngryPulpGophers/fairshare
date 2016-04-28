@@ -1,9 +1,10 @@
 @import 'foundation-sites/scss/foundation';
-
+@import 'components/settings';
+@import 'components/nav';
 /// include all modules of foundation
 @include foundation-everything;
 @import 'app';
-@import 'fuzzySearch';
+@import 'components/fuzzySearch';
 
 /// or use just particular mouldes
 // @include foundation-global-styles;

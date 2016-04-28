@@ -1,10 +1,10 @@
 import { UPDATE_LOCATION } from 'react-router-redux';
 const BASE_URL = 'http://localhost:3000/';
 
-let config = {credentials : 'include' };
 //console.log('made it to middleware:')
 
 function callApi(endpoint, id, req, body){
+  let config = {credentials : 'include' };
   //console.log('got an id:', id);
   //config.header = { Accept: 'application/json'};
   // console.log(arguments);

@@ -39,7 +39,7 @@ export const USERBYGROUP_SUCCESS = 'USERBYGROUP_SUCCESS';
 export const USERBYGROUP_FAILURE = 'USERBYGROUP_FAILURE';
 
 export function getUserByGroup(id) {
-   console.log('pj got an id:', id)
+   //console.log('pj got an id:', id)
   return {
     [CALL_API]: {
       endpoint: 'groups/users/'+id,
@@ -56,7 +56,7 @@ export const CREATE_SUCCESS = 'CREATE_SUCCESS';
 export const CREATE_FAILURE = 'CREATE_FAILURE';
 
 export function createGroup(members, formData) {
-  console.log('called actions with:', members, formData)
+  //console.log('called actions with:', members, formData)
   return {
     [CALL_API]: {
       endpoint: 'groups',
@@ -69,7 +69,7 @@ export function createGroup(members, formData) {
 }
 
 function processGroup(members,formData){
-  console.log('all our stuff:', members, formData)
+  //console.log('all our stuff:', members, formData)
   let groupObj = {};
   groupObj.name = formData.groupName.value;
   groupObj.desc = formData.groupDesc.value;

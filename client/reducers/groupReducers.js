@@ -21,11 +21,10 @@ export function groups(state = { isFetching: false, newGroup:{}, groups: [],acti
           isFetching: {$set: false}})
 
       case ActionTypes.CREATE_REQUEST:
-        return update(state, {isFetching: {$set: true}})
-      // return Object.assign({}, state, {
-      //   isFetching: true
+        return update(state, {
+          isFetching: {$set: true}})
       case ActionTypes.CREATE_SUCCESS:
-        console.log('got our type and resp:', action.response)
+        //console.log('got our type and resp:', action.response)
         return update(state, {
           isFetching: {$set: false},
           groups: {$push: [JSON.parse(action.response)]}
