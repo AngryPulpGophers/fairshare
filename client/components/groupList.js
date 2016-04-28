@@ -15,9 +15,9 @@ function puke (obj) {
 export default class GroupList extends Component {
   componentWillMount(){
     //call our get groups function only if we haven't called it yet
-    if(this.props.groups.length === 0){
+    //if(this.props.groups.length === 0){
       this.props.getGroups()
-    }
+    //}
   }
 
   render(){
