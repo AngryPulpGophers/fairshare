@@ -91,7 +91,6 @@ router.get('/activity/:group', function(req, res){
 });
 
 router.post('/', function(req, res){
-  console.log('tried a post', req.body)
   Groups.createGroup(req.body)
     .then(function(data){
       res.status(200).send(data);
