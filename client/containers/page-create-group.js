@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getUsers } from '../actions/userActions';
-import { addMember, removeMember } from '../actions/memberActions';
+import { addMember, removeMember, clearMembers } from '../actions/memberActions';
 import { createGroup } from '../actions/groupActions';
 import CreateGroup from '../components/createGroup';
 
@@ -13,16 +13,13 @@ class PageCreateGroup extends Component {
   }
 
   handleNewMem(option, state){
-    //console.log('our user object:',option)
-   // console.log('passed in state', state === this.state)
-   // this.state.newMem[option.id] = option.name;
+    //set a temp state to handle our fuzzy search
     this.setState({ newMem: option})
-   // this.props.newMem = option
-    //console.log('our new state:',this.state)
+
   }
 
   render() {
-    console.log('checking state again:',this.state.newMem)
+    //console.log('checking members existence:',this.state.members)
     return (
       <div className="create-group">
         <CreateGroup 
@@ -35,7 +32,9 @@ class PageCreateGroup extends Component {
           handleNewMem={this.handleNewMem.bind(this)}
           createGroup={this.props.createGroup}
           memState ={this.state}
+          groups={this.props.groups}
           groupForm={this.props.groupForm}
+          clearMembers={this.props.clearMembers}
         />
       </div>
     );
@@ -47,12 +46,14 @@ PageCreateGroup.PropTypes = {
   users: PropTypes.array.isRequired,
   addMember: PropTypes.func.isRequired,
   removeMember: PropTypes.func.isRequired,
-  createGroup: PropTypes.func.isRequired
+  createGroup: PropTypes.func.isRequired,
+  clearMembers: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
   console.log('current state:',state);
   return {
+    groups: state.groups.groups,
     users: state.users.users,
     members: state.members.members,
     isAuthed: state.auth.isAuthed,
@@ -64,5 +65,6 @@ export default connect(mapStateToProps, {
   getUsers,
   addMember,
   removeMember,
-  createGroup
+  createGroup,
+  clearMembers
 })(PageCreateGroup);

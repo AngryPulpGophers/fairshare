@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import SelectSearch from 'react-select-search';
+
 export default class GroupList extends Component {
 
+  //handles adding members to the page
   renderMembers(data) {
     console.log('called', data)
     //const refName = `callout-${data.id}`;
@@ -11,16 +13,24 @@ export default class GroupList extends Component {
       <li>{data.name}</li>
     )
   }
-  
+
+  componentWillUpdate(nextProps, nextState){
+    //this conditional handles if groups was updated - render the new group view
+    if(nextProps.groups.length !== this.props.groups.length){
+      let dest = nextProps.groups.pop()
+      browserHistory.push('/groupView?id='+ dest.id);
+    }
+  }
+
   render(){
-    const groupData = this.props.groupForm
-    const options = this.props.users
 
     const memberElements = this.props.members.map((data) => {
       return this.renderMembers(data);
     })
 //     // Need to set the search field value because otherwise it is cleared when the value changes.
-//     this.SelectSearch.refs.search.value = getSelectedOptionDisplayName();
+        //ReactDOM.findDOMNode(this.refs[refName])
+        //ReactDOM.findDOMNode(this.SelectSearch.refs.nameInput).focus()
+      //this.SelectSearch.refs.search.value = getSelectedOptionDisplayName();
 //     this.SelectSearch.refs.search.select();
 //     // Trick the SelectSearch into acting like it was blurred.
 //     this.SelectSearch.onBlur();
@@ -30,24 +40,18 @@ export default class GroupList extends Component {
     return(
 
       <div className="row">
+
         <div className="small-12 columns">
-          <h2>Add somone to the group:</h2>
+          <h4>Add a few folks:</h4>
         </div>
         <div className="small-12 large-6 columns">
-          <label>
-            { options.length === 0 ? null :  
-              <div className="input-group">
-                <SelectSearch valueChanged={this.props.handleNewMem} options={options} name="users" refs="search" />
-                <a onClick={() => { this.props.addMember(this.props.newMem, this.props.groupForm) }} className="input-group-button button">+ add</a>
+          { this.props.users.length === 0 ? null :  
+            <div className="input-group">
+              <SelectSearch valueChanged={this.props.handleNewMem} options={this.props.users} ref="users" />
+              <a id="add" onClick={() => { this.props.addMember(this.props.newMem, this.props.groupForm) }} className="input-group-button button">+ add</a>
 
-              </div>
-              }
-            {/*<input 
-              type="text" 
-              placeholder="add user" 
-              onChange={this.handleMemberChange}
-            />*/}
-          </label>
+            </div>
+            }
         </div>
         <div className="small-12 large-6 columns">
           <h5>Current Members</h5>
@@ -56,9 +60,9 @@ export default class GroupList extends Component {
           </ul>
         </div>
         <div className="small-12 columns">
-          { groupData.length === 0 ? null :
-          <a onClick={() => { this.props.createGroup(this.props.members,groupData) }} className="expanded success button">+ Create New Group!</a>
-          }
+          
+          <a onClick={() => { this.props.createGroup(this.props.members,this.props.groupForm) }} className="expanded success button">+ Create New Group!</a>
+          
         </div>
       </div>
 
