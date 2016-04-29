@@ -18,6 +18,7 @@ export default class GroupList extends Component {
     // if(this.props.groups.length === 0){
       this.props.getGroups()
     // }
+
   }
 
   render(){
