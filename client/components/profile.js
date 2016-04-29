@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
-//export const fields = [ 'name', 'username', 'email'];
+//import { load as loadAccount } from '../redux/modules/account';
+
 const FIELDS = {
     name : {
         type : 'input',
@@ -17,7 +18,23 @@ const FIELDS = {
     }
 };
 
+// const data = {  // used to populate "account" reducer when "Load" is clicked
+//   name: this.props.name,
+//   username: this.props.username,
+//   email: this.props.email
+// }
+
+// after component mount - call this to add field 
+// function defaultFields(state) {
+//   return {
+//      load(data)
+//   };
+// }
+
+
 export default class Profile extends Component {
+    //componentWillMount(defaultFields)
+
     onSubmit(props) {
       alert('Profile Updated');
     }
@@ -29,7 +46,7 @@ export default class Profile extends Component {
          <div>
           <label>{fieldConfig.label}</label>
           <div>
-            <fieldConfig.type type="text" value={fieldConfig.label} placeholder={fieldConfig.label} {...fieldHelper}/>
+            <fieldConfig.type value={fieldConfig.label} placeholder={fieldConfig.label} {...fieldHelper}/>
           </div>
           {fieldHelper.touched && fieldHelper.error && <div>{fieldHelper.error}</div>}
         </div>
@@ -59,19 +76,6 @@ export default class Profile extends Component {
   }
 }
 
-// export default class Profile extends Component {
-//     render() {
-//         return (
-//         <div>
-//             <h2>{this.props.userInfo.name} Profile</h2>
-//                     <div >name: {this.props.userInfo.name}</div>
-//                     <div>email: {this.props.userInfo.email}</div>
-//                 
-//         </div>
-//         )
-//     }
-// }
-
 const validate = values => {
   const errors = {}
      // if (!values.name) {
@@ -92,19 +96,12 @@ const validate = values => {
 
  _.each(FIELDS, (type, field) => {
     if (!values[field]) {
-        errors[field] = 'Enter a ${field}'
+        errors[field] = `${field} required`;
     }
  }); 
 
   return errors
 }
-
-
-
-// requiring from parent comp.
-    // Profile.PropTypes = {
-    //     userInfo: PropTypes.object.isRequired
-    // }
 
 Profile.propTypes = {
   fields: PropTypes.object.isRequired,
