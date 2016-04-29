@@ -34,9 +34,7 @@ class App extends Component {
   }
 
   componentWillMount(){
-    if(!this.props.isAuthed){
-      this.props.getUserInfo()
-    }
+    this.props.getUserInfo()
     
   }
 

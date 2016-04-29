@@ -19,20 +19,7 @@ export default class Navigation extends Component {
               <li className="menu-text-name">
                 <Link to='/' title="Dashboard"><h1><i className="fa fa-th-large"></i> Divvy</h1></Link>
               </li>
-              {/*<li><Link to='/table'>Table</Link></li>*/}
-              {/*<li>
-                <a href="javascript:;">More</a>
-                <ul className="vertical menu" data-dropdown-menu>
-                  <li><a href="https://github.com/reactjs/redux" target="_blank">Redux</a></li>
-                  <li><a href="http://foundation.zurb.com/sites/docs/" target="_blank" >Foundation</a></li>
-                </ul>
-              </li>*/}
               <li style={{width: '20px'}}></li>
-              {/*<li>
-                <button className="button secondary" onClick={() => {
-                  this.props.createCallout()
-                }}>Create callout</button>
-              </li>*/}
             </ul>
           </div>
           <div className="top-bar-right" style={{marginRight: 20}}>
@@ -62,20 +49,9 @@ export default class Navigation extends Component {
               <li className="menu-text-name">
                 <Link to='/' title="Dashboard"><i className="fa fa-th-large"></i></Link>
               </li>
-              {/*<li><Link to='/table'>Table</Link></li>*/}
-              {/*<li>
-                <a href="javascript:;">More</a>
-                <ul className="vertical menu" data-dropdown-menu>
-                  <li><a href="https://github.com/reactjs/redux" target="_blank">Redux</a></li>
-                  <li><a href="http://foundation.zurb.com/sites/docs/" target="_blank" >Foundation</a></li>
-                </ul>
-              </li>*/}
+
               <li style={{width: '20px'}}></li>
-              <li>
-                <button className="button secondary" onClick={() => {
-                  this.props.createCallout()
-                }}>{this.props.userInfo.name}</button>
-              </li>
+
             </ul>
           </div>
         </div>
