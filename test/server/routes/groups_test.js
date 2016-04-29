@@ -18,7 +18,6 @@ describe("Groups API", function() {
   var expense1, payment1;
 
   it_("returns all groups", function * () {
-    console.log("IN BRANCH DEVELOPMENT!");
     yield Users.create({ username: 'aliceinchains', name: 'Alice' })
       .then(function(resp){ user1 = resp[0]; });
     yield Users.create({ username: 'bobthebuilder', name: 'Bob' })
