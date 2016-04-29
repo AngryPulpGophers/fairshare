@@ -34,8 +34,8 @@ export default class Dashboard extends Component {
     })
     return isAuthed ? (
       <div className="dashboard">
-        <h2>Groups</h2>
-        <Link to='/create-group' className="success button expand">+ New Group</Link>
+        {/*<h3>Dashboard</h3>*/}
+        <Link to='/create-group' className="large primary button expanded">+ New Group</Link>
         <GroupList getGroups={this.props.getGroups} groups={this.props.groups}/>
       </div>
       ) 
