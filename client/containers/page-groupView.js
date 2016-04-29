@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Link, browserHistory } from 'react-router';
 import {  getGroups, getActivity,getUserByGroup } from '../actions/groupActions';
 import GroupView from '../components/groupView';
 import { startDisplay, toggleDisplay } from '../actions/calloutActions';
@@ -39,7 +40,8 @@ function mapStateToProps(state) {
     activity: state.groups.activity,
     currentGroupUsers: state.groups.currentGroupUsers,
     url: state.routing,
-    displayActive: state.notifications.displayActive
+    displayActive: state.notifications.displayActive,
+    isAuthed: PropTypes.bool.isRequired,
   }
 }
 
