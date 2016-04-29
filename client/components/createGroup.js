@@ -4,18 +4,23 @@ import MemberList from './memberList';
 import { reduxForm } from 'redux-form';
 export const fields = [ 'groupName', 'groupDesc' ];
 
-let hide = false;
-
 export default class CreateGroup extends Component {
 
   handleSubmit(data) {
-    hide = true;
+    console.log(date)
   }
   componentWillMount(){
-    //call our get groups function
-    this.props.getUsers()
+    //call our get users function, but only if we haven't called it already
+    if(this.props.users.length === 0){
+      this.props.getUsers()
+    } else {
+      this.props.clearMembers();
+    }
+
   }
   render() {
+    let hide = false;
+    
     console.log('createGroup prop',this.props.createGroup)
     const {
         fields: { groupName, groupDesc },
@@ -24,7 +29,7 @@ export default class CreateGroup extends Component {
         submitting
       } = this.props
 
-    return !hide ? (  
+    return (  
       
         <div className="row">
           <div className="small-12 large-7 large-centered columns">
@@ -45,16 +50,13 @@ export default class CreateGroup extends Component {
                 />
               </label>
               <br />
-              <button type="submit" disabled={submitting} className="expanded success button">
+              {/*<button type="submit" disabled={submitting} className="expanded success button">
                 Continue
-              </button>
+              </button>*/}
             </form>
           </div>
           <div className="small-12 large-5 columns"></div>
-        </div>
-      
-    ) : (
-      <div className="row">
+        
         <div className="small-12 large-7 large-centered columns">
           <MemberList 
             users={this.props.users}
@@ -66,6 +68,7 @@ export default class CreateGroup extends Component {
             createGroup={this.props.createGroup}
             memState={this.props.state}
             groupForm={this.props.groupForm}
+            groups={this.props.groups}
             />
         </div>
         <div className="small-12 large-5 columns"></div>

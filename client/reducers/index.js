@@ -6,11 +6,6 @@ import {reducer as form} from 'redux-form';
 import { auth } from './authReducers';
 import { routeReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
-// import * as ActionTypes from '../actions';
-// import { GROUPS_REQUEST, GROUPS_SUCCESS, GROUPS_FAILURE,ACTIVITY_REQUEST, ACTIVITY_SUCCESS, ACTIVITY_FAILURE} from '../actions';
-// import { routeReducer } from 'react-router-redux';
-// import { combineReducers } from 'redux';
-// import update from 'react-addons-update';
 
 
 const rootReducer = combineReducers({
@@ -20,7 +15,6 @@ const rootReducer = combineReducers({
   groups,
   members,
   form,
-  groups,
   auth
 });
 

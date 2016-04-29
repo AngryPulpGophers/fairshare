@@ -28,11 +28,11 @@ export default class Navigation extends Component {
                 </ul>
               </li>*/}
               <li style={{width: '20px'}}></li>
-              <li>
+              {/*<li>
                 <button className="button secondary" onClick={() => {
                   this.props.createCallout()
                 }}>Create callout</button>
-              </li>
+              </li>*/}
             </ul>
           </div>
           <div className="top-bar-right" style={{marginRight: 20}}>
