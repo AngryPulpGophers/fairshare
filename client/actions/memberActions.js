@@ -2,16 +2,17 @@
 
 //add a member to a group
 export const MEMBER_ADDED = 'MEMBER_ADDED';
-export function addMember(id) {
+export function addMember(userObj) {
   return {
       type: MEMBER_ADDED,
-      id: id,
+      userObj: userObj,
   }
 }
 
 //remove a member from a group
 export const MEMBER_REMOVED = 'MEMBER_REMOVED';
 export function removeMember(id) {
+  console.log('Made an attempt to remove', id)
   return {
       type: MEMBER_REMOVED,
       id: id,

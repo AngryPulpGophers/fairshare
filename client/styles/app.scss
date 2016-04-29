@@ -1,6 +1,9 @@
 @import 'components/settings';
-.dashboard,.login,.create-group{
-  margin-top: 150px;
+.login,.create-group{
+  margin-top: 130px;
+}
+.dashboard{
+  margin-top: 100px;
 }
 .input-group{
   position: relative;
@@ -14,11 +17,15 @@ input[type='search']{
 .add-member{
   margin: 24px 0 0 0;
 }
-
-.roundCorner-image{
-  height:50px;
-  width: 50px;
-  border-radius: 10px;
-  margin-left: 5px
- }
+.members-list{
+  margin-top: 20px;
+  li{ list-style-type: none;}
+}
+.remove-user{
+  margin-bottom: 0;
+  padding: 0.25em 1em;
+}
+.button.alert{
+  color: $white;
+}
 

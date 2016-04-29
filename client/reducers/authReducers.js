@@ -34,10 +34,7 @@ export function auth(state = {isFetching: false, isAuthed: false, userInfo: {}},
 	  })
 	  
 	  case ActionTypes.LOGOUT_SUCCESS:
-	    return update(state, {
-	  	isAuthed: {$set: false},
-	    userInfo: {$set: {}}
-	  })
+	    return [];
 	  
 	  case ActionTypes.LOGOUT_FAILURE:
 	    return update(state, {

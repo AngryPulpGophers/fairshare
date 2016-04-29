@@ -1,4 +1,5 @@
 /** The option list should not be visible by default */
+
 .select-search-box__select {
     display: none;
 }
@@ -42,8 +43,8 @@
 
 /** The option (LI), look at the state classes below */
 .select-search-box__option {
-    padding: 20px;
-    font-size: 1.2em;
+    padding: 5px;
+    font-size: .9em;
     list-style-type: none;
     margin-left: 0;
 }
@@ -55,5 +56,5 @@
 
     /** When the option is selected (when navigation with the arrow keys, up/down) */
     .select-search-box__option--hover, .select-search-box__option:hover {
-        background-color: #ddd;
+        background-color: #eee;
     }
