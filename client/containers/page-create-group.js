@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Link, browserHistory } from 'react-router';
 import { getUsers } from '../actions/userActions';
 import { addMember, removeMember, clearMembers } from '../actions/memberActions';
 import { createGroup } from '../actions/groupActions';
@@ -17,7 +18,12 @@ class PageCreateGroup extends Component {
     this.setState({ newMem: option})
 
   }
-
+  // our hacky way of dealing with auth
+  componentDidMount(){
+    if(!this.props.isAuthed){
+      browserHistory.push('/login')
+    }
+  }
   render() {
     //console.log('checking members existence:',this.state.members)
     return (

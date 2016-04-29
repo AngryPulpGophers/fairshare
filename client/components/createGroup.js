@@ -113,7 +113,7 @@ CreateGroup.propTypes = {
   removeMember: PropTypes.func.isRequired,
   handleNewMem: PropTypes.func.isRequired,
   createGroup: PropTypes.func.isRequired,
-  memState: PropTypes.array.isRequired
+  memState: PropTypes.object.isRequired
 }
 
 export default reduxForm({

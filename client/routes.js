@@ -1,6 +1,5 @@
 import React from 'react'
 import { Route, IndexRoute, Redirect } from 'react-router'
-
 import App from './containers/app'
 import Table from './containers/page-table'
 import CreateGroup from './containers/page-create-group'
