@@ -86,7 +86,11 @@ Create the test database
 ```
 createdb divvy-test
 knex migrate:latest --env test
+createuser divvy --password
 ```
+**important
+When prompted give the user divvy a password of "password".
+
 Run the test
 ```
 npm run test
