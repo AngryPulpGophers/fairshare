@@ -5,13 +5,13 @@ import { getGroups } from '../actions/groupActions';
 import Dashboard from '../components/dashboard';
 
 class PageDashboard extends Component {
+
   render() {
     return (
         <div>
           <Dashboard
             url={this.props.url}
             callouts={this.props.callouts}
-            removeCallout={this.props.removeCallout}
             getGroups={this.props.getGroups}
             isAuthed={this.props.isAuthed}
             groups={this.props.groups}
@@ -31,7 +31,6 @@ class PageDashboard extends Component {
 PageDashboard.propTypes = {
   url: PropTypes.string.isRequired,
   callouts: PropTypes.array.isRequired,
-  removeCallout: PropTypes.func.isRequired,
   getGroups: PropTypes.func.isRequired,
   isAuthed: PropTypes.bool.isRequired,
   groups:PropTypes.array.isRequired
