@@ -1,0 +1,31 @@
+@import 'components/settings';
+.login,.create-group{
+  margin-top: 130px;
+}
+.dashboard{
+  margin-top: 100px;
+}
+.input-group{
+  position: relative;
+}
+.input-group-button{
+  width: 75px;
+}
+input[type='search']{
+  margin-bottom: 0;
+}
+.add-member{
+  margin: 24px 0 0 0;
+}
+.members-list{
+  margin-top: 20px;
+  li{ list-style-type: none;}
+}
+.remove-user{
+  margin-bottom: 0;
+  padding: 0.25em 1em;
+}
+.button.alert{
+  color: $white;
+}
+
