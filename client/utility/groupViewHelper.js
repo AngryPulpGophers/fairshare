@@ -39,15 +39,20 @@ Helper.prettyDate = function(milliseconds){
       */
  
   Helper.calcBalance = function() {
-console.log('what is going on',this.props.activity)
+    if (this.props.currentGroupUsers){
+//console.log('what is going on',this.props.activity)
   var groupObj = {}
   for (var i = 0 ; i < this.props.currentGroupUsers.length ; i++){
     groupObj[this.props.currentGroupUsers[i].user_id]=this.props.currentGroupUsers[i]
     groupObj[this.props.currentGroupUsers[i].user_id].balance = 0
     //groupObj[this.props.currentGroupUsers[i].user_id].tempBalance = 0
   }
-console.log('look at me mom',groupObj)
+
+for (var key in groupObj){
+  //console.log('look at me mom',groupObj[key].balance)
+}
   for (var i = 0 ; i < this.props.activity.length ; i++){
+
 //console.log('where are the strings',this.props.activity[i].amount,typeof this.props.activity[i].amount)
     if (this.props.activity[i].type==='expense'){
       
@@ -55,6 +60,7 @@ console.log('look at me mom',groupObj)
       
     
       for (var x = 0 ; x < this.props.activity[i].members.length ; x++){
+        //console.log('this is important',this.props.activity[i].members.length )
         if(this.props.activity[i].paid_by != this.props.activity[i].members[x].id){
           if (x===this.props.activity[i].members.length-1){
             if (round(this.props.activity[i].amount/this.props.activity[i].members.length)*this.props.activity[i].members.length!==this.props.activity[i].amount){
@@ -178,6 +184,11 @@ console.log('so confused',sortedGroup)
     console.log(user.name,user.owed)
   })
 return sortedGroup;
+}
+else{
+  console.log('rico hello there')
+  return [];
+}
 
 }
   

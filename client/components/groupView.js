@@ -30,6 +30,9 @@ export default class GroupView extends Component {
 
 
   render() {
+    var currentURL = window.location.href
+    var ID = currentURL.split('id=')
+    console.log('did this work',ID[1])
     //var { query } = this.props.location
    // console.log('samsam',this.props,'and pj', this.props.params)
      //var what = new Date(this.props.activity[0].created_at)
@@ -72,11 +75,24 @@ export default class GroupView extends Component {
       }
 
 
+
         <h2>Activity</h2>        
         <PaymentForm
         groupMembers = {this.props.currentGroupUsers}
         userInfo = {this.props.userInfo}
         />
+        <AddExpense
+        getActivity={this.props.getActivity}
+        activity={this.props.activity}
+        currentGroupUsers = {this.props.currentGroupUsers}
+        url = {this.props.url}
+        getUserByGroup = {this.props.getUserByGroup}
+        />
+
+     
+        <h2>Activity</h2>
+        
+
          {this.props.activity.map(function(activity,index){
             return <div className= {activity.type==='expense' ? "callout alert" :"callout success"}>
               
