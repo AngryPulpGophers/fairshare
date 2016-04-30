@@ -86,9 +86,11 @@ router.post('/', function(req, res){
 });
 
 router.put('/username', function(req, res){
+  console.log("req.body in users.js", req.body);
 	Users.editProfile(req.body)
-	  .then(function(){
-	  	res.status(200).send('profile updated');
+	  .then(function(data){
+      console.log("Data inside /username @users.js", data)
+	  	res.status(200).send(data);
 	  })
 	  .catch(function(err){
 	  	res.status(400).send({err:err});
