@@ -12,7 +12,7 @@ class PageCreateGroup extends Component {
     super(props)
     this.state = {newMem: {}}
   }
-
+  
   handleNewMem(option, state){
     //set a temp state to handle our fuzzy search
     this.setState({ newMem: option})

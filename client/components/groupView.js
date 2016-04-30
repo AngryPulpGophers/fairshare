@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import { browserHistory, Router, Route,Link } from 'react-router';
 import GroupList from './groupList';
 import {prettyDate, calcBalance, makeGroupObj, test} from '../utility/groupViewHelper';
+import Modal from './modal';
+import PaymentForm from './paymentForm';
+
 
 export default class GroupView extends Component {
   
@@ -23,6 +26,8 @@ export default class GroupView extends Component {
     //this number can be as big as you want, just takes up more space in state
     this.props.startDisplay(100)
   }
+
+
 
   render() {
     //var { query } = this.props.location
@@ -67,8 +72,11 @@ export default class GroupView extends Component {
       }
 
 
-        <h2>Activity</h2>
-        
+        <h2>Activity</h2>        
+        <PaymentForm
+        groupMembers = {this.props.currentGroupUsers}
+        userInfo = {this.props.userInfo}
+        />
          {this.props.activity.map(function(activity,index){
             return <div className= {activity.type==='expense' ? "callout alert" :"callout success"}>
               

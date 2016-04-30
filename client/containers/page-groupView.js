@@ -18,6 +18,7 @@ class PageGroupView extends Component {
         getActivity={this.props.getActivity}
         activity={this.props.activity}
         currentGroupUsers = {this.props.currentGroupUsers}
+        userInfo = {this.props.userInfo}
         url = {this.props.url}
         getUserByGroup = {this.props.getUserByGroup}
         startDisplay = {this.props.startDisplay}
@@ -41,6 +42,7 @@ function mapStateToProps(state) {
     currentGroupUsers: state.groups.currentGroupUsers,
     url: state.routing,
     displayActive: state.notifications.displayActive,
+    userInfo: state.auth.userInfo,
     isAuthed: PropTypes.bool.isRequired,
   }
 }
