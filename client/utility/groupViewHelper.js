@@ -97,8 +97,10 @@ console.log('where are the strings',this.props.activity[i].amount,typeof this.pr
     }
 
     if ( this.props.activity[i].type === 'payment'){
+      groupObj[this.props.activity[i].payee].balance= round(groupObj[this.props.activity[i].payee].balance)
       groupObj[this.props.activity[i].payee].balance += round(this.props.activity[i].amount);
       groupObj[this.props.activity[i].payee].balance = round(groupObj[this.props.activity[i].payee].balance)
+      groupObj[this.props.activity[i].recipient].balance=round(groupObj[this.props.activity[i].recipient].balance)
       groupObj[this.props.activity[i].recipient].balance -= round(this.props.activity[i].amount)
       groupObj[this.props.activity[i].recipient].balance = round(groupObj[this.props.activity[i].recipient].balance)  
     }
