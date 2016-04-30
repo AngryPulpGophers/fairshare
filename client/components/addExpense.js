@@ -5,15 +5,6 @@ import { reduxForm } from 'redux-form'
 import PureInput from './PureInput'
 export const fields = [ 'title', 'note', 'imgUrl', 'sex', 'favoriteColor', 'members0','members1','members2',
                         'members3', 'members4','members5','members6','members7','members8','members9', 'notes','amount' ]
-//a helpful function when looking at retrieved data
-// function puke (obj) {
-//   return <pre>{JSON.stringify(obj, 2, ' ')}</pre>
-// }
-// function puke (obj) {
-//   return <pre>{JSON.stringify(obj, 2, ' ')}</pre>
-// }
-
-
 
 export default class AddExpense extends Component {
 
@@ -29,23 +20,17 @@ export default class AddExpense extends Component {
     this.props.getUserByGroup(ID[0])
     console.log('maybe work33', this.props.currentGroupUsers)
     console.log(this,'this')
-    //if (this.props.currentGroupUsers){
-    // for (var i = 0; i < 3; i++){
-    //    console.log(this,'lucky',i)
-    //   this.props.fields['members'+1].initialValue=true;
-     
-    // }
-  //}
+  
   }
 
-  handleAddMember(){
-    return members.addField();
-  }
+  
   handleSubmit(data) {
-    console.log('addExpense',this.props.currentGroupUsers)
-     console.log('I SUBMITTED',data)
+    // console.log('addExpense',this.props.currentGroupUsers)
+    //  console.log('I SUBMITTED',data)
      
+
      var currentURL = window.location.href
+     var baseURL = currentURL.split('/')[0]
         console.log(currentURL)
     var ID = currentURL.split('id=')
     ID= ID[1].split('&')
@@ -68,6 +53,7 @@ export default class AddExpense extends Component {
 
 
     console.log('I SUBMITTED',data)
+    location.replace(baseURL+'/groupView?id='+ID[0])
   }
 
   
@@ -75,7 +61,6 @@ export default class AddExpense extends Component {
   render(){
     console.log('maybe work444',this.props.currentGroupUsers)
 
-//use ID[0] for current group ID
 
     const {
 
@@ -114,39 +99,6 @@ export default class AddExpense extends Component {
             <input type="text" placeholder="Amount" {...amount}/>
           </div>
         </div>
-
-
-        {/*
-        <div>
-       
-          <label>Sex</label>
-          <div>
-            <label>
-              <input type="radio" {...sex} value="male" checked={sex.value === 'male'}/> Male
-            </label>
-            <label>
-              <input type="radio" {...sex} value="female" checked={sex.value === 'female'}/> Female
-            </label>
-          </div>
-        </div>
-        <div>
-          <label>Favorite Color</label>
-          <div>
-            <select
-              {...favoriteColor}
-              // required syntax for reset form to work
-              // undefined will not change value to first empty option
-              // when resetting
-              value={favoriteColor.value || ''}>
-              <option></option>
-              <option value="ff0000">Red</option>
-              <option value="00ff00">Green</option>
-              <option value="0000ff">Blue</option>
-            </select>
-          </div>
-
-        </div>
-      */}
         <div>
         <h3>Members Involved</h3>
         {this.props.currentGroupUsers.map(function(user,index){
@@ -163,18 +115,7 @@ export default class AddExpense extends Component {
           }.bind(this))
             }
         </div>
-        {/*}
-        <div>
-          <label>Notes</label>
-          <div>
-            <textarea
-              {...notes}
-              // required for reset form to work (only on textarea's)
-              // see: https://github.com/facebook/react/issues/2533
-              value={notes.value || ''}/>
-          </div>
-        </div>
-      */}
+   
         <div>
           <button type="submit" className="button primary float-left tiny button" disabled={submitting}>
             {submitting ? <i/> : <i/>} Submit
@@ -187,9 +128,7 @@ export default class AddExpense extends Component {
     )
   }
 }
-//     )
-//   }
-// }
+
 export default reduxForm({
   form: 'simple',
   fields
