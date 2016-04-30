@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import {  getGroups, getActivity,getUserByGroup } from '../actions/groupActions';
+import {  getGroups, getActivity,getUserByGroup, addExpense } from '../actions/groupActions';
 import AddExpense from '../components/addExpense';
 
 class PageAddExpense extends Component {
   
- 
+
 
 
   render() {
@@ -16,6 +16,7 @@ class PageAddExpense extends Component {
         currentGroupUsers = {this.props.currentGroupUsers}
         url = {this.props.url}
         getUserByGroup = {this.props.getUserByGroup}
+        addExpense = {this.props.addExpense}
       />
     )
   }
@@ -38,5 +39,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  getActivity,getUserByGroup
+  getActivity,getUserByGroup,addExpense
 })(PageAddExpense)

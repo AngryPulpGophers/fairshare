@@ -10,14 +10,13 @@ import PaymentForm from './paymentForm';
 export default class GroupView extends Component {
   
   componentWillMount(){
+    console.log('hi my name is pjpjpjpjpj',this)
     //call our get groups function
     console.log('currentURL',window.location.href )
     console.log('currentURL type',typeof window.location.href )
     var currentURL = window.location.href
     var ID = currentURL.split('id=')
     console.log(ID[1])
-    //var stuff= this.props.getUserByGroup(this.props.url.location.query.id)
-     //console.log('please fucking work',stuff)
      this.props.getUserByGroup(ID[1])
      console.log('maybe work', this.props.currentGroupUsers)
     //var clickedOnGroup = (this.props.url.location.query.id)

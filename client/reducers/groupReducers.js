@@ -63,6 +63,23 @@ export function groups(state = { isFetching: false, newGroup:{}, groups: [],acti
         return update(state, {
           isFetching: {$set: false}})
 
+      case ActionTypes.EXPENSE_REQUEST:
+        return update(state, {
+          isFetching: {$set: true}})
+      case ActionTypes.EXPENSE_SUCCESS:
+        //console.log('got our type and resp:', action.response)
+        return update(state, {
+          isFetching: {$set: false},
+          activity: {$push: [JSON.parse(action.response)]}
+        })
+      case ActionTypes.EXPENSE_FAILURE:
+        return update(state, {
+          isFetching: {$set: false}})
+
+
+
+
+
       default:
         return state
       }

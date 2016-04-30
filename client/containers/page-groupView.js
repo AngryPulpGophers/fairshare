@@ -24,6 +24,7 @@ class PageGroupView extends Component {
         startDisplay = {this.props.startDisplay}
         toggleDisplay = {this.props.toggleDisplay}
         displayActive = {this.props.displayActive}
+        userInfo = {this.props.userInfo}
       />
     )
   }
