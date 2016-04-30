@@ -7,17 +7,22 @@ const FIELDS = {
     name : {
         type : 'input',
         label : 'name',
+        defaultValue : 'toto'
     },
     username : {
         type : 'input',
-        label: 'username'
+        label: 'username',
+        defaultValue : 'test'
     },
     email : {
         type : 'input',
-        label: 'email'
+        label: 'email',
+        defaultValue : 'toto@gmail.com'
     }
 };
-
+const initialValues = {
+  name : 'sam'
+}
 // const data = {  // used to populate "account" reducer when "Load" is clicked
 //   name: this.props.name,
 //   username: this.props.username,
@@ -41,12 +46,12 @@ export default class Profile extends Component {
 
     renderField(fieldConfig, field) { // one helper per ea field declared
       const fieldHelper = this.props.fields[field];
-
+      console.log('deafultValue',fieldConfig.defaultValue);
       return (
          <div>
           <label>{fieldConfig.label}</label>
           <div>
-            <fieldConfig.type value={fieldConfig.label} placeholder={fieldConfig.label} {...fieldHelper}/>
+            <fieldConfig.type placeholder={fieldConfig.label} {...fieldHelper}/>
           </div>
           {fieldHelper.touched && fieldHelper.error && <div>{fieldHelper.error}</div>}
         </div>
@@ -54,8 +59,7 @@ export default class Profile extends Component {
     }
 
   render() {
-      const {resetForm, handleSubmit, submitting } = this.props;
-
+      const {resetForm, handleSubmit, submitting, initialValues} = this.props;
     return (
         <div>
             <img className="image" src={this.props.userInfo.img_url}/>

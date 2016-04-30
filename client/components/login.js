@@ -4,6 +4,7 @@ export default class Login extends Component {
   render() {
     return (
       <div className="login">
+      
         <div className="row">
           <div className="small-12 large-7 large-centered columns text-center">
             <h3>Want to track your expenses? You gotta' login!</h3>

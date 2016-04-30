@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { ReactCSSTransitionGroup } from 'react-addons-css-transition-group';
 import Navigation from '../components/navigation';
 import { createCallout } from '../actions/calloutActions';
 import { getUserInfo } from '../actions/authActions';
@@ -21,7 +22,7 @@ class App extends Component {
     // children are components which defined in the routes as children of App
     const { children } = this.props;
     return (
-      <div className="bg-overlay">
+      <div>
         <Navigation createCallout={this.props.createCallout} 
           isAuthed={this.props.isAuthed} userInfo = {this.props.userInfo} logoutUser ={this.props.logoutUser} />
         <div className='row'>
@@ -30,6 +31,7 @@ class App extends Component {
           </div>
         </div>
       </div>
+
     )
   }
 
