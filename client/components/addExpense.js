@@ -126,7 +126,7 @@ export default class AddExpense extends Component {
           return (
           <label>
             
-               <PureInput type="checkbox"  field={this.props.fields[string]}/> {user.name}
+               <input type="checkbox"  {...this.props.fields[string]}/> {user.name}
             
           </label>)
           }.bind(this))
