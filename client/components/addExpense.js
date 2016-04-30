@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
 import { reduxForm } from 'redux-form'
 import PureInput from './PureInput'
-export const fields = [ 'title', 'note', 'imgUrl', 'sex', 'favoriteColor', 'members0','members1','members2',
-                        'members3', 'members4','members5','members6','members7','members8','members9', 'notes','amount' ]
+export const fields = [ 'title', 'note', 'imgUrl', 'members0','members1','members2',
+                        'members3', 'members4','members5','members6','members7','members8','members9', 'amount' ]
 
 export default class AddExpense extends Component {
 
@@ -64,8 +64,8 @@ export default class AddExpense extends Component {
 
     const {
 
-      fields: { title, note, imgUrl, sex, favoriteColor, members0,members1,members2,
-                members3, members4, members5, members6, members7, members8, members9, notes,amount },
+      fields: { title, note, imgUrl, members0,members1,members2,
+                members3, members4, members5, members6, members7, members8, members9, amount },
       handleSubmit,
       resetForm,
       submitting
