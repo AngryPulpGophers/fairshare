@@ -53,7 +53,7 @@ for (var key in groupObj){
 }
   for (var i = 0 ; i < this.props.activity.length ; i++){
 
-console.log('where are the strings',this.props.activity[i].amount,typeof this.props.activity[i].amount)
+    console.log('where are the strings',this.props.activity[i].amount, typeof this.props.activity[i].amount)
     if (this.props.activity[i].type==='expense'){
       
       
@@ -140,19 +140,25 @@ console.log('so confused',sortedGroup)
         if(p1!==p2){
           if (sortedGroup[p2].tempBalance < 0){
             if((sortedGroup[p1].tempBalance - sortedGroup[p2].tempBalance) > 0){
+                  //console.log(sortedGroup[p1].name,sortedGroup[p1].tempBalance,sortedGroup[p2].name,sortedGroup[p2].tempBalance)
               sortedGroup[p2].owed.push({[sortedGroup[p1].name] : sortedGroup[p2].tempBalance})
               sortedGroup[p1].owed.push({[sortedGroup[p2].name] : -1 * sortedGroup[p2].tempBalance })
               sortedGroup[p1].tempBalance += sortedGroup[p2].tempBalance;
               sortedGroup[p1].tempBalance = round(sortedGroup[p1].tempBalance)
               sortedGroup[p2].tempBalance = 0;
-
+              if(sortedGroup[p1].tempBalance===0){
+                break;
+              }
+              //console.log(sortedGroup[p1].name,sortedGroup[p1].tempBalance,sortedGroup[p2].name,sortedGroup[p2].tempBalance)
             }
             else if ((sortedGroup[p1].tempBalance - sortedGroup[p2].tempBalance) <= 0){
+                 console.log(sortedGroup[p1].name,sortedGroup[p1].tempBalance,sortedGroup[p2].name,sortedGroup[p2].tempBalance)
               sortedGroup[p2].owed.push({[sortedGroup[p1].name] : -1 * sortedGroup[p1].tempBalance})
               sortedGroup[p1].owed.push({[sortedGroup[p2].name] : sortedGroup[p1].tempBalance })
               sortedGroup[p2].tempBalance += sortedGroup[p1];
               sortedGroup[p2].tempBalance = round(sortedGroup[p2].tempBalance)
               sortedGroup[p1].tempBalance = 0;
+                  console.log(sortedGroup[p1].name,sortedGroup[p1].tempBalance,sortedGroup[p2].name,sortedGroup[p2].tempBalance)
             }
           }
         }
