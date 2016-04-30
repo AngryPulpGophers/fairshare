@@ -26,3 +26,18 @@ export function logoutUser (){
 		}
 	}
 }
+
+export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
+
+export function updateUserInfo(userObj) {
+  return {
+    [CALL_API]: {
+      endpoint: 'users/username',
+      req: 'PUT',
+      body: JSON.stringify(userObj),	
+      types: [UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE]
+    }
+  }
+}
