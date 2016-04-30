@@ -3,11 +3,22 @@ import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
 import { reduxForm } from 'redux-form'
 import PureInput from './PureInput'
+import Modal from './modal';
 export const fields = [ 'title', 'note', 'imgUrl', 'members0','members1','members2',
                         'members3', 'members4','members5','members6','members7','members8','members9', 'amount' ]
 
 export default class AddExpense extends Component {
 
+  constructor(props){
+    super(props)
+    this.state = ({isModalOpen: false})
+  }
+  openModal = () => {
+    this.setState({isModalOpen: true})
+  }
+  closeModal = () => {
+    this.setState({isModalOpen: false})
+  }
   
   componentWillMount(){
     console.log('currentURL',window.location.href )
@@ -16,8 +27,8 @@ export default class AddExpense extends Component {
         var currentURL = window.location.href
         console.log(currentURL)
     var ID = currentURL.split('id=')
-    ID= ID[1].split('&')
-    this.props.getUserByGroup(ID[0])
+    //ID= ID[1].split('&')
+    this.props.getUserByGroup(ID[1])
     console.log('maybe work33', this.props.currentGroupUsers)
     console.log(this,'this')
   
@@ -33,7 +44,7 @@ export default class AddExpense extends Component {
      var baseURL = currentURL.split('/')[0]
         console.log(currentURL)
     var ID = currentURL.split('id=')
-    ID= ID[1].split('&')
+    //ID= ID[1].split('&')
     var obj = {}
     obj.members = []
     //hard coded to 10, which is number of hard coded members max
@@ -47,13 +58,13 @@ export default class AddExpense extends Component {
     obj.amount = Number(Number(data.amount).toFixed(2))
     obj.img_url = data.imgUrl;
     obj.note = data.note;
-    obj.group_id = Number(ID[0])
+    obj.group_id = Number(ID[1])
     console.log('what PJ sends to post expense',obj)
     this.props.addExpense(JSON.stringify(obj))
 
 
     console.log('I SUBMITTED',data)
-    location.replace(baseURL+'/groupView?id='+ID[0])
+    location.replace(baseURL+'/groupView?id='+ID[1])
   }
 
   
@@ -72,7 +83,13 @@ export default class AddExpense extends Component {
       } = this.props
      
 
-    return (<form onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this)).bind(this)}>
+    return (
+      <div>
+      <button className = 'button primary button tiny'onClick={this.openModal}>Add Expense</button>
+            <Modal isOpen={this.state.isModalOpen}
+                   transitionName="modal-anim">
+      <form onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this)).bind(this)}>
+        <i onClick={this.closeModal} className="fa fa-times-circle-o" aria-hidden="true" style = {{cursor:'pointer'}}></i>
         <div>
           <h2>Add Expense</h2>
           <label>Title</label>
@@ -125,6 +142,8 @@ export default class AddExpense extends Component {
           </button>
         </div>
       </form>
+      </Modal>
+      </div>
     )
   }
 }

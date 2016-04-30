@@ -5,6 +5,7 @@ import GroupList from './groupList';
 import {prettyDate, calcBalance, makeGroupObj, test} from '../utility/groupViewHelper';
 import Modal from './modal';
 import PaymentForm from './paymentForm';
+import AddExpense from './addExpense';
 
 
 export default class GroupView extends Component {
@@ -86,9 +87,10 @@ export default class GroupView extends Component {
         currentGroupUsers = {this.props.currentGroupUsers}
         url = {this.props.url}
         getUserByGroup = {this.props.getUserByGroup}
+        addExpense = {this.props.addExpense}
         />
+      {/*<p> hi add expense<Link  to={{pathname:'/addExpense',query:{ id:ID[1] , pj:'holly'}}} title="groupView"  className="button primary float-left tiny button">Add Expense</Link> </p>*/}
 
-     
         <h2>Activity</h2>
         
 

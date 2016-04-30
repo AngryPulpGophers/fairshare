@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
-import {  getGroups, getActivity,getUserByGroup } from '../actions/groupActions';
+import {  getGroups, getActivity,getUserByGroup , addExpense} from '../actions/groupActions';
 import GroupView from '../components/groupView';
 import { startDisplay, toggleDisplay } from '../actions/calloutActions';
 
@@ -25,6 +25,7 @@ class PageGroupView extends Component {
         toggleDisplay = {this.props.toggleDisplay}
         displayActive = {this.props.displayActive}
         userInfo = {this.props.userInfo}
+        addExpense = {this.props.addExpense}
       />
     )
   }
@@ -49,5 +50,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  getActivity,getUserByGroup,startDisplay,toggleDisplay
+  getActivity,getUserByGroup,startDisplay,toggleDisplay, addExpense
 })(PageGroupView)
