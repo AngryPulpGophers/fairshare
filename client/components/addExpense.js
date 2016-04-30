@@ -12,6 +12,7 @@ export default class AddExpense extends Component {
   constructor(props){
     super(props)
     this.state = ({isModalOpen: false})
+    //this.state = ({initialValue: true})
   }
   openModal = () => {
     this.setState({isModalOpen: true})
@@ -39,39 +40,51 @@ export default class AddExpense extends Component {
     // console.log('addExpense',this.props.currentGroupUsers)
     //  console.log('I SUBMITTED',data)
      
-
-     var currentURL = window.location.href
-     var baseURL = currentURL.split('/')[0]
-        console.log(currentURL)
-    var ID = currentURL.split('id=')
-    //ID= ID[1].split('&')
-    var obj = {}
-    obj.members = []
-    //hard coded to 10, which is number of hard coded members max
-    for (var i = 0 ; i< 10 ; i++){
-      if (data['members'+i]){
-        obj.members.push(this.props.currentGroupUsers[i].user_id)
+  if (this.props.userInfo){
+       var currentURL = window.location.href
+       var baseURL = currentURL.split('/')[0]
+          console.log(currentURL)
+      var ID = currentURL.split('id=')
+      //ID= ID[1].split('&')
+      var obj = {}
+      obj.members = []
+      //hard coded to 10, which is number of hard coded members max
+      for (var i = 0 ; i< this.props.currentGroupUsers.length ; i++){
+        
+          if (this.props.userInfo.id===this.props.currentGroupUsers[i].user_id){
+            data['members'+i] = true;
+          }
+        
       }
+      for (var i = 0 ; i< 10 ; i++){
+        if (data['members'+i]){
+          obj.members.push(this.props.currentGroupUsers[i].user_id)
+        }
+      }
+      obj.paid_by = this.props.userInfo.id;
+      obj.title = data.title;
+      obj.amount = Number(Number(data.amount).toFixed(2))
+      obj.img_url = data.imgUrl;
+      obj.note = data.note;
+      obj.group_id = Number(ID[1])
+      console.log('what PJ sends to post expense',obj)
+      this.props.addExpense(JSON.stringify(obj))
+
+
+      console.log('I SUBMITTED',data)
+      location.replace(baseURL+'/groupView?id='+ID[1])
+
     }
-    obj.paid_by = 1;
-    obj.title = data.title;
-    obj.amount = Number(Number(data.amount).toFixed(2))
-    obj.img_url = data.imgUrl;
-    obj.note = data.note;
-    obj.group_id = Number(ID[1])
-    console.log('what PJ sends to post expense',obj)
-    this.props.addExpense(JSON.stringify(obj))
-
-
-    console.log('I SUBMITTED',data)
-    location.replace(baseURL+'/groupView?id='+ID[1])
-  }
-
+    else{
+      console.log("ERROR NO CURRENT USER")
+    }
+}
   
 
   render(){
     console.log('maybe work444',this.props.currentGroupUsers)
-
+    
+    {console.log('EXPENSEcurrent user:', this.props.userInfo)}
 
     const {
 
@@ -120,14 +133,21 @@ export default class AddExpense extends Component {
         <h3>Members Involved</h3>
         {this.props.currentGroupUsers.map(function(user,index){
           //console.log(members[index],'what is this')
-          console.log('big thing',this)
+          // console.log('big thing',this)
        //members.push({value:true})
          var string = 'members'+index
+         if(this.props.userInfo.id===user.user_id){
+         // console.log('pj',true)
+       }
           return (
           <label>
-            
-               <input type="checkbox"  {...this.props.fields[string]}/> {user.name}
-            
+              {this.props.userInfo.id===user.user_id ?
+               <PureInput type="checkbox"   checked='checked' field = {this.props.fields[string]}/> 
+              
+               : 
+               <PureInput type="checkbox"  field = {this.props.fields[string]}/> 
+
+             } <span>{user.name}</span>
           </label>)
           }.bind(this))
             }

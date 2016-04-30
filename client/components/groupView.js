@@ -88,6 +88,7 @@ export default class GroupView extends Component {
         url = {this.props.url}
         getUserByGroup = {this.props.getUserByGroup}
         addExpense = {this.props.addExpense}
+        userInfo = {this.props.userInfo}
         />
       {/*<p> hi add expense<Link  to={{pathname:'/addExpense',query:{ id:ID[1] , pj:'holly'}}} title="groupView"  className="button primary float-left tiny button">Add Expense</Link> </p>*/}
 
