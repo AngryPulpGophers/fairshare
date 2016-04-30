@@ -39,30 +39,35 @@ Helper.prettyDate = function(milliseconds){
       */
  
   Helper.calcBalance = function() {
+    if (this.props.currentGroupUsers){
 console.log('what is going on',this.props.activity)
   var groupObj = {}
   for (var i = 0 ; i < this.props.currentGroupUsers.length ; i++){
     groupObj[this.props.currentGroupUsers[i].user_id]=this.props.currentGroupUsers[i]
     groupObj[this.props.currentGroupUsers[i].user_id].balance = 0
-    //groupObj[this.props.currentGroupUsers[i].user_id].tempBalance = 0
+    groupObj[this.props.currentGroupUsers[i].user_id].tempBalance = 0
   }
-console.log('look at me mom',groupObj)
+
+for (var key in groupObj){
+  console.log('look at me mom',groupObj[key].balance)
+}
   for (var i = 0 ; i < this.props.activity.length ; i++){
-//console.log('where are the strings',this.props.activity[i].amount,typeof this.props.activity[i].amount)
+
+console.log('where are the strings',this.props.activity[i].amount,typeof this.props.activity[i].amount)
     if (this.props.activity[i].type==='expense'){
       
       
       
     
       for (var x = 0 ; x < this.props.activity[i].members.length ; x++){
+        console.log('this is important',this.props.activity[i].members.length )
         if(this.props.activity[i].paid_by != this.props.activity[i].members[x].id){
           if (x===this.props.activity[i].members.length-1){
             if (round(this.props.activity[i].amount/this.props.activity[i].members.length)*this.props.activity[i].members.length!==this.props.activity[i].amount){
-              groupObj[this.props.activity[i].members[x].id].balance -= round((this.props.activity[i].amount/this.props.activity[i].members.length+.01));
-          
+              groupObj[this.props.activity[i].members[x].id].balance -= round((this.props.activity[i].amount/this.props.activity[i].members.length+
+                round(this.props.activity[i].amount-round(this.props.activity[i].amount/this.props.activity[i].members.length)*this.props.activity[i].members.length)));
             }
             else {
-              
               groupObj[this.props.activity[i].members[x].id].balance -= round((this.props.activity[i].amount/this.props.activity[i].members.length));
             } 
           }
@@ -74,13 +79,13 @@ console.log('look at me mom',groupObj)
           if (x===this.props.activity[i].members.length-1){
 
             if (round(this.props.activity[i].amount/this.props.activity[i].members.length)*this.props.activity[i].members.length!==this.props.activity[i].amount){
-              groupObj[this.props.activity[i].paid_by].balance +=  round((this.props.activity[i].amount* ((this.props.activity[i].members.length-1)/this.props.activity[i].members.length))+.01);
+              groupObj[this.props.activity[i].paid_by].balance +=  round((this.props.activity[i].amount* ((this.props.activity[i].members.length-1)/this.props.activity[i].members.length))+
+                round(this.props.activity[i].amount-round(this.props.activity[i].amount/this.props.activity[i].members.length)*this.props.activity[i].members.length));
               groupObj[this.props.activity[i].paid_by].balance =  round(groupObj[this.props.activity[i].paid_by].balance)
-            }
+            } 
             else {
               groupObj[this.props.activity[i].paid_by].balance +=  round((this.props.activity[i].amount* ((this.props.activity[i].members.length-1)/this.props.activity[i].members.length)));
               groupObj[this.props.activity[i].paid_by].balance =  round(groupObj[this.props.activity[i].paid_by].balance)
-
             }
           }
           else {
@@ -91,13 +96,11 @@ console.log('look at me mom',groupObj)
       }
     }
 
-
     if ( this.props.activity[i].type === 'payment'){
-
-      groupObj[this.props.activity[i].payee].balance += this.props.activity[i].amount;
+      groupObj[this.props.activity[i].payee].balance += round(this.props.activity[i].amount);
       groupObj[this.props.activity[i].payee].balance = round(groupObj[this.props.activity[i].payee].balance)
-      groupObj[this.props.activity[i].recipient].balance -= this.props.activity[i].amount
-      groupObj[this.props.activity[i].recipient].balance = round(groupObj[this.props.activity[i].recipient].balance)
+      groupObj[this.props.activity[i].recipient].balance -= round(this.props.activity[i].amount)
+      groupObj[this.props.activity[i].recipient].balance = round(groupObj[this.props.activity[i].recipient].balance)  
     }
   }
 
@@ -105,21 +108,15 @@ console.log('look at me mom',groupObj)
  // console.log('balances should be here',groupObj)
 var sortedGroup = [];
   for (var user in groupObj){
+    // console.log('real balance',groupObj[user].balance)
     sortedGroup.push(groupObj[user])
   }
 
-  //var sortedGroup = this.props.currentGroupUsers.sort(function(a,b){
-  //   return a.user_id - b.user_id;
-  // })
 sortedGroup = sortedGroup.sort(function(a,b){
   if (a.user_id){
    // console.log('user_id')
     return a.user_id - b.user_id;
   }
-  // else{
-  //   console.log('id')
-  //   return a.id - b.id;
-  // }
   })
 console.log('so confused',sortedGroup)
   for (var i=0 ; i<sortedGroup.length; i++){
@@ -141,8 +138,6 @@ console.log('so confused',sortedGroup)
         if(p1!==p2){
           if (sortedGroup[p2].tempBalance < 0){
             if((sortedGroup[p1].tempBalance - sortedGroup[p2].tempBalance) > 0){
-              // var owesObj = {}
-              // owesObj[sortedGroup[p1].id] = -1 * sortedGroup[p2].tempBalance
               sortedGroup[p2].owed.push({[sortedGroup[p1].name] : sortedGroup[p2].tempBalance})
               sortedGroup[p1].owed.push({[sortedGroup[p2].name] : -1 * sortedGroup[p2].tempBalance })
               sortedGroup[p1].tempBalance += sortedGroup[p2].tempBalance;
@@ -178,6 +173,11 @@ console.log('so confused',sortedGroup)
     console.log(user.name,user.owed)
   })
 return sortedGroup;
+}
+else{
+  console.log('rico hello there')
+  return [];
+}
 
 }
   
