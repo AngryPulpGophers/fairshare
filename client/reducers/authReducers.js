@@ -47,6 +47,7 @@ export function auth(state = {isFetching: false, isAuthed: false, userInfo: {}},
     })
     
     case ActionTypes.UPDATE_USER_SUCCESS:
+    // console.log("Action.response  in authReducers.js", action.response);
       return update(state, {
         isFetching: {$set: false}, 
         userInfo: {$set: JSON.parse(action.response)}

@@ -23,6 +23,7 @@ export default class Profile extends Component {
     handleSubmit(userData) {
      userData.id = this.props.userInfo.id
      this.props.updateUserInfo(userData)
+     alert("profile updated successfully");
     }
 
     renderField(fieldConfig, field) { // one helper per ea field declared

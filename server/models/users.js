@@ -32,9 +32,7 @@ Users.editProfile = function(profAttrs){
   return db('users')
     .where('id', '=', id)
     .update(profAttrs)
-    .then(function () {
-        return Users.getById(id)
-    })
+    .returning('id')
 };
 
 Users.getAll = function(){
