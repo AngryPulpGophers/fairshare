@@ -9,6 +9,7 @@ import NotFound from './containers/page-not-found'
 import GroupView from './containers/page-groupView'
 import Profile from './containers/page-profile'
 
+
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={Dashboard}/>

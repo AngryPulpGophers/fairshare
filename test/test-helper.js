@@ -53,31 +53,10 @@ TestHelper.createApp = function (loader) {
   return app;
 };
 
+//
+// Mocha "helpers" to support coroutines tests
+//
 var Bluebird = require('bluebird');
-
-/*
-// Monkey-patch mocha's `it` function
-// to support `yield` within generator functions
-// for pleasant test writing.
-//
-// Thanks goes to http://stackoverflow.com/a/23029774/49695
-//
-
-var originalIt = it;
-it = function(title, test) {
-
-  // If the test is a generator function - run it using suspend
-  if (test.constructor.name === 'GeneratorFunction') {
-    originalIt(title, function() {
-      return Bluebird.coroutine(test)();
-    });
-  }
-  // Otherwise use the original implementation
-  else {
-    originalIt(title, test);
-  }
-};
-*/
 
 global.before_ = function (f) { before ( Bluebird.coroutine(f) ); };
 global.beforeEach_ = function (f) { beforeEach ( Bluebird.coroutine(f) ); };

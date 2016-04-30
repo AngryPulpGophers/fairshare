@@ -21,7 +21,7 @@ class App extends Component {
     // children are components which defined in the routes as children of App
     const { children } = this.props;
     return (
-      <div>
+      <div className="bg-overlay">
         <Navigation createCallout={this.props.createCallout} 
           isAuthed={this.props.isAuthed} userInfo = {this.props.userInfo} logoutUser ={this.props.logoutUser} />
         <div className='row'>

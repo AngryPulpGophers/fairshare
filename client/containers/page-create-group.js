@@ -12,14 +12,14 @@ class PageCreateGroup extends Component {
     super(props)
     this.state = {newMem: {}}
   }
-
+  
   handleNewMem(option, state){
     //set a temp state to handle our fuzzy search
     this.setState({ newMem: option})
 
   }
   // our hacky way of dealing with auth
-  componentDidMount(){
+  componentDidUpdate(){
     if(!this.props.isAuthed){
       browserHistory.push('/login')
     }
@@ -53,7 +53,8 @@ PageCreateGroup.PropTypes = {
   addMember: PropTypes.func.isRequired,
   removeMember: PropTypes.func.isRequired,
   createGroup: PropTypes.func.isRequired,
-  clearMembers: PropTypes.func.isRequired
+  clearMembers: PropTypes.func.isRequired,
+  isAuthed: PropTypes.bool.isRequired
 }
 
 function mapStateToProps(state) {
