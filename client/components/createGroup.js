@@ -17,7 +17,7 @@ export default class CreateGroup extends Component {
   renderMembers(data) {
     //console.log('called', data)
     return (
-      <li><strong>{data.name} - <a className="tiny alert button remove-user" onClick={() => { this.props.removeMember(Number(data.value))}}> remove</a></strong></li>
+      <li><img className="small-mem" src={data.image} /><strong>{data.name} - <a className="tiny alert button remove-user" onClick={() => { this.props.removeMember(Number(data.value))}}> remove</a></strong></li>
     )
   }
 
@@ -83,6 +83,7 @@ export default class CreateGroup extends Component {
                     </div>
                   }
                 </form>
+                <button disabled={!this.props.members.length} onClick={() => { this.props.createGroup(this.props.members,this.props.groupForm) }} className="expanded primary button">+ Create New Group!</button>
               </div>
               <div className="small-12 large-5 columns">
                 <div className="callout text-center members-list">
@@ -93,9 +94,7 @@ export default class CreateGroup extends Component {
                   </ul>
                 </div>
               </div>  
-              <div className="small-12 columns">
-                <a onClick={() => { this.props.createGroup(this.props.members,this.props.groupForm) }} className="expanded primary button">+ Create New Group!</a>
-              </div>         
+                      
             </div> 
           </div>
           <div className="small-12 large-3 columns"></div>
