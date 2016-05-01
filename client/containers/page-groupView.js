@@ -4,6 +4,7 @@ import { Link, browserHistory } from 'react-router';
 import {  getGroups, getActivity,getUserByGroup , addExpense} from '../actions/groupActions';
 import GroupView from '../components/groupView';
 import { startDisplay, toggleDisplay } from '../actions/calloutActions';
+import makePayment from '../actions/paymentActions'
 
 class PageGroupView extends Component {
   // our hacky way of dealing with auth
@@ -27,6 +28,7 @@ class PageGroupView extends Component {
         displayActive = {this.props.displayActive}
         userInfo = {this.props.userInfo}
         addExpense = {this.props.addExpense}
+        makePayment = {this.props.makePayment}
       />
     )
   }
@@ -47,6 +49,7 @@ function mapStateToProps(state) {
     displayActive: state.notifications.displayActive,
     userInfo: state.auth.userInfo,
     isAuthed: state.auth.isAuthed,
+    makePayment: PropTypes.func.isRequired
   }
 }
 
