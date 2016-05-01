@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
-import {  getGroups, getActivity,getUserByGroup , addExpense} from '../actions/groupActions';
+import {  getGroups, getActivity,getUserByGroup , addExpense, makePayment} from '../actions/groupActions';
 import GroupView from '../components/groupView';
 import { startDisplay, toggleDisplay } from '../actions/calloutActions';
-import makePayment from '../actions/paymentActions'
 
 class PageGroupView extends Component {
   // our hacky way of dealing with auth
@@ -54,5 +53,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  getActivity,getUserByGroup,startDisplay,toggleDisplay, addExpense
+  getActivity,getUserByGroup,startDisplay,toggleDisplay, addExpense,makePayment
 })(PageGroupView)

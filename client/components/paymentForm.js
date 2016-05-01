@@ -4,14 +4,15 @@ import { reduxForm } from 'redux-form';
 import Modal from './modal';
 
 
-export const fields = ['Payee', 'Recipient', 'Amount', 'Notes'];
+export const fields = ['payee', 'recipient', 'amount', 'note'];
 
 export default class PaymentForm extends Component{
 
 	constructor(props){
     super(props)
     this.state = ({isModalOpen: false,
-                   chosenOne:null})
+                   chosenOne:null,
+                  })
   }
   openModal = () => {
     this.setState({isModalOpen: true})
@@ -20,25 +21,29 @@ export default class PaymentForm extends Component{
     this.setState({isModalOpen: false})
   }
   handleSubmit = (data) => {
-    data.Recipient = this.state.chosenOne;
+    console.log('data before type changes:', data)
+    data.group_id= window.location.href.match(/id.+/)[0].split('=')[1];
+    data.recipient = Number(this.state.chosenOne);
+    data.payee = this.props.userInfo.id;
+    data.amount = Number(Number(data.amount).toFixed(2));
+    data.group_id = Number(data.group_id);
     console.log('data after setting recipient:', data);
     // ReactDOM.unmountComponentAtNode(document.getElementById('modHanger'));
     this.setState({isModalOpen:false});
-    this.props.makePayment(this.props.groupMembers,data);
+    // console.log('makePayment:', this.props.makePayment);
+    this.props.makePayment(JSON.stringify(data));
   }
   resetForm = () => {
   	//do something
   }
 
   onChange = () => {
-   console.log('starting val of chosenOne:' ,this.state.chosenOne);
    var boxes = document.getElementsByClassName('recip');
-   // console.log('boxes in onchange:', boxes);
     for(var i =0; i< boxes.length;i++){
       if(boxes[i].checked){
         this.setState({chosenOne:boxes[i].value});
       }
-   }
+    }
   }
 
   makeCheckBox = (data) => {
@@ -49,15 +54,17 @@ export default class PaymentForm extends Component{
 
 	render(){
 		const{
-		  fields: {Payee, Recipient, Amount, Notes},
+		  fields: {payee, recipient, amount, note},
 		  handleSubmit,
 		  resetForm,
       submitting
      } = this.props
 
-     const memberCheckboxes = this.props.groupMembers.map((obj) => {
-      return this.makeCheckBox(obj);
-     });
+    const memberCheckboxes = this.props.groupMembers.filter((obj) => {
+      return obj.user_id !== this.props.userInfo.id;
+    }).map(obj => { 
+      return this.makeCheckBox(obj);  
+    })
 
     return(
     	<div>
@@ -65,30 +72,24 @@ export default class PaymentForm extends Component{
             <Modal id='modal' isOpen={this.state.isModalOpen} transitionName="modal-anim">
     	<form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
          <i onClick={this.closeModal} className="fa fa-times-circle-o" aria-hidden="true" style = {{cursor:'pointer'}}></i>
-				  <div>
-              <label>Payee</label>
-            <div>
-              <input type="text" value={this.props.userInfo.name.split(' ')[0]}
-              {...Payee}/>
-            </div>
-          </div>
           <div>
-            <label>Select</label>
-            <div>
-              {[...memberCheckboxes]}
-            </div>
+            <h2>Make a Payment</h2>
+              <label>Select One</label>
+                <div>
+                  {[...memberCheckboxes]}
+                </div>
           </div>
           <div>
             <label>Amount</label>
           <div>
-            <input type="text" placeholder="100.00,etc." defaultValue=""
-            {...Amount}/>
+            <input type="number" placeholder="100.00,etc." defaultValue=""
+            {...amount}/>
           </div>
         </div>
         <div>
           <label>Notes</label>
           <textarea placeholder="Additional Info" defaultValue=""
-          {...Notes}/>
+          {...note}/>
           <div>
           </div>
         </div>
@@ -96,7 +97,7 @@ export default class PaymentForm extends Component{
           <button type="submit" className='button primary button tiny' disabled={submitting}>
             {submitting ? <i/> : <i/>} Make Payment
           </button>
-          <button type="button" className = 'button alert button tiny' disabled={submitting} onClick={resetForm}>
+          <button type="button" className = 'button alert button tiny' disabled={submitting} onClick={resetForm} style={{marginLeft: 5}}>
             Clear Values
           </button>
         </div>

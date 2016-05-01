@@ -85,6 +85,23 @@ export function addExpense(formData) {
   }
 }
 
+export const PAYMENT_REQUEST = 'PAYMENT_REQUEST';
+export const PAYMENT_SUCCESS = 'PAYMENT_SUCCESS';
+export const PAYMENT_FAILURE = 'PAYMENT_FAILURE';
+
+export function makePayment(formData) {
+  console.log('called Payment action with:', formData);
+  return {
+    [CALL_API]: {
+      endpoint: 'groups/payments',
+      body: formData,
+      req: 'POST',
+      types: [PAYMENT_REQUEST, PAYMENT_SUCCESS, PAYMENT_FAILURE]
+    }
+
+  }
+}
+
 
 
 

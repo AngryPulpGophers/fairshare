@@ -79,8 +79,6 @@ export default class GroupView extends Component {
         )
       }
 
-
-
         <h2>Activity</h2>  
             
         <PaymentForm
@@ -98,7 +96,6 @@ export default class GroupView extends Component {
         userInfo = {this.props.userInfo}
         />
       {/*<p> hi add expense<Link  to={{pathname:'/addExpense',query:{ id:ID[1] , pj:'holly'}}} title="groupView"  className="button primary float-left tiny button">Add Expense</Link> </p>*/}
-        />
 
          {this.props.activity.map(function(activity,index){
             return <div className= {activity.type==='expense' ? "callout alert" :"callout success"}>
@@ -134,6 +131,9 @@ export default class GroupView extends Component {
      
     )
   }
+}
+GroupView.propTypes = {
+  makePayment: PropTypes.func.isRequired
 }
 
 
