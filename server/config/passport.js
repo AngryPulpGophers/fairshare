@@ -26,9 +26,9 @@ const trimProfile = obj => {
 const sessionConfig = {
   genid: () => uuid.v1(),
   store:  new pgSession({
-    pg       : pg,                                 
-    conString: 'postgresql://' + database_url +'/divvy', 
-    tableName: 'sessions'             
+    pg       : pg,
+    conString: 'postgresql://' + database_url +'/divvy',
+    tableName: 'sessions'
   }),
   secret: 'kitkat',
   resave: true,
@@ -54,11 +54,14 @@ passport.deserializeUser((id, done) => {
     console.warn("err at deserialize:", err);
   });
 });
+var clientID = process.env.FACEBOOK_APP_ID || authKeys.FACEBOOK_APP_ID
+var clientSecret = process.env.FACEBOOK_APP_SECRET || authKeys.FACEBOOK_APP_SECRET
+
 
 passport.use(new FacebookStrategy(
   {
-    clientID: authKeys.FACEBOOK_APP_ID,
-    clientSecret: authKeys.FACEBOOK_APP_SECRET,
+    clientID: clientID,
+    clientSecret: clientSecret,
     callbackURL: "http://localhost:3000/auth/facebook/callback",
     profileFields: ['id', 'displayName', 'picture.type(large)','email']
   },

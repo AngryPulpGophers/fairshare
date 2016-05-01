@@ -1,4 +1,15 @@
 module.exports = {
+  production: {
+    client: 'pg',
+    connection: {
+      database: 'divvy',
+      user: 'divvy',
+      password: 'password'
+    },
+    migrations:{
+      directory: __dirname + '/migrations'
+    }
+  },
   development: {
     client: 'postgresql',
     connection: {
