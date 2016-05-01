@@ -27,9 +27,12 @@ Users.getById = function(reqObj){
 };
 
 Users.editProfile = function(profAttrs){
+  var id = profAttrs.id;
+
   return db('users')
-    .where('id', '=', profAttrs.id)
-    .update(profAttrs);
+    .where('id', '=', id)
+    .update(profAttrs)
+    .returning('id')
 };
 
 Users.getAll = function(){

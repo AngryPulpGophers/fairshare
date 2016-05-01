@@ -2,17 +2,17 @@ import * as ActionTypes from '../actions/userActions';
 import update from 'react-addons-update';
 
 export function users(state = { isFetching: false, users: []}, action) {
-    //console.log('groups actions:', action)
     switch (action.type) {
+
       case ActionTypes.USERS_REQUEST:
         return update(state, {isFetching: {$set: true}})
 
       case ActionTypes.USERS_SUCCESS:
-        console.log('got our type and resp:', action.response)
         return update(state, {
           isFetching: {$set: false},
           users: {$set: cleanUsers(action.response)}
         })
+
       case ActionTypes.USERS_FAILURE:
         return update(state, {
           isFetching: {$set: false}})

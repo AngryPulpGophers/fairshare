@@ -5,11 +5,11 @@ const BASE_URL = 'http://localhost:3000/';
 
 function callApi(endpoint, id, req, body){
   let config = {credentials : 'include' };
-  //console.log('got an id:', id);
+  // console.log('got an id:', id);
   //config.header = { Accept: 'application/json'};
-  // console.log(arguments);
-  if(req === 'POST'){
-    // console.log('making POST req')
+  console.log(arguments);
+  if(req === 'POST' || req === 'PUT'){
+    console.log('making POST or PUT req');
     config.headers= {
       "Content-Type":"application/json",
       "Accept":"application/json"

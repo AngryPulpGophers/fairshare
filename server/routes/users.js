@@ -87,8 +87,12 @@ router.post('/', function(req, res){
 
 router.put('/username', function(req, res){
 	Users.editProfile(req.body)
-	  .then(function(){
-	  	res.status(200).send('profile updated');
+	  .then(function(data){
+      Users.getById({ id: JSON.parse(data)})
+      .then(function (data) {
+        res.status(200).send(data[0]);
+      })
+	     
 	  })
 	  .catch(function(err){
 	  	res.status(400).send({err:err});
