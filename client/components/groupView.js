@@ -10,6 +10,7 @@ import AddExpense from './addExpense';
 
 
 
+
 export default class GroupView extends Component {
   
   componentWillMount(){
@@ -19,7 +20,7 @@ export default class GroupView extends Component {
     // console.log('currentURL type',typeof window.location.href )
     var currentURL = window.location.href
     var ID = currentURL.split('id=')
-    console.log(ID[1])
+    // console.log(ID[1])
     //var stuff= this.props.getUserByGroup(this.props.url.location.query.id)
      //console.log('please fucking work',stuff)
      this.props.getUserByGroup(ID[1])
@@ -80,7 +81,7 @@ export default class GroupView extends Component {
 
 
 
-        <h2>Activity</h2>        
+        <h2>Activity</h2>  
             
         <PaymentForm
         groupMembers = {this.props.currentGroupUsers}
@@ -98,6 +99,7 @@ export default class GroupView extends Component {
         />
       {/*<p> hi add expense<Link  to={{pathname:'/addExpense',query:{ id:ID[1] , pj:'holly'}}} title="groupView"  className="button primary float-left tiny button">Add Expense</Link> </p>*/}
         />
+
          {this.props.activity.map(function(activity,index){
             return <div className= {activity.type==='expense' ? "callout alert" :"callout success"}>
               
