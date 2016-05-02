@@ -124,7 +124,7 @@ export default class AddExpense extends Component {
         <div>
           <label>imgUrl</label>
           <div>
-            <input type="text" placeholder="Image URL" {...imgUrl}/>
+            <input type="file" placeholder="Image URL" {...imgUrl} value = {null}/>
           </div>
         </div>
 

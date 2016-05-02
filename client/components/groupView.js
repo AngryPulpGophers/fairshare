@@ -8,6 +8,18 @@ import PaymentForm from './paymentForm';
 import AddExpense from './addExpense';
 
 
+
+
+  seeIfYou(name) {
+    if (name===this.props.userInfo.name){
+      return ('You')
+    }
+    else {
+      return name
+    }
+  }
+
+
 export default class GroupView extends Component {
   
   render() {
@@ -19,18 +31,19 @@ export default class GroupView extends Component {
   //    var what = new Date(this.props.activity[0].created_at)
   // console.log(this.props.activity)
   console.log('maybe work222', this.props.currentGroupUsers)
+  console.log('groupView CurrentUser',this.props.userInfo)
   var showUserBalance=[];
   showUserBalance=calcBalance.call(this)//this.calcBalance();
   console.log('hi pj, stuff should be here^^^^', showUserBalance)
     var localGroupObj=makeGroupObj.call(this) //this.makeGroupObj()
-    var counter = 0;
-    var displayObj={};
-    for (var i = 0; i<this.props.activity.length ; i++){
-      displayObj[counter] = {
-        display: 'none'
-      }
+    // var counter = 0;
+    // var displayObj={};
+    // for (var i = 0; i<this.props.activity.length ; i++){
+    //   displayObj[counter] = {
+    //     display: 'none'
+    //   }
 
-    }
+    // }
 
   // setting this to bypas the need for authentication
     return(
@@ -42,16 +55,21 @@ export default class GroupView extends Component {
             {user.owed.map(function(person){
               return (
                 <div>
-                  {user.name} {person[Object.keys(person)]>0 ? " is owed $" +person[Object.keys(person)]+" from "+Object.keys(person) 
-                  : "owes " + Object.keys(person) +" $"+ -1*person[Object.keys(person)]}
+
+
+                
+                  {this.seeIfYou(user.name)} {this.seeIfYou(user.name)==='You' ? " owe " +Object.keys(person)+" $"+person[Object.keys(person)] 
+                  : "owes " + this.seeIfYou(Object.keys(person)) +" $"+ -1*person[Object.keys(person)]}
+                  
                 </div>
+              
               )
-            })
+            }.bind(this))
             
            }
            </span> 
            )
-          }
+          }.bind(this)
         )
       }
 
@@ -86,16 +104,16 @@ export default class GroupView extends Component {
                     <div>Members: 
                       {activity.members.map(function(member,index,members){
                         return <span>
-                        {member.name}{index===members.length-1? "" : ", "}</span>
-                        })
+                        {this.seeIfYou(member.name)}{index===members.length-1? "" : ", "}</span>
+                        }.bind(this))
                       }
                     </div>
                   </div>
                 </div>  
               </div>
               :
-              <div>{localGroupObj[activity.payee].name} paid {localGroupObj[activity.recipient].name} ${activity.amount} Time:{prettyDate(activity.created_at)} 
-                <i className="fa fa-plus-square" aria-hidden='true' onClick={()=>this.props.toggleDisplay(index)} style={{float: "right", cursor:'pointer'}}></i>
+              <div>{this.seeIfYou(localGroupObj[activity.payee].name)} paid {this.seeIfYou(localGroupObj[activity.recipient].name)} ${activity.amount} Time:{prettyDate(activity.created_at)} 
+                <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
                  <div style={this.props.displayActive[index]}>
                     Note: {activity.note}
                   </div>
