@@ -120,7 +120,7 @@ sortedGroup = sortedGroup.sort(function(a,b){
     return a.user_id - b.user_id;
   }
   })
-console.log('so confused',sortedGroup)
+// console.log('so confused',sortedGroup)
   for (var i=0 ; i<sortedGroup.length; i++){
    sortedGroup[i].balance = round(sortedGroup[i].balance);
    //console.log('pj',sortedGroup[i].balance)
@@ -176,9 +176,9 @@ console.log('so confused',sortedGroup)
   }
 
 
-  console.log(sortedGroup)
+  // console.log(sortedGroup)
   sortedGroup.map(function(user){
-    console.log(user.name,user.owed)
+    // console.log(user.name,user.owed)
   })
 return sortedGroup;
 }
@@ -200,7 +200,7 @@ Helper.makeGroupObj = function(){
 }
 
 Helper.test = function(x,obj){
-  console.log('holly', x,obj)
+  // console.log('holly', x,obj)
   if (obj.display==='none'){
     delete obj.display;
     return {}

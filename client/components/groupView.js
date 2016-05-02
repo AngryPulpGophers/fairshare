@@ -8,22 +8,27 @@ import PaymentForm from './paymentForm';
 import AddExpense from './addExpense';
 
 
+
+
+
 export default class GroupView extends Component {
   
   componentWillMount(){
     console.log('hi my name is pjpjpjpjpj',this)
-    //call our get groups function
+    // call our get groups function
     console.log('currentURL',window.location.href )
     console.log('currentURL type',typeof window.location.href )
     var currentURL = window.location.href
     var ID = currentURL.split('id=')
     console.log(ID[1])
+    // var stuff= this.props.getUserByGroup(this.props.url.location.query.id)
+     // console.log('please fucking work',stuff)
      this.props.getUserByGroup(ID[1])
      console.log('maybe work', this.props.currentGroupUsers)
-    //var clickedOnGroup = (this.props.url.location.query.id)
+    // var clickedOnGroup = (this.props.url.location.query.id)
     this.props.getActivity(ID[1])
-    //the number on the next line should be the number of activities for the group but PJ had issues with that
-    //this number can be as big as you want, just takes up more space in state
+    // the number on the next line should be the number of activities for the group but PJ had issues with that
+    // this number can be as big as you want, just takes up more space in state
     this.props.startDisplay(100)
   }
 
@@ -33,10 +38,10 @@ export default class GroupView extends Component {
     var currentURL = window.location.href
     var ID = currentURL.split('id=')
     console.log('did this work',ID[1])
-    //var { query } = this.props.location
-   // console.log('samsam',this.props,'and pj', this.props.params)
-     //var what = new Date(this.props.activity[0].created_at)
-  //console.log(this.props.activity)
+  //   var { query } = this.props.location
+  //  console.log('samsam',this.props,'and pj', this.props.params)
+  //    var what = new Date(this.props.activity[0].created_at)
+  // console.log(this.props.activity)
   console.log('maybe work222', this.props.currentGroupUsers)
   var showUserBalance=[];
   showUserBalance=calcBalance.call(this)//this.calcBalance();
@@ -74,12 +79,12 @@ export default class GroupView extends Component {
         )
       }
 
-
-
-        <h2>Activity</h2>        
+        <h2>Activity</h2>  
+            
         <PaymentForm
         groupMembers = {this.props.currentGroupUsers}
         userInfo = {this.props.userInfo}
+        makePayment = {this.props.makePayment}
         />
         <AddExpense
         getActivity={this.props.getActivity}
@@ -91,9 +96,6 @@ export default class GroupView extends Component {
         userInfo = {this.props.userInfo}
         />
       {/*<p> hi add expense<Link  to={{pathname:'/addExpense',query:{ id:ID[1] , pj:'holly'}}} title="groupView"  className="button primary float-left tiny button">Add Expense</Link> </p>*/}
-
-        <h2>Activity</h2>
-        
 
          {this.props.activity.map(function(activity,index){
             return <div className= {activity.type==='expense' ? "callout alert" :"callout success"}>
@@ -117,7 +119,7 @@ export default class GroupView extends Component {
               </div>
               :
               <div>{localGroupObj[activity.payee].name} paid {localGroupObj[activity.recipient].name} ${activity.amount} Time:{prettyDate(activity.created_at)} 
-                <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
+                <i className="fa fa-plus-square" aria-hidden='true' onClick={()=>this.props.toggleDisplay(index)} style={{float: "right", cursor:'pointer'}}></i>
                  <div style={this.props.displayActive[index]}>
                     Note: {activity.note}
                   </div>
@@ -130,8 +132,8 @@ export default class GroupView extends Component {
     )
   }
 }
+GroupView.propTypes = {
+  makePayment: PropTypes.func.isRequired
+}
 
-// GroupView.propTypes = {
 
-//   prettyDate: PropTypes.func.isRequired
-// }
