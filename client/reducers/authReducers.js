@@ -15,7 +15,9 @@ export function auth(state = {isFetching: false, isAuthed: false, userInfo: {}},
 		})
     
     case ActionTypes.USER_SUCCESS:
-    console.log('action.response in USER_SUCCESS:', action.response);
+    //console.log('action.response in USER_SUCCESS:', action.response);
+    //take advantage of localstorage
+    window.localStorage.setItem("isAuthed", true);
     return update(state, {
     	isFetching:{$set: false},
 	    isAuthed: {$set: true},
@@ -34,6 +36,8 @@ export function auth(state = {isFetching: false, isAuthed: false, userInfo: {}},
 	  })
 	  
 	  case ActionTypes.LOGOUT_SUCCESS:
+      //make sure local storage is cleared
+      window.localStorage.clear();
 	    return [];
 	  
 	  case ActionTypes.LOGOUT_FAILURE:
