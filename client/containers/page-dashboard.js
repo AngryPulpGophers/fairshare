@@ -16,13 +16,6 @@ class PageDashboard extends Component {
             isAuthed={this.props.isAuthed}
             groups={this.props.groups}
           />
-          {/*<div className="row">
-        <div className="small-12 large-4 large-push-8 columns small-uncollapse large-collapse">
-          column here
-        </div>
-        <div className="small-12 large-8 large-pull-4 columns small-uncollapse large-collapse">
-        </div>
-      </div>*/}
       </div>
     )
   }
@@ -37,7 +30,6 @@ PageDashboard.propTypes = {
 }
 
 function mapStateToProps(state) {
-console.log('state notifications:',state.notifications)
   
   return {
     url: state.routing.location.pathname,

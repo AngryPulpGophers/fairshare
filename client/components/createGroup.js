@@ -55,46 +55,47 @@ export default class CreateGroup extends Component {
       
         <div className="row">
           <div className="small-12 large-9 large-centered columns">
-            <div className="row">
-              <div className="small-12 columns">
-                <h2>Create a New Group</h2>
-              </div>
-              <div className="small-12 large-7 columns">
-                <form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
-                  <label>Group Name
-                    <input
-                      type="text"
-                      placeholder="Make sure you're specific! (Trip to Detroit, College Reunion)" 
-                      {...groupName}
-                    />
-                  </label>
-                  <label>Description
-                    <input 
-                      type="text" 
-                      placeholder="Describe the group" 
-                      {...groupDesc}
-                    />
-                  </label>
-                  <label>Add a few folks</label>
-                  { this.props.users.length === 0 ? null :  
-                    <div className="input-group">
-                      <SelectSearch valueChanged={this.props.handleNewMem} options={this.props.users} ref="users" />
-                      <a id="add" onClick={() => { this.props.addMember(this.props.newMem, this.props.groupForm) }} className="input-group-button button">+ add</a>
-                    </div>
-                  }
-                </form>
-                <button disabled={!this.props.members.length} onClick={() => { this.props.createGroup(this.props.members,this.props.groupForm) }} className="expanded primary button">+ Create New Group!</button>
-              </div>
-              <div className="small-12 large-5 columns">
-                <div className="callout text-center members-list">
-                  <h4>Current Members</h4>
-                  {this.props.members.length === 0 ? <span className="warning label"><strong>No one added yet!</strong></span> : null}
-                  <ul>
-                    {[...memberElements]}
-                  </ul>
+            <div className="component-wrapper">
+              <div className="row">
+                <div className="small-12 columns">
+                  <h2>Create a New Group</h2>
                 </div>
-              </div>  
-                      
+                <div className="small-12 large-7 columns">
+                  <form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
+                    <label>Group Name
+                      <input
+                        type="text"
+                        placeholder="Make sure you're specific! (Trip to Detroit, College Reunion)" 
+                        {...groupName}
+                      />
+                    </label>
+                    <label>Description
+                      <input 
+                        type="text" 
+                        placeholder="Describe the group" 
+                        {...groupDesc}
+                      />
+                    </label>
+                    <label>Add a few folks</label>
+                    { this.props.users.length === 0 ? null :  
+                      <div className="input-group">
+                        <SelectSearch valueChanged={this.props.handleNewMem} options={this.props.users} ref="users" />
+                        <a id="add" onClick={() => { this.props.addMember(this.props.newMem, this.props.groupForm) }} className="input-group-button button">+ add</a>
+                      </div>
+                    }
+                  </form>
+                  <button disabled={!this.props.members.length} onClick={() => { this.props.createGroup(this.props.members,this.props.groupForm) }} className="expanded primary button">+ Create New Group!</button>
+                </div>
+                <div className="small-12 large-5 columns">
+                  <div className="callout text-center members-list">
+                    <h4>Current Members</h4>
+                    {this.props.members.length === 0 ? <span className="warning label"><strong>No one added yet!</strong></span> : null}
+                    <ul>
+                      {[...memberElements]}
+                    </ul>
+                  </div>
+                </div>  
+              </div>     
             </div> 
           </div>
           <div className="small-12 large-3 columns"></div>

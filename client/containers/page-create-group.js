@@ -11,6 +11,10 @@ class PageCreateGroup extends Component {
   constructor(props){
     super(props)
     this.state = {newMem: {}}
+
+    if(!this.props.isAuthed){
+      browserHistory.push('/login')
+    }
   }
   
   handleNewMem(option, state){
@@ -18,12 +22,7 @@ class PageCreateGroup extends Component {
     this.setState({ newMem: option})
 
   }
-  // our hacky way of dealing with auth
-  componentDidUpdate(){
-    if(!this.props.isAuthed){
-      browserHistory.push('/login')
-    }
-  }
+
   render() {
     //console.log('checking members existence:',this.state.members)
     return (
@@ -58,7 +57,6 @@ PageCreateGroup.PropTypes = {
 }
 
 function mapStateToProps(state) {
-  console.log('current state:',state);
   return {
     groups: state.groups.groups,
     users: state.users.users,

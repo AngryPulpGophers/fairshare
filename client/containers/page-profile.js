@@ -5,7 +5,13 @@ import {updateUserInfo} from '../actions/authActions'
 
 class PageProfile extends Component {
 
-   render() {
+  constructor(props){
+    super(props)
+    if(!this.props.isAuthed){
+      browserHistory.push('/login')
+    }
+  }
+  render() {
 
     const myInitialValues = {
       initialValues: {
@@ -27,7 +33,8 @@ class PageProfile extends Component {
 
 function mapStateToProps(state) {
   return {
-   userInfo : state.auth.userInfo
+   userInfo : state.auth.userInfo,
+   isAuthed: state.auth.isAuthed,
   }
 }
 

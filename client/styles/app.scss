@@ -1,7 +1,17 @@
 @import 'components/settings';
 body{
-  //background: transparent url(../images/dinnerBlur.jpg) no-repeat center center;
+  z-index: -1;
+  background: $white url(../images/dinnerBlur.jpg) no-repeat center center;
 }
+
+.component-wrapper{
+  background: #fff;
+  padding: 20px 40px;
+  border-radius: .5em;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 20px #888;
+}
+
 .login,.create-group{
   margin-top: 130px;
 }
@@ -22,6 +32,7 @@ input[type='search']{
 }
 .members-list{
   margin-top: 20px;
+  background-color: $white;
   li{ list-style-type: none;}
 }
 .remove-user{
@@ -38,6 +49,14 @@ input[type='search']{
   color: $white;
 }
 
+.example-appear {
+  opacity: 0.01;
+}
+
+.example-appear.example-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
 .modal-anim-enter {
   opacity: 0.00;
   transform: scale(0.7);
@@ -83,6 +102,4 @@ input[type='search']{
   margin-right: auto;
   overflow-y: auto;
   width:65%;
-
 }
-
