@@ -1,6 +1,8 @@
 var Groups  = require('../models/groups.js');
 var Users   = require('../models/users.js');
 var express = require('express');
+var multer = require('multer');
+var upload = multer({ dest: './client/images/expenses'});
 var router  = express.Router();
 
 module.exports = router;
@@ -108,6 +110,10 @@ router.post('/expenses', function(req, res){
     .catch(function(err){
       res.status(400).send({err: err});
     });
+});
+
+router.post('/expenses/upload', upload.single('photo') ,function(req, res){
+  res.end(req.file.path);
 });
 
 router.post('/payments', function(req, res){

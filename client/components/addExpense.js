@@ -1,17 +1,18 @@
-import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
-import { Link } from 'react-router'
-import { reduxForm } from 'redux-form'
-import PureInput from './PureInput'
+import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
+import { Link } from 'react-router';
+import { reduxForm } from 'redux-form';
+import PureInput from './PureInput';
 import Modal from './modal';
-export const fields = [ 'title', 'note', 'imgUrl', 'members0','members1','members2',
-                        'members3', 'members4','members5','members6','members7','members8','members9', 'amount' ]
+import request from 'superagent';
+export const fields = [ 'title', 'note', 'imgUrl', 'photo', 'members0','members1','members2',
+  'members3', 'members4','members5','members6','members7','members8','members9', 'amount'];
 
 export default class AddExpense extends Component {
 
   constructor(props){
-    super(props)
-    this.state = ({isModalOpen: false})
+    super(props);
+    this.state = ({isModalOpen: false});
     //this.state = ({initialValue: true})
   }
   openModal = () => {
@@ -20,81 +21,84 @@ export default class AddExpense extends Component {
   closeModal = () => {
     this.setState({isModalOpen: false})
   }
-  
+
   componentWillMount(){
-    console.log('currentURL',window.location.href )
     console.log('currentURL type',typeof window.location.href )
     //call our get groups function only if we haven't called it yet
-        var currentURL = window.location.href
-        console.log(currentURL)
-    var ID = currentURL.split('id=')
+    var currentURL = window.location.href;
+    console.log(currentURL);
+    var ID = currentURL.split('id=');
     //ID= ID[1].split('&')
-    this.props.getUserByGroup(ID[1])
-    console.log('maybe work33', this.props.currentGroupUsers)
-    console.log(this,'this')
-  
+    this.props.getUserByGroup(ID[1]);
+    console.log('maybe work33', this.props.currentGroupUsers);
+    console.log(this,'this');
   }
 
-  
+
   handleSubmit(data) {
-    // console.log('addExpense',this.props.currentGroupUsers)
-    //  console.log('I SUBMITTED',data)
-     
-  if (this.props.userInfo){
-       var currentURL = window.location.href
-       var baseURL = currentURL.split('/')[0]
-          console.log(currentURL)
-      var ID = currentURL.split('id=')
-      //ID= ID[1].split('&')
-      var obj = {}
-      obj.members = []
-      //hard coded to 10, which is number of hard coded members max
-      for (var i = 0 ; i< this.props.currentGroupUsers.length ; i++){
-        
-          if (this.props.userInfo.id===this.props.currentGroupUsers[i].user_id){
-            data['members'+i] = true;
-          }
-        
-      }
-      for (var i = 0 ; i< 10 ; i++){
-        if (data['members'+i]){
-          obj.members.push(this.props.currentGroupUsers[i].user_id)
+    if (this.props.userInfo){
+    var photo = new FormData();
+    photo.append('photo', data.photo[0]);
+
+    request.post('/groups/expenses/upload')
+      .send(photo)
+      .end(function(err, resp) {
+        if (err) { console.error(err); }
+        return resp;
+      })
+      .then(function(resp){
+        var currentURL = window.location.href;
+        var baseURL = currentURL.split('/')[0];
+            console.log(currentURL);
+        var ID = currentURL.split('id=');
+        //ID= ID[1].split('&')
+        var obj = {}
+        obj.members = []
+        //hard coded to 10, which is number of hard coded members max
+        for (var i = 0 ; i< this.props.currentGroupUsers.length ; i++){
+
+            if (this.props.userInfo.id===this.props.currentGroupUsers[i].user_id){
+              data['members'+i] = true;
+            }
+
         }
-      }
-      obj.paid_by = this.props.userInfo.id;
-      obj.title = data.title;
-      obj.amount = Number(Number(data.amount).toFixed(2))
-      obj.img_url = data.imgUrl;
-      obj.note = data.note;
-      obj.group_id = Number(ID[1])
-      console.log('what PJ sends to post expense',obj)
-      this.props.addExpense(JSON.stringify(obj))
+        for (var i = 0 ; i< 10 ; i++){
+          if (data['members'+i]){
+            obj.members.push(this.props.currentGroupUsers[i].user_id)
+          }
+        }
+        obj.paid_by = this.props.userInfo.id;
+        obj.title = data.title;
+        obj.amount = Number(Number(data.amount).toFixed(2))
+        obj.img_url = resp.text || data.imgUrl;
+        obj.note = data.note;
+        obj.group_id = Number(ID[1]);
+        console.log('send to post expense', obj);
+        this.props.addExpense(JSON.stringify(obj));
 
-
-      console.log('I SUBMITTED',data)
-      location.replace(baseURL+'/groupView?id='+ID[1])
-
+        location.replace(baseURL+'/groupView?id='+ID[1]);
+      }.bind(this));
     }
     else{
-      console.log("ERROR NO CURRENT USER")
+      console.log("ERROR NO CURRENT USER");
     }
 }
-  
+
 
   render(){
-    console.log('maybe work444',this.props.currentGroupUsers)
-    
+    console.log('maybe work444',this.props.currentGroupUsers);
+
     {console.log('EXPENSEcurrent user:', this.props.userInfo)}
 
     const {
 
-      fields: { title, note, imgUrl, members0,members1,members2,
+      fields: { title, note, imgUrl, photo, members0,members1,members2,
                 members3, members4, members5, members6, members7, members8, members9, amount },
       handleSubmit,
       resetForm,
       submitting
       } = this.props
-     
+
 
     return (
       <div>
@@ -116,13 +120,21 @@ export default class AddExpense extends Component {
             <input type="text" placeholder="Note" {...note}/>
           </div>
         </div>
-        
+
         <div>
           <label>imgUrl</label>
           <div>
             <input type="text" placeholder="Image URL" {...imgUrl}/>
           </div>
         </div>
+
+        <div>
+          <label>Upload a photo (overwrites url option)</label>
+          <div>
+            <input type="file" accept='image/*' {...photo} value={null} />
+          </div>
+        </div>
+
         <div>
           <label>Amount</label>
           <div>
@@ -142,17 +154,17 @@ export default class AddExpense extends Component {
           return (
           <label>
               {this.props.userInfo.id===user.user_id ?
-               <PureInput type="checkbox"   checked='checked' field = {this.props.fields[string]}/> 
-              
-               : 
-               <PureInput type="checkbox"  field = {this.props.fields[string]}/> 
+               <PureInput type="checkbox"   checked='checked' field = {this.props.fields[string]}/>
+
+               :
+               <PureInput type="checkbox"  field = {this.props.fields[string]}/>
 
              } <span>{user.name}</span>
           </label>)
           }.bind(this))
             }
         </div>
-   
+
         <div>
           <button type="submit" className="button primary float-left tiny button" disabled={submitting}>
             {submitting ? <i/> : <i/>} Submit
