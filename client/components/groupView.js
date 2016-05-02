@@ -119,7 +119,7 @@ export default class GroupView extends Component {
               </div>
               :
               <div>{localGroupObj[activity.payee].name} paid {localGroupObj[activity.recipient].name} ${activity.amount} Time:{prettyDate(activity.created_at)} 
-                <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
+                <i className="fa fa-plus-square" aria-hidden='true' onClick={()=>this.props.toggleDisplay(index)} style={{float: "right", cursor:'pointer'}}></i>
                  <div style={this.props.displayActive[index]}>
                     Note: {activity.note}
                   </div>
