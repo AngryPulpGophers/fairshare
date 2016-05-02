@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Profile from '../components/Profile';
-import {updateUserInfo} from '../actions/authActions'
+import Profile from '../components/profile';
+import {updateUserInfo} from '../actions/authActions';
 
 class PageProfile extends Component {
 
@@ -19,10 +19,10 @@ class PageProfile extends Component {
         email: this.props.userInfo.email,
         username: this.props.userInfo.username
       }
-    }
+    };
 
     return (
-     <Profile 
+     <Profile
         {...myInitialValues}
         userInfo = {this.props.userInfo}
         updateUserInfo = {this.props.updateUserInfo}
