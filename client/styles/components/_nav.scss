@@ -1,6 +1,7 @@
 @import 'settings';
 .top-bar{
   border-bottom: 3px solid $white;
+  box-shadow: 1px 1px 20px #888;
 }
 .menu > li > a.img-placeholder{
   padding: 0;

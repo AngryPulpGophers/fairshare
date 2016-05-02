@@ -3,18 +3,21 @@ import ReactDOM from 'react-dom';
 import { browserHistory, Router, Route,Link } from 'react-router';
 import GroupList from './groupList';
 import {prettyDate, calcBalance, makeGroupObj, test} from '../utility/groupViewHelper';
+import Modal from './modal';
+import PaymentForm from './paymentForm';
+import AddExpense from './addExpense';
+
 
 export default class GroupView extends Component {
   
   componentWillMount(){
+    console.log('hi my name is pjpjpjpjpj',this)
     //call our get groups function
     console.log('currentURL',window.location.href )
     console.log('currentURL type',typeof window.location.href )
     var currentURL = window.location.href
     var ID = currentURL.split('id=')
     console.log(ID[1])
-    //var stuff= this.props.getUserByGroup(this.props.url.location.query.id)
-     //console.log('please fucking work',stuff)
      this.props.getUserByGroup(ID[1])
      console.log('maybe work', this.props.currentGroupUsers)
     //var clickedOnGroup = (this.props.url.location.query.id)
@@ -24,7 +27,12 @@ export default class GroupView extends Component {
     this.props.startDisplay(100)
   }
 
+
+
   render() {
+    var currentURL = window.location.href
+    var ID = currentURL.split('id=')
+    console.log('did this work',ID[1])
     //var { query } = this.props.location
    // console.log('samsam',this.props,'and pj', this.props.params)
      //var what = new Date(this.props.activity[0].created_at)
@@ -67,8 +75,26 @@ export default class GroupView extends Component {
       }
 
 
+
+        <h2>Activity</h2>        
+        <PaymentForm
+        groupMembers = {this.props.currentGroupUsers}
+        userInfo = {this.props.userInfo}
+        />
+        <AddExpense
+        getActivity={this.props.getActivity}
+        activity={this.props.activity}
+        currentGroupUsers = {this.props.currentGroupUsers}
+        url = {this.props.url}
+        getUserByGroup = {this.props.getUserByGroup}
+        addExpense = {this.props.addExpense}
+        userInfo = {this.props.userInfo}
+        />
+      {/*<p> hi add expense<Link  to={{pathname:'/addExpense',query:{ id:ID[1] , pj:'holly'}}} title="groupView"  className="button primary float-left tiny button">Add Expense</Link> </p>*/}
+
         <h2>Activity</h2>
         
+
          {this.props.activity.map(function(activity,index){
             return <div className= {activity.type==='expense' ? "callout alert" :"callout success"}>
               

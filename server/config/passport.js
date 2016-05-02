@@ -23,7 +23,7 @@ const trimProfile = obj => {
   return obj;
 };
 
-app.use(session({
+const sessionConfig = {
   genid: () => uuid.v1(),
   store:  new pgSession({
     pg       : pg,                                 
@@ -33,14 +33,14 @@ app.use(session({
   secret: 'kitkat',
   resave: true,
   saveUninitialized: true
-}));
+};
 
+app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser('kitkat'));
 
 passport.serializeUser((user, done) => {
-  // console.log('in serialize:', user.id);
   return done(null, user.id);
 });
 
@@ -48,7 +48,6 @@ passport.deserializeUser((id, done) => {
   User.getById({id: id})
   .then( userObj => {
     var cleanProfile = trimProfile(userObj[0]);
-    // console.log('in deserialize:', cleanProfile)
       return done(null, cleanProfile);
   })
   .catch( err => {
@@ -64,7 +63,6 @@ passport.use(new FacebookStrategy(
     profileFields: ['id', 'displayName', 'picture.type(large)','email']
   },
   (accessToken, refreshToken,params, profile, done) => {
-     console.log('params in fb strat:', params)
 
     //check DB for user--IF exists, execute cb->line 68
     //ELSE create profile, store in DB, execute cb->lines 70-85
@@ -72,7 +70,6 @@ passport.use(new FacebookStrategy(
       .then( userObj => {
         if(userObj[0]){
           let cleanProfile = trimProfile(userObj[0])
-          console.log('cleanProfile from getByFaceBookId:', cleanProfile);
           return done(null, cleanProfile);
         }
           let userProfile = {
@@ -88,12 +85,11 @@ passport.use(new FacebookStrategy(
           //attach app ID to userProfile for use in fn serializeUser->line 34
           userProfile.id = id[0];
           let cleanProfile = trimProfile(userProfile)
-          console.log('cleanProfile in create:', cleanProfile);
           return done(null, cleanProfile);
         });
       })
       .catch( err => {
-        console.warn('at facebook strategy err:', err);
+        console.warn('Error @facebook strategy:', err);
       });
   }));
 };

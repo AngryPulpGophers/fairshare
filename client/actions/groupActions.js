@@ -68,6 +68,30 @@ export function createGroup(members, formData) {
   }
 }
 
+export const EXPENSE_REQUEST = 'EXPENSE_REQUEST';
+export const EXPENSE_SUCCESS = 'EXPENSE_SUCCESS';
+export const EXPENSE_FAILURE = 'EXPENSE_FAILURE';
+
+export function addExpense(formData) {
+  //console.log('called actions with:', members, formData)
+  return {
+    [CALL_API]: {
+      endpoint: 'groups/expenses',
+      body: formData,
+      req: 'POST',
+      types: [EXPENSE_REQUEST, EXPENSE_SUCCESS, EXPENSE_FAILURE]
+    }
+
+  }
+}
+
+
+
+
+
+
+
+
 function processGroup(members,formData){
   console.log('all our stuff:', members, formData)
   let groupObj = {};

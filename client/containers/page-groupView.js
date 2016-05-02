@@ -1,13 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
-import {  getGroups, getActivity,getUserByGroup } from '../actions/groupActions';
+import {  getGroups, getActivity,getUserByGroup , addExpense} from '../actions/groupActions';
 import GroupView from '../components/groupView';
 import { startDisplay, toggleDisplay } from '../actions/calloutActions';
 
 class PageGroupView extends Component {
   // our hacky way of dealing with auth
-  componentDidUpdate(){
+  constructor(props){
+    super(props)
     if(!this.props.isAuthed){
       browserHistory.push('/login')
     }
@@ -18,11 +19,14 @@ class PageGroupView extends Component {
         getActivity={this.props.getActivity}
         activity={this.props.activity}
         currentGroupUsers = {this.props.currentGroupUsers}
+        userInfo = {this.props.userInfo}
         url = {this.props.url}
         getUserByGroup = {this.props.getUserByGroup}
         startDisplay = {this.props.startDisplay}
         toggleDisplay = {this.props.toggleDisplay}
         displayActive = {this.props.displayActive}
+        userInfo = {this.props.userInfo}
+        addExpense = {this.props.addExpense}
       />
     )
   }
@@ -34,17 +38,18 @@ PageGroupView.propTypes = {
 }
 
 function mapStateToProps(state) {
-  console.log('page-groupview',state)
+
   return {
     //I have no idea if this is right
     activity: state.groups.activity,
     currentGroupUsers: state.groups.currentGroupUsers,
     url: state.routing,
     displayActive: state.notifications.displayActive,
-    isAuthed: PropTypes.bool.isRequired,
+    userInfo: state.auth.userInfo,
+    isAuthed: state.auth.isAuthed,
   }
 }
 
 export default connect(mapStateToProps, {
-  getActivity,getUserByGroup,startDisplay,toggleDisplay
+  getActivity,getUserByGroup,startDisplay,toggleDisplay, addExpense
 })(PageGroupView)

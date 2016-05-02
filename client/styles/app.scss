@@ -4,20 +4,12 @@ body{
   background: $white url(../images/dinnerBlur.jpg) no-repeat center center;
 }
 
-#root {
-  position: relative;
-  height: 100%;
-}
-
-#root:after {
-  position: absolute;
-  content:"";
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  z-index: -1;
-  background-color: rgba(255,255,255,.5)
+.component-wrapper{
+  background: #fff;
+  padding: 20px 40px;
+  border-radius: .5em;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 20px #888;
 }
 
 .login,.create-group{
@@ -40,6 +32,7 @@ input[type='search']{
 }
 .members-list{
   margin-top: 20px;
+  background-color: $white;
   li{ list-style-type: none;}
 }
 .remove-user{
@@ -63,4 +56,50 @@ input[type='search']{
 .example-appear.example-appear-active {
   opacity: 1;
   transition: opacity .5s ease-in;
+}
+.modal-anim-enter {
+  opacity: 0.00;
+  transform: scale(0.7);
+  transition: all 0.2s;
+}
+
+.modal-anim-enter.modal-anim-enter-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.modal-anim-leave {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.2s;
+}
+
+.modal-anim-leave.modal-anim-leave-active {
+  opacity: 0.00;
+  transform: scale(0.7);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1005;
+  background-color: rgba(10, 10, 10, 0.45);
+  overflow-y: scroll;
+}
+
+.modal {
+  z-index: 1006;
+  padding: 1rem;
+  border: 1px solid #cacaca;
+  background-color: #fefefe;
+  border-radius: 0;
+  position: relative;
+  top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: auto;
+  width:65%;
 }

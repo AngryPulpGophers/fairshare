@@ -20,28 +20,13 @@ const FIELDS = {
         defaultValue : 'toto@gmail.com'
     }
 };
-const initialValues = {
-  name : 'sam'
-}
-// const data = {  // used to populate "account" reducer when "Load" is clicked
-//   name: this.props.name,
-//   username: this.props.username,
-//   email: this.props.email
-// }
-
-// after component mount - call this to add field 
-// function defaultFields(state) {
-//   return {
-//      load(data)
-//   };
-// }
-
 
 export default class Profile extends Component {
-    //componentWillMount(defaultFields)
 
-    onSubmit(props) {
-      alert('Profile Updated');
+    handleSubmit(userData) {
+     userData.id = this.props.userInfo.id
+     this.props.updateUserInfo(userData)
+     alert("profile updated successfully");
     }
 
     renderField(fieldConfig, field) { // one helper per ea field declared
@@ -62,8 +47,9 @@ export default class Profile extends Component {
       const {resetForm, handleSubmit, submitting, initialValues} = this.props;
     return (
         <div>
+        {console.log("this.props.userInfo inside profile.js", this.props.userInfo)}
             <img className="image" src={this.props.userInfo.img_url}/>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this))}>
             <div>
             {_.map(FIELDS, this.renderField.bind(this))}
               <button type="submit" className="btn btn-primary" disabled={submitting}>
