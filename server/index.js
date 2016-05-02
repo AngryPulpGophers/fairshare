@@ -53,7 +53,6 @@ if (process.env.NODE_ENV !== 'production') {
 if (process.env.NODE_ENV !== 'test') {
   // We're in development or production mode
   // create and run a real server.
-  var app = express();
   var authConfig = require('./config/passport.js')(app,express);
 
   // Parse incoming request bodies as JSON
