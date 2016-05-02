@@ -63,7 +63,7 @@ function mapStateToProps(state) {
     displayActive: state.notifications.displayActive,
     userInfo: state.auth.userInfo,
     isAuthed: state.auth.isAuthed,
-    auth: state.auth
+    auth: state.auth,
     makePayment: PropTypes.func.isRequired
   }
 }
