@@ -18,6 +18,7 @@ export function getUserInfo (){
 }
 
 export function logoutUser (){
+  //make sure local storage is cleared
 	return {
 		[CALL_API]:{
 			endpoint: 'auth/logout',

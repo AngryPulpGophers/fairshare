@@ -6,18 +6,15 @@ import { reduxForm } from 'redux-form';
 const FIELDS = {
     name : {
         type : 'input',
-        label : 'name',
-        defaultValue : 'toto'
+        label : 'name'
     },
     username : {
         type : 'input',
-        label: 'username',
-        defaultValue : 'test'
+        label: 'username'
     },
     email : {
         type : 'input',
-        label: 'email',
-        defaultValue : 'toto@gmail.com'
+        label: 'email'
     }
 };
 
@@ -31,7 +28,6 @@ export default class Profile extends Component {
 
     renderField(fieldConfig, field) { // one helper per ea field declared
       const fieldHelper = this.props.fields[field];
-      console.log('deafultValue',fieldConfig.defaultValue);
       return (
          <div>
           <label>{fieldConfig.label}</label>

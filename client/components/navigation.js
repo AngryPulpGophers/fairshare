@@ -30,7 +30,7 @@ export default class Navigation extends Component {
                   <img className = 'roundCorner-image' src = {this.props.userInfo.img_url}/>
                 </Link>
               </li>
-              <li><a href="auth/logout" type='button' className='primary button'>Logout</a></li>
+              <li><button onClick={() => {this.props.logoutUser()}} type='button' className='primary button'>Logout</button></li>
             </ul>
           </div>
         </div>

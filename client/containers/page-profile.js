@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import Profile from '../components/profile';
-import {updateUserInfo} from '../actions/authActions';
+import {updateUserInfo} from '../actions/authActions'
 
 class PageProfile extends Component {
 
-  constructor(props){
-    super(props)
-    if(!this.props.isAuthed){
+  componentWillMount(){
+    //console.log('component did update:',nextProps)
+    if(!window.localStorage.isAuthed){
+      browserHistory.push('/login')
+    }
+  }
+  componentWillReceiveProps(nextProps){
+    //console.log('component did update:',nextProps)
+    if(!nextProps.isAuthed){
       browserHistory.push('/login')
     }
   }

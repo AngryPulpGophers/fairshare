@@ -13,27 +13,6 @@ import AddExpense from './addExpense';
 
 export default class GroupView extends Component {
   
-  componentWillMount(){
-    console.log('hi my name is pjpjpjpjpj',this)
-    // call our get groups function
-    console.log('currentURL',window.location.href )
-    console.log('currentURL type',typeof window.location.href )
-    var currentURL = window.location.href
-    var ID = currentURL.split('id=')
-    console.log(ID[1])
-    // var stuff= this.props.getUserByGroup(this.props.url.location.query.id)
-     // console.log('please fucking work',stuff)
-     this.props.getUserByGroup(ID[1])
-     console.log('maybe work', this.props.currentGroupUsers)
-    // var clickedOnGroup = (this.props.url.location.query.id)
-    this.props.getActivity(ID[1])
-    // the number on the next line should be the number of activities for the group but PJ had issues with that
-    // this number can be as big as you want, just takes up more space in state
-    this.props.startDisplay(100)
-  }
-
-
-
   render() {
     var currentURL = window.location.href
     var ID = currentURL.split('id=')

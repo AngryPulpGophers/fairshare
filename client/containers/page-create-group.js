@@ -11,8 +11,14 @@ class PageCreateGroup extends Component {
   constructor(props){
     super(props)
     this.state = {newMem: {}}
-
-    if(!this.props.isAuthed){
+  }
+  componentWillMount(){
+    if(!window.localStorage.isAuthed){
+      browserHistory.push('/login')
+    }
+  }
+  componentWillReceiveProps(nextProps){
+    if(!nextProps.isAuthed){
       browserHistory.push('/login')
     }
   }
