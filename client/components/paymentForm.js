@@ -1,74 +1,98 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes, Link } from 'react';
+import ReactDOM from 'react-dom';
 import { reduxForm } from 'redux-form';
 import Modal from './modal';
+import PayHelp from '../utility/PaymentViewHelper'
 
-export const fields = ['Payee', 'Recipient', 'Amount'];
+export const fields = ['payee', 'recipient', 'amount', 'note'];
 
 export default class PaymentForm extends Component{
 
 	constructor(props){
     super(props)
-    this.state = ({isModalOpen: false})
+    this.state = ({
+      isModalOpen: false,
+      chosenOne:null,
+      isInnerModalOpen:false
+    })
   }
+
+//PayHelp methods and explanations --> PaymentViewHelper.js
+
   openModal = () => {
-    this.setState({isModalOpen: true})
+    PayHelp.openModal(this);
   }
   closeModal = () => {
-    this.setState({isModalOpen: false})
+    PayHelp.closeModal(this);
   }
-  handleSubmit(data){
-  	console.log(data);
+
+  handleSubmit = (data) => {
+    if(!this.state.chosenOne || !data.amount || !data.note){
+      this.openModal();
+    }else{
+      data = PayHelp.buildPaymentEntry(this,data);
+      this.setState({isModalOpen:false, chosenOne: null});
+      this.props.makePayment(JSON.stringify(data));
+    }  
   }
-  resetForm(){
-  	//do something
+
+  onChange = () => {
+    var userID = PayHelp.getRadioButtons('recip');
+    this.setState({chosenOne: userID})
   }
 
 	render(){
-    {console.log('users:', this.props.groupMembers)}
-    {console.log('current user:', this.props.userInfo)}
 		const{
-		  fields: {Payee, Recipient, Amount},
+		  fields: {payee, recipient, amount, note},
 		  handleSubmit,
 		  resetForm,
       submitting
      } = this.props
+
+    let RadioButtons = PayHelp.memberButtons(this, PayHelp.makeRadioButton);
+
     return(
     	<div>
     	 <button className = 'button primary button tiny'onClick={this.openModal}>Make Payment</button>
-            <Modal isOpen={this.state.isModalOpen}
-                   transitionName="modal-anim">
-    	<form onSubmit={handleSubmit}>
+            <Modal className='modal' isOpen={this.state.isModalOpen} transitionName="modal-anim">
+    	<form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
          <i onClick={this.closeModal} className="fa fa-times-circle-o" aria-hidden="true" style = {{cursor:'pointer'}}></i>
-				  <div>
-              <label>Payee</label>
-            <div>
-              <input type="text" placeholder="Payee"/>
-            </div>
-          </div>
           <div>
-            <label>Recipient</label>
-            <div>
-              <input type="text" placeholder="Recipient"/>
-            </div>
+            <h2>Make a Payment</h2>
+            <label>Select One</label>
+              <div>
+                {[...RadioButtons]}
+              </div>
           </div>
+          <div style={{backgroundColor:'black'}}></div>
           <div>
             <label>Amount</label>
-          <div>
-            <input type="text" placeholder="Amount"/>
+            <div>
+              <input type="text" placeholder="100.00" pattern = '[0-9]{1,}\.[0-9]{2}'
+              {...amount}/>
+            </div>
           </div>
-        </div>
-        <div>
-          <label>Notes</label>
+            <Modal className='modal' isOpen={this.state.isInnerModalOpen} transitionName="modal-anim">
+              <div>
+                <i onClick={this.closeModal} className="fa fa-times-circle-o" aria-hidden="true" style = {{cursor:'pointer'}}></i>
+                <span> All fields are required</span>
+              </div>
+            </Modal>
           <div>
+            <label>Notes</label>
+            <div>
+              <textarea placeholder="Additional Info" defaultValue=""
+              {...note}/>
+            </div>
           </div>
-        </div>
         <div>
           <button type="submit" className='button primary button tiny' disabled={submitting}>
-            {submitting ? <i/> : <i/>} Submit
+            {submitting ? <i/> : <i/>} Register Cash Payment
           </button>
-          <button type="button" className = 'button alert button tiny' disabled={submitting} onClick={resetForm}>
+          <button type="button" className = 'button alert button tiny' disabled={submitting} onClick={resetForm} style={{marginLeft: 5}}>
             Clear Values
           </button>
+          <a href=' https://www.paypal.com/home' className = 'button primary expand' style={{marginLeft: 5}}><i className= 'fa fa-paypal' style={{marginRight:'2px'}}></i>Settle up through PayPal</a>
         </div>
       </form>
       </Modal>
@@ -79,10 +103,11 @@ export default class PaymentForm extends Component{
 }
 
 PaymentForm.propTypes = {
-	user: PropTypes.object.isRequired,
-	groupMembers: PropTypes.object.isRequired,
+	userInfo: PropTypes.object.isRequired,
+	groupMembers: PropTypes.array.isRequired,
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  makePayment: PropTypes.func.isRequired,
   resetForm: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired
 }

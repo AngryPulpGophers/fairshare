@@ -113,9 +113,11 @@ router.post('/expenses', function(req, res){
 router.post('/payments', function(req, res){
   Groups.createPayment( req.body )
     .then(function(data){
+      data[0].type = 'payment';
       res.send(data[0]);
     })
     .catch(function(err){
+      console.log('err in payment post:', err);
       res.status(400).send({err: err});
     });
 });

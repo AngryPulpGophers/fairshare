@@ -56,6 +56,7 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    auth: state.auth,
     isAuthed: state.auth.isAuthed,
     userInfo: state.auth.userInfo
   }
