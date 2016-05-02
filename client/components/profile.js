@@ -44,7 +44,6 @@ export default class Profile extends Component {
     return (
         <div>
         {console.log("this.props.userInfo inside profile.js", this.props.userInfo)}
-            <img className="image" src={this.props.userInfo.img_url}/>
             <form onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this))}>
             <div>
             {_.map(FIELDS, this.renderField.bind(this))}
@@ -84,7 +83,7 @@ const validate = values => {
     if (!values[field]) {
         errors[field] = `${field} required`;
     }
- }); 
+ });
 
   return errors
 }

@@ -26,10 +26,10 @@ class PageProfile extends Component {
         email: this.props.userInfo.email,
         username: this.props.userInfo.username
       }
-    }
+    };
 
     return (
-     <Profile 
+     <Profile
         {...myInitialValues}
         userInfo = {this.props.userInfo}
         updateUserInfo = {this.props.updateUserInfo}

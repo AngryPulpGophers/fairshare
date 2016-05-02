@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
-import {  getGroups, getActivity,getUserByGroup , addExpense} from '../actions/groupActions';
+import {  getGroups, getActivity,getUserByGroup , addExpense, makePayment} from '../actions/groupActions';
 import GroupView from '../components/groupView';
 import { startDisplay, toggleDisplay } from '../actions/calloutActions';
 
@@ -42,6 +42,7 @@ class PageGroupView extends Component {
         displayActive = {this.props.displayActive}
         userInfo = {this.props.userInfo}
         addExpense = {this.props.addExpense}
+        makePayment = {this.props.makePayment}
       />
     )
   }
@@ -63,9 +64,10 @@ function mapStateToProps(state) {
     userInfo: state.auth.userInfo,
     isAuthed: state.auth.isAuthed,
     auth: state.auth
+    makePayment: PropTypes.func.isRequired
   }
 }
 
 export default connect(mapStateToProps, {
-  getActivity,getUserByGroup,startDisplay,toggleDisplay, addExpense
+  getActivity,getUserByGroup,startDisplay,toggleDisplay, addExpense,makePayment
 })(PageGroupView)
