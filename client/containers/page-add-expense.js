@@ -4,9 +4,6 @@ import {  getGroups, getActivity,getUserByGroup, addExpense } from '../actions/g
 import AddExpense from '../components/addExpense';
 
 class PageAddExpense extends Component {
-  
-
-
 
   render() {
     return (

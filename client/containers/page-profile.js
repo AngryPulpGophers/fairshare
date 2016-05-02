@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Profile from '../components/Profile';
-import {updateUserInfo} from '../actions/authActions'
+import Profile from '../components/profile';
+import {updateUserInfo} from '../actions/authActions';
 
 class PageProfile extends Component {
 
-   render() {
+  constructor(props){
+    super(props)
+    if(!this.props.isAuthed){
+      browserHistory.push('/login')
+    }
+  }
+  render() {
 
     const myInitialValues = {
       initialValues: {
@@ -13,10 +19,10 @@ class PageProfile extends Component {
         email: this.props.userInfo.email,
         username: this.props.userInfo.username
       }
-    }
+    };
 
     return (
-     <Profile 
+     <Profile
         {...myInitialValues}
         userInfo = {this.props.userInfo}
         updateUserInfo = {this.props.updateUserInfo}
@@ -27,7 +33,8 @@ class PageProfile extends Component {
 
 function mapStateToProps(state) {
   return {
-   userInfo : state.auth.userInfo
+   userInfo : state.auth.userInfo,
+   isAuthed: state.auth.isAuthed,
   }
 }
 

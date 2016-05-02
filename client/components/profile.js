@@ -7,14 +7,17 @@ const FIELDS = {
     name : {
         type : 'input',
         label : 'name',
+        defaultValue : 'toto'
     },
     username : {
         type : 'input',
-        label: 'username'
+        label: 'username',
+        defaultValue : 'test'
     },
     email : {
         type : 'input',
-        label: 'email'
+        label: 'email',
+        defaultValue : 'toto@gmail.com'
     }
 };
 
@@ -28,12 +31,12 @@ export default class Profile extends Component {
 
     renderField(fieldConfig, field) { // one helper per ea field declared
       const fieldHelper = this.props.fields[field];
-
+      console.log('deafultValue',fieldConfig.defaultValue);
       return (
          <div>
           <label>{fieldConfig.label}</label>
           <div>
-            <fieldConfig.type value={fieldConfig.label} placeholder={fieldConfig.label} {...fieldHelper}/>
+            <fieldConfig.type placeholder={fieldConfig.label} {...fieldHelper}/>
           </div>
           {fieldHelper.touched && fieldHelper.error && <div>{fieldHelper.error}</div>}
         </div>
@@ -41,12 +44,10 @@ export default class Profile extends Component {
     }
 
   render() {
-      const {resetForm, handleSubmit, submitting } = this.props;
-
+      const {resetForm, handleSubmit, submitting, initialValues} = this.props;
     return (
         <div>
         {console.log("this.props.userInfo inside profile.js", this.props.userInfo)}
-            <img className="image" src={this.props.userInfo.img_url}/>
             <form onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this))}>
             <div>
             {_.map(FIELDS, this.renderField.bind(this))}
@@ -86,7 +87,7 @@ const validate = values => {
     if (!values[field]) {
         errors[field] = `${field} required`;
     }
- }); 
+ });
 
   return errors
 }

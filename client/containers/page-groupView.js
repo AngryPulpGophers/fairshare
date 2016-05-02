@@ -7,7 +7,8 @@ import { startDisplay, toggleDisplay } from '../actions/calloutActions';
 
 class PageGroupView extends Component {
   // our hacky way of dealing with auth
-  componentDidUpdate(){
+  constructor(props){
+    super(props)
     if(!this.props.isAuthed){
       browserHistory.push('/login')
     }
@@ -37,7 +38,7 @@ PageGroupView.propTypes = {
 }
 
 function mapStateToProps(state) {
-  console.log('page-groupview',state)
+
   return {
     //I have no idea if this is right
     activity: state.groups.activity,
@@ -45,7 +46,7 @@ function mapStateToProps(state) {
     url: state.routing,
     displayActive: state.notifications.displayActive,
     userInfo: state.auth.userInfo,
-    isAuthed: PropTypes.bool.isRequired,
+    isAuthed: state.auth.isAuthed,
   }
 }
 
