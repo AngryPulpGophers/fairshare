@@ -42,5 +42,8 @@ server/config/auth_secrets.js
 # seed data
 seeds
 
+# local storage
+client/images/expenses
+
 # mac files
 .DS_Store
