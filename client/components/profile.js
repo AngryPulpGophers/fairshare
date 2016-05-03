@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
+import ExpireAlert from '../components/alert';
 //import { load as loadAccount } from '../redux/modules/account';
 
 const FIELDS = {
@@ -18,45 +19,67 @@ const FIELDS = {
     }
 };
 
+let alert = false;
 export default class Profile extends Component {
+    //setup for our alert
+    componentWillReceiveProps(nextProps){
+      //console.log('*************OUR PROPS:',nextProps)
+      if(nextProps.userIsUpdated){
+        alert = !alert
+      }
+    }
 
     handleSubmit(userData) {
      userData.id = this.props.userInfo.id
      this.props.updateUserInfo(userData)
-     alert("profile updated successfully");
+     //alert("profile updated successfully");
     }
 
     renderField(fieldConfig, field) { // one helper per ea field declared
       const fieldHelper = this.props.fields[field];
+      console.log('deafultValue',fieldConfig.defaultValue);
       return (
-         <div>
-          <label>{fieldConfig.label}</label>
-          <div>
-            <fieldConfig.type placeholder={fieldConfig.label} {...fieldHelper}/>
-          </div>
+        <label>{fieldConfig.label}
+          <fieldConfig.type type="text" placeholder={fieldConfig.label} {...fieldHelper}/>
           {fieldHelper.touched && fieldHelper.error && <div>{fieldHelper.error}</div>}
-        </div>
+        </label>
       );
     }
 
   render() {
       const {resetForm, handleSubmit, submitting, initialValues} = this.props;
     return (
-        <div>
-        {console.log("this.props.userInfo inside profile.js", this.props.userInfo)}
-            <form onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this))}>
-            <div>
-            {_.map(FIELDS, this.renderField.bind(this))}
-              <button type="submit" className="btn btn-primary" disabled={submitting}>
-                {submitting ? <i/> : <i/>} Submit
-              </button>
-              <div> - don't forget to style those buttons</div>
-              <button type="button" className="btn btn-danger" disabled={submitting} onClick={resetForm}>
-                Clear Values
-              </button>
+        <div className="login">
+          <div className="row">
+            <div className="small-12 large-7 large-centered columns">
+              <div className="component-wrapper">
+                  <ExpireAlert 
+                    set={this.props.userIsUpdated}
+                    reset={this.props.resetAlert}
+                    status="success"
+                    delay={3000}>
+                    <strong> That was a splendid update! </strong>
+                  </ExpireAlert>
+                <h3>Your Profile</h3>
+                <form className="profile-form" onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this))}>
+                  <div className="row">
+                    <div className="small-12 large-4 columns">
+                      <img className="image" src={this.props.userInfo.img_url}/>
+                    </div>
+                    <div className="small-12 large-8 columns">
+                      {_.map(FIELDS, this.renderField.bind(this))}
+                    </div>
+                    <div className="small-12 columns">
+                      <button type="submit" className="primary button expanded" disabled={submitting}>
+                        {submitting ? <i/> : <i/>} Update
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
-          </form>
-      </div>
+          </div>
+        </div>
     );
   }
 }
@@ -83,7 +106,7 @@ const validate = values => {
     if (!values[field]) {
         errors[field] = `${field} required`;
     }
- });
+ }); 
 
   return errors
 }

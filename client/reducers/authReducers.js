@@ -3,7 +3,7 @@ import * as ActionTypes from '../actions/authActions';
 import update from 'react-addons-update';
 console.log(ActionTypes);
 
-export function auth(state = {isFetching: false, isAuthed: false, userInfo: {}}, action){
+export function auth(state = {isFetching: false, userIsUpdated: false, isAuthed: false, userInfo: {}}, action){
 	switch (action.type){
 		
 		case ActionTypes.USER_LOGIN:
@@ -54,8 +54,14 @@ export function auth(state = {isFetching: false, isAuthed: false, userInfo: {}},
     // console.log("Action.response  in authReducers.js", action.response);
       return update(state, {
         isFetching: {$set: false}, 
-        userInfo: {$set: JSON.parse(action.response)}
+        userInfo: {$set: JSON.parse(action.response)},
+        userIsUpdated: {$set: true}
       });
+
+    case ActionTypes.RESET_ALERT:
+      return update(state, {
+        userIsUpdated: {$set: false}
+      })
     
     case ActionTypes.UPDATE_USER_FAILURE:
       return update(state, {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import Profile from '../components/profile';
-import {updateUserInfo} from '../actions/authActions'
+import {updateUserInfo, resetAlert} from '../actions/authActions'
 
 class PageProfile extends Component {
 
@@ -18,6 +18,8 @@ class PageProfile extends Component {
       browserHistory.push('/login')
     }
   }
+
+
   render() {
 
     const myInitialValues = {
@@ -33,6 +35,8 @@ class PageProfile extends Component {
         {...myInitialValues}
         userInfo = {this.props.userInfo}
         updateUserInfo = {this.props.updateUserInfo}
+        userIsUpdated = {this.props.userIsUpdated}
+        resetAlert = {this.props.resetAlert}
      />
     )
   }
@@ -42,12 +46,14 @@ function mapStateToProps(state) {
   return {
    userInfo : state.auth.userInfo,
    isAuthed: state.auth.isAuthed,
+   userIsUpdated: state.auth.userIsUpdated
   }
 }
 
 
 // injection to child
 export default connect(mapStateToProps, {
-  updateUserInfo
+  updateUserInfo,
+  resetAlert
 })(PageProfile);
 
