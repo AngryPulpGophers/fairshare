@@ -11,29 +11,43 @@ import AddExpense from './addExpense';
 
 
 
+
 export default class GroupView extends Component {
   
+
+  seeIfYou(name) {
+    if (name===this.props.userInfo.name || name[0]===this.props.userInfo.name){
+      return ('You')
+    }
+    else {
+      return name
+    }
+  }
+
+
   render() {
     var currentURL = window.location.href
     var ID = currentURL.split('id=')
     console.log('did this work',ID[1])
+    console.log('HAIL MARY',__dirname)
   //   var { query } = this.props.location
   //  console.log('samsam',this.props,'and pj', this.props.params)
   //    var what = new Date(this.props.activity[0].created_at)
   // console.log(this.props.activity)
   console.log('maybe work222', this.props.currentGroupUsers)
+  console.log('groupView CurrentUser',this.props.userInfo)
   var showUserBalance=[];
   showUserBalance=calcBalance.call(this)//this.calcBalance();
   console.log('hi pj, stuff should be here^^^^', showUserBalance)
     var localGroupObj=makeGroupObj.call(this) //this.makeGroupObj()
-    var counter = 0;
-    var displayObj={};
-    for (var i = 0; i<this.props.activity.length ; i++){
-      displayObj[counter] = {
-        display: 'none'
-      }
+    // var counter = 0;
+    // var displayObj={};
+    // for (var i = 0; i<this.props.activity.length ; i++){
+    //   displayObj[counter] = {
+    //     display: 'none'
+    //   }
 
-    }
+    // }
 
   // setting this to bypas the need for authentication
     return(
@@ -45,16 +59,21 @@ export default class GroupView extends Component {
             {user.owed.map(function(person){
               return (
                 <div>
-                  {user.name} {person[Object.keys(person)]>0 ? " is owed $" +person[Object.keys(person)]+" from "+Object.keys(person) 
-                  : "owes " + Object.keys(person) +" $"+ -1*person[Object.keys(person)]}
+
+
+                
+                  {this.seeIfYou(user.name)} {this.seeIfYou(user.name)==='You' ? " owe " +Object.keys(person)+" $"+ -1*person[Object.keys(person)] 
+                  : "owes " + this.seeIfYou(Object.keys(person)) +" $"+ -1*person[Object.keys(person)]}
+                  
                 </div>
+              
               )
-            })
+            }.bind(this))
             
            }
            </span> 
            )
-          }
+          }.bind(this)
         )
       }
 
@@ -84,21 +103,30 @@ export default class GroupView extends Component {
                 <div>Title: {activity.title} Time:{prettyDate(activity.created_at)} Amount: ${activity.amount}    
                 <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
                   <div style={this.props.displayActive[index]}>
-                  <div>Note: {activity.note}</div>
-                  <div>Paid: {localGroupObj[activity.paid_by].name}</div>
-                    <div>Members: 
-                      {activity.members.map(function(member,index,members){
-                        return <span>
-                        {member.name}{index===members.length-1? "" : ", "}</span>
-                        })
-                      }
+                    <div className = 'row '>
+                      <div className = 'small-12 large-6 columns'>
+                        <div>Note: {activity.note}</div>
+                        <div>Paid: {this.seeIfYou(localGroupObj[activity.paid_by].name)}</div>
+                          <div>Members: 
+                            {activity.members.map(function(member,index,members){
+                              return <div>
+                              {this.seeIfYou(member.name)}{index===members.length-1? "" : " "}</div>
+                              }.bind(this))
+                            }
+                        </div>
+                      </div>
+                      <div className = "small-12 large-3 columns">
+                        <div>Reciept: <img src={"/"+activity.img_url} /></div>
+                      </div>
+                      <div className = 'large-3 columns'>
+                      </div>
                     </div>
                   </div>
                 </div>  
               </div>
               :
-              <div>{localGroupObj[activity.payee].name} paid {localGroupObj[activity.recipient].name} ${activity.amount} Time:{prettyDate(activity.created_at)} 
-                <i className="fa fa-plus-square" aria-hidden='true' onClick={()=>this.props.toggleDisplay(index)} style={{float: "right", cursor:'pointer'}}></i>
+              <div>{this.seeIfYou(localGroupObj[activity.payee].name)} paid {this.seeIfYou(localGroupObj[activity.recipient].name)} ${activity.amount} Time:{prettyDate(activity.created_at)} 
+                <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
                  <div style={this.props.displayActive[index]}>
                     Note: {activity.note}
                   </div>
