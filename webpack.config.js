@@ -2,26 +2,29 @@ var path = require('path');
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-
-var assetPath = '/assets/';
-var absolutePath = path.join(__dirname, 'build', assetPath);
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+  template: __dirname + '/client/index.html',
+  filename: 'index.html',
+  inject: 'body'
+});
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: [
     'webpack-hot-middleware/client',
-    './client/index'
+    './client/index.js'
   ],
   output: {
-    path: absolutePath,
-    filename: 'bundle.js',
-    publicPath: assetPath
+    path: __dirname + '/dist',
+    filename: 'bundle.js'
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new ExtractTextPlugin("bundle.css")
+    new ExtractTextPlugin("bundle.css"),
+    HtmlWebpackPluginConfig
   ],
   module: {
     loaders: [

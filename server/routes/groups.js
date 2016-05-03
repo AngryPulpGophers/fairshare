@@ -2,7 +2,7 @@ var Groups  = require('../models/groups.js');
 var Users   = require('../models/users.js');
 var express = require('express');
 var multer = require('multer');
-var upload = multer({ dest: './client/images/expenses'});
+var upload = multer({ dest: 'images/expenses'});
 var router  = express.Router();
 
 module.exports = router;

@@ -1,4 +1,4 @@
-//var serveStatic = require('serve-static');
+var serveStatic = require('serve-static');
 // above added by sam to bring in r3 boilerplate
 
 var express    = require('express');
