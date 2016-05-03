@@ -21,4 +21,4 @@ knex.deleteEverything = function () {
 };
 console.log("migrating...");
 console.log("env:", env);
-knex.migrate.latest([config]);
+// knex.migrate.latest([config]);
