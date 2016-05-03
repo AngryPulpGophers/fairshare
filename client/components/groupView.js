@@ -27,6 +27,7 @@ export default class GroupView extends Component {
 
   render() {
     var currentURL = window.location.href
+    console.log('pjpjpjp',currentURL.split('/')[2])
     var ID = currentURL.split('id=')
     console.log('did this work',ID[1])
     console.log('HAIL MARY',__dirname)

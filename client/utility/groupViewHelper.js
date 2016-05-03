@@ -55,14 +55,14 @@ for (var key in groupObj){
 //loop through each activity the group has
   for (var i = 0 ; i < this.props.activity.length ; i++){
 
-    console.log('where are the strings',this.props.activity[i].amount, typeof this.props.activity[i].amount)
+    //console.log('where are the strings',this.props.activity[i].amount, typeof this.props.activity[i].amount)
     if (this.props.activity[i].type==='expense'){
       
       
       
       //loop through each member in each activity 
       for (var x = 0 ; x < this.props.activity[i].members.length ; x++){
-        console.log('this is important',this.props.activity[i].members.length )
+        //console.log('this is important',this.props.activity[i].members.length )
         //if the member you are looking at is the one that paid, go down to else
         if(this.props.activity[i].paid_by != this.props.activity[i].members[x].id){
           //if it is the last member in the group he has to settle all the left over pennies
