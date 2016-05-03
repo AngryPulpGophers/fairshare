@@ -14,6 +14,7 @@ var routes     = require('./routes/index.js');
 var app = express();
 
 console.log("NODE_ENV", process.env.NODE_ENV);
+console.log("DB URL", process.env.DATABASE_URL);
 // using webpack-dev-server and middleware in development environment
 
 if (process.env.NODE_ENV !== 'production') {

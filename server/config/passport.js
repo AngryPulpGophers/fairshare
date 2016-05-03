@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var passport          = require('passport');
 var FacebookStrategy  = require('passport-facebook').Strategy;
@@ -17,7 +17,7 @@ if (process.env.NODE_ENV !== 'production'){
 
 module.exports = (app,express) => {
 
-let database_url = process.env.DATABASE_URL || 'localhost';
+let database_url = process.env.DATABASE_URL || 'postgresql://localhost/divvy';
 
 const trimProfile = obj => {
   delete obj.username;
@@ -30,7 +30,7 @@ const sessionConfig = {
   genid: () => uuid.v1(),
   store:  new pgSession({
     pg       : pg,
-    conString: 'postgresql://' + database_url +'/divvy',
+    conString: database_url,
     tableName: 'sessions'
   }),
   secret: 'kitkat',
@@ -57,15 +57,15 @@ passport.deserializeUser((id, done) => {
     console.warn("err at deserialize:", err);
   });
 });
-var clientID = process.env.FACEBOOK_APP_ID || authKeys.FACEBOOK_APP_ID
-var clientSecret = process.env.FACEBOOK_APP_SECRET || authKeys.FACEBOOK_APP_SECRET
+var clientID = process.env.FACEBOOK_APP_ID || authKeys.FACEBOOK_APP_ID;
+var clientSecret = process.env.FACEBOOK_APP_SECRET || authKeys.FACEBOOK_APP_SECRET;
 
 
 passport.use(new FacebookStrategy(
   {
     clientID: clientID,
     clientSecret: clientSecret,
-    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    callbackURL: "/auth/facebook/callback",
     profileFields: ['id', 'displayName', 'picture.type(large)','email']
   },
   (accessToken, refreshToken,params, profile, done) => {
@@ -75,7 +75,7 @@ passport.use(new FacebookStrategy(
     User.getByFacebookId(profile.id)
       .then( userObj => {
         if(userObj[0]){
-          let cleanProfile = trimProfile(userObj[0])
+          let cleanProfile = trimProfile(userObj[0]);
           return done(null, cleanProfile);
         }
           let userProfile = {
@@ -90,7 +90,7 @@ passport.use(new FacebookStrategy(
         .then( id => {
           //attach app ID to userProfile for use in fn serializeUser->line 34
           userProfile.id = id[0];
-          let cleanProfile = trimProfile(userProfile)
+          let cleanProfile = trimProfile(userProfile);
           return done(null, cleanProfile);
         });
       })

@@ -1,5 +1,5 @@
 import { UPDATE_LOCATION } from 'react-router-redux';
-const BASE_URL = 'http://localhost:3000/';
+const BASE_URL = 'http://' + window.location.href.split('/')[2] + '/';
 
 //console.log('made it to middleware:')
 
@@ -23,7 +23,7 @@ function callApi(endpoint, id, req, body){
   }
 
   return fetch( BASE_URL + endpoint, config)
-    .then(response => 
+    .then(response =>
         response.text()
         .then(text => ({ text, response }))
       )
@@ -35,7 +35,7 @@ function callApi(endpoint, id, req, body){
         return Promise.reject(text)
       }else{
         return text;
-      }  
+      }
     })
 }
 
@@ -54,10 +54,10 @@ export default store => next => action => {
   if (typeof callAPI === 'undefined') {
     return next(action)
   }
-  
+
   let { endpoint, id, req, body, types } = callAPI
   const [ requestType, successType, errorType ] = types
-  
+
   return callApi(endpoint, id, req, body, types).then(
     response => next({
       response,
