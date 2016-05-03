@@ -17,7 +17,7 @@ if (process.env.NODE_ENV !== 'production'){
 
 module.exports = (app,express) => {
 
-let database_url = process.env.DATABASE_URL || 'localhost';
+let database_url = process.env.DATABASE_URL || 'postgresql://localhost/divvy';
 
 const trimProfile = obj => {
   delete obj.username;
@@ -30,7 +30,7 @@ const sessionConfig = {
   genid: () => uuid.v1(),
   store:  new pgSession({
     pg       : pg,
-    conString: 'postgresql://' + database_url +'/divvy',
+    conString: database_url,
     tableName: 'sessions'
   }),
   secret: 'kitkat',
@@ -57,8 +57,8 @@ passport.deserializeUser((id, done) => {
     console.warn("err at deserialize:", err);
   });
 });
-var clientID = process.env.FACEBOOK_APP_ID || authKeys.FACEBOOK_APP_ID
-var clientSecret = process.env.FACEBOOK_APP_SECRET || authKeys.FACEBOOK_APP_SECRET
+var clientID = process.env.FACEBOOK_APP_ID || authKeys.FACEBOOK_APP_ID;
+var clientSecret = process.env.FACEBOOK_APP_SECRET || authKeys.FACEBOOK_APP_SECRET;
 
 
 passport.use(new FacebookStrategy(
