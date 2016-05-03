@@ -1,9 +1,12 @@
 var config      = require('../knexfile.js');
 var env         = process.env.NODE_ENV || 'development';
 var knex        = require('knex')(config[env]);
+var Promise     = require('bluebird');
+
+console.log("env:", env);
+knex.migrate.latest([config]);
 
 module.exports  = knex;
-
 // Function for your testing suite
 knex.deleteEverything = function () {
   if (env !== 'test') { return Promise.reject(); }
@@ -19,6 +22,3 @@ knex.deleteEverything = function () {
   knex('sessions').del().then();
   return Promise.resolve();
 };
-console.log("migrating...");
-console.log("env:", env);
-knex.migrate.latest([config]);
