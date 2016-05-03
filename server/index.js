@@ -16,28 +16,24 @@ var app = express();
 console.log("NODE_ENV", process.env.NODE_ENV);
 // using webpack-dev-server and middleware in development environment
 
-// if (process.env.NODE_ENV === 'production'){
-//   console.log("trying to connect to db");
+if (process.env.NODE_ENV === 'production'){
+  console.log("trying to connect to db");
+  console.log("db url", process.env.DATABASE_URL);
 
-//   var pg = require('pg');
+  var pg = require('pg');
 
-//   var conString = "postgres://pllapgon:68qTi8Qfaq6fmK5q2jPKW9XWtgAc7Pws@pellefant-02.db.elephantsql.com:5432/pllapgon";
-//   var client = new pg.Client(conString);
+  pg.defaults.ssl = true;
+  pg.connect(process.env.DATABASE_URL, function(err, client) {
+    if (err) throw err;
+    console.log('Connected to postgres! Getting schemas...');
 
-//   client.connect(function(err) {
-//     if(err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//     client.query('SELECT NOW() AS "theTime"', function(err, result) {
-//       if(err) {
-//         return console.error('error running query', err);
-//       }
-//       console.log(result.rows[0].theTime);
-//       //output: Tue Jan 15 2013 19:12:47 GMT-600 (CST)
-//       client.end();
-//     });
-//   });
-// }
+    client
+      .query('SELECT table_schema,table_name FROM information_schema.tables;')
+      .on('row', function(row) {
+        console.log(JSON.stringify(row));
+      });
+  });
+}
 
 if (process.env.NODE_ENV !== 'production') {
   var webpackDevMiddleware = require('webpack-dev-middleware');

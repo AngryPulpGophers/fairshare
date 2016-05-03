@@ -8,7 +8,10 @@ var pgSession         = require('connect-pg-simple')(session);
 var uuid              = require('node-uuid');
 var cookieParser      = require('cookie-parser');
 var User              = require('../models/users');
-var authKeys          = require('./auth_secrets.js');
+
+if (process.env.NODE_ENV !== 'production'){
+  var authKeys          = require('./auth_secrets.js');
+}
 
 
 
