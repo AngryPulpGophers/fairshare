@@ -1,13 +1,7 @@
 module.exports = {
   production: {
     client: 'postgres',
-    connection: {
-      host: 'pellefant-02.db.elephantsql.com',
-      database: 'pllapgon',
-      user: 'pllapgon',
-      password: '68qTi8Qfaq6fmK5q2jPKW9XWtgAc7Pws',
-      port: 5432
-    },
+    connection: process.env.DATABASE_URL,
     pool: {
       min: 2,
       max: 10
