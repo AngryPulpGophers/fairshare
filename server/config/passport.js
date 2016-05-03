@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var passport          = require('passport');
 var FacebookStrategy  = require('passport-facebook').Strategy;
@@ -75,7 +75,7 @@ passport.use(new FacebookStrategy(
     User.getByFacebookId(profile.id)
       .then( userObj => {
         if(userObj[0]){
-          let cleanProfile = trimProfile(userObj[0])
+          let cleanProfile = trimProfile(userObj[0]);
           return done(null, cleanProfile);
         }
           let userProfile = {
@@ -90,7 +90,7 @@ passport.use(new FacebookStrategy(
         .then( id => {
           //attach app ID to userProfile for use in fn serializeUser->line 34
           userProfile.id = id[0];
-          let cleanProfile = trimProfile(userProfile)
+          let cleanProfile = trimProfile(userProfile);
           return done(null, cleanProfile);
         });
       })
