@@ -8,6 +8,7 @@ import { startDisplay, toggleDisplay } from '../actions/calloutActions';
 class PageGroupView extends Component {
   // our hacky way of dealing with auth
 
+
   componentWillReceiveProps(nextProps){
     if(!window.localStorage.isAuthed){
       browserHistory.push('/login')

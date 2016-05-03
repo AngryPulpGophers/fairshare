@@ -70,7 +70,7 @@ export default class AddExpense extends Component {
         obj.paid_by = this.props.userInfo.id;
         obj.title = data.title;
         obj.amount = Number(Number(data.amount).toFixed(2))
-        obj.img_url = resp.text || data.imgUrl;
+        obj.img_url = resp.text //|| data.imgUrl;
         obj.note = data.note;
         obj.group_id = Number(ID[1]);
         console.log('send to post expense', obj);
@@ -120,14 +120,14 @@ export default class AddExpense extends Component {
             <input type="text" placeholder="Note" {...note}/>
           </div>
         </div>
-
+        {/*
         <div>
           <label>imgUrl</label>
           <div>
-            <input type="text" placeholder="Image URL" {...imgUrl}/>
+            <input type="text" placeholder="Image URL" {...imgUrl} />
           </div>
         </div>
-
+      */}
         <div>
           <label>Upload a photo (overwrites url option)</label>
           <div>
