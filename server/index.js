@@ -4,7 +4,7 @@ var serveStatic = require('serve-static');
 var express    = require('express');
 var bodyParser = require('body-parser');
 var Path       = require('path');
-var db = require('./db.js');
+var db         = require('./db.js');
 // var browserify = require('browserify-middleware');
 
 var auth       = require('./routes/auth.js');
@@ -15,25 +15,6 @@ var app = express();
 
 console.log("NODE_ENV", process.env.NODE_ENV);
 // using webpack-dev-server and middleware in development environment
-
-// if (process.env.NODE_ENV === 'production'){
-//   console.log("trying to connect to db");
-//   console.log("db url", process.env.DATABASE_URL);
-
-//   var pg = require('pg');
-
-//   pg.defaults.ssl = true;
-//   pg.connect(process.env.DATABASE_URL, function(err, client) {
-//     if (err) throw err;
-//     console.log('Connected to postgres! Getting schemas...');
-
-//     client
-//       .query('SELECT table_schema,table_name FROM information_schema.tables;')
-//       .on('row', function(row) {
-//         console.log(JSON.stringify(row));
-//       });
-//   });
-// }
 
 if (process.env.NODE_ENV !== 'production') {
   var webpackDevMiddleware = require('webpack-dev-middleware');

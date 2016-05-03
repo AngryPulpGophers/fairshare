@@ -1,14 +1,13 @@
 module.exports = {
   production: {
-    client: 'postgres',
+    client: 'pg',
     connection: process.env.DATABASE_URL,
     pool: {
       min: 2,
       max: 10
     },
     migrations:{
-      directory: __dirname + '/migrations',
-      tableName: 'divvy'
+      directory: __dirname + '/migrations'
     }
   },
   development: {
@@ -17,8 +16,7 @@ module.exports = {
       database: 'divvy'
     },
     migrations:{
-      directory: __dirname + '/migrations',
-      tableName: 'divvy'
+      directory: __dirname + '/migrations'
     },
     seeds:{
       directory:__dirname + '/seeds'
@@ -36,8 +34,7 @@ module.exports = {
       max: 10
     },
     migrations:{
-      directory: __dirname + '/test/migrations',
-      tableName: 'divvy-test'
+      directory: __dirname + '/test/migrations'
     }
   }
 };
