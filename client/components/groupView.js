@@ -106,11 +106,11 @@ export default class GroupView extends Component {
                     <div className = 'row '>
                       <div className = 'small-12 large-6 columns'>
                         <div>Note: {activity.note}</div>
-                        <div>Paid: {localGroupObj[activity.paid_by].name}</div>
+                        <div>Paid: {this.seeIfYou(localGroupObj[activity.paid_by].name)}</div>
                           <div>Members: 
                             {activity.members.map(function(member,index,members){
-                              return <span>
-                              {this.seeIfYou(member.name)}{index===members.length-1? "" : ", "}</span>
+                              return <div>
+                              {this.seeIfYou(member.name)}{index===members.length-1? "" : " "}</div>
                               }.bind(this))
                             }
                         </div>
