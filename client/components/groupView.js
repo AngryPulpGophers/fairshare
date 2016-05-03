@@ -16,7 +16,7 @@ export default class GroupView extends Component {
   
 
   seeIfYou(name) {
-    if (name===this.props.userInfo.name){
+    if (name===this.props.userInfo.name || name[0]===this.props.userInfo.name){
       return ('You')
     }
     else {
@@ -116,7 +116,7 @@ export default class GroupView extends Component {
                         </div>
                       </div>
                       <div className = "small-12 large-3 columns">
-                        <div>Reciept: <img src={"../"+activity.img_url.split('client/')[1]} /></div>
+                        <div>Reciept: <img src={"/"+activity.img_url} /></div>
                       </div>
                       <div className = 'large-3 columns'>
                       </div>
