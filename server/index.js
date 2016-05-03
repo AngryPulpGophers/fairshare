@@ -4,7 +4,7 @@ var serveStatic = require('serve-static');
 var express    = require('express');
 var bodyParser = require('body-parser');
 var Path       = require('path');
-var db = require('./db.js');
+var db         = require('./db.js');
 // var browserify = require('browserify-middleware');
 
 var auth       = require('./routes/auth.js');
@@ -15,29 +15,6 @@ var app = express();
 
 console.log("NODE_ENV", process.env.NODE_ENV);
 // using webpack-dev-server and middleware in development environment
-
-// if (process.env.NODE_ENV === 'production'){
-//   console.log("trying to connect to db");
-
-//   var pg = require('pg');
-
-//   var conString = "postgres://pllapgon:68qTi8Qfaq6fmK5q2jPKW9XWtgAc7Pws@pellefant-02.db.elephantsql.com:5432/pllapgon";
-//   var client = new pg.Client(conString);
-
-//   client.connect(function(err) {
-//     if(err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//     client.query('SELECT NOW() AS "theTime"', function(err, result) {
-//       if(err) {
-//         return console.error('error running query', err);
-//       }
-//       console.log(result.rows[0].theTime);
-//       //output: Tue Jan 15 2013 19:12:47 GMT-600 (CST)
-//       client.end();
-//     });
-//   });
-// }
 
 if (process.env.NODE_ENV !== 'production') {
   var webpackDevMiddleware = require('webpack-dev-middleware');
@@ -60,9 +37,9 @@ if (process.env.NODE_ENV !== 'test') {
   app.use( bodyParser.urlencoded ({extended:true}) );
   app.use( bodyParser.json() );
   app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
   });
 
   // Mount our routes
