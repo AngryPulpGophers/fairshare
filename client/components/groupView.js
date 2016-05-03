@@ -10,6 +10,11 @@ import AddExpense from './addExpense';
 
 
 
+
+
+export default class GroupView extends Component {
+  
+
   seeIfYou(name) {
     if (name===this.props.userInfo.name){
       return ('You')
@@ -20,12 +25,11 @@ import AddExpense from './addExpense';
   }
 
 
-export default class GroupView extends Component {
-  
   render() {
     var currentURL = window.location.href
     var ID = currentURL.split('id=')
     console.log('did this work',ID[1])
+    console.log('HAIL MARY',__dirname)
   //   var { query } = this.props.location
   //  console.log('samsam',this.props,'and pj', this.props.params)
   //    var what = new Date(this.props.activity[0].created_at)
@@ -58,7 +62,7 @@ export default class GroupView extends Component {
 
 
                 
-                  {this.seeIfYou(user.name)} {this.seeIfYou(user.name)==='You' ? " owe " +Object.keys(person)+" $"+person[Object.keys(person)] 
+                  {this.seeIfYou(user.name)} {this.seeIfYou(user.name)==='You' ? " owe " +Object.keys(person)+" $"+ -1*person[Object.keys(person)] 
                   : "owes " + this.seeIfYou(Object.keys(person)) +" $"+ -1*person[Object.keys(person)]}
                   
                 </div>
@@ -99,14 +103,23 @@ export default class GroupView extends Component {
                 <div>Title: {activity.title} Time:{prettyDate(activity.created_at)} Amount: ${activity.amount}    
                 <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
                   <div style={this.props.displayActive[index]}>
-                  <div>Note: {activity.note}</div>
-                  <div>Paid: {localGroupObj[activity.paid_by].name}</div>
-                    <div>Members: 
-                      {activity.members.map(function(member,index,members){
-                        return <span>
-                        {this.seeIfYou(member.name)}{index===members.length-1? "" : ", "}</span>
-                        }.bind(this))
-                      }
+                    <div className = 'row '>
+                      <div className = 'small-12 large-6 columns'>
+                        <div>Note: {activity.note}</div>
+                        <div>Paid: {localGroupObj[activity.paid_by].name}</div>
+                          <div>Members: 
+                            {activity.members.map(function(member,index,members){
+                              return <span>
+                              {this.seeIfYou(member.name)}{index===members.length-1? "" : ", "}</span>
+                              }.bind(this))
+                            }
+                        </div>
+                      </div>
+                      <div className = "small-12 large-3 columns">
+                        <div>Reciept: <img src={"../"+activity.img_url.split('client/')[1]} /></div>
+                      </div>
+                      <div className = 'large-3 columns'>
+                      </div>
                     </div>
                   </div>
                 </div>  

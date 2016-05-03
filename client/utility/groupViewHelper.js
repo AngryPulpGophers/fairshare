@@ -123,7 +123,7 @@ sortedGroup = sortedGroup.sort(function(a,b){
 // console.log('so confused',sortedGroup)
   for (var i=0 ; i<sortedGroup.length; i++){
    sortedGroup[i].balance = round(sortedGroup[i].balance);
-   //console.log('pj',sortedGroup[i].balance)
+   // console.log('pj',sortedGroup[i].balance)
     sortedGroup[i].tempBalance = round(sortedGroup[i].balance);
    // console.log('holly',sortedGroup[i].tempBalance)
     sortedGroup[i].owed = [];
@@ -139,8 +139,8 @@ sortedGroup = sortedGroup.sort(function(a,b){
       for (var p2 = 0; p2 < sortedGroup.length ; p2++){
         if(p1!==p2){
           if (sortedGroup[p2].tempBalance < 0){
-            if((sortedGroup[p1].tempBalance - sortedGroup[p2].tempBalance) > 0){
-                  //console.log(sortedGroup[p1].name,sortedGroup[p1].tempBalance,sortedGroup[p2].name,sortedGroup[p2].tempBalance)
+            if((sortedGroup[p1].tempBalance + sortedGroup[p2].tempBalance) > 0){
+                  // console.log(sortedGroup[p1].name,sortedGroup[p1].tempBalance,sortedGroup[p2].name,sortedGroup[p2].tempBalance)
               sortedGroup[p2].owed.push({[sortedGroup[p1].name] : sortedGroup[p2].tempBalance})
               //test to only show 'person2 owes person 1 $$$'
               //sortedGroup[p1].owed.push({[sortedGroup[p2].name] : -1 * sortedGroup[p2].tempBalance })
@@ -152,15 +152,16 @@ sortedGroup = sortedGroup.sort(function(a,b){
               }
               //console.log(sortedGroup[p1].name,sortedGroup[p1].tempBalance,sortedGroup[p2].name,sortedGroup[p2].tempBalance)
             }
-            else if ((sortedGroup[p1].tempBalance - sortedGroup[p2].tempBalance) <= 0){
-                 console.log(sortedGroup[p1].name,sortedGroup[p1].tempBalance,sortedGroup[p2].name,sortedGroup[p2].tempBalance)
+            else if ((sortedGroup[p1].tempBalance + sortedGroup[p2].tempBalance) <= 0){
+                 // console.log(sortedGroup[p1].name,sortedGroup[p1].tempBalance,sortedGroup[p2].name,sortedGroup[p2].tempBalance)
               sortedGroup[p2].owed.push({[sortedGroup[p1].name] : -1 * sortedGroup[p1].tempBalance})
               //test to only show 'person2 owes person 1 $$$'
               //sortedGroup[p1].owed.push({[sortedGroup[p2].name] : sortedGroup[p1].tempBalance })
-              sortedGroup[p2].tempBalance += sortedGroup[p1];
+              sortedGroup[p2].tempBalance += sortedGroup[p1].tempBalance;
               sortedGroup[p2].tempBalance = round(sortedGroup[p2].tempBalance)
               sortedGroup[p1].tempBalance = 0;
-                  console.log(sortedGroup[p1].name,sortedGroup[p1].tempBalance,sortedGroup[p2].name,sortedGroup[p2].tempBalance)
+              break;
+                  // console.log(sortedGroup[p1].name,sortedGroup[p1].tempBalance,sortedGroup[p2].name,sortedGroup[p2].tempBalance)
             }
           }
         }
