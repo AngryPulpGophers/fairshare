@@ -8,9 +8,6 @@ import PaymentForm from './paymentForm';
 import AddExpense from './addExpense';
 
 
-
-
-
 export default class GroupView extends Component {
   
   render() {

@@ -4,7 +4,6 @@ export default class Login extends Component {
   render() {
     return (
       <div className="login">
-      
         <div className="row">
           <div className="small-12 large-7 large-centered columns text-center">
             <div className="component-wrapper">

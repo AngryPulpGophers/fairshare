@@ -27,6 +27,15 @@ body{
 input[type='search']{
   margin-bottom: 0;
 }
+.profile-form{
+  input[type='text']{
+    margin-bottom: .3rem;
+  }
+  img{
+    margin-top: 20px;
+  }
+  button{margin-top: 10px;}
+}
 .add-member{
   margin: 24px 0 0 0;
 }
