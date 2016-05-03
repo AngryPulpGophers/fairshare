@@ -1,5 +1,5 @@
 import { UPDATE_LOCATION } from 'react-router-redux';
-const BASE_URL = 'http://' + window.location.href.split('/')[2];
+const BASE_URL = 'http://' + window.location.href.split('/')[2] + '/';
 
 //console.log('made it to middleware:')
 
