@@ -117,7 +117,7 @@ export default class GroupView extends Component {
                         </div>
                       </div>
                       <div className = "small-12 large-3 columns">
-                        <div>Reciept: <img src={"/"+activity.img_url} /></div>
+                        <div>Reciept: <img src={"/"+(activity.img_url.split('dist/')[1] ? activity.img_url.split('dist/')[1] : activity.img_url)} /></div>
                       </div>
                       <div className = 'large-3 columns'>
                       </div>
