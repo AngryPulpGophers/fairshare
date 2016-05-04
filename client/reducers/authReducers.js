@@ -67,10 +67,19 @@ export function auth(state = {isFetching: false, isAuthed: false, isOpen: true, 
       isFetching: {$set: false}
     })
 
-    case ActionTypes.TOGGLE_MODAL:
+    case ActionTypes.RESET_MODAL:
       return update(state, {
-        isOpen: {$set: false}
-    })   
+        isFetching: {$set: true}
+    }) 
+    case ActionTypes.RESET_MODAL_SUCCESS:
+      return update(state, {
+        isFetching: {$set: false},
+        userInfo: {$set: JSON.parse(action.response)}
+    })
+     case ActionTypes.RESET_MODAL_FAILURE:
+      return update(state, {
+        isFetching: {$set: false}
+    })  
     
     default: 
 			return state;

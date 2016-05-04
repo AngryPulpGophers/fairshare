@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { removeCallout } from '../actions/calloutActions';
 import { getGroups } from '../actions/groupActions';
+import {stopSocialModal} from '../actions/authActions';
 import Dashboard from '../components/dashboard';
 
 class PageDashboard extends Component {
@@ -16,6 +17,7 @@ class PageDashboard extends Component {
             isAuthed={this.props.isAuthed}
             groups={this.props.groups}
             userInfo={this.props.userInfo}
+            stopSocialModal={this.props.stopSocialModal}
           />
       </div>
     )
@@ -27,7 +29,8 @@ PageDashboard.propTypes = {
   callouts: PropTypes.array.isRequired,
   getGroups: PropTypes.func.isRequired,
   isAuthed: PropTypes.bool.isRequired,
-  groups:PropTypes.array.isRequired
+  groups:PropTypes.array.isRequired,
+  stopSocialModal: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -43,5 +46,6 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
   removeCallout,
-  getGroups
+  getGroups,
+  stopSocialModal
 })(PageDashboard)
