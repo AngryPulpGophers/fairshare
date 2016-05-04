@@ -10,9 +10,7 @@ var Strategies        = require('./oauthStrategies');
 var User              = require('../models/users');
 
 
-if (process.env.NODE_ENV !== 'production'){
-  var Credentials       = require('./auth_secrets.js');
-}
+
 
 module.exports = (app,express) => {
 
