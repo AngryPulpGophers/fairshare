@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import MemberList from './memberList';
 import { reduxForm } from 'redux-form';
 import { browserHistory } from 'react-router';
 import SelectSearch from 'react-select-search';
@@ -24,7 +23,7 @@ export default class CreateGroup extends Component {
   componentWillMount(){
     //call our get users function, but only if we haven't called it already
     if(this.props.users.length === 0){
-      this.props.getUsers()
+      this.props.getUsers(true)
     } else {
       this.props.clearMembers();
     }
@@ -89,7 +88,7 @@ export default class CreateGroup extends Component {
                 <div className="small-12 large-5 columns">
                   <div className="callout text-center members-list">
                     <h4>Current Members</h4>
-                    {this.props.members.length === 0 ? <span className="warning label"><strong>No one added yet!</strong></span> : null}
+                    {this.props.members.length === 0 ? <span className="warning label"><strong>Just you so far!</strong></span> : null}
                     <ul>
                       {[...memberElements]}
                     </ul>
