@@ -77,6 +77,7 @@ export default class AddExpense extends Component {
         obj.note = data.note;
         obj.group_id = Number(ID[1]);
         console.log('send to post expense', obj);
+        this.props.destroyForm();
         this.props.addExpense(JSON.stringify(obj));
 
         location.replace(baseURL+'/groupView?id='+ID[1]);
@@ -111,6 +112,7 @@ export default class AddExpense extends Component {
         obj.note = data.note;
         obj.group_id = Number(ID[1]);
         console.log('send to post expense', obj);
+        this.props.destroyForm();
         this.props.addExpense(JSON.stringify(obj));
 
         location.replace(baseURL+'/groupView?id='+ID[1]);

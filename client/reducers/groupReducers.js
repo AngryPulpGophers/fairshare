@@ -65,9 +65,10 @@ export function groups(state = { isFetching: false, newGroup:{}, groups: [],acti
           isFetching: {$set: true}})
       case ActionTypes.EXPENSE_SUCCESS:
         //console.log('got our type and resp:', action.response)
+        console.log('pj test pexpense',JSON.parse(action.response))
         return update(state, {
           isFetching: {$set: false},
-          activity: {$push: [JSON.parse(action.response)]}
+          activity: {$unshift: [JSON.parse(action.response)]}
         })
       case ActionTypes.EXPENSE_FAILURE:
         return update(state, {
@@ -78,6 +79,7 @@ export function groups(state = { isFetching: false, newGroup:{}, groups: [],acti
           isFetching: {$set: true}
         })
       case ActionTypes.PAYMENT_SUCCESS:
+      console.log('pj test payment',JSON.parse(action.response))
         return update(state, {
           isFetching: {$set: false},
           activity: {$unshift: [JSON.parse(action.response)]}
