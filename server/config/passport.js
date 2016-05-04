@@ -13,8 +13,6 @@ if (process.env.NODE_ENV !== 'production'){
   var authKeys          = require('./auth_secrets.js');
 }
 
-
-
 module.exports = (app,express) => {
 
 let database_url = process.env.DATABASE_URL || 'postgresql://localhost/divvy';
@@ -57,8 +55,8 @@ passport.deserializeUser((id, done) => {
     console.warn("err at deserialize:", err);
   });
 });
-var clientID = process.env.FACEBOOK_APP_ID || authKeys.FACEBOOK_APP_ID;
-var clientSecret = process.env.FACEBOOK_APP_SECRET || authKeys.FACEBOOK_APP_SECRET;
+var clientID = process.env.FACEBOOK_APP_ID || authKeys.facebook.ID;
+var clientSecret = process.env.FACEBOOK_APP_SECRET || authKeys.facebook.SECRET;
 
 
 passport.use(new FacebookStrategy(
