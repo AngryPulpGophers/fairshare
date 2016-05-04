@@ -8,7 +8,8 @@ function puke (obj) {
 
 export default class GroupList extends Component {
   componentWillMount(){
-    this.props.getGroups()
+    //console.log('USER ID', this.props.userInfo.id)
+    this.props.getGroups(this.props.userInfo.id)
   }
 
   render(){

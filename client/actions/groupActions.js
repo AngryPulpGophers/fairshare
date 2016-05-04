@@ -8,8 +8,7 @@ export function getGroups(id) {
   // console.log('got an id:', id)
   return {
     [CALL_API]: {
-      endpoint: 'groups',
-      id: id,
+      endpoint: 'groups/' + id,
       req: 'GET',
       types: [GROUPS_REQUEST, GROUPS_SUCCESS, GROUPS_FAILURE]
     }
