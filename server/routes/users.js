@@ -25,13 +25,24 @@ router.param('username',function(req, res, next, username){
 });
 
 router.get('/', function(req, res){
-	Users.getAll()
-	  .then(function(data){
-	    res.status(200).send(data);
-	  })
-	  .catch(function(err){
-	  	res.status(400).send({err: err});
-	  });
+  if(req.query.notCurr){
+    Users.getAllButCurr(req.user)
+    .then(function(data){
+      res.status(200).send(data);
+    })
+    .catch(function(err){
+      res.status(400).send({err: err});
+    });
+  } else {
+    Users.getAll()
+    .then(function(data){
+      res.status(200).send(data);
+    })
+    .catch(function(err){
+      res.status(400).send({err: err});
+    });
+  }
+	
 });
 
 router.get('/id', function(req, res){

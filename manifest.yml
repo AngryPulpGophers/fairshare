@@ -1,4 +1,4 @@
 ---
 applications:
-  - name: divvy
+  - name: fairshare
     command: node server/

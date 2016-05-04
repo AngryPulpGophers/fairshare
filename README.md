@@ -1,4 +1,4 @@
-# Divvy
+# Fairshare
 
 ## Press Release
 
@@ -26,11 +26,11 @@ Just make an account, add your buddies to your trip and get going.
 
 ### Customer Quote
 
-'Divvy sure did stop us from having silly arguements and let us have more time for good times'
+'Fairshare sure did stop us from having silly arguements and let us have more time for good times'
 
 ### Closing and Call to Action
 
-Go download Divvy now and let us keep track of all the boring stuff for you today!
+Go download Fairshare now and let us keep track of all the boring stuff for you today!
 
 ## Contributing
 
@@ -39,8 +39,8 @@ Go download Divvy now and let us keep track of all the boring stuff for you toda
 Clone the project's development branch on github
 
 ```
-git clone -b development https://github.com/AngryPulpGophers/divvy.git
-cd divvy
+git clone -b development https://github.com/AngryPulpGophers/fairshare.git
+cd fairshare
 ```
 
 ### Start the Database
@@ -60,7 +60,7 @@ postgres -D /usr/local/var/postgres
 ```
 To create your tables and seed data run in a new tab:
 ```
-createdb divvy
+createdb fairshare
 knex migrate:latest
 knex seed:run
 ```
@@ -77,19 +77,19 @@ npm run start
 
 To drop the database, stop your server and run:
 ```
-dropdb divvy
+dropdb fairshare
 ```
 
 ### Setup Test Suite
 
 Create the test database
 ```
-createdb divvy-test
+createuser fairshare --password
+createdb fairshare-test
 knex migrate:latest --env test
-createuser divvy --password
 ```
 **important
-When prompted give the user divvy a password of "password".
+When prompted give the user fairshare a password of "password".
 
 Run the test
 ```

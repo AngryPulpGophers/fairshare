@@ -22,8 +22,7 @@ Users.getByUsername = function(username){
 Users.getById = function(reqObj){
   return db('users')
     .select('id', 'name', 'username', 'email', 'img_url')
-    .where('id', '=', reqObj.id)
-    
+    .where('id', '=', reqObj.id);
 };
 
 Users.editProfile = function(profAttrs){
@@ -37,6 +36,12 @@ Users.editProfile = function(profAttrs){
 Users.getAll = function(){
   return db('users')
     .select('id', 'name', 'username', 'img_url');
+};
+
+Users.getAllButCurr = function(reqObj){
+  return db('users')
+    .select('id', 'name', 'username', 'img_url')
+    .where('id', '!=', reqObj.id);
 };
 
 Users.getUsersByExpenseId = function(expenseId){
@@ -58,7 +63,7 @@ Users.getUsersByExpenseId = function(expenseId){
 
 Users.getUsersByGroupId = function(groupID){
   return db('users')
-    .select('name', 'username', 'email', 'facebookId', 'img_url', 'user_id')
+    .select('name', 'username', 'email', 'img_url', 'user_id')
     .innerJoin('user_groups', 'users.id', 'user_groups.user_id')
     .where({
       group_id: groupID

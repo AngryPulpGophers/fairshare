@@ -1,5 +1,5 @@
 {
-  "name": "divvy",
+  "name": "fairshare",
   "version": "1.0.0",
   "description": "Keep track of IOUs within a group of friends",
   "main": "server/index.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AngryPulpGophers/divvy.git"
+    "url": "git+https://github.com/AngryPulpGophers/fairshare.git"
   },
   "author": "APG",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AngryPulpGophers/divvy/issues"
+    "url": "https://github.com/AngryPulpGophers/fairshare/issues"
   },
-  "homepage": "https://github.com/AngryPulpGophers/divvy#readme",
+  "homepage": "https://github.com/AngryPulpGophers/fairshare#readme",
   "dependencies": {
     "autoprefixer": "^6.3.2",
     "babel-core": "^6.3.15",

@@ -7,9 +7,9 @@ function callApi(endpoint, id, req, body){
   let config = {credentials : 'include' };
   // console.log('got an id:', id);
   //config.header = { Accept: 'application/json'};
-  console.log(arguments);
+  //console.log(arguments);
   if(req === 'POST' || req === 'PUT'){
-    console.log('making POST or PUT req');
+    //console.log('making POST or PUT req');
     config.headers= {
       "Content-Type":"application/json",
       "Accept":"application/json"
@@ -20,6 +20,7 @@ function callApi(endpoint, id, req, body){
     // console.log('making GET req')
 
     config.id = id;
+    console.log('here is our config',config)
   }
 
   return fetch( BASE_URL + endpoint, config)
@@ -49,7 +50,7 @@ export default store => next => action => {
   // return next(action)
 
   const callAPI = action[CALL_API]
-  console.log('here is our callAPI', callAPI)
+  //console.log('here is our callAPI', callAPI)
   // So the middleware doesn't get applied to every single action
   if (typeof callAPI === 'undefined') {
     return next(action)
