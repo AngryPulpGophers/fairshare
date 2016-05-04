@@ -38,6 +38,12 @@ Users.getAll = function(){
     .select('id', 'name', 'username', 'img_url');
 };
 
+Users.getAllButCurr = function(reqObj){
+  return db('users')
+    .select('id', 'name', 'username', 'img_url')
+    .where('id', '!=', reqObj.id);
+};
+
 Users.getUsersByExpenseId = function(expenseId){
   return db('user_expenses')
     .select('user_id')
