@@ -7,6 +7,16 @@ var router  = express.Router();
 
 module.exports = router;
 
+if (process.env.NODE_ENV !== 'test'){
+  router.use(function(req, res, next){
+    if(req.isAuthenticated()){
+      return next();
+    } else{
+      res.status(401).send('user not authenticated');
+    }
+  });
+}
+
 router.param('group', function(req, res, next, group){
   req.group = group;
   next();
@@ -93,6 +103,10 @@ router.get('/activity/:group', function(req, res){
 });
 
 router.post('/', function(req, res){
+  //automatically add yourself to group if not already in it.
+  if (process.env.NODE_ENV !== 'test' && req.body.members.indexOf(req.user.id) === -1){
+    req.body.members.push(req.user.id);
+  }
   Groups.createGroup(req.body)
     .then(function(data){
       res.status(200).send(data);
