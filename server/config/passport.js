@@ -9,12 +9,9 @@ var cookieParser      = require('cookie-parser');
 var Strategies        = require('./oauthStrategies');
 var User              = require('../models/users');
 
-
-
-
 module.exports = (app,express) => {
 
-let database_url = process.env.DATABASE_URL || 'postgresql://localhost/divvy';
+let database_url = process.env.DATABASE_URL || 'postgresql://localhost/fairshare';
 
 
 const sessionConfig = {
@@ -35,13 +32,13 @@ app.use(passport.session());
 app.use(cookieParser('kitkat'));
 
 passport.serializeUser((user, done) => {
-  console.log('in serializeUser');
-  console.log('user in serializeUser:', user);
+  // console.log('in serializeUser');
+  // console.log('user in serializeUser:', user);
   return done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-  console.log('in deserialize');
+  // console.log('in deserialize');
   User.getById({id: id})
   .then( userObj => {
     return done(null, userObj[0]);

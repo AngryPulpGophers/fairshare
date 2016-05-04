@@ -13,7 +13,7 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
-      database: 'divvy'
+      database: 'fairshare'
     },
     migrations:{
       directory: __dirname + '/migrations'
@@ -25,8 +25,8 @@ module.exports = {
   test: {
     client: 'pg',
     connection: {
-      database: 'divvy-test',
-      user:     'divvy',
+      database: 'fairshare-test',
+      user:     'fairshare',
       password: 'password'
     },
     pool: {
