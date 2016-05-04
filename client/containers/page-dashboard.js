@@ -15,6 +15,7 @@ class PageDashboard extends Component {
             getGroups={this.props.getGroups}
             isAuthed={this.props.isAuthed}
             groups={this.props.groups}
+            userInfo={this.props.userInfo}
           />
       </div>
     )
@@ -35,7 +36,8 @@ function mapStateToProps(state) {
     url: state.routing.location.pathname,
     callouts: state.notifications.callouts,
     groups: state.groups.groups,
-    isAuthed: state.auth.isAuthed
+    isAuthed: state.auth.isAuthed,
+    userInfo: state.auth.userInfo
   }
 }
 
