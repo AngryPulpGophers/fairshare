@@ -32,6 +32,7 @@ class PageGroupView extends Component {
 
   render() {
     return (
+    <div>
       <GroupView
         getActivity={this.props.getActivity}
         activity={this.props.activity}
@@ -45,6 +46,7 @@ class PageGroupView extends Component {
         addExpense = {this.props.addExpense}
         makePayment = {this.props.makePayment}
       />
+    </div>
     )
   }
 }
