@@ -41,6 +41,10 @@ export default class PaymentForm extends Component{
     this.setState({chosenOne: userID})
   }
 
+  componentDidMount(){
+    console.log('userbalance array:', this.props.userArray)
+  }
+
 	render(){
 		const{
 		  fields: {payee, recipient, amount, note},
@@ -53,7 +57,7 @@ export default class PaymentForm extends Component{
 
     return(
     	<div>
-    	 <button className = 'button primary button tiny'onClick={this.openModal}>Make Payment</button>
+    	 <button className = 'button primary button tiny' onClick={this.openModal}>Make Payment</button>
             <Modal className='modal' isOpen={this.state.isModalOpen} transitionName="modal-anim">
     	<form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
          <i onClick={this.closeModal} className="fa fa-times-circle-o" aria-hidden="true" style = {{cursor:'pointer'}}></i>
@@ -103,6 +107,7 @@ export default class PaymentForm extends Component{
 }
 
 PaymentForm.propTypes = {
+  userArray: PropTypes.array.isRequired,
 	userInfo: PropTypes.object.isRequired,
 	groupMembers: PropTypes.array.isRequired,
   fields: PropTypes.object.isRequired,

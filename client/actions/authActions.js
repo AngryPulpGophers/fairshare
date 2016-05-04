@@ -45,7 +45,6 @@ export function updateUserInfo(userObj) {
 
 export const RESET_ALERT = 'RESET_ALERT';
 export function resetAlert() {
-  console.log('@*&$%#$*&%@#%&@we reset the form alert')
   return {
       type: RESET_ALERT,
       userIsUpdated: false

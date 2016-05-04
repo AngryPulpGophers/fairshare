@@ -44,7 +44,7 @@ router.get('/id', function(req, res){
       }
     })
     .catch(function(err){
-      console.error(err);
+      res.status(400).send(err);
     });
 });
 

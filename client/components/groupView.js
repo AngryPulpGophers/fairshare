@@ -25,7 +25,8 @@ export default class GroupView extends Component {
   }
 
 
-  render() {
+
+ render() {
     var currentURL = window.location.href
     console.log('pjpjpjp',currentURL.split('/')[2])
     var ID = currentURL.split('id=')
@@ -52,7 +53,7 @@ export default class GroupView extends Component {
 
   // setting this to bypas the need for authentication
     return(
-      <div>
+      <div id='hanger'>
         <h2>Balance</h2>
           {showUserBalance.map(function(user){
             return (
@@ -81,6 +82,7 @@ export default class GroupView extends Component {
         <h2>Activity</h2>  
             
         <PaymentForm
+        userArray = {showUserBalance}
         groupMembers = {this.props.currentGroupUsers}
         userInfo = {this.props.userInfo}
         makePayment = {this.props.makePayment}
