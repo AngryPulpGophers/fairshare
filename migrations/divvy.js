@@ -4,10 +4,8 @@ exports.up = function(knex, Promise){
     knex.schema.createTable('users', function(table){
       table.increments('id').primary();
       table.string('name', 40);
-      table.string('username', 20).unique();
-      table.string('password', 16);
+      table.string('username', 20);
       table.string('email');
-      table.string('facebookId');
       table.string('img_url');
     }),
 
@@ -57,6 +55,16 @@ exports.up = function(knex, Promise){
       table.string('sess');
       table.string('sid');
       table.timestamp('expire');
+    }),
+
+    knex.schema.createTable('identity', function(table){
+      table.increments('id').primary();
+      table.integer('user_id').references('id').inTable('users');
+      table.string('provider_id');
+      table.string('provider');
+      table.string('token');
+      table.string('refresh');
+      table.integer('expires');
     })
   ]);
 };

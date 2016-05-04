@@ -16,7 +16,11 @@ export default class Dashboard extends Component {
 
         {/*<h3>Dashboard</h3>*/}
         <Link to='/create-group' className="large primary button expanded">+ New Group</Link>
-        <GroupList getGroups={this.props.getGroups} groups={this.props.groups}/>
+        <GroupList 
+          getGroups={this.props.getGroups} 
+          groups={this.props.groups}
+          userInfo={this.props.userInfo}
+        />
         </div>
       </div>
       ) 
@@ -38,5 +42,6 @@ export default class Dashboard extends Component {
 Dashboard.propTypes = {
   callouts: PropTypes.array.isRequired,
   getGroups: PropTypes.func.isRequired,
-  isAuthed: PropTypes.bool.isRequired
+  isAuthed: PropTypes.bool.isRequired,
+  userInfo: PropTypes.object.isRequired
 }

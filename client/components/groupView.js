@@ -25,8 +25,10 @@ export default class GroupView extends Component {
   }
 
 
-  render() {
+
+ render() {
     var currentURL = window.location.href
+    console.log('pjpjpjp',currentURL.split('/')[2])
     var ID = currentURL.split('id=')
     console.log('did this work',ID[1])
     console.log('HAIL MARY',__dirname)
@@ -51,7 +53,7 @@ export default class GroupView extends Component {
 
   // setting this to bypas the need for authentication
     return(
-      <div>
+      <div id='hanger'>
         <h2>Balance</h2>
           {showUserBalance.map(function(user){
             return (
@@ -80,6 +82,7 @@ export default class GroupView extends Component {
         <h2>Activity</h2>  
             
         <PaymentForm
+        userArray = {showUserBalance}
         groupMembers = {this.props.currentGroupUsers}
         userInfo = {this.props.userInfo}
         makePayment = {this.props.makePayment}
@@ -116,7 +119,7 @@ export default class GroupView extends Component {
                         </div>
                       </div>
                       <div className = "small-12 large-3 columns">
-                        <div>Reciept: <img src={"/"+activity.img_url} /></div>
+                        <div>Reciept: <img src={"/"+(activity.img_url.split('dist/')[1] ? activity.img_url.split('dist/')[1] : activity.img_url)} /></div>
                       </div>
                       <div className = 'large-3 columns'>
                       </div>

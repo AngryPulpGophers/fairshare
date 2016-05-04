@@ -4,7 +4,7 @@ exports.up = function(knex, Promise){
     knex.schema.createTable('users', function(table){
       table.increments('id').primary();
       table.string('name', 40);
-      table.string('username', 20).unique();
+      table.string('username', 20);
       table.string('password', 16);
       table.string('email');
       table.string('facebookId');

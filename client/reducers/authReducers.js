@@ -2,8 +2,7 @@ import * as ActionTypes from '../actions/authActions';
 //import { GROUPS_REQUEST, GROUPS_SUCCESS, GROUPS_FAILURE} from '../actions';
 import update from 'react-addons-update';
 console.log(ActionTypes);
-
-export function auth(state = {isFetching: false, userIsUpdated: false, isAuthed: false, userInfo: {}}, action){
+export function auth(state = {isFetching: false, isAuthed: false, isOpen: true, userInfo: {}}, action){
 	switch (action.type){
 		
 		case ActionTypes.USER_LOGIN:
@@ -66,10 +65,14 @@ export function auth(state = {isFetching: false, userIsUpdated: false, isAuthed:
     case ActionTypes.UPDATE_USER_FAILURE:
       return update(state, {
       isFetching: {$set: false}
-    })    
+    })
 
-
-		default: 
+    case ActionTypes.TOGGLE_MODAL:
+      return update(state, {
+        isOpen: {$set: false}
+    })   
+    
+    default: 
 			return state;
 	}
 }

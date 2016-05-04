@@ -2,10 +2,20 @@ var Groups  = require('../models/groups.js');
 var Users   = require('../models/users.js');
 var express = require('express');
 var multer = require('multer');
-var upload = multer({ dest: 'images/expenses'});
+var upload = multer({ dest: 'dist/images/expenses'});
 var router  = express.Router();
 
 module.exports = router;
+
+if (process.env.NODE_ENV !== 'test'){
+  router.use(function(req, res, next){
+    if(req.isAuthenticated()){
+      return next();
+    } else{
+      res.status(401).send('user not authenticated');
+    }
+  });
+}
 
 router.param('group', function(req, res, next, group){
   req.group = group;
@@ -93,6 +103,10 @@ router.get('/activity/:group', function(req, res){
 });
 
 router.post('/', function(req, res){
+  //automatically add yourself to group if not already in it.
+  if (process.env.NODE_ENV !== 'test' && req.body.members.indexOf(req.user.id) === -1){
+    req.body.members.push(req.user.id);
+  }
   Groups.createGroup(req.body)
     .then(function(data){
       res.status(200).send(data);

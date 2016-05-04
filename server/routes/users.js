@@ -3,18 +3,17 @@ var express = require('express');
 var router = express.Router();
 var Middleware = require('../middleware');
 
-//router.get('/', function(req, res, next){
-
-
-router.use(function(req, res, next){
- // console.log('req in middleware:', req);
-  if(req.isAuthenticated()){
-  	return next();
-  }else{
-  	res.status(401).send('user not authenticated');
-  }
-});
 module.exports = router;
+
+if (process.env.NODE_ENV !== 'test'){
+  router.use(function(req, res, next){
+    if(req.isAuthenticated()){
+      return next();
+    }else{
+      res.status(401).send('user not authenticated');
+    }
+  });
+}
 
 //console.log('middleware.checkAuth:', Middleware.checkAuth);
 router.param('username',function(req, res, next, username){
@@ -45,7 +44,7 @@ router.get('/id', function(req, res){
       }
     })
     .catch(function(err){
-      console.error(err);
+      res.status(400).send(err);
     });
 });
 
@@ -91,8 +90,8 @@ router.put('/username', function(req, res){
       Users.getById({ id: JSON.parse(data)})
       .then(function (data) {
         res.status(200).send(data[0]);
-      })
-	     
+      });
+
 	  })
 	  .catch(function(err){
 	  	res.status(400).send({err:err});

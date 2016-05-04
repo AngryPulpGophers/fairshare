@@ -80,7 +80,7 @@ export function groups(state = { isFetching: false, newGroup:{}, groups: [],acti
       case ActionTypes.PAYMENT_SUCCESS:
         return update(state, {
           isFetching: {$set: false},
-          activity: {$push: [JSON.parse(action.response)]}
+          activity: {$unshift: [JSON.parse(action.response)]}
         })
       case ActionTypes.PAYMENT_FAILURE:
         return update(state, {

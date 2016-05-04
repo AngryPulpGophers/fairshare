@@ -4,8 +4,7 @@ var Users = module.exports;
 
 Users.create = function(reqObj){
   return db('users')
-    .insert(reqObj)
-    .returning('id');
+    .insert(reqObj, 'id');
 };
 
 Users.getByFacebookId = function(id){
@@ -22,8 +21,9 @@ Users.getByUsername = function(username){
 
 Users.getById = function(reqObj){
   return db('users')
-    .select('id', 'name', 'username', 'email', 'facebookId', 'img_url')
-    .where('id', '=', reqObj.id);
+    .select('id', 'name', 'username', 'email', 'img_url')
+    .where('id', '=', reqObj.id)
+    
 };
 
 Users.editProfile = function(profAttrs){
@@ -31,13 +31,12 @@ Users.editProfile = function(profAttrs){
 
   return db('users')
     .where('id', '=', id)
-    .update(profAttrs)
-    .returning('id')
+    .update(profAttrs, 'id');
 };
 
 Users.getAll = function(){
   return db('users')
-    .select('id', 'name', 'username', 'email', 'facebookId', 'img_url');
+    .select('id', 'name', 'username', 'img_url');
 };
 
 Users.getUsersByExpenseId = function(expenseId){
