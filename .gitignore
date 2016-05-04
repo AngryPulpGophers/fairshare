@@ -24,6 +24,8 @@ coverage
 build/
 dist/
 images/
+client/images/expenses/
+!client/images/
 
 # Dependency directory
 # Deployed apps should consider commenting these lines out:

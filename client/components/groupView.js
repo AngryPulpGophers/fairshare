@@ -42,6 +42,7 @@ export default class GroupView extends Component {
   showUserBalance=calcBalance.call(this)//this.calcBalance();
   console.log('hi pj, stuff should be here^^^^', showUserBalance)
     var localGroupObj=makeGroupObj.call(this) //this.makeGroupObj()
+    console.log('localGroupOBJ',localGroupObj)
     // var counter = 0;
     // var displayObj={};
     // for (var i = 0; i<this.props.activity.length ; i++){

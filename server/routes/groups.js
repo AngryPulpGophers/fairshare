@@ -57,6 +57,8 @@ router.get('/users/:group', function(req, res){
     });
 });
 
+
+
 router.get('/activity/:group', function(req, res){
   var activity = [];
 
@@ -119,6 +121,7 @@ router.post('/', function(req, res){
 router.post('/expenses', function(req, res){
   Groups.createExpense( req.body )
     .then(function(data){
+      data[0].type = 'expense';
       res.send(data[0]);
     })
     .catch(function(err){
