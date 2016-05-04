@@ -1,0 +1,9 @@
+#!/bin/sh
+
+ssh fairshare@158.69.200.249 <<EOF
+  cd ~/var/www/fairshare/code
+  git pull
+  npm install --production
+  forever restartall
+  exit
+EOF
