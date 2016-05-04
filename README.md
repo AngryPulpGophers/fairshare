@@ -84,9 +84,9 @@ dropdb fairshare
 
 Create the test database
 ```
+createuser fairshare --password
 createdb fairshare-test
 knex migrate:latest --env test
-createuser fairshare --password
 ```
 **important
 When prompted give the user fairshare a password of "password".
