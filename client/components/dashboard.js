@@ -29,7 +29,7 @@ export default class Dashboard extends Component {
         <div className="row">
           <div className="small-12 large-7 large-centered columns text-center">
             <div className="component-wrapper">
-              <h1>Welcome to Fairshare</h1>
+              <h1>Welcome to Fairshare WE ROCK!</h1>
               <Link to='/login' title="Get Started" className="button primary"><i className="fa fa-balance-scale"></i>Get Started</Link>
             </div>
           </div>
