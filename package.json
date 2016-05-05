@@ -7,7 +7,7 @@
     "start": "nodemon server/",
     "dev": "webpack-dev-server",
     "postinstall": "webpack -p",
-    "test": "NODE_ENV=test ./test/run.sh"
+    "test": "NODE_ENV=test ./script/run.sh"
   },
   "repository": {
     "type": "git",
