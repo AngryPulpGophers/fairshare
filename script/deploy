@@ -3,8 +3,8 @@
 ssh fairshare@158.69.200.249 <<EOF
   cd fairshare
   git pull
-  sudo npm install --production
-  sudo webpack -p
+  npm install --production
+  webpack -p
   forever restartall
   exit
 EOF
