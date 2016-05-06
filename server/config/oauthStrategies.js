@@ -56,7 +56,11 @@ Strategies.facebook_strat = new FacebookStrategy({
               name: profile.displayName,
               username:'',
               email: profile.emails[0].value,
-              img_url: profile.photos[0].value
+              img_url: profile.photos[0].value,
+              facebook: 1,
+              google: 0,
+              paypal: 0,
+              showModal: 1
             };
           User.create(userProfile)
             .then( id => {
@@ -71,10 +75,15 @@ Strategies.facebook_strat = new FacebookStrategy({
       })
       .catch( err => console.warn('Error @facebook strategy:', err));
   }else{
-    let ID = identityEntry(req.user.id, profile.id, params,'facebook');
-    Identity.create(ID)
-      .then( () => done(null, req.user))
-      .catch( err => console.warn(err));
+    let ID = identityEntry(req.user.id, profile.id, params,'google');
+    req.user.facebook = 1;
+    User.editProfile(req.user)
+      .then( () => {
+        Identity.create(ID)
+          .then( () => done(null, req.user))
+          .catch( err => console.warn(err))
+      })
+      .catch( err => console.warn(err))
   }
 });
 
@@ -88,7 +97,7 @@ Strategies.google_strat = new GoogleStrategy({
 
     //check DB for user--IF exists, execute cb->line 68
     //ELSE create profile, store in DB, execute cb->lines 70-85
-    console.log('profile from google:', profile);
+    // console.log('profile from google:', profile);
   if(!req.user){
     Identity.getByProviderID(profile.id)
       .then( userObj => {
@@ -101,7 +110,11 @@ Strategies.google_strat = new GoogleStrategy({
               name: profile.displayName,
               username:'',
               email: profile.emails[0].value,
-              img_url: profile.photos[0].value
+              img_url: profile.photos[0].value,
+              facebook: 0,
+              google: 1,
+              paypal: 0,
+              showModal: 1
             };
           User.create(userProfile)
             .then( id => {
@@ -117,9 +130,14 @@ Strategies.google_strat = new GoogleStrategy({
       .catch( err => console.warn('Error @google strategy:', err));
   }else{
     let ID = identityEntry(req.user.id, profile.id, params,'google');
-    Identity.create(ID)
-      .then( () => done(null, req.user))
-      .catch( err => console.warn(err));
+    req.user.google = 1;
+    User.editProfile(req.user)
+      .then( () => {
+        Identity.create(ID)
+          .then( () => done(null, req.user))
+          .catch( err => console.warn(err))
+      })
+      .catch( err => console.warn(err))
   }
 });
 
@@ -146,7 +164,11 @@ Strategies.paypal_strat = new PayPalStrategy({
               name: profile.displayName,
               username:'',
               email: profile.emails[0].value,
-              img_url: profile.photos[0].value
+              img_url: profile.photos[0].value,
+              facebook: 0,
+              google: 0,
+              paypal: 1,
+              showModal: 1
             };
           User.create(userProfile)
             .then( id => {
@@ -161,9 +183,14 @@ Strategies.paypal_strat = new PayPalStrategy({
       })
       .catch( err => console.warn('Error @paypal strategy:', err));
   }else{
-    let ID = identityEntry(req.user.id, profile.id, params,'paypal');
-    Identity.create(ID)
-      .then( () => done(null, req.user))
-      .catch( err => console.warn(err));
-  }
+    let ID = identityEntry(req.user.id, profile.id, params,'google');
+    req.user.google = 1;
+    User.editProfile(req.user)
+      .then( () => {
+        Identity.create(ID)
+          .then( () => done(null, req.user))
+          .catch( err => console.warn(err))
+      })
+      .catch( err => console.warn(err))
+    }
 });
