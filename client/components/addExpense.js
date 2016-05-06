@@ -80,6 +80,7 @@ export default class AddExpense extends Component {
         obj.note = data.note;
         obj.group_id = Number(ID[1]);
         console.log('send to post expense', obj);
+        this.setState({isModalOpen:false})
         this.props.destroyForm();
         this.props.addExpense(JSON.stringify(obj));
 
@@ -115,6 +116,7 @@ export default class AddExpense extends Component {
         obj.note = data.note;
         obj.group_id = Number(ID[1]);
         console.log('send to post expense', obj);
+        this.setState({isModalOpen:false})
         this.props.destroyForm();
         this.props.addExpense(JSON.stringify(obj));
 
@@ -153,13 +155,13 @@ export default class AddExpense extends Component {
           <h2>Add Expense</h2>
           <label>Title</label>
           <div>
-            <input type="text" placeholder="Title" {...title}/>
+            <input type="text" placeholder="Title" required{...title}/>
           </div>
         </div>
         <div>
           <label>Note</label>
           <div>
-            <input type="text" placeholder="Note" {...note}/>
+            <input type="text" placeholder="Note" required{...note}/>
           </div>
         </div>
         {/*
@@ -180,7 +182,7 @@ export default class AddExpense extends Component {
         <div>
           <label>Amount</label>
           <div>
-            <input type="text" placeholder="Amount" {...amount}/>
+            <input type="text" placeholder="Amount(must be number)" pattern = '[0-9]{1,9}' title = 'Must be a number 0-9,999,999.99' required{...amount}/>
           </div>
         </div>
         <div>
