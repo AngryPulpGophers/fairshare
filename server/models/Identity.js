@@ -33,9 +33,9 @@ Identity.getToken = (id, provider) => {
 
 //obj here will be {token: null}
 
-Identity.unlink = (id,provider,obj) => {
+Identity.unlink = (obj) => {
 	return db('identity')
-	  .where('user_id', '=', id)
-	  .andWhere('provider','=', provider)
-	  .update(obj)
+	  .where('user_id', '=', obj.id)
+	  .andWhere('provider','=', obj.provider)
+	  .delete()
 }

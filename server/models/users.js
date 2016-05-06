@@ -33,6 +33,7 @@ Users.editProfile = function(profAttrs){
     .update(profAttrs, 'id');
 };
 
+
 Users.getAll = function(){
   return db('users')
     .select('id', 'name', 'username', 'img_url');
