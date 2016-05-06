@@ -10,6 +10,7 @@ var db         = require('./db.js');
 var auth       = require('./routes/auth.js');
 var users      = require('./routes/users.js');
 var groups     = require('./routes/groups.js');
+var dashboard  = require('./routes/dashboard.js');
 var routes     = require('./routes/index.js');
 var app = express();
 
@@ -47,6 +48,7 @@ if (process.env.NODE_ENV !== 'test') {
   app.use('/auth', auth);
   app.use('/users', users);
   app.use('/groups', groups);
+  app.use('/dashboard', dashboard);
   app.use('/', routes);
 
   // Start the server!
