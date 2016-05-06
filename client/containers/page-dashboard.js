@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { removeCallout } from '../actions/calloutActions';
 import { getGroups } from '../actions/groupActions';
 import { getDashboard } from '../actions/dashActions';
+import { stopSocialModal } from '../actions/authActions';
 import Dashboard from '../components/dashboard';
 
 class PageDashboard extends Component {
@@ -21,6 +22,7 @@ class PageDashboard extends Component {
             isAuthed={this.props.isAuthed}
             groups={this.props.groups}
             userInfo={this.props.userInfo}
+            stopSocialModal={this.props.stopSocialModal}
           />
       </div>
     )
@@ -33,7 +35,8 @@ PageDashboard.propTypes = {
   getGroups: PropTypes.func.isRequired,
   isAuthed: PropTypes.bool.isRequired,
   groups:PropTypes.array.isRequired,
-  getDashboard:PropTypes.func.isRequired
+  getDashboard:PropTypes.func.isRequired,
+  stopSocialModal: PropTypes.func.isRequired,
 }
 
 function mapStateToProps(state) {
@@ -44,12 +47,13 @@ function mapStateToProps(state) {
     groups: state.groups.groups,
     isAuthed: state.auth.isAuthed,
     userInfo: state.auth.userInfo,
-    dashboard: state.dashboard.dashboard
+    dashboard: state.dashboard.dashboard,
   }
 }
 
 export default connect(mapStateToProps, {
   removeCallout,
   getGroups,
-  getDashboard
+  getDashboard,
+  stopSocialModal,
 })(PageDashboard)

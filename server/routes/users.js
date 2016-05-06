@@ -96,6 +96,7 @@ router.post('/', function(req, res){
 });
 
 router.put('/username', function(req, res){
+  console.log('in /username with following body:', req.body);
 	Users.editProfile(req.body)
 	  .then(function(data){
       Users.getById({ id: JSON.parse(data)})

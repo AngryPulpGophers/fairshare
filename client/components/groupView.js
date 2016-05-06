@@ -6,7 +6,7 @@ import {prettyDate, calcBalance, makeGroupObj, test} from '../utility/groupViewH
 import Modal from './modal';
 import PaymentForm from './paymentForm';
 import AddExpense from './addExpense';
-
+import defaultPicture from '../images/defaultPicture.jpg'
 
 
 
@@ -42,6 +42,7 @@ export default class GroupView extends Component {
   showUserBalance=calcBalance.call(this)//this.calcBalance();
   console.log('hi pj, stuff should be here^^^^', showUserBalance)
     var localGroupObj=makeGroupObj.call(this) //this.makeGroupObj()
+    console.log('localGroupOBJ',localGroupObj)
     // var counter = 0;
     // var displayObj={};
     // for (var i = 0; i<this.props.activity.length ; i++){
@@ -119,7 +120,7 @@ export default class GroupView extends Component {
                         </div>
                       </div>
                       <div className = "small-12 large-3 columns">
-                        <div>Reciept: <img src={"/"+(activity.img_url.split('dist/')[1] ? activity.img_url.split('dist/')[1] : activity.img_url)} /></div>
+                        <div>Reciept: <img src={"/"+(activity.img_url.split('dist/')[1] ? activity.img_url.split('dist/')[1] : defaultPicture)} /></div>
                       </div>
                       <div className = 'large-3 columns'>
                       </div>

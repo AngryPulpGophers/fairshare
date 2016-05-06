@@ -23,6 +23,7 @@ export default class Dashboard extends Component {
             getGroups={this.props.getGroups}
             groups={this.props.groups}
             userInfo={this.props.userInfo}
+            stopSocialModal={this.props.stopSocialModal}
           />
         </div>
       </div>
@@ -43,6 +44,7 @@ export default class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
+  stopSocialModal: PropTypes.func.isRequired,
   callouts: PropTypes.array.isRequired,
   getGroups: PropTypes.func.isRequired,
   isAuthed: PropTypes.bool.isRequired,

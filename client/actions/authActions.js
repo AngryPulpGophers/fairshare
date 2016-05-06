@@ -50,3 +50,18 @@ export function resetAlert() {
       userIsUpdated: false
   }
 }
+
+export const RESET_MODAL = 'RESET_MODAL';
+export const RESET_MODAL_SUCCESS = 'RESET_MODAL_SUCCESS';
+export const RESET_MODAL_FAILURE = 'RESET_MODAL_FAILURE';
+
+export function stopSocialModal(obj){
+  return {
+    [CALL_API]:{
+      endpoint: 'users/username',
+      req:'PUT',
+      body: JSON.stringify(obj),
+      types:[RESET_MODAL,RESET_MODAL_SUCCESS,RESET_MODAL_FAILURE]
+    }
+  }
+}
