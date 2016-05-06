@@ -91,6 +91,7 @@ export default class CreateGroup extends Component {
                     {this.props.members.length === 0 ? <span className="warning label"><strong>Just you so far!</strong></span> : null}
                     <ul>
                       {[...memberElements]}
+                      {this.props.members.length > 0 ? <span>(and you!)</span> : null}
                     </ul>
                   </div>
                 </div>  

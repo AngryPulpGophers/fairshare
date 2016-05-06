@@ -7,7 +7,7 @@ body{
 .component-wrapper{
   background: #fff;
   padding: 20px 40px;
-  border-radius: .5em;
+  border-radius: .33em;
   border: 1px solid #ccc;
   box-shadow: 1px 1px 20px #888;
 }
@@ -111,6 +111,16 @@ input[type='search']{
   margin-right: auto;
   overflow-y: auto;
   width:65%;
+}
+.dash-stat{
+  font-size: 2rem;
+  margin-bottom: 20px;
+  .alert{
+    color: $alert-color
+  }
+  .success{
+    color: green;
+  }
 }
 
 

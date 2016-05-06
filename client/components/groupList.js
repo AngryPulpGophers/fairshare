@@ -10,7 +10,6 @@ function puke (obj) {
 
 export default class GroupList extends Component {
   componentWillMount(){
-    //console.log('USER ID', this.props.userInfo.id)
     this.props.getGroups(this.props.userInfo.id)
   }
 
@@ -22,6 +21,7 @@ export default class GroupList extends Component {
           stopSocialModal={this.props.stopSocialModal}
         />
       <div>
+        { console.log('OUR GROUP INFO', this.props.groups) }
          {this.props.groups.map(function(group){
             return <Link  to={{pathname:'/groupView',query:{ id: group.id }}} title="groupView" className="callout callout-nav">{group.name}</Link> 
 
