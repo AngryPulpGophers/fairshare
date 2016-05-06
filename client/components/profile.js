@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import ExpireAlert from '../components/alert';
+import SocialAccount from '../components/socialAccounts'
 //import { load as loadAccount } from '../redux/modules/account';
 
 const FIELDS = {
@@ -19,9 +20,14 @@ const FIELDS = {
     }
 };
 
+
 let alert = false;
 export default class Profile extends Component {
+    
+
     //setup for our alert
+    
+
     componentWillReceiveProps(nextProps){
       //console.log('*************OUR PROPS:',nextProps)
       if(nextProps.userIsUpdated){
@@ -61,6 +67,10 @@ export default class Profile extends Component {
                     <strong> That was a splendid update! </strong>
                   </ExpireAlert>
                 <h3>Your Profile</h3>
+                <SocialAccount
+                  userInfo={this.props.userInfo}
+                  unlinkSocialAcc={this.props.unlinkSocialAcc}
+                />
                 <form className="profile-form" onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this))}>
                   <div className="row">
                     <div className="small-12 large-4 columns">
