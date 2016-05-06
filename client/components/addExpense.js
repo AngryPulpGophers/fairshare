@@ -39,6 +39,9 @@ export default class AddExpense extends Component {
     if (this.props.userInfo){
     var photo = new FormData();
     console.log('PHOTO',data.photo)
+    if(data.photo == undefined){
+      data.photo = [];
+    }
     if (data.photo.length){
       photo.append('photo', data.photo[0]);
     
@@ -115,7 +118,7 @@ export default class AddExpense extends Component {
         this.props.destroyForm();
         this.props.addExpense(JSON.stringify(obj));
 
-        location.replace(baseURL+'/groupView?id='+ID[1]);
+        //location.replace(baseURL+'/groupView?id='+ID[1]);
     }
     }
     else{
