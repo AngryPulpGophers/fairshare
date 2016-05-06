@@ -65,3 +65,18 @@ export function stopSocialModal(obj){
     }
   }
 }
+export const UNLINK_REQUEST = 'UNLINK_REQUEST';
+export const UNLINK_SUCCESS = 'UNLINK_SUCCESS';
+export const UNLINK_FAILURE = 'UNLINK_FAILURE';
+
+export function unlinkSocialAcc(obj){
+  return {
+    [CALL_API]:{
+      endpoint: 'users/unlinkAccount',
+      req:'POST',
+      body: JSON.stringify(obj),
+      types:[UNLINK_REQUEST,UNLINK_SUCCESS,UNLINK_FAILURE]
+    }
+  }
+}
+

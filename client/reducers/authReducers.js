@@ -79,7 +79,20 @@ export function auth(state = {isFetching: false, isAuthed: false, isOpen: true, 
      case ActionTypes.RESET_MODAL_FAILURE:
       return update(state, {
         isFetching: {$set: false}
-    })  
+    }) 
+      case ActionTypes.UNLINK_REQUEST:
+      return update(state, {
+        isFetching: {$set: true}
+    }) 
+    case ActionTypes.UNLINK_SUCCESS:
+      return update(state, {
+        isFetching: {$set: false},
+        userInfo: {$set: JSON.parse(action.response)}
+    })
+     case ActionTypes.UNLINK_FAILURE:
+      return update(state, {
+        isFetching: {$set: false}
+    })   
     
     default: 
 			return state;
