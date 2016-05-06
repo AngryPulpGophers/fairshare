@@ -1,0 +1,5 @@
+
+--compilers js:client_tests/compile.js
+--require client_tests/setup.js
+
+
