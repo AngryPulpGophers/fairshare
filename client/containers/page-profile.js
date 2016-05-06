@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import Profile from '../components/profile';
-import {updateUserInfo, resetAlert} from '../actions/authActions'
+import {updateUserInfo, resetAlert, unlinkSocialAcc} from '../actions/authActions'
 
 class PageProfile extends Component {
 
@@ -37,6 +37,7 @@ class PageProfile extends Component {
         updateUserInfo = {this.props.updateUserInfo}
         userIsUpdated = {this.props.userIsUpdated}
         resetAlert = {this.props.resetAlert}
+        unlinkSocialAcc = {this.props.unlinkSocialAcc} 
      />
     )
   }
@@ -54,6 +55,7 @@ function mapStateToProps(state) {
 // injection to child
 export default connect(mapStateToProps, {
   updateUserInfo,
-  resetAlert
+  resetAlert,
+  unlinkSocialAcc
 })(PageProfile);
 

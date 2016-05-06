@@ -53,6 +53,7 @@ PayHelp.makeRadioButton = (data,obj) => {
       <label><input className='recip' name='recipient' onChange={obj.onChange} type='radio' value={data.user_id}/>{data.name}</label>
     )
   }
+
 //creates JSX elements for form radio buttons using previous func while excluding the signed in user;
 
 PayHelp.memberButtons = (obj,func) => obj.props.groupMembers.filter( member => {
