@@ -62,7 +62,6 @@ To create your tables and seed data run in a new tab:
 ```
 createdb fairshare
 knex migrate:latest
-knex seed:run
 ```
 Do not CTRL-C to stop Postgres
 To stop your database:
