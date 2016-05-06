@@ -10,15 +10,18 @@ function puke (obj) {
 
 export default class GroupList extends Component {
   componentWillMount(){
-    //console.log('USER ID', this.props.userInfo.id)
     this.props.getGroups(this.props.userInfo.id)
   }
 
   render(){
     return(
       <div>
-        <SocialModal/>
+        <SocialModal
+          userInfo={this.props.userInfo}
+          stopSocialModal={this.props.stopSocialModal}
+        />
       <div>
+        { console.log('OUR GROUP INFO', this.props.groups) }
          {this.props.groups.map(function(group){
             return <Link  to={{pathname:'/groupView',query:{ id: group.id }}} title="groupView" className="callout callout-nav">{group.name}</Link> 
 
@@ -27,5 +30,10 @@ export default class GroupList extends Component {
     </div>
     )
   }
+}
+
+GroupList.propTypes = {
+  userInfo: PropTypes.object.isRequired,
+  stopSocialModal: PropTypes.func.isRequired
 }
 

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Login from '../components/login';
 class PageLogin extends Component {
 
+
   render() {
     return (
       <Login
@@ -15,7 +16,6 @@ class PageLogin extends Component {
 };
 
 PageLogin.propTypes = {
-	
 }
 
 function mapStateToProps(state) {

@@ -121,12 +121,18 @@ router.post('/', function(req, res){
 router.post('/expenses', function(req, res){
   Groups.createExpense( req.body )
     .then(function(data){
-      data[0].type = 'expense';
-      res.send(data[0]);
+      //console.log('expense id:', data[0].id)
+      Users.getUsersByExpenseId(data[0].id)
+        .then(function(members){
+          data[0].members = members;
+          data[0].type = 'expense';
+          //console.log('expense posted data:',data)
+          res.send(data[0]);
+        })
+        .catch(function(err){
+          res.status(400).send({err: err});
+        });
     })
-    .catch(function(err){
-      res.status(400).send({err: err});
-    });
 });
 
 router.post('/expenses/upload', upload.single('photo') ,function(req, res){
