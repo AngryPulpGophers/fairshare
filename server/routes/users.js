@@ -1,4 +1,5 @@
 var Users = require('../models/users.js');
+var Identity = require('../models/Identity');
 var express = require('express');
 var router = express.Router();
 var Middleware = require('../middleware');
@@ -42,7 +43,7 @@ router.get('/', function(req, res){
       res.status(400).send({err: err});
     });
   }
-	
+
 });
 
 router.get('/id', function(req, res){
@@ -96,7 +97,6 @@ router.post('/', function(req, res){
 });
 
 router.put('/username', function(req, res){
-  console.log('in /username with following body:', req.body);
 	Users.editProfile(req.body)
 	  .then(function(data){
       Users.getById({ id: JSON.parse(data)})
@@ -109,3 +109,27 @@ router.put('/username', function(req, res){
 	  	res.status(400).send({err:err});
 	  });
 });
+
+router.post('/unlinkAccount',function(req,res){
+  console.log('in unlink endpoint with following:', req.body);
+  Identity.unlink(req.body)
+    .then(function(){
+      delete req.body.provider;
+      Users.editProfile(req.body)
+        .then(function(data){
+          Users.getById({id:JSON.parse(data)})
+            .then(function(data){
+            res.status(200).send(data[0]);
+            })
+            .catch(function(err){
+            res.status(400).send(err);
+            })
+        })
+        .catch(function(err){
+          res.status(400).send(err);
+        })
+    })
+    .catch(function(err){
+      res.status(400).send(err);
+    })
+})

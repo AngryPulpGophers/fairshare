@@ -37,13 +37,10 @@ export default class PaymentForm extends Component{
   }
 
   onChange = () => {
-    var userID = PayHelp.getRadioButtons('recip');
+    let userID = PayHelp.getRadioButtons('recip');
     this.setState({chosenOne: userID})
   }
 
-  componentDidMount(){
-    console.log('userbalance array:', this.props.userArray)
-  }
 
 	render(){
 		const{
@@ -68,7 +65,6 @@ export default class PaymentForm extends Component{
                 {[...RadioButtons]}
               </div>
           </div>
-          <div style={{backgroundColor:'black'}}></div>
           <div>
             <label>Amount</label>
             <div>
@@ -107,7 +103,6 @@ export default class PaymentForm extends Component{
 }
 
 PaymentForm.propTypes = {
-  userArray: PropTypes.array.isRequired,
 	userInfo: PropTypes.object.isRequired,
 	groupMembers: PropTypes.array.isRequired,
   fields: PropTypes.object.isRequired,
