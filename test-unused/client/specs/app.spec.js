@@ -4,8 +4,8 @@ import { shallow } from "enzyme";
 
 import RootProd from "../../../client/containers/app";
 
-  describe('(Container) app.js ', () => {
-  it('renders as a  <Navigation/> ', () => {
+  describe('FrontEnd : app.js wrapper ', () => {
+  it('renders as a  <Navigation/> element', () => {
     const wrapper = shallow( <div/>);
     expect(wrapper.type()).to.eql('div');
   });
