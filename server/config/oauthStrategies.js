@@ -57,6 +57,7 @@ Strategies.facebook_strat = new FacebookStrategy({
               username:profile.displayName.split(' ').join(''),
               email: profile.emails[0].value,
               img_url: profile.photos[0].value,
+              primary: 'facebook',
               facebook: 1,
               google: 0,
               paypal: 0,
@@ -90,8 +91,8 @@ Strategies.facebook_strat = new FacebookStrategy({
 Strategies.google_strat = new GoogleStrategy({
     clientID: GoogleID,
     clientSecret: GoogleSecret,
-    callbackURL: 'http://localhost:3000/auth/google/callback',
-    passReqToCallback   : true
+    callbackURL: 'http://fairshare.com/auth/google/callback',
+    passReqToCallback: true
   },
    (req, accessToken, refreshToken,params, profile, done) => {
 
@@ -111,6 +112,7 @@ Strategies.google_strat = new GoogleStrategy({
               username:'',
               email: profile.emails[0].value,
               img_url: profile.photos[0].value,
+              primary: 'google',
               facebook: 0,
               google: 1,
               paypal: 0,
@@ -144,8 +146,8 @@ Strategies.google_strat = new GoogleStrategy({
 Strategies.paypal_strat = new PayPalStrategy({
     clientID: PaypalID,
     clientSecret: PaypalSecret,
-    callbackURL: '/auth/google/callback',
-    passReqToCallback   : true
+    callbackURL: 'http://fairshare.cloud/auth/paypal/callback',
+    passReqToCallback: true
   },
   (req, accessToken, refreshToken, params, profile, done) => {
   console.log('params at start of strategy:', params)
@@ -165,6 +167,7 @@ Strategies.paypal_strat = new PayPalStrategy({
               username:'',
               email: profile.emails[0].value,
               img_url: profile.photos[0].value,
+              primary: 'paypal',
               facebook: 0,
               google: 0,
               paypal: 1,

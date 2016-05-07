@@ -1,4 +1,5 @@
 var Auth = require('../models/auth.js');
+var User = require('../models/users.js');
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
@@ -13,23 +14,32 @@ router.get('/facebook/callback', passport.authenticate('facebook',
 router.get('/google', passport.authenticate('google', {scope:['email','profile']}));
 
 router.get('/google/callback', passport.authenticate('google', 
-  {failureRedirect: '/facebook', successRedirect: '/'}))
+  {failureRedirect: '/google', successRedirect: '/'}))
 
-router.get('/paypal', passport.authenticate('paypal'));
+router.get('/paypal', passport.authenticate('paypal'),function(req,res,next){
+	console.log('in initial part of callback:', req);
+
+	next();
+});
 
 router.get('/paypal/callback', passport.authenticate('paypal', 
-  {failureRedirect: '/facebook', successRedirect: '/'}))
+  {failureRedirect: '/paypal'}), function(req,res){
+	console.log('req in paypal/callback', req);
+	res.redirect('/');
+})
 
 
 
 
 router.get(('/logout'),function(req,res){
-	// req.session = null;
-	req.session.destroy(function(){
-	  req.sessionID = null;
-	  // console.log('req.session after nullified:', req.session.cookie)
-	  req.logout();
-	  res.redirect('/')
-  })
+  User.editProfile({id:req.user.id, showModal: 1})
+    .then(() => {
+	    req.session.destroy(function(){
+	    req.sessionID = null;
+	    req.logout();
+	    res.redirect('/')
+      })
+    })
+	 .catch(err => console.warn(err));
 })
 

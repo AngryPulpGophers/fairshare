@@ -27,13 +27,9 @@ export default class PaymentForm extends Component{
   }
 
   handleSubmit = (data) => {
-    if(!this.state.chosenOne || !data.amount || !data.note){
-      this.openModal();
-    }else{
-      data = PayHelp.buildPaymentEntry(this,data);
-      this.setState({isModalOpen:false, chosenOne: null});
-      this.props.makePayment(JSON.stringify(data));
-    }  
+    data = PayHelp.buildPaymentEntry(this,data);
+    this.setState({isModalOpen:false, chosenOne: null});
+    this.props.makePayment(JSON.stringify(data)); 
   }
 
   onChange = () => {
@@ -68,8 +64,8 @@ export default class PaymentForm extends Component{
           <div>
             <label>Amount</label>
             <div>
-              <input type="text" placeholder="100.00" pattern = '[0-9]{1,}\.[0-9]{2}'
-              {...amount}/>
+              <input type="text" placeholder="100.00" pattern = '[0-9]{1,}\.[0-9]{2}' title ='include two decimal places'
+              {...amount} required/>
             </div>
           </div>
             <Modal className='modal' isOpen={this.state.isInnerModalOpen} transitionName="modal-anim">
@@ -82,7 +78,7 @@ export default class PaymentForm extends Component{
             <label>Notes</label>
             <div>
               <textarea placeholder="Additional Info" defaultValue=""
-              {...note}/>
+              {...note} required/>
             </div>
           </div>
         <div>
