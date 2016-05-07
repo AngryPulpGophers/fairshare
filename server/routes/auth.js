@@ -14,12 +14,19 @@ router.get('/facebook/callback', passport.authenticate('facebook',
 router.get('/google', passport.authenticate('google', {scope:['email','profile']}));
 
 router.get('/google/callback', passport.authenticate('google', 
-  {failureRedirect: '/facebook', successRedirect: '/'}))
+  {failureRedirect: '/google', successRedirect: '/'}))
 
-router.get('/paypal', passport.authenticate('paypal'));
+router.get('/paypal', passport.authenticate('paypal'),function(req,res,next){
+	console.log('in initial part of callback:', req);
+
+	next();
+});
 
 router.get('/paypal/callback', passport.authenticate('paypal', 
-  {failureRedirect: '/facebook', successRedirect: '/'}))
+  {failureRedirect: '/paypal'}), function(req,res){
+	console.log('req in paypal/callback', req);
+	res.redirect('/');
+})
 
 
 

@@ -91,7 +91,7 @@ Strategies.facebook_strat = new FacebookStrategy({
 Strategies.google_strat = new GoogleStrategy({
     clientID: GoogleID,
     clientSecret: GoogleSecret,
-    callbackURL: '/auth/google/callback',
+    callbackURL: 'http://fairshare.com/auth/google/callback',
     passReqToCallback: true
   },
    (req, accessToken, refreshToken,params, profile, done) => {
@@ -146,7 +146,7 @@ Strategies.google_strat = new GoogleStrategy({
 Strategies.paypal_strat = new PayPalStrategy({
     clientID: PaypalID,
     clientSecret: PaypalSecret,
-    callbackURL: 'http://www.fairshare.cloud/auth/paypal/callback',
+    callbackURL: 'http://fairshare.cloud/auth/paypal/callback',
     passReqToCallback: true
   },
   (req, accessToken, refreshToken, params, profile, done) => {
