@@ -1,4 +1,5 @@
 var Auth = require('../models/auth.js');
+var User = require('../models/users.js');
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
@@ -24,12 +25,14 @@ router.get('/paypal/callback', passport.authenticate('paypal',
 
 
 router.get(('/logout'),function(req,res){
-	// req.session = null;
-	req.session.destroy(function(){
-	  req.sessionID = null;
-	  // console.log('req.session after nullified:', req.session.cookie)
-	  req.logout();
-	  res.redirect('/')
-  })
+  User.editProfile({id:req.user.id, showModal: 1})
+    .then(() => {
+	    req.session.destroy(function(){
+	    req.sessionID = null;
+	    req.logout();
+	    res.redirect('/')
+      })
+    })
+	 .catch(err => console.warn(err));
 })
 
