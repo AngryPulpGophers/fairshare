@@ -26,6 +26,7 @@ Users.getById = function(reqObj){
 };
 
 Users.editProfile = function(profAttrs){
+  console.log('in edit profile with following:', profAttrs)
   var id = profAttrs.id;
 
   return db('users')

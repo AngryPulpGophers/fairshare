@@ -7,6 +7,7 @@ exports.up = function(knex, Promise){
       table.string('username', 20);
       table.string('email');
       table.string('img_url');
+      table.string('primary');
       table.integer('facebook');
       table.integer('google');
       table.integer('paypal');

@@ -38,7 +38,6 @@ router.get('/', function(req, res){
 });
 
 router.get('/:user', function(req, res){
-  // return members [{},{},{}]
   Groups.getGroupsByUserId( req.user )
     .then(function(data){
       res.send(data);
