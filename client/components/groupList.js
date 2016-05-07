@@ -23,8 +23,15 @@ export default class GroupList extends Component {
       <div>
         { console.log('OUR GROUP INFO', this.props.groups) }
          {this.props.groups.map(function(group){
-            return <Link  to={{pathname:'/groupView',query:{ id: group.id }}} title="groupView" className="callout callout-nav">{group.name}</Link> 
-
+            return (
+              <Link  to={{pathname:'/groupView',query:{ id: group.id }}} title="groupView" className="callout callout-nav">{group.name} 
+                  {group.members.map(function(member){
+                    return (
+                      <img className="group-avatar" src={member.img_url} />
+                    )
+                  })}
+              </Link>
+            ) 
           })}
       </div>
     </div>
