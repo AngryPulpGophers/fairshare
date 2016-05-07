@@ -15,7 +15,7 @@ Users.getByFacebookId = function(id){
 
 Users.getByUsername = function(username){
   return db('users')
-    .select('id', 'name', 'username', 'email', 'facebookId', 'img_url')
+    .select('id', 'name', 'username', 'email', 'img_url')
     .where('users.username', '=', username);
 };
 

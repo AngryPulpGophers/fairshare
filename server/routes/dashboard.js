@@ -20,10 +20,10 @@ router.get('/', function(req, res){
   //console.log('the user',req.user)
   Dashboard.getOwedUser(req.user.id)
     .then(function(data){
-      dashData.owedToUser = data.rows[0].sum ||0;
+      dashData.owedToUser = data.rows[0].sum || 0;
       Dashboard.getUserOwes(req.user.id)
         .then(function(data){
-          dashData.userOwes = data.rows[0].sum||0;
+          dashData.userOwes = data.rows[0].sum|| 0;
           Dashboard.payments(req.user.id)
             .then(function(data){
               dashData.payments = data.rows[0].total || 0 ;

@@ -1,5 +1,11 @@
 //import { CALL_API } from '../middleware';
-
+export const INPUT_FOCUSED = 'INPUT_FOCUSED';
+// export function focusOnInput() {
+//   return {
+//     type: INPUT_FOCUSED,
+    
+//   }
+// }
 //add a member to a group
 export const MEMBER_ADDED = 'MEMBER_ADDED';
 export function addMember(userObj) {
