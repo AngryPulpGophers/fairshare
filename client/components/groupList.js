@@ -29,7 +29,10 @@ export default class GroupList extends Component {
               <Link key={group.id} to={{pathname:'/groupView',query:{ id: group.id }}} title="groupView" className="callout callout-nav"><h5>{group.name} </h5>
                   {group.members.map(function(member){
                     return (
+
+                      <Link to={{pathname:'/profile', query:{ username: member.username }}}>
                       <img key={group.created_at + member.user_id} className="group-avatar" src={member.img_url} />
+                      </Link>
                     )
                   })}
               </Link>

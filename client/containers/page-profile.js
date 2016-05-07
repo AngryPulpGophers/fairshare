@@ -8,6 +8,10 @@ import {updateUserInfo, resetAlert, unlinkSocialAcc} from '../actions/authAction
 class PageProfile extends Component {
 
   componentWillMount(){
+
+    let currentURL = window.location.href.split('username=')[1];
+    console.log("*** currentURL ****", currentURL);
+
     //console.log('component did update:',nextProps)
     if(!window.localStorage.isAuthed){
       browserHistory.push('/login')
@@ -22,9 +26,14 @@ class PageProfile extends Component {
 
 /*
 ternary for unique props for unedit prof view
+- make a property on mapStaeToProps
+- find reducer to pass logic to mapStateToProps
+make myFriendValues const
+- users/username endpoint
 */
 
   render() {
+    
 
     const myInitialValues = {
       initialValues: {
