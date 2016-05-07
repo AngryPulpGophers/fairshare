@@ -84,7 +84,7 @@ export default class AddExpense extends Component {
         this.props.destroyForm();
         this.props.addExpense(JSON.stringify(obj));
 
-        location.replace(baseURL+'/groupView?id='+ID[1]);
+        //location.replace(baseURL+'/groupView?id='+ID[1]);
       }.bind(this));
     }
     else{
