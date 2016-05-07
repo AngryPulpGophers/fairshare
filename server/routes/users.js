@@ -1,5 +1,5 @@
 var Users = require('../models/users.js');
-var Identity = require('../models/Identity')
+var Identity = require('../models/Identity');
 var express = require('express');
 var router = express.Router();
 var Middleware = require('../middleware');
@@ -43,7 +43,7 @@ router.get('/', function(req, res){
       res.status(400).send({err: err});
     });
   }
-	
+
 });
 
 router.get('/id', function(req, res){

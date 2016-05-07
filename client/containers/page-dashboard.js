@@ -12,7 +12,7 @@ class PageDashboard extends Component {
   }
   render() {
     return (
-        <div>
+
           <Dashboard
             url={this.props.url}
             callouts={this.props.callouts}
@@ -24,7 +24,6 @@ class PageDashboard extends Component {
             userInfo={this.props.userInfo}
             stopSocialModal={this.props.stopSocialModal}
           />
-      </div>
     )
   }
 }
