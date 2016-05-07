@@ -11,9 +11,9 @@ import '../styles/foundation.scss';
 
 //load jquery and foundation in the window scope
 
-import 'script!jquery';
-import 'script!what-input';
-import 'script!foundation-sites';
+// import 'script!jquery';
+// import 'script!what-input';
+// import 'script!foundation-sites';
 
 class App extends Component {
   constructor(props) {
