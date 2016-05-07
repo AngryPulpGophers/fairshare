@@ -182,7 +182,7 @@ export default class AddExpense extends Component {
         <div>
           <label>Amount</label>
           <div>
-            <input type="text" placeholder="Amount(must be number)" pattern = '[0-9]{1,9}' title = 'Must be a number 0-9,999,999.99' required{...amount}/>
+            <input type="text" placeholder="Amount(must be of form ##.##)" pattern = '[0-9]{1,}\.[0-9]{2}' title = 'Must be in format ##.##' required{...amount}/>
           </div>
         </div>
         <div>
