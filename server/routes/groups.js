@@ -38,6 +38,7 @@ router.get('/', function(req, res){
 });
 
 router.get('/:user', function(req, res){
+  // return members [{},{},{}]
   Groups.getGroupsByUserId( req.user )
     .then(function(data){
       res.send(data);
@@ -132,7 +133,7 @@ router.post('/expenses', function(req, res){
         .catch(function(err){
           res.status(400).send({err: err});
         });
-    })
+    });
 });
 
 router.post('/expenses/upload', upload.single('photo') ,function(req, res){

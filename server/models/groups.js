@@ -1,4 +1,5 @@
 var db = require('../db.js');
+var Users   = require('./users.js');
 
 var Groups = module.exports;
 
@@ -19,6 +20,16 @@ Groups.getGroupsByUserId = function(userID) {
     .innerJoin('user_groups', 'groups.id', 'user_groups.group_id')
     .where({
       user_id: userID
+    })
+    .then(function(data){
+      var groups = data.map(function(group){
+        return Users.getUsersByGroupId(group.id)
+        .then(function(data){
+          group.members = data;
+          return group;
+        });
+      });
+      return Promise.all(groups);
     });
 };
 
@@ -86,6 +97,14 @@ Groups.updateExpense = function(expenseAttrs){
     .then(function(id){
       return Groups.getExpenseById(id[0]);
     });
+};
+
+Groups.deleteExpense = function(expenseId){
+  return db('expenses')
+    .where({
+      id: expenseId
+    })
+    .del();
 };
 
 Groups.getPaymentById = function(paymentId) {
