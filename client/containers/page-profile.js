@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import Profile from '../components/profile';
+import Friend from '../components/friendProfileView'
 import {updateUserInfo, resetAlert, unlinkSocialAcc} from '../actions/authActions'
 
 class PageProfile extends Component {
@@ -19,6 +20,9 @@ class PageProfile extends Component {
     }
   }
 
+/*
+ternary for unique props for unedit prof view
+*/
 
   render() {
 
@@ -30,7 +34,10 @@ class PageProfile extends Component {
       }
     };
 
-    return (
+    const isFriend = true;
+
+    return !isFriend ? (
+
      <Profile
         {...myInitialValues}
         userInfo = {this.props.userInfo}
@@ -39,6 +46,8 @@ class PageProfile extends Component {
         resetAlert = {this.props.resetAlert}
         unlinkSocialAcc = {this.props.unlinkSocialAcc} 
      />
+    ) :
+    (<Friend/>
     )
   }
 }
