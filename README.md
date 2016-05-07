@@ -2,7 +2,7 @@
 
 ## Press Release
 
->For anyone who is going on a trip with a group of people, to keep track of who owes who what instead of having to keep track on their own.
+>A bill-splitting app that makes the tediousness of shared expenses a thing of the past.
 
 ### Summary
 
