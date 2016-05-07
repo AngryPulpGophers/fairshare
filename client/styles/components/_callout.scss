@@ -1,3 +1,10 @@
 .callout-nav{
   display: block;
+  clear: both;
+  overflow: hidden;
+  h5{
+    float: left;
+    font-size: 2rem;
+  }
+
 }

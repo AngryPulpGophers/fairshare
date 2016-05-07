@@ -3,7 +3,7 @@ body{
   z-index: -1;
   background: $white url(../images/dinnerBlur.jpg) no-repeat center center;
 }
-
+h5,h6 {font-family: 'Helvetica Neue', sans-serif;}
 .component-wrapper{
   background: #fff;
   padding: 20px 40px;
@@ -126,6 +126,7 @@ input[type='search']{
   height: 40px;
   border-radius: 50%;
   border: 1px solid $white;
+  float: right;
 }
 
 

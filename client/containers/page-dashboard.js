@@ -5,6 +5,7 @@ import { getGroups } from '../actions/groupActions';
 import { getDashboard } from '../actions/dashActions';
 import { stopSocialModal } from '../actions/authActions';
 import Dashboard from '../components/dashboard';
+import ReactCSSTransitionReplace from 'react-css-transition-replace';
 
 class PageDashboard extends Component {
   componentWillMount(){
@@ -12,7 +13,8 @@ class PageDashboard extends Component {
   }
   render() {
     return (
-        <div>
+        <ReactCSSTransitionReplace transitionName="slide" 
+                               transitionEnterTimeout={500} transitionLeaveTimeout={500}>
           <Dashboard
             url={this.props.url}
             callouts={this.props.callouts}
@@ -24,7 +26,7 @@ class PageDashboard extends Component {
             userInfo={this.props.userInfo}
             stopSocialModal={this.props.stopSocialModal}
           />
-      </div>
+      </ReactCSSTransitionReplace>
     )
   }
 }

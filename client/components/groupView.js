@@ -58,10 +58,10 @@ export default class GroupView extends Component {
         <h2>Balance</h2>
           {showUserBalance.map(function(user){
             return (
-              <span>
-            {user.owed.map(function(person){
+              <span key={user.user_id}>
+            {user.owed.map(function(person, index){
               return (
-                <div>
+                <div key={index+user.name}>
 
 
                 
@@ -100,7 +100,7 @@ export default class GroupView extends Component {
       {/*<p> hi add expense<Link  to={{pathname:'/addExpense',query:{ id:ID[1] , pj:'holly'}}} title="groupView"  className="button primary float-left tiny button">Add Expense</Link> </p>*/}
 
          {this.props.activity.map(function(activity,index){
-            return <div className= {activity.type==='expense' ? "callout alert" :"callout success"}>
+            return <div key={activity.id} className= {activity.type==='expense' ? "callout alert" :"callout success"}>
               
               {activity.type==='expense' ?
               <div>
