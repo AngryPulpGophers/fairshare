@@ -54,7 +54,7 @@ Strategies.facebook_strat = new FacebookStrategy({
         }else{
           let userProfile = {
               name: profile.displayName,
-              username:'',
+              username:profile.displayName.split(' ').join(''),
               email: profile.emails[0].value,
               img_url: profile.photos[0].value,
               primary: 'facebook',
