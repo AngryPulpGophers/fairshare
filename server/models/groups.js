@@ -85,8 +85,8 @@ Groups.getExpensesByGroupId = function(groupId){
 Groups.createExpense = function(expenseAttrs){
   console.log('our expense attributes',expenseAttrs)
   var members = expenseAttrs.members;
-
   delete expenseAttrs.members;
+
   return db('expenses')
     .insert(expenseAttrs, 'id')
     .then(function(id){
@@ -172,10 +172,23 @@ Groups.deleteGroupById = function(groupId){
     .del().then();
 };
 
+// get all expenses
+// delete user_expenses
+// then delete the expense
 Groups.deleteExpensesByGroupId = function(groupId){
-  return db('expenses')
-    .where('group_id', '=', groupId)
-    .del().then();
+  return Groups.getExpensesByGroupId(groupId)
+    .then(function(expenses){
+      expenses.forEach(function(expense){
+        db('user_expenses')
+          .where('id', '=', expense.id)
+          .del()
+          .then(function(){
+            db('expenses')
+            .where('id', '=', expense.id)
+            .del().then();
+          });
+      });
+    });
 };
 
 Groups.deletePaymentsByGroupId = function(groupId){
