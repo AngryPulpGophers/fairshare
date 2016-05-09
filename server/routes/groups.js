@@ -102,6 +102,7 @@ router.post('/', function(req, res){
   if (process.env.NODE_ENV !== 'test' && req.body.members.indexOf(req.user.id) === -1){
     req.body.members.push(req.user.id);
   }
+  req.body.created_by = req.user.id;
   Groups.createGroup(req.body)
     .then(function(data){
       res.status(200).send(data);
