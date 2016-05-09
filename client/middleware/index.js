@@ -1,7 +1,7 @@
 import { UPDATE_LOCATION } from 'react-router-redux';
 import fetch from 'isomorphic-fetch';
-const BASE_URL = 'http://' + window.location.href.split('/')[2] + '/';
-//const BASE_URL = 'http://localhost:3000/';
+// const BASE_URL = 'http://' + window.location.href.split('/')[2] + '/';
+const BASE_URL = 'http://localhost:3000/';
 
 function callApi(endpoint, id, req, body){
   let config = {credentials : 'include' };
