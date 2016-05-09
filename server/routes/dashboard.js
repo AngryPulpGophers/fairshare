@@ -17,17 +17,13 @@ if (process.env.NODE_ENV !== 'test'){
 
 router.get('/', function(req, res){
   var dashData = {};
-  Dashboard.getOwedUser(req.user.id)
+  Dashboard.getWhatOwed2User(req.user.id)
     .then(function(data){
       dashData.owedToUser = data.rows[0].sum || 0;
-      Dashboard.getUserOwes(req.user.id)
+      Dashboard.getWhatOwedFromUser(req.user.id)
         .then(function(data){
           dashData.userOwes = data.rows[0].sum|| 0;
-          Dashboard.payments(req.user.id)
-            .then(function(data){
-              dashData.payments = data.rows[0].total || 0 ;
               res.status(200).send(dashData);
-            });
         });
     });
 });

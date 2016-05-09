@@ -109,7 +109,7 @@ export function indBalance(indObj) {
   console.log('updated user balance to group:', indObj);
   return {
     [CALL_API]: {
-      endpoint: 'groups/balance',//will need to change
+      endpoint: 'groups/balance',
       body: indObj,
       req: 'PUT',
       types: [INDBALANCE_REQUEST, INDBALANCE_SUCCESS, INDBALANCE_FAILURE]

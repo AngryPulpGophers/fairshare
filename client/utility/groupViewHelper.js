@@ -127,8 +127,8 @@ for (var ind in groupObj){
   tempObj.balance = round(groupObj[ind].balance)
   console.log('NEW PJ',tempObj.user_id,'USER',
   tempObj.group_id,'group',
-  tempObj.balance)
-  
+  tempObj.balance);
+  this.props.indBalance(tempObj);
   tempObj = {}
 }
 
