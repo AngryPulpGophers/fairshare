@@ -183,7 +183,7 @@ Groups.deletePaymentsByGroupId = function(groupId){
     .del().then();
 };
 
-Groups.deleteUsersByGroupId = function(groupId){
+Groups.deleteUserGroups = function(groupId){
   return db('user_groups')
     .where('group_id', '=', groupId)
     .del().then();

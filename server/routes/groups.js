@@ -202,6 +202,6 @@ router.delete('/:group', Middleware.checkOwner, function(req, res){
       });
     })
     .catch(function(err){
-      res.status(400).send({err: 'Error in /groups/:group'});
+      res.status(400).send({err: err});
     });
 });
