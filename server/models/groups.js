@@ -145,6 +145,18 @@ Groups.updatePayment = function(paymentAttrs){
     });
 };
 
+Groups.updateBalance = function(attrs){
+  return db('user_groups')
+    .where({
+      group_id: attrs.group_id,
+      user_id: attrs.user_id
+    })
+    .update(attrs, 'balance')
+    .then(function(balance){
+      return balance[0];
+    });
+};
+
 Groups.deleteGroupById = function(groupId){
   return db('groups')
     .where('id', '=', groupId)

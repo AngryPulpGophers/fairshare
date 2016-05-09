@@ -164,6 +164,16 @@ router.put('/payments', Middleware.checkGroup, function(req, res){
     });
 });
 
+router.put('/balance', Middleware.checkGroup, function(req, res){
+  Groups.updateBalance( req.body )
+    .then(function(data){
+      res.status(400).send(data);
+    })
+    .catch(function(err){
+      res.status(400).send({err: err});
+    });
+});
+
 router.delete('/:group', Middleware.checkGroup, function(req, res){
   Groups.deleteGroupById( req.group )
     .then(function(){
@@ -184,5 +194,4 @@ router.delete('/:group', Middleware.checkGroup, function(req, res){
     .catch(function(err){
       res.status(400).send({err: 'Error in /groups/:group'});
     });
-
 });
