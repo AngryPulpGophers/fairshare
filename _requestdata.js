@@ -39,10 +39,7 @@ req.body = {
 // GROUPS ROUTES
 //
 
-// 'GET' /groups
-  // gets all groups (prob a bad idea)
-
-// 'GET' /groups/:user
+// 'GET' /groups/
   // gets all groups by user id
 
 // 'GET' /groups/users/:group
@@ -78,6 +75,7 @@ req.body = {
 
 req.body = {
   id: "expense id",
+  group_id: "number", // NEED THIS TO PASS MIDDLEWARE
   title: undefined,
   amount: undefined,
   img_url: undefined,
@@ -87,10 +85,10 @@ req.body = {
 
 
 // 'POST' to /groups/payments
-  // creates a new payment
+// creates a new payment
 
 req.body = {
-  group_id: 'group id number',
+  group_id: 'group id number', // NEED THIS TO PASS MIDDLEWARE
   payee: 'your user id number',
   recipient: 'recipients user id number',
   amount: 'number with 2 decimals, max 8 digits',
@@ -102,6 +100,7 @@ req.body = {
 
 req.body = {
   id: "payment id",
+  group_id: "number", // NEEDS THIS TO PASS MIDDLEWARE
   amount: undefined,
   note: undefined
 };

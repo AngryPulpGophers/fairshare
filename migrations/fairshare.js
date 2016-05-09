@@ -7,7 +7,6 @@ exports.up = function(knex, Promise){
       table.string('username', 20);
       table.string('email');
       table.string('img_url');
-      table.string('primary');
       table.integer('facebook');
       table.integer('google');
       table.integer('paypal');
@@ -18,6 +17,7 @@ exports.up = function(knex, Promise){
       table.increments('id').primary();
       table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
       table.string('name');
+      table.integer('created_by');
       table.text('desc', 200);
     }),
 
@@ -25,6 +25,7 @@ exports.up = function(knex, Promise){
       table.increments('id').primary();
       table.integer('user_id').references('id').inTable('users');
       table.integer('group_id').references('id').inTable('groups');
+      table.decimal('balance', 8, 2);
     }),
 
     knex.schema.createTable('expenses', function(table){
