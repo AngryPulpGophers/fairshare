@@ -171,9 +171,6 @@ Groups.deleteGroupById = function(groupId){
     .del().then();
 };
 
-// get all expenses
-// delete user_expenses
-// then delete the expense
 Groups.deleteExpensesByGroupId = function(groupId){
   return Groups.getExpensesByGroupId(groupId)
     .then(function(expenses){
@@ -183,8 +180,8 @@ Groups.deleteExpensesByGroupId = function(groupId){
           .del()
           .then(function(){
             db('expenses')
-            .where('id', '=', expense.id)
-            .del().then();
+              .where('id', '=', expense.id)
+              .del().then();
           });
       });
     });
