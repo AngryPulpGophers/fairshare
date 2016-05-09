@@ -21,7 +21,7 @@ MiddleWare.checkGroup = function(req, res, next){
 };
 
 MiddleWare.checkOwner = function(req, res, next){
-  Groups.getById( req.group )
+  Groups.getGroupById( req.group )
     .then(function(group){
       if (group.created_by === req.user.id){
         next();

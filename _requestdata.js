@@ -57,6 +57,12 @@ req.body = {
   members: ["id(number)", "id", "id"]
 };
 
+// 'POST' to /groups/addMember/
+req.body = {
+  group_id: 'id',
+  user_id: 'id'
+};
+
 // 'POST' to /groups/expenses
   // creates a group expense
 
