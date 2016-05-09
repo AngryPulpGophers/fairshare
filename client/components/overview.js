@@ -19,11 +19,11 @@ export default class Overview extends Component {
         </div>
         <div className="small-12 large-4 columns text-center dash-stat">
           <h3>You owe:</h3>
-          <strong className="alert">${round(this.props.dashboard.userOwes)}</strong>
+          <strong className="alert">${round(this.props.dashboard.userOwes*-1)}</strong>
         </div>
         <div className="small-12 large-4 columns text-center dash-stat">
           <h3>Current Balance:</h3>
-          <strong>${round(round(this.props.dashboard.owedToUser) -  round(this.props.dashboard.userOwes))}</strong>
+          <strong>${round(round(this.props.dashboard.owedToUser) +  round(this.props.dashboard.userOwes))}</strong>
         </div>
       </div>
     )
