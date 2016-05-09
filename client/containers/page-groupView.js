@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
-import {  getGroups, getActivity,getUserByGroup , addExpense, makePayment} from '../actions/groupActions';
+import {  getGroups, getActivity,getUserByGroup , addExpense, makePayment, deleteGroup, setCurrentGroup } from '../actions/groupActions';
 import GroupView from '../components/groupView';
 import { startDisplay, toggleDisplay } from '../actions/calloutActions';
+
 
 class PageGroupView extends Component {
   // our hacky way of dealing with auth
@@ -28,6 +29,8 @@ class PageGroupView extends Component {
     //the number on the next line should be the number of activities for the group but PJ had issues with that
     //this number can be as big as you want, just takes up more space in state
     this.props.startDisplay(100)
+
+    this.props.setCurrentGroup(ID[1])
   }
 
   render() {
@@ -37,6 +40,7 @@ class PageGroupView extends Component {
         getActivity={this.props.getActivity}
         activity={this.props.activity}
         currentGroupUsers = {this.props.currentGroupUsers}
+        currentGroup = {this.props.currentGroup}
         userInfo = {this.props.userInfo}
         url = {this.props.url}
         getUserByGroup = {this.props.getUserByGroup}
@@ -45,6 +49,7 @@ class PageGroupView extends Component {
         userInfo = {this.props.userInfo}
         addExpense = {this.props.addExpense}
         makePayment = {this.props.makePayment}
+        deleteGroup = {this.props.deleteGroup}
       />
     </div>
     )
@@ -54,6 +59,8 @@ class PageGroupView extends Component {
 PageGroupView.propTypes = {
   getActivity: PropTypes.func.isRequired,
   activity:PropTypes.array.isRequired,
+  makePayment: PropTypes.func.isRequired,
+  deleteGroup: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -67,10 +74,17 @@ function mapStateToProps(state) {
     userInfo: state.auth.userInfo,
     isAuthed: state.auth.isAuthed,
     auth: state.auth,
-    makePayment: PropTypes.func.isRequired
+    currentGroup: state.groups.currentGroup
   }
 }
 
 export default connect(mapStateToProps, {
-  getActivity,getUserByGroup,startDisplay,toggleDisplay, addExpense,makePayment
+  getActivity,
+  getUserByGroup,
+  startDisplay,
+  toggleDisplay,
+  addExpense,
+  makePayment,
+  deleteGroup,
+  setCurrentGroup
 })(PageGroupView)
