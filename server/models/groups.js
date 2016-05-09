@@ -52,7 +52,7 @@ Groups.createGroup = function(groupAttrs) {
       });
       return Groups.getGroupById(id[0])
         .then(function(resp){
-          return resp[0];
+          return resp;
         });
     });
 };
@@ -61,6 +61,9 @@ Groups.getExpenseById = function(expenseId) {
   return db.select().table('expenses')
     .where({
       id: expenseId
+    })
+    .then(function(data){
+      return data[0];
     });
 };
 
@@ -129,6 +132,9 @@ Groups.createPayment = function(paymentAttrs) {
     .insert(paymentAttrs, 'id')
     .then(function(id){
       return Groups.getPaymentById(id[0]);
+    })
+    .then(function(data){
+      return data[0];
     });
 };
 
@@ -141,5 +147,8 @@ Groups.updatePayment = function(paymentAttrs){
     .update(paymentAttrs, 'id')
     .then(function(id){
       return Groups.getPaymentById(id[0]);
+    })
+    .then(function(data){
+      return data[0];
     });
 };

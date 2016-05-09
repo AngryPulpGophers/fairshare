@@ -4,6 +4,8 @@ var Users = require('./models/users');
 var MiddleWare = module.exports;
 
 MiddleWare.checkGroup = function(req, res, next){
+  req.group = req.group || req.body.group_id;
+  console.log("req.group in middleware", req.group);
   Users.getUsersByGroupId( req.group )
     .then(function(users){
       var ids = users.map(function(user){

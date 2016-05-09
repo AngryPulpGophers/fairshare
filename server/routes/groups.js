@@ -6,7 +6,6 @@ var multer = require('multer');
 var upload = multer({ dest: 'dist/images/expenses'});
 var router  = express.Router();
 
-console.log("Middleware", Middleware);
 module.exports = router;
 
 if (process.env.NODE_ENV !== 'test'){
@@ -96,7 +95,6 @@ router.get('/activity/:group', Middleware.checkGroup, function(req, res, next){
     });
 });
 
-// ADD SECURITY
 router.post('/', function(req, res){
   //automatically add yourself to group if not already in it.
   if (process.env.NODE_ENV !== 'test' && req.body.members.indexOf(req.user.id) === -1){
@@ -112,17 +110,16 @@ router.post('/', function(req, res){
     });
 });
 
-// ADD SECURITY
-router.post('/expenses', function(req, res){
+router.post('/expenses', Middleware.checkGroup, function(req, res){
   Groups.createExpense( req.body )
     .then(function(data){
       //console.log('expense id:', data[0].id)
-      Users.getUsersByExpenseId(data[0].id)
+      Users.getUsersByExpenseId(data.id)
         .then(function(members){
-          data[0].members = members;
-          data[0].type = 'expense';
+          data.members = members;
+          data.type = 'expense';
           //console.log('expense posted data:',data)
-          res.send(data[0]);
+          res.send(data);
         })
         .catch(function(err){
           res.status(400).send({err: err});
@@ -135,12 +132,11 @@ router.post('/expenses/upload', upload.single('photo') ,function(req, res){
   res.end(req.file.path);
 });
 
-// ADD SECURITY
-router.post('/payments', function(req, res){
+router.post('/payments', Middleware.checkGroup, function(req, res){
   Groups.createPayment( req.body )
     .then(function(data){
-      data[0].type = 'payment';
-      res.send(data[0]);
+      data.type = 'payment';
+      res.send(data);
     })
     .catch(function(err){
       console.log('err in payment post:', err);
@@ -148,24 +144,23 @@ router.post('/payments', function(req, res){
     });
 });
 
-// ADD SECURITY
-router.put('/expenses', function(req, res){
+router.put('/expenses', Middleware.checkGroup, function(req, res){
   Groups.updateExpense( req.body )
     .then(function(data){
-      res.send(data[0]);
+      res.send(data);
     })
     .catch(function(err){
       res.status(400).send({err: err});
     });
 });
 
-// ADD SECURITY
-router.put('/payments', function(req, res){
+router.put('/payments', Middleware.checkGroup, function(req, res){
   Groups.updatePayment( req.body )
     .then(function(data){
-      res.send(data[0]);
+      res.send(data);
     })
     .catch(function(err){
       res.status(400).send({err: err});
     });
 });
+
