@@ -1,21 +1,32 @@
-var Sess = require('./models/sessions');
+var Users   = require('./models/users');
+var Groups  = require('./models/groups.js');
+var Sess    = require('./models/sessions');
 
 var MiddleWare = module.exports;
 
-
-MiddleWare.checkAuth = function(req,res,next){
-  //console.log('req in midware:', req)
-	if(req.isAuthenticated()) {return next();}
-	res.status(401).send('user not authenticated');
+MiddleWare.checkGroup = function(req, res, next){
+  req.group = req.group || req.body.group_id;
+  Users.getUsersByGroupId( req.group )
+    .then(function(users){
+      var ids = users.map(function(user){
+        return user.user_id;
+      });
+      if (ids.indexOf(req.user.id) === -1){
+        res.status(403).send('Invalid Request');
+      }
+      else {
+        next();
+      }
+    });
 };
 
-MiddleWare.checkSession = function(req,res,next){
-  Sess.getById(req.sessionID)
-  .then(function(session){
-  	if(session[0]){
-  	 return next();
-    }else{
-    	res.status(401).send('invalid session');
-    }
-  });
+MiddleWare.checkOwner = function(req, res, next){
+  Groups.getById( req.group )
+    .then(function(group){
+      if (group.created_by === req.user.id){
+        next();
+      } else {
+        res.status(403).send('You are not the owner of this group.');
+      }
+    });
 };

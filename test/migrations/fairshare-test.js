@@ -13,7 +13,9 @@ exports.up = function(knex, Promise){
 
     knex.schema.createTable('groups', function(table){
       table.increments('id').primary();
+      table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
       table.string('name');
+      table.integer('created_by');
       table.text('desc', 200);
     }),
 

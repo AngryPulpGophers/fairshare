@@ -4,11 +4,11 @@ export const GROUPS_REQUEST = 'GROUPS_REQUEST';
 export const GROUPS_SUCCESS = 'GROUPS_SUCCESS';
 export const GROUPS_FAILURE = 'GROUPS_FAILURE';
 
-export function getGroups(id) {
+export function getGroups() {
   // console.log('got an id:', id)
   return {
     [CALL_API]: {
-      endpoint: 'groups/' + id,
+      endpoint: 'groups/',
       req: 'GET',
       types: [GROUPS_REQUEST, GROUPS_SUCCESS, GROUPS_FAILURE]
     }
@@ -80,10 +80,10 @@ export const DELETE_SUCCESS = 'DELETE_SUCCESS';
 export const DELETE_FAILURE = 'DELETE_FAILURE';
 
 export function deleteGroup(id) {
-  //console.log('triggered', id)
+  console.log('triggered', id)
   return {
     [CALL_API]: {
-      endpoint: 'groups/delete/'+Number(id.id),
+      endpoint: 'groups/'+id.id,
       req: 'DELETE',
       types: [DELETE_REQUEST, DELETE_SUCCESS, DELETE_FAILURE]
     }

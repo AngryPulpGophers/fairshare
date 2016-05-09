@@ -25,7 +25,7 @@ export function groups(state = { isFetching: false, currentGroup: {}, isDeleting
 
       //set CURRENT group
       case ActionTypes.CURRENT_GROUP:
-       // console.log('time to set the current group with', action.id)
+       console.log('time to set the current group with', action.id)
         return update(state, {
           currentGroup: {$set:{id:action.id}}
         })
@@ -51,6 +51,7 @@ export function groups(state = { isFetching: false, currentGroup: {}, isDeleting
         )
 
       case ActionTypes.DELETE_SUCCESS:
+      console.log('HERE is OUR RESPONSE:',action)
         const index = state.groups.map(item => item.id).indexOf(action.id)
 
         return update(state, {

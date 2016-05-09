@@ -16,15 +16,12 @@ Users.getByUsername = function(username){
 Users.getById = function(reqObj){
   return db('users')
     .select()
-    .where('id', '=', reqObj.id)    
+    .where('id', '=', reqObj.id)
 };
 
 Users.editProfile = function(profAttrs){
-  console.log('in edit profile with following:', profAttrs)
-  var id = profAttrs.id;
-
   return db('users')
-    .where('id', '=', id)
+    .where('id', '=', profAttrs.id)
     .update(profAttrs, 'id');
 };
 
