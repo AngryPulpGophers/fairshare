@@ -8,10 +8,6 @@ import PaymentForm from './paymentForm';
 import AddExpense from './addExpense';
 import defaultPicture from '../images/defaultPicture.jpg'
 
-
-
-
-
 export default class GroupView extends Component {
   constructor(props){
     super(props)
@@ -35,35 +31,22 @@ export default class GroupView extends Component {
 
 
  render() {
-    var currentURL = window.location.href
+  var currentURL = window.location.href
     //console.log('pjpjpjp',currentURL.split('/')[2])
-    var ID = currentURL.split('id=')
-    //console.log('did this work',ID[1])
-    //console.log('HAIL MARY',__dirname)
-  //   var { query } = this.props.location
-  //  console.log('samsam',this.props,'and pj', this.props.params)
-  //    var what = new Date(this.props.activity[0].created_at)
+  var ID = currentURL.split('id=')
   // console.log(this.props.activity)
   //console.log('maybe work222', this.props.currentGroupUsers)
   //console.log('groupView CurrentUser',this.props.userInfo)
   var showUserBalance=[];
   showUserBalance=calcBalance.call(this)//this.calcBalance();
   //console.log('hi pj, stuff should be here^^^^', showUserBalance)
-    var localGroupObj=makeGroupObj.call(this) //this.makeGroupObj()
-   // console.log('localGroupOBJ',localGroupObj)
-    // var counter = 0;
-    // var displayObj={};
-    // for (var i = 0; i<this.props.activity.length ; i++){
-    //   displayObj[counter] = {
-    //     display: 'none'
-    //   }
+  var localGroupObj=makeGroupObj.call(this) //this.makeGroupObj()
+  
 
-    // }
 
   // setting this to bypas the need for authentication
     return(
       <div id='hanger'>
-        {console.log(this.state)}
         <Modal className='modal' isOpen={this.state.isModalOpen} transitionName="modal-anim">
           <div className="row">
             <div className="small-12 large-7 large-centered columns text-center">

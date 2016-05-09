@@ -83,6 +83,7 @@ Groups.getExpensesByGroupId = function(groupId){
 };
 
 Groups.createExpense = function(expenseAttrs){
+  console.log('our expense attributes',expenseAttrs)
   var members = expenseAttrs.members;
 
   delete expenseAttrs.members;
@@ -94,8 +95,7 @@ Groups.createExpense = function(expenseAttrs){
           .returning('id')
           .insert({
             user_id: memberId,
-            expense_id: id[0],
-            group_id: expenseAttrs.group_id
+            expense_id: id[0]
           }).then();
       });
       return Groups.getExpenseById(id[0]);
