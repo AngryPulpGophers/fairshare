@@ -23,6 +23,20 @@ router.param('group', function(req, res, next, group){
   next();
 });
 
+router.param('userid', function(req, res, next, userid){
+  req.userid = userid;
+  next();
+});
+
+router.param('balance', function(req, res, next, balance){
+  req.balance = balance;
+  next();
+});
+
+
+
+
+
 router.get('/', function(req, res){
   Groups.getGroupsByUserId( req.user.id )
     .then(function(data){
@@ -174,15 +188,21 @@ router.put('/payments', Middleware.checkGroup, function(req, res){
     });
 });
 
-router.put('/balance', Middleware.checkGroup, function(req, res){
+//Middleware.checkGroup,
+router.put('/balance/:userid/:group/:balance',Middleware.checkGroup, function(req, res){
+  req.body.user_id = Number(req.userid);
+  req.body.group_id = Number(req.group);
+  req.body.balance = Number(req.balance);
+  //console.log('Rico',req.body)
   Groups.updateBalance( req.body )
     .then(function(data){
-      res.status(400).send(data);
+      res.status(204).send(data);
     })
     .catch(function(err){
       res.status(400).send({err: err});
     });
 });
+
 
 router.delete('/:group', Middleware.checkOwner, function(req, res){
   Groups.deleteGroupById( req.group )

@@ -45,6 +45,7 @@ class PageGroupView extends Component {
         userInfo = {this.props.userInfo}
         addExpense = {this.props.addExpense}
         makePayment = {this.props.makePayment}
+        indBalance = {this.props.indBalance}
       />
     </div>
     )
