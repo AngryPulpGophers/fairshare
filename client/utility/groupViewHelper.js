@@ -114,6 +114,31 @@ for (var key in groupObj){
     }
   }
 
+
+
+ //refactor this to use a state variable later
+ var currentURL = window.location.href
+    var ID = currentURL.split('id=')[1] 
+
+var tempObj = {}
+for (var ind in groupObj){
+  tempObj.user_id = ind
+  tempObj.group_id = ID
+  tempObj.balance = round(groupObj[ind].balance)
+  console.log('NEW PJ',tempObj.user_id,'USER',
+  tempObj.group_id,'group',
+  tempObj.balance)
+  
+  tempObj = {}
+}
+
+
+
+
+
+
+
+
   //for some reason I thought it was logical to sort the group before I settled all of the debt
   // so that is done here
 

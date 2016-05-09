@@ -88,6 +88,20 @@ export function groups(state = { isFetching: false, newGroup:{}, groups: [],acti
         return update(state, {
           isFetching: {$set: false}
         })
+
+        case ActionTypes.INDBALANCE_REQUEST:
+        return update(state, {
+          isFetching: {$set: true}})
+      case ActionTypes.INDBALANCE_SUCCESS:
+        //console.log('got our type and resp:', action.response)
+        //console.log('pj test pexpense',JSON.parse(action.response))
+        return update(state, {
+          isFetching: {$set: false}})
+        
+      case ActionTypes.INDBALANCE_FAILURE:
+        return update(state, {
+          isFetching: {$set: false}})
+
       default:
         return state
       }
