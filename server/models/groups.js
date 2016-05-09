@@ -11,6 +11,9 @@ Groups.getGroupById = function(groupID) {
   return db.select().table('groups')
     .where({
       id: groupID
+    })
+    .then(function(data){
+      return data[0];
     });
 };
 

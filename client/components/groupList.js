@@ -11,7 +11,7 @@ function puke (obj) {
 
 export default class GroupList extends Component {
   componentWillMount(){
-    this.props.getGroups(this.props.userInfo.id)
+    this.props.getGroups()
   }
 
   render(){
@@ -33,7 +33,7 @@ export default class GroupList extends Component {
                     )
                   })}
               </Link>
-            ) 
+            )
           })}
       </div>
     </div>

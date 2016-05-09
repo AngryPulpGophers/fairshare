@@ -39,10 +39,7 @@ req.body = {
 // GROUPS ROUTES
 //
 
-// 'GET' /groups
-  // gets all groups (prob a bad idea)
-
-// 'GET' /groups/:user
+// 'GET' /groups/
   // gets all groups by user id
 
 // 'GET' /groups/users/:group
