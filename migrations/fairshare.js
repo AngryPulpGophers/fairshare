@@ -25,6 +25,7 @@ exports.up = function(knex, Promise){
       table.increments('id').primary();
       table.integer('user_id').references('id').inTable('users');
       table.integer('group_id').references('id').inTable('groups');
+      table.decimal('balance', 8, 2);
     }),
 
     knex.schema.createTable('expenses', function(table){

@@ -164,3 +164,25 @@ router.put('/payments', Middleware.checkGroup, function(req, res){
     });
 });
 
+router.delete('/:group', Middleware.checkGroup, function(req, res){
+  Groups.deleteGroupById( req.group )
+    .then(function(){
+      Groups.deleteExpensesByGroupId( req.group );
+    })
+    .then(function(){
+      Groups.deletePaymentsByGroupId( req.group );
+    })
+    .then(function(){
+      Groups.deleteUserGroups( req.group );
+    })
+    .then(function(){
+      res.status(200).send({
+        id: req.group,
+        text: 'Group successfully deleted'
+      });
+    })
+    .catch(function(err){
+      res.status(400).send({err: 'Error in /groups/:group'});
+    });
+
+});

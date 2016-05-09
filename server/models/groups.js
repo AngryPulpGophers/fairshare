@@ -105,14 +105,6 @@ Groups.updateExpense = function(expenseAttrs){
     });
 };
 
-Groups.deleteExpense = function(expenseId){
-  return db('expenses')
-    .where({
-      id: expenseId
-    })
-    .del();
-};
-
 Groups.getPaymentById = function(paymentId) {
   return db.select().table('payments')
     .where({
@@ -151,4 +143,28 @@ Groups.updatePayment = function(paymentAttrs){
     .then(function(data){
       return data[0];
     });
+};
+
+Groups.deleteGroupById = function(groupId){
+  return db('groups')
+    .where('id', '=', groupId)
+    .del();
+};
+
+Groups.deleteExpensesByGroupId = function(groupId){
+  return db('expenses')
+    .where('group_id', '=', groupId)
+    .del();
+};
+
+Groups.deletePaymentsByGroupId = function(groupId){
+  return db('payments')
+    .where('group_id', '=', groupId)
+    .del();
+};
+
+Groups.deleteUsersByGroupId = function(groupId){
+  return db('user_groups')
+    .where('group_id', '=', groupId)
+    .del();
 };
