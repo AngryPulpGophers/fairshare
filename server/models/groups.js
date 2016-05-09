@@ -80,7 +80,8 @@ Groups.createExpense = function(expenseAttrs){
           .returning('id')
           .insert({
             user_id: memberId,
-            expense_id: id[0]
+            expense_id: id[0],
+            group_id: expenseAttrs.group_id
           }).then();
       });
       return Groups.getExpenseById(id[0]);
