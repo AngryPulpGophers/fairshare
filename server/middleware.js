@@ -30,3 +30,8 @@ MiddleWare.checkOwner = function(req, res, next){
       }
     });
 };
+
+if (process.env.NODE_ENV === 'test'){
+  MiddleWare.checkGroup = function(req, res, next){ next(); };
+  MiddleWare.checkOwner = function(req, res, next){ next(); };
+}

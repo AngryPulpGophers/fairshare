@@ -39,7 +39,7 @@ router.get('/users/:group', function(req, res){
       var ids = users.map(function(user){
         return user.user_id;
       });
-      if (ids.indexOf(req.user.id) === -1){
+      if (ids.indexOf(req.user.id) === -1 && process.env.NODE_ENV !== 'test'){
         res.status(403).send('Invalid Request');
       } else {
         res.send(users);
@@ -174,10 +174,10 @@ router.put('/payments', Middleware.checkGroup, function(req, res){
     });
 });
 
-router.put('/balance', Middleware.checkGroup, function(req, res){
+router.put('/balance/', Middleware.checkGroup, function(req, res){
   Groups.updateBalance( req.body )
     .then(function(data){
-      res.status(400).send(data);
+      res.send(data);
     })
     .catch(function(err){
       res.status(400).send({err: err});
@@ -185,15 +185,15 @@ router.put('/balance', Middleware.checkGroup, function(req, res){
 });
 
 router.delete('/:group', Middleware.checkOwner, function(req, res){
-  Groups.deleteGroupById( req.group )
+  Groups.deletePaymentsByGroupId( req.group )
     .then(function(){
       Groups.deleteExpensesByGroupId( req.group );
     })
     .then(function(){
-      Groups.deletePaymentsByGroupId( req.group );
+      Groups.deleteUserGroups( req.group );
     })
     .then(function(){
-      Groups.deleteUserGroups( req.group );
+      Groups.deleteGroupById( req.group );
     })
     .then(function(){
       res.status(200).send({
