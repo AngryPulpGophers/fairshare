@@ -86,6 +86,7 @@ exports.down = function(knex, Promise){
     knex.schema.dropTable('groups'),
     knex.schema.dropTable('expenses'),
     knex.schema.dropTable('payments'),
-    knex.schema.dropTable('sessions')
+    knex.schema.dropTable('sessions'),
+    knex.schema.dropTable('identity')
   ]);
 };

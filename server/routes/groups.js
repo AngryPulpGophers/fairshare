@@ -144,6 +144,16 @@ router.post('/payments', Middleware.checkGroup, function(req, res){
     });
 });
 
+router.post('/addMember/', Middleware.checkGroup,  function(req, res){
+  Groups.addMember( req.body )
+    .then(function(){
+      res.send('succesfully added member');
+    })
+    .catch(function(err){
+      res.send({err: err});
+    });
+});
+
 router.put('/expenses', Middleware.checkGroup, function(req, res){
   Groups.updateExpense( req.body )
     .then(function(data){
