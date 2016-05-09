@@ -14,3 +14,13 @@ Dashboard.getUserOwes = function(id) {
 Dashboard.payments = function(id) {
   return db.raw("SELECT (SELECT SUM(amount) as got FROM payments WHERE recipient = " + id + ") - (SELECT SUM(amount) as gave FROM payments WHERE payee = " + id + ") as total;");
 }
+
+
+Dashboard.getWhatOwed2User = function(id){
+	return db.raw("SELECT SUM(owed) FROM (SELECT user_groups.balance AS owed FROM user_groups WHERE user_groups.user_id = "+ id +"AND user_groups.balance > 0) as total;");
+}
+
+
+Dashboard.getWhatOwedFromUser = function(id){
+	return db.raw("SELECT SUM(owed) FROM (SELECT user_groups.balance AS owed FROM user_groups WHERE user_groups.user_id = "+ id +"AND user_groups.balance < 0) as total;");
+}
