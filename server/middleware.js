@@ -1,5 +1,6 @@
-var Sess = require('./models/sessions');
-var Users = require('./models/users');
+var Users   = require('./models/users');
+var Groups  = require('./models/groups.js');
+var Sess    = require('./models/sessions');
 
 var MiddleWare = module.exports;
 
@@ -15,6 +16,17 @@ MiddleWare.checkGroup = function(req, res, next){
       }
       else {
         next();
+      }
+    });
+};
+
+MiddleWare.checkOwner = function(req, res, next){
+  Groups.getById( req.group )
+    .then(function(group){
+      if (group.created_by === req.user.id){
+        next();
+      } else {
+        res.status(403).send('You are not the owner of this group.');
       }
     });
 };

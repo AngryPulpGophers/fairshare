@@ -174,7 +174,7 @@ router.put('/balance', Middleware.checkGroup, function(req, res){
     });
 });
 
-router.delete('/:group', Middleware.checkGroup, function(req, res){
+router.delete('/:group', Middleware.checkOwner, function(req, res){
   Groups.deleteGroupById( req.group )
     .then(function(){
       Groups.deleteExpensesByGroupId( req.group );
