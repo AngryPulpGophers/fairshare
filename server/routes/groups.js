@@ -1,5 +1,6 @@
 var Groups  = require('../models/groups.js');
 var Users   = require('../models/users.js');
+var Middleware = require('../middleware');
 var express = require('express');
 var multer = require('multer');
 var upload = multer({ dest: 'dist/images/expenses'});
@@ -22,23 +23,22 @@ router.param('group', function(req, res, next, group){
   next();
 });
 
-router.param('user', function(req, res, next, user){
-  req.user = user;
+router.param('userid', function(req, res, next, userid){
+  req.userid = userid;
   next();
 });
 
-router.get('/', function(req, res){
-  Groups.getAllGroups()
-    .then(function(data){
-      res.send(data);
-    })
-    .catch(function(err){
-      res.status(400).send({err: err, text: 'Error in getting all groups'});
-    });
+router.param('balance', function(req, res, next, balance){
+  req.balance = balance;
+  next();
 });
 
-router.get('/:user', function(req, res){
-  Groups.getGroupsByUserId( req.user )
+
+
+
+
+router.get('/', function(req, res){
+  Groups.getGroupsByUserId( req.user.id )
     .then(function(data){
       res.send(data);
     })
@@ -49,17 +49,22 @@ router.get('/:user', function(req, res){
 
 router.get('/users/:group', function(req, res){
   Users.getUsersByGroupId( req.group )
-    .then(function(data){
-      res.send(data);
+    .then(function(users){
+      var ids = users.map(function(user){
+        return user.user_id;
+      });
+      if (ids.indexOf(req.user.id) === -1 && process.env.NODE_ENV !== 'test'){
+        res.status(403).send('Invalid Request');
+      } else {
+        res.send(users);
+      }
     })
     .catch(function(err){
       res.status(400).send({err: err, text: 'Error getting a groups users'});
     });
 });
 
-
-
-router.get('/activity/:group', function(req, res){
+router.get('/activity/:group', Middleware.checkGroup, function(req, res, next){
   var activity = [];
 
   // Get all expenses in your group
@@ -109,6 +114,7 @@ router.post('/', function(req, res){
   if (process.env.NODE_ENV !== 'test' && req.body.members.indexOf(req.user.id) === -1){
     req.body.members.push(req.user.id);
   }
+  req.body.created_by = req.user.id;
   Groups.createGroup(req.body)
     .then(function(data){
       res.status(200).send(data);
@@ -118,16 +124,16 @@ router.post('/', function(req, res){
     });
 });
 
-router.post('/expenses', function(req, res){
+router.post('/expenses', Middleware.checkGroup, function(req, res){
   Groups.createExpense( req.body )
     .then(function(data){
       //console.log('expense id:', data[0].id)
-      Users.getUsersByExpenseId(data[0].id)
+      Users.getUsersByExpenseId(data.id)
         .then(function(members){
-          data[0].members = members;
-          data[0].type = 'expense';
+          data.members = members;
+          data.type = 'expense';
           //console.log('expense posted data:',data)
-          res.send(data[0]);
+          res.send(data);
         })
         .catch(function(err){
           res.status(400).send({err: err});
@@ -135,15 +141,16 @@ router.post('/expenses', function(req, res){
     });
 });
 
+// ADD SECURITY
 router.post('/expenses/upload', upload.single('photo') ,function(req, res){
   res.end(req.file.path);
 });
 
-router.post('/payments', function(req, res){
+router.post('/payments', Middleware.checkGroup, function(req, res){
   Groups.createPayment( req.body )
     .then(function(data){
-      data[0].type = 'payment';
-      res.send(data[0]);
+      data.type = 'payment';
+      res.send(data);
     })
     .catch(function(err){
       console.log('err in payment post:', err);
@@ -151,20 +158,60 @@ router.post('/payments', function(req, res){
     });
 });
 
-router.put('/expenses', function(req, res){
+router.post('/addMember/', Middleware.checkGroup,  function(req, res){
+  Groups.addMember( req.body )
+    .then(function(){
+      res.send('succesfully added member');
+    })
+    .catch(function(err){
+      res.send({err: err});
+    });
+});
+
+router.put('/expenses', Middleware.checkGroup, function(req, res){
   Groups.updateExpense( req.body )
     .then(function(data){
-      res.send(data[0]);
+      res.send(data);
     })
     .catch(function(err){
       res.status(400).send({err: err});
     });
 });
 
-router.put('/payments', function(req, res){
+router.put('/payments', Middleware.checkGroup, function(req, res){
   Groups.updatePayment( req.body )
     .then(function(data){
-      res.send(data[0]);
+      res.send(data);
+    })
+    .catch(function(err){
+      res.status(400).send({err: err});
+    });
+});
+
+
+//Middleware.checkGroup,
+router.put('/balance/:userid/:group/:balance',Middleware.checkGroup, function(req, res){
+  req.body.user_id = Number(req.userid);
+  req.body.group_id = Number(req.group);
+  req.body.balance = Number(req.balance);
+  //console.log('Rico',req.body)
+  Groups.updateBalance( req.body )
+    .then(function(data){
+      res.status(204).send(data);
+    })
+    .catch(function(err){
+      res.status(400).send({err: err});
+    });
+});
+
+
+router.delete('/:group', Middleware.checkOwner, function(req, res){
+  Groups.deleteGroupById( req.group )
+    .then(function(){
+      res.status(200).send({
+        id: req.group,
+        text: 'Group successfully deleted'
+      });
     })
     .catch(function(err){
       res.status(400).send({err: err});

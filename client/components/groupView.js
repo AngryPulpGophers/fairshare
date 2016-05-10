@@ -8,12 +8,13 @@ import PaymentForm from './paymentForm';
 import AddExpense from './addExpense';
 import defaultPicture from '../images/defaultPicture.jpg'
 
-
-
-
-
 export default class GroupView extends Component {
-  
+  constructor(props){
+    super(props)
+    this.state = ({
+      isModalOpen: false
+    })
+  }
 
   seeIfYou(name) {
     if (name===this.props.userInfo.name || name[0]===this.props.userInfo.name){
@@ -24,37 +25,38 @@ export default class GroupView extends Component {
     }
   }
 
+  handleDeleteGroup(){
+    this.setState({isModalOpen:true});
+  }
 
 
  render() {
-    var currentURL = window.location.href
-    console.log('pjpjpjp',currentURL.split('/')[2])
-    var ID = currentURL.split('id=')
-    console.log('did this work',ID[1])
-    console.log('HAIL MARY',__dirname)
-  //   var { query } = this.props.location
-  //  console.log('samsam',this.props,'and pj', this.props.params)
-  //    var what = new Date(this.props.activity[0].created_at)
+  var currentURL = window.location.href
+    //console.log('pjpjpjp',currentURL.split('/')[2])
+  var ID = currentURL.split('id=')
   // console.log(this.props.activity)
-  console.log('maybe work222', this.props.currentGroupUsers)
-  console.log('groupView CurrentUser',this.props.userInfo)
+  //console.log('maybe work222', this.props.currentGroupUsers)
+  //console.log('groupView CurrentUser',this.props.userInfo)
   var showUserBalance=[];
   showUserBalance=calcBalance.call(this)//this.calcBalance();
-  console.log('hi pj, stuff should be here^^^^', showUserBalance)
-    var localGroupObj=makeGroupObj.call(this) //this.makeGroupObj()
-    console.log('localGroupOBJ',localGroupObj)
-    // var counter = 0;
-    // var displayObj={};
-    // for (var i = 0; i<this.props.activity.length ; i++){
-    //   displayObj[counter] = {
-    //     display: 'none'
-    //   }
+  //console.log('hi pj, stuff should be here^^^^', showUserBalance)
+  var localGroupObj=makeGroupObj.call(this) //this.makeGroupObj()
+  
 
-    // }
 
   // setting this to bypas the need for authentication
     return(
       <div id='hanger'>
+        <Modal className='modal' isOpen={this.state.isModalOpen} transitionName="modal-anim">
+          <div className="row">
+            <div className="small-12 large-7 large-centered columns text-center">
+              <h3>Are you sure?</h3>
+              <p>This process cannot be undone. All group expense and payment info will be lost!</p>
+              <p><button onClick={()=>{this.props.deleteGroup(this.props.currentGroup)}} className="alert button">Delete</button><button onClick={()=>{this.setState({isModalOpen:false})}} className="secondary button">Cancel</button></p>
+            </div>
+          </div>
+        </Modal>
+        <button onClick={() => { this.handleDeleteGroup()} } className="alert button">Delete Group</button>
         <h2>Balance</h2>
           {showUserBalance.map(function(user){
             return (
@@ -100,7 +102,7 @@ export default class GroupView extends Component {
       {/*<p> hi add expense<Link  to={{pathname:'/addExpense',query:{ id:ID[1] , pj:'holly'}}} title="groupView"  className="button primary float-left tiny button">Add Expense</Link> </p>*/}
 
          {this.props.activity.map(function(activity,index){
-            return <div key={activity.id} className= {activity.type==='expense' ? "callout alert" :"callout success"}>
+            return <div key={activity.id + activity.type} className= {activity.type==='expense' ? "callout alert" :"callout success"}>
               
               {activity.type==='expense' ?
               <div>

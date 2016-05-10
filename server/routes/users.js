@@ -123,13 +123,13 @@ router.post('/unlinkAccount',function(req,res){
             })
             .catch(function(err){
             res.status(400).send(err);
-            })
+            });
         })
         .catch(function(err){
           res.status(400).send(err);
-        })
+        });
     })
     .catch(function(err){
       res.status(400).send(err);
-    })
-})
+    });
+});

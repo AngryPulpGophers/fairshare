@@ -4,11 +4,11 @@ export const GROUPS_REQUEST = 'GROUPS_REQUEST';
 export const GROUPS_SUCCESS = 'GROUPS_SUCCESS';
 export const GROUPS_FAILURE = 'GROUPS_FAILURE';
 
-export function getGroups(id) {
+export function getGroups() {
   // console.log('got an id:', id)
   return {
     [CALL_API]: {
-      endpoint: 'groups/' + id,
+      endpoint: 'groups/',
       req: 'GET',
       types: [GROUPS_REQUEST, GROUPS_SUCCESS, GROUPS_FAILURE]
     }
@@ -30,6 +30,14 @@ export function getActivity(id) {
       types: [ACTIVITY_REQUEST, ACTIVITY_SUCCESS, ACTIVITY_FAILURE]
     }
 
+  }
+}
+
+export const CURRENT_GROUP = 'CURRENT_GROUP';
+export function setCurrentGroup(id) {
+  return {
+      type: CURRENT_GROUP,
+      id: id
   }
 }
 
@@ -67,6 +75,21 @@ export function createGroup(members, formData) {
   }
 }
 
+export const DELETE_REQUEST = 'DELETE_REQUEST';
+export const DELETE_SUCCESS = 'DELETE_SUCCESS';
+export const DELETE_FAILURE = 'DELETE_FAILURE';
+
+export function deleteGroup(id) {
+  console.log('triggered', id)
+  return {
+    [CALL_API]: {
+      endpoint: 'groups/'+id.id,
+      req: 'DELETE',
+      types: [DELETE_REQUEST, DELETE_SUCCESS, DELETE_FAILURE]
+    }
+  }
+}
+
 export const EXPENSE_REQUEST = 'EXPENSE_REQUEST';
 export const EXPENSE_SUCCESS = 'EXPENSE_SUCCESS';
 export const EXPENSE_FAILURE = 'EXPENSE_FAILURE';
@@ -101,7 +124,22 @@ export function makePayment(formData) {
   }
 }
 
+export const INDBALANCE_REQUEST = 'INDBALANCE_REQUEST';
+export const INDBALANCE_SUCCESS = 'INDBALANCE_SUCCESS';
+export const INDBALANCE_FAILURE = 'INDBALANCE_FAILURE';
+//object should have properties of user id group id and balance to that group
+export function indBalance(indObj) {
+  //console.log('updated user balance to group:', indObj);
+  return {
+    [CALL_API]: {
+      endpoint: 'groups/balance/'+indObj.user_id+'/'+indObj.group_id+'/'+indObj.balance,
+      body: indObj,
+      req: 'PUT',
+      types: [INDBALANCE_REQUEST, INDBALANCE_SUCCESS, INDBALANCE_FAILURE]
+    }
 
+  }
+}
 
 
 

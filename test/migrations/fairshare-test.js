@@ -5,15 +5,20 @@ exports.up = function(knex, Promise){
       table.increments('id').primary();
       table.string('name', 40);
       table.string('username', 20);
-      table.string('password', 16);
       table.string('email');
-      table.string('facebookId');
       table.string('img_url');
+      table.string('primary');
+      table.integer('facebook');
+      table.integer('google');
+      table.integer('paypal');
+      table.integer('showModal');
     }),
 
     knex.schema.createTable('groups', function(table){
       table.increments('id').primary();
+      table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
       table.string('name');
+      table.integer('created_by');
       table.text('desc', 200);
     }),
 
@@ -21,6 +26,7 @@ exports.up = function(knex, Promise){
       table.increments('id').primary();
       table.integer('user_id').references('id').inTable('users');
       table.integer('group_id').references('id').inTable('groups');
+      table.decimal('balance', 8, 2);
     }),
 
     knex.schema.createTable('expenses', function(table){
@@ -57,6 +63,16 @@ exports.up = function(knex, Promise){
       table.string('sess');
       table.string('sid');
       table.timestamp('expire');
+    }),
+
+    knex.schema.createTable('identity', function(table){
+      table.increments('id').primary();
+      table.integer('user_id').references('id').inTable('users');
+      table.string('provider_id');
+      table.string('provider');
+      table.string('token');
+      table.string('refresh');
+      table.integer('expires');
     })
   ]);
 };
@@ -70,6 +86,7 @@ exports.down = function(knex, Promise){
     knex.schema.dropTable('groups'),
     knex.schema.dropTable('expenses'),
     knex.schema.dropTable('payments'),
-    knex.schema.dropTable('sessions')
+    knex.schema.dropTable('sessions'),
+    knex.schema.dropTable('identity')
   ]);
 };

@@ -11,12 +11,15 @@ Groups.getGroupById = function(groupID) {
   return db.select().table('groups')
     .where({
       id: groupID
+    })
+    .then(function(data){
+      return data[0];
     });
 };
 
 Groups.getGroupsByUserId = function(userID) {
   return db('groups')
-    .select('name', 'desc', 'created_at', 'group_id AS id')
+    .select('name', 'desc', 'created_at', 'group_id AS id', 'user_groups.balance')
     .innerJoin('user_groups', 'groups.id', 'user_groups.group_id')
     .where({
       user_id: userID
@@ -49,8 +52,16 @@ Groups.createGroup = function(groupAttrs) {
       });
       return Groups.getGroupById(id[0])
         .then(function(resp){
-          return resp[0];
+          return resp;
         });
+    });
+};
+
+Groups.addMember = function(attrs){
+  return db('user_groups')
+    .insert({
+      group_id: attrs.group_id,
+      user_id: attrs.user_id
     });
 };
 
@@ -58,6 +69,9 @@ Groups.getExpenseById = function(expenseId) {
   return db.select().table('expenses')
     .where({
       id: expenseId
+    })
+    .then(function(data){
+      return data[0];
     });
 };
 
@@ -69,9 +83,10 @@ Groups.getExpensesByGroupId = function(groupId){
 };
 
 Groups.createExpense = function(expenseAttrs){
+  console.log('our expense attributes',expenseAttrs)
   var members = expenseAttrs.members;
-
   delete expenseAttrs.members;
+
   return db('expenses')
     .insert(expenseAttrs, 'id')
     .then(function(id){
@@ -99,14 +114,6 @@ Groups.updateExpense = function(expenseAttrs){
     });
 };
 
-Groups.deleteExpense = function(expenseId){
-  return db('expenses')
-    .where({
-      id: expenseId
-    })
-    .del();
-};
-
 Groups.getPaymentById = function(paymentId) {
   return db.select().table('payments')
     .where({
@@ -126,6 +133,9 @@ Groups.createPayment = function(paymentAttrs) {
     .insert(paymentAttrs, 'id')
     .then(function(id){
       return Groups.getPaymentById(id[0]);
+    })
+    .then(function(data){
+      return data[0];
     });
 };
 
@@ -138,5 +148,26 @@ Groups.updatePayment = function(paymentAttrs){
     .update(paymentAttrs, 'id')
     .then(function(id){
       return Groups.getPaymentById(id[0]);
+    })
+    .then(function(data){
+      return data[0];
     });
+};
+
+Groups.updateBalance = function(attrs){
+  return db('user_groups')
+    .where({
+      group_id: attrs.group_id,
+      user_id: attrs.user_id
+    })
+    .update(attrs, 'balance')
+    .then(function(balance){
+      return balance[0];
+    });
+};
+
+Groups.deleteGroupById = function(groupId){
+  return db('groups')
+    .where('id', '=', groupId)
+    .del().then();
 };
