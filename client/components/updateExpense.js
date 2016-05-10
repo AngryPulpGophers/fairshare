@@ -5,10 +5,11 @@ import { reduxForm } from 'redux-form';
 import PureInput from './PureInput';
 import Modal from './modal';
 import request from 'superagent';
+import defaultPicture from '../images/defaultPicture.jpg';
 export const fields = [ 'title', 'note', 'imgUrl', 'photo', 'members0','members1','members2',
   'members3', 'members4','members5','members6','members7','members8','members9', 'amount'];
 
-export default class AddExpense extends Component {
+export default class UpdateExpense extends Component {
 
   constructor(props){
     super(props);
@@ -73,16 +74,52 @@ export default class AddExpense extends Component {
             obj.members.push(this.props.currentGroupUsers[i].user_id)
           }
         }
-        obj.paid_by = this.props.userInfo.id;
+        ///////////////////CODE FOR UPDATE////////////////////////////////////////////////////////////////////////
+         obj.membersAdded = [];
+        obj.membersDeleted = [];
+        var membersFlag = false;
+        console.log('I NEED HELP', this.props.currentActivity.members,'obj',obj.members)
+        for (var i = 0 ; i < this.props.currentActivity.members.length ; i++){
+          membersFlag = false;
+          for(var x = 0 ; x < obj.members.length ; x++){
+            console.log('what',this.props.currentActivity.members[i].id ,obj.members[x])
+            if (this.props.currentActivity.members[i].id === obj.members[x]){
+              membersFlag = true;
+            }
+          }
+          if (!membersFlag){
+            if (this.props.currentActivity.members[i].id!==undefined){
+                 console.log('seriously',this.props.currentActivity.members[i].id)
+            obj.membersDeleted.push(this.props.currentActivity.members[i].id)
+          }
+          }
+        }
+
+        for(var x = 0 ; x < obj.members.length ; x++){
+          membersFlag = false;
+          for (var i = 0 ; i < this.props.currentActivity.members.length ; i++){
+            if (this.props.currentActivity.members[i].id === obj.members[x]){
+              membersFlag = true;
+            }
+          }
+          if (!membersFlag){
+            if (obj.members[x]!==undefined){
+              obj.membersAdded.push(obj.members[x])
+            }
+          }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //obj.paid_by = this.props.userInfo.id;
         obj.title = data.title;
         obj.amount = Number(Number(data.amount).toFixed(2))
         obj.img_url = resp.text //|| data.imgUrl;
         obj.note = data.note;
         obj.group_id = Number(ID[1]);
-        console.log('send to post expense', obj);
+        obj.id = this.props.currentActivity.id;
+        console.log('send to post update', obj);
         this.setState({isModalOpen:false})
         this.props.destroyForm();
-        this.props.addExpense(JSON.stringify(obj));
+        this.props.updateExpense(JSON.stringify(obj),this.props.currentActivity.id);
 
         //location.replace(baseURL+'/groupView?id='+ID[1]);
       }.bind(this));
@@ -109,16 +146,53 @@ export default class AddExpense extends Component {
             obj.members.push(this.props.currentGroupUsers[i].user_id)
           }
         }
-        obj.paid_by = this.props.userInfo.id;
+        ///////////////////CODE FOR UPDATE////////////////////////////////////////////////////////////////////////
+        obj.membersAdded = [];
+        obj.membersDeleted = [];
+        var membersFlag = false;
+        console.log('I NEED HELP', this.props.currentActivity.members,'obj',obj.members)
+        for (var i = 0 ; i < this.props.currentActivity.members.length ; i++){
+          membersFlag = false;
+          for(var x = 0 ; x < obj.members.length ; x++){
+            console.log('what',this.props.currentActivity.members[i].id ,obj.members[x])
+            if (this.props.currentActivity.members[i].id === obj.members[x]){
+              membersFlag = true;
+            }
+          }
+          if (!membersFlag){
+            if (this.props.currentActivity.members[i].id!==undefined){
+                 console.log('seriously',this.props.currentActivity.members[i].id)
+            obj.membersDeleted.push(this.props.currentActivity.members[i].id)
+          }
+          }
+        }
+
+        for(var x = 0 ; x < obj.members.length ; x++){
+          membersFlag = false;
+          for (var i = 0 ; i < this.props.currentActivity.members.length ; i++){
+            if (this.props.currentActivity.members[i].id === obj.members[x]){
+              membersFlag = true;
+            }
+          }
+          if (!membersFlag){
+            if (obj.members[x]!==undefined){
+              obj.membersAdded.push(obj.members[x])
+            }
+          }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //obj.paid_by = this.props.userInfo.id;
         obj.title = data.title;
         obj.amount = Number(Number(data.amount).toFixed(2))
         obj.img_url = 'client/images/download.jpg'
         obj.note = data.note;
         obj.group_id = Number(ID[1]);
-        console.log('send to post expense', obj);
+        obj.id = this.props.currentActivity.id;
+        console.log('send to post UPDATE', obj);
         this.setState({isModalOpen:false})
         this.props.destroyForm();
-        this.props.addExpense(JSON.stringify(obj));
+        this.props.updateExpense(JSON.stringify(obj),this.props.currentActivity.id);
 
         //location.replace(baseURL+'/groupView?id='+ID[1]);
     }
@@ -130,9 +204,9 @@ export default class AddExpense extends Component {
 
 
   render(){
-    console.log('maybe work444',this.props.currentGroupUsers);
+  
 
-    {console.log('EXPENSEcurrent user:', this.props.userInfo)}
+    
 
     const {
 
@@ -146,7 +220,7 @@ export default class AddExpense extends Component {
 
     return (
       <div>
-      <button className = 'button primary button tiny'onClick={this.openModal}>Add Expense</button>
+      <button className = 'button primary button tiny'onClick={this.openModal}>Edit Expense</button>
             <Modal isOpen={this.state.isModalOpen}
                    transitionName="modal-anim">
       <form onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this)).bind(this)}>
@@ -172,8 +246,15 @@ export default class AddExpense extends Component {
           </div>
         </div>
       */}
+        <div className = 'row '>
+          <div className = "small-12 large-5 columns">
+            <img src={"/"+(this.props.currentActivity.img_url.split('dist/')[1] ? this.props.currentActivity.img_url.split('dist/')[1] : defaultPicture)}/>
+          </div>
+          <div className = "small-12 large-7 columns">
+          </div>
+        </div>
         <div>
-          <label>Upload a photo</label>
+          <label>Upload a photo (overwrites previous picture)</label>
           <div>
             <input type="file" accept='image/*' {...photo} value={null} />
           </div>
@@ -211,10 +292,10 @@ export default class AddExpense extends Component {
 
         <div>
           <button type="submit" className="button primary float-left tiny button" disabled={submitting}>
-            {submitting ? <i/> : <i/>} Submit
+            {submitting ? <i/> : <i/>} Update
           </button>
           <button type="button" disabled={submitting} onClick={resetForm}>
-            Clear Values
+            Reset Values
           </button>
         </div>
       </form>
@@ -225,6 +306,6 @@ export default class AddExpense extends Component {
 }
 
 export default reduxForm({
-  form: 'simple',
+  form: 'updateX',
   fields
-})(AddExpense)
+})(UpdateExpense)
