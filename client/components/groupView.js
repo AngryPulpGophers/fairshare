@@ -50,6 +50,7 @@ export default class GroupView extends Component {
     showUserBalance=calcBalance.call(this)//this.calcBalance();
     localGroupObj=makeGroupObj.call(this) //this.makeGroupObj()
   }
+  var expenseValues={};
 
   // setting this to bypas the need for authentication
     return(
@@ -131,15 +132,7 @@ export default class GroupView extends Component {
               <div>
                 <div>Title: {activity.title} Time:{prettyDate(activity.created_at)} Amount: ${activity.amount}    
                 <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
-                <AddExpense
-                  getActivity={this.props.getActivity}
-                  activity={this.props.activity}
-                  currentGroupUsers = {this.props.currentGroupUsers}
-                  url = {this.props.url}
-                  getUserByGroup = {this.props.getUserByGroup}
-                  addExpense = {this.props.addExpense}
-                  userInfo = {this.props.userInfo}
-                />
+        
                   {this.props.userInfo.id===activity.paid_by?
                     <UpdateExpense
                     formKey = {'updateExpense'+activity.id}
