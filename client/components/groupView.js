@@ -43,7 +43,6 @@ export default class GroupView extends Component {
   var localGroupObj=makeGroupObj.call(this) //this.makeGroupObj()
   
 
-
   // setting this to bypas the need for authentication
     return(
       <div id='hanger'>
@@ -108,6 +107,7 @@ export default class GroupView extends Component {
               <div>
                 <div>Title: {activity.title} Time:{prettyDate(activity.created_at)} Amount: ${activity.amount}    
                 <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
+                <button className="secondary button float-right">Edit</button>
                   <div style={this.props.displayActive[index]}>
                     <div className = 'row '>
                       <div className = 'small-12 large-6 columns'>
