@@ -185,16 +185,7 @@ router.put('/balance/', Middleware.checkGroup, function(req, res){
 });
 
 router.delete('/:group', Middleware.checkOwner, function(req, res){
-  Groups.deletePaymentsByGroupId( req.group )
-    .then(function(){
-      Groups.deleteExpensesByGroupId( req.group );
-    })
-    .then(function(){
-      Groups.deleteUserGroups( req.group );
-    })
-    .then(function(){
-      Groups.deleteGroupById( req.group );
-    })
+  Groups.deleteGroupById( req.group )
     .then(function(){
       res.status(200).send({
         id: req.group,

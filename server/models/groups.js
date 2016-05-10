@@ -171,34 +171,3 @@ Groups.deleteGroupById = function(groupId){
     .where('id', '=', groupId)
     .del().then();
 };
-
-// get all expenses
-// delete user_expenses
-// then delete the expense
-Groups.deleteExpensesByGroupId = function(groupId){
-  return Groups.getExpensesByGroupId(groupId)
-    .then(function(expenses){
-      expenses.forEach(function(expense){
-        db('user_expenses')
-          .where('id', '=', expense.id)
-          .del()
-          .then(function(){
-            db('expenses')
-            .where('id', '=', expense.id)
-            .del().then();
-          });
-      });
-    });
-};
-
-Groups.deletePaymentsByGroupId = function(groupId){
-  return db('payments')
-    .where('group_id', '=', groupId)
-    .del().then();
-};
-
-Groups.deleteUserGroups = function(groupId){
-  return db('user_groups')
-    .where('group_id', '=', groupId)
-    .del().then();
-};
