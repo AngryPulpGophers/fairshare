@@ -28,19 +28,30 @@ export default class GroupView extends Component {
   handleDeleteGroup(){
     this.setState({isModalOpen:true});
   }
-
-
+  
  render() {
   var currentURL = window.location.href
     //console.log('pjpjpjp',currentURL.split('/')[2])
   var ID = currentURL.split('id=')
-  // console.log(this.props.activity)
+  console.log('checking activities',this.props.activity)
   //console.log('maybe work222', this.props.currentGroupUsers)
   //console.log('groupView CurrentUser',this.props.userInfo)
   var showUserBalance=[];
-  showUserBalance=calcBalance.call(this)//this.calcBalance();
+  var localGroupObj ={};
+  console.log('groups props',this.props.groups)
+  console.log('id',ID[1])
+  var groupExists = false;
+  for(var i = 0; i < this.props.groups.length; i++){
+    if(this.props.groups[i].id == ID[1]){
+      groupExists = true;
+      break;
+    }
+  }
+  if(groupExists){
+    showUserBalance=calcBalance.call(this)//this.calcBalance();
   //console.log('hi pj, stuff should be here^^^^', showUserBalance)
-  var localGroupObj=makeGroupObj.call(this) //this.makeGroupObj()
+    localGroupObj=makeGroupObj.call(this) //this.makeGroupObj()
+  }
   
 
   // setting this to bypas the need for authentication
@@ -107,7 +118,16 @@ export default class GroupView extends Component {
               <div>
                 <div>Title: {activity.title} Time:{prettyDate(activity.created_at)} Amount: ${activity.amount}    
                 <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
-                <button className="secondary button float-right">Edit</button>
+                <AddExpense
+                  getActivity={this.props.getActivity}
+                  activity={this.props.activity}
+                  currentGroupUsers = {this.props.currentGroupUsers}
+                  url = {this.props.url}
+                  getUserByGroup = {this.props.getUserByGroup}
+                  addExpense = {this.props.addExpense}
+                  userInfo = {this.props.userInfo}
+
+                />
                   <div style={this.props.displayActive[index]}>
                     <div className = 'row '>
                       <div className = 'small-12 large-6 columns'>

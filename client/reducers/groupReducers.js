@@ -51,9 +51,7 @@ export function groups(state = { isFetching: false, currentGroup: {}, isDeleting
         )
 
       case ActionTypes.DELETE_SUCCESS:
-      console.log('HERE is OUR RESPONSE:',action)
         const index = state.groups.map(item => item.id).indexOf(action.id)
-
         return update(state, {
           isDeleting: {$set: false},
           groups: {$splice: [[index, 1]]},
