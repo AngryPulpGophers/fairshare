@@ -125,7 +125,8 @@ export default class GroupView extends Component {
               <div>
                 <div>Title: {activity.title} Time:{prettyDate(activity.created_at)} Amount: ${activity.amount}    
                 <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
-                  <UpdateExpense
+                  {this.props.userInfo.id===activity.paid_by?
+                    <UpdateExpense
                     formKey = {'updateExpense'+activity.id}
                     getActivity={this.props.getActivity}
                     activity={this.props.activity}
@@ -136,7 +137,7 @@ export default class GroupView extends Component {
                     updateExpense = {this.props.updateExpense}
                     userInfo = {this.props.userInfo}
                     initialValues = {expenseValues[activity.id]}
-                  />
+                  />:null}
                   <div style={this.props.displayActive[index]}>
                     <div className = 'row '>
                       <div className = 'small-12 large-6 columns'>

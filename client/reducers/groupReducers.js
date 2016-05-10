@@ -123,10 +123,10 @@ export function groups(state = { isFetching: false, currentGroup: {}, isDeleting
         }
 
         //console.log('got our type and resp:', action.response)
-        // console.log('pj test pexpense',JSON.parse(action.response))
+         console.log('pj test UPDATE EXPENSE',JSON.parse(action.response))
         return update(state, {
           isFetching: {$set: false},
-          activity: {$splice: [[actionIndex, 1,JSON.parse(action.response)]]}
+          activity: {$splice: [[activityIndex, 1,JSON.parse(action.response)]]}
         })
 
       case ActionTypes.UPDATE_EXPENSE_FAILURE:

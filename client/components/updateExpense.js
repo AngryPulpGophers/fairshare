@@ -109,16 +109,17 @@ export default class UpdateExpense extends Component {
           }
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        obj.paid_by = this.props.userInfo.id;
+        //obj.paid_by = this.props.userInfo.id;
         obj.title = data.title;
         obj.amount = Number(Number(data.amount).toFixed(2))
         obj.img_url = resp.text //|| data.imgUrl;
         obj.note = data.note;
         obj.group_id = Number(ID[1]);
+        obj.id = this.props.currentActivity.id;
         console.log('send to post update', obj);
         this.setState({isModalOpen:false})
         this.props.destroyForm();
-        //this.props.updateExpense(JSON.stringify(obj),this.props.currentActivity.id);
+        this.props.updateExpense(JSON.stringify(obj),this.props.currentActivity.id);
 
         //location.replace(baseURL+'/groupView?id='+ID[1]);
       }.bind(this));
@@ -181,16 +182,17 @@ export default class UpdateExpense extends Component {
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        obj.paid_by = this.props.userInfo.id;
+        //obj.paid_by = this.props.userInfo.id;
         obj.title = data.title;
         obj.amount = Number(Number(data.amount).toFixed(2))
         obj.img_url = 'client/images/download.jpg'
         obj.note = data.note;
         obj.group_id = Number(ID[1]);
+        obj.id = this.props.currentActivity.id;
         console.log('send to post UPDATE', obj);
         this.setState({isModalOpen:false})
         this.props.destroyForm();
-        // this.props.updateExpense(JSON.stringify(obj),this.props.currentActivity.id);
+        this.props.updateExpense(JSON.stringify(obj),this.props.currentActivity.id);
 
         //location.replace(baseURL+'/groupView?id='+ID[1]);
     }
