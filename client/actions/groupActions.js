@@ -107,6 +107,25 @@ export function addExpense(formData) {
   }
 }
 
+export const UPDATE_EXPENSE_REQUEST = 'UPDATE_EXPENSE_REQUEST';
+export const UPDATE_EXPENSE_SUCCESS = 'UPDATE_EXPENSE_SUCCESS';
+export const UPDATE_EXPENSE_FAILURE = 'UPDATE_EXPENSE_FAILURE';
+
+export function updateExpense(formData,id) {
+  //console.log('called actions with:', members, formData)
+  return {
+    [CALL_API]: {
+      id: id,
+      endpoint: 'groups/expenses',
+      body: formData,
+      req: 'PUT',
+      types: [UPDATE_EXPENSE_REQUEST, UPDATE_EXPENSE_SUCCESS, UPDATE_EXPENSE_FAILURE]
+    }
+
+  }
+}
+
+
 export const PAYMENT_REQUEST = 'PAYMENT_REQUEST';
 export const PAYMENT_SUCCESS = 'PAYMENT_SUCCESS';
 export const PAYMENT_FAILURE = 'PAYMENT_FAILURE';

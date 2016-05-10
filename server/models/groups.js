@@ -83,7 +83,6 @@ Groups.getExpensesByGroupId = function(groupId){
 };
 
 Groups.createExpense = function(expenseAttrs){
-  console.log('our expense attributes',expenseAttrs)
   var members = expenseAttrs.members;
   delete expenseAttrs.members;
 
@@ -114,7 +113,21 @@ Groups.updateExpense = function(expenseAttrs){
     });
 };
 
-Groups.getPaymentById = function(paymentId) {
+Groups.addExpenseMember = function(attrs){
+  return db('user_expenses')
+    .insert(attrs, 'id');
+};
+
+Groups.removeExpenseMember = function(attrs){
+  return db('user_expenses')
+    .where({
+      user_id: attrs.user_id,
+      expense_id: attrs.expense_id
+    })
+    .del();
+};
+
+Groups.getPaymentById = function(paymentId){
   return db.select().table('payments')
     .where({
       id: paymentId
@@ -128,7 +141,7 @@ Groups.getPaymentsByGroupId = function(groupId){
     });
 };
 
-Groups.createPayment = function(paymentAttrs) {
+Groups.createPayment = function(paymentAttrs){
   return db('payments')
     .insert(paymentAttrs, 'id')
     .then(function(id){

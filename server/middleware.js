@@ -23,7 +23,7 @@ MiddleWare.checkGroup = function(req, res, next){
 MiddleWare.checkOwner = function(req, res, next){
   Groups.getGroupById( req.group )
     .then(function(group){
-      if (group.created_by == req.user.id){
+      if (group.created_by === req.user.id){
         next();
       } else {
         res.status(403).send('You are not the owner of this group.');

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
-import {  getGroups, getActivity,getUserByGroup , addExpense, makePayment, deleteGroup, setCurrentGroup, indBalance } from '../actions/groupActions';
+import {  getGroups, getActivity,getUserByGroup , addExpense, makePayment, deleteGroup, setCurrentGroup, indBalance, updateExpense } from '../actions/groupActions';
 import GroupView from '../components/groupView';
 import { startDisplay, toggleDisplay } from '../actions/calloutActions';
 
@@ -57,6 +57,7 @@ class PageGroupView extends Component {
         deleteGroup = {this.props.deleteGroup}
         indBalance = {this.props.indBalance}
         groups = {this.props.groups}
+        updateExpense = {this.props.updateExpense}
       />
     </div>
     )
@@ -96,5 +97,6 @@ export default connect(mapStateToProps, {
   deleteGroup,
   setCurrentGroup,
   indBalance,
-  getGroups
+  getGroups,
+  updateExpense
 })(PageGroupView)
