@@ -173,7 +173,7 @@ export default class AddExpense extends Component {
         </div>
       */}
         <div>
-          <label>Upload a photo (overwrites url option)</label>
+          <label>Upload a photo</label>
           <div>
             <input type="file" accept='image/*' {...photo} value={null} />
           </div>

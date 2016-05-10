@@ -107,7 +107,7 @@ export default class GroupView extends Component {
           expenseValues[activity.id]= {
             title: activity.title,
             note: activity.note,
-            amount: Number(activity.amount),
+            amount: activity.amount,
           }
           for(var x =0 ; x< activity.members.length ; x++){
             holdMemberId.push(activity.members[x].id);
@@ -126,15 +126,16 @@ export default class GroupView extends Component {
                 <div>Title: {activity.title} Time:{prettyDate(activity.created_at)} Amount: ${activity.amount}    
                 <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
                   <UpdateExpense
-                  {...{initialValues:expenseValues[activity.id]}}
+                    formKey = {'updateExpense'+activity.id}
                     getActivity={this.props.getActivity}
                     activity={this.props.activity}
+                    currentActivity = {activity}
                     currentGroupUsers = {this.props.currentGroupUsers}
                     url = {this.props.url}
                     getUserByGroup = {this.props.getUserByGroup}
-                    addExpense = {this.props.addExpense}
+                    updateExpense = {this.props.updateExpense}
                     userInfo = {this.props.userInfo}
-                    activityID = {activity.id}
+                    initialValues = {expenseValues[activity.id]}
                   />
                   <div style={this.props.displayActive[index]}>
                     <div className = 'row '>

@@ -110,6 +110,29 @@ export function groups(state = { isFetching: false, currentGroup: {}, isDeleting
         return update(state, {
           isFetching: {$set: false}})
 
+      case ActionTypes.UPDATE_EXPENSE_REQUEST:
+        return update(state, {
+          isFetching: {$set: true}})
+
+      case ActionTypes.UPDATE_EXPENSE_SUCCESS:
+        var activityIndex
+        for (var i = 0 ; i < state.activity.length ; i++){
+          if (action.id === state.activity[i].id){
+            activityIndex=i
+          }
+        }
+
+        //console.log('got our type and resp:', action.response)
+        // console.log('pj test pexpense',JSON.parse(action.response))
+        return update(state, {
+          isFetching: {$set: false},
+          activity: {$splice: [[actionIndex, 1,JSON.parse(action.response)]]}
+        })
+
+      case ActionTypes.UPDATE_EXPENSE_FAILURE:
+        return update(state, {
+          isFetching: {$set: false}})
+
       case ActionTypes.PAYMENT_REQUEST:
         return update(state, {
           isFetching: {$set: true}
