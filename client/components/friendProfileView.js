@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router'
 
 
 export default class FriendProfileView extends Component {
@@ -21,14 +22,14 @@ export default class FriendProfileView extends Component {
                               <div> email: {this.props.friendProfile.email} </div>
 
                                <div> shared expenses groups: </div>
-
-                                { console.log('MY INFOOOOO INSIDE FRIEND PROF VIEW', this.props.userInfo.id) }
                                 <div>
                                     {this.props.groups.map(function(group) {
                                         for (var i = 0; i < group.members.length; i++) {
                                           if (group.members[i].user_id === this.props.friendProfile.id) {
-                                              return <div>{group.name}</div>
-                                          }
+                                              return (
+                                              <div>
+                                              <Link key={group.id} to={{pathname:'/groupView',query:{ id: group.id }}} title="groupView" className="callout callout-nav"> {group.name} </Link></div>
+                                          )}
                                         }
                                     }.bind(this))}
                                 </div>
