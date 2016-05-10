@@ -4,7 +4,6 @@ import { Link } from 'react-router'
 import SocialModal from '../components/socialPromptModal';
 
 
-
 function puke (obj) {
   return <pre>{JSON.stringify(obj, 2, ' ')}</pre>
 }

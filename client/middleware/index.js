@@ -6,11 +6,12 @@ const BASE_URL = 'http://localhost:3000/';
 
 function callApi(endpoint, id, req, body){
   let config = {credentials : 'include' };
+  console.log("call api's ENDPOINT!!!!!!!! ", endpoint)
   // console.log('got an id:', id);
   //config.header = { Accept: 'application/json'};
   //console.log(arguments);
   if(req === 'POST' || req === 'PUT'){
-    //console.log('making POST or PUT req');
+   console.log('making POST or PUT req');
     config.headers= {
       "Content-Type":"application/json",
       "Accept":"application/json"
@@ -18,7 +19,7 @@ function callApi(endpoint, id, req, body){
     config.method = req;
     config.body = body;
   } else {
-    // console.log('making GET req')
+    console.log('*******making GET req w/in callAPI *****')
 
     config.id = id;
     console.log('here is our config',config)
@@ -30,7 +31,7 @@ function callApi(endpoint, id, req, body){
         .then(text => ({ text, response }))
       )
     .then(({ text, response }) => {
-      // console.log('text:', text, 'response:', response)
+      console.log('text:', text, 'response:', response)
       // console.log('response.ok in middleware:', response.ok)
       if (!response.ok) {
         // throw new Error (text);

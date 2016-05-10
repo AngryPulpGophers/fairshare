@@ -3,37 +3,35 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import Profile from '../components/profile';
 import Friend from '../components/friendProfileView'
+import { getFriendProfile } from '../actions/userActions'
 import {updateUserInfo, resetAlert, unlinkSocialAcc} from '../actions/authActions'
 
 class PageProfile extends Component {
 
   componentWillMount(){
+    getFriendProfile('PJMatteucci')
 
     let currentURL = window.location.href.split('username=')[1];
-    console.log("*** currentURL ****", currentURL);
-
-    //console.log('component did update:',nextProps)
     if(!window.localStorage.isAuthed){
       browserHistory.push('/login')
     }
   }
   componentWillReceiveProps(nextProps){
-    //console.log('component did update:',nextProps)
     if(!nextProps.isAuthed){
       browserHistory.push('/login')
     }
   }
 
-/*
-ternary for unique props for unedit prof view
-- make a property on mapStaeToProps
-- find reducer to pass logic to mapStateToProps
-make myFriendValues const
-- users/username endpoint
-*/
-
   render() {
-    
+    let username = window.location.href.split('username=')[1];
+    console.log("User profile url", username);
+
+    let isFriend = true;
+    if ( username === undefined || this.props.userInfo.username === username) {
+      isFriend = false;
+    } else {
+      username? getFriendProfile(username) : null;
+    }
 
     const myInitialValues = {
       initialValues: {
@@ -41,9 +39,7 @@ make myFriendValues const
         email: this.props.userInfo.email,
         username: this.props.userInfo.username
       }
-    };
-
-    const isFriend = true;
+    }; 
 
     return !isFriend ? (
 
@@ -65,7 +61,7 @@ function mapStateToProps(state) {
   return {
    userInfo : state.auth.userInfo,
    isAuthed: state.auth.isAuthed,
-   userIsUpdated: state.auth.userIsUpdated
+   userIsUpdated: state.auth.userIsUpdated,
   }
 }
 

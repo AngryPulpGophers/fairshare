@@ -61,6 +61,7 @@ router.get('/id', function(req, res){
 });
 
 router.get('/:username', function(req, res){
+  console.log("****Req.body ", req.body);
   Users.getByUsername(req.username)
     .then(function(data){
 			if(data[0]){
