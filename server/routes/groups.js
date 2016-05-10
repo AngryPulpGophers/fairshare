@@ -163,6 +163,7 @@ router.post('/addMember/', Middleware.checkGroup, function(req, res){
 
 // add/remove members
 router.put('/expenses', Middleware.checkGroup, function(req, res){
+  console.log('rico is wrong',req.body)
   if (req.body.membersAdded){
     req.body.membersAdded.forEach(function(member){
       Groups.addExpenseMember({
@@ -189,6 +190,7 @@ router.put('/expenses', Middleware.checkGroup, function(req, res){
   Groups.updateExpense( req.body )
     .then(function(data){
       if (members){ data.members = members; }
+      data.type = 'expense';
       res.send(data);
     })
     .catch(function(err){
