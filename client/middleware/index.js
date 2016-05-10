@@ -17,6 +17,7 @@ function callApi(endpoint, id, req, body){
     config.method = req;
     config.body = body;
   } else if(req === 'DELETE'){
+    console.log('we are deleting', req)
     config.method = req
     //console.log('method',config.method,'method',config.body,'body')
 
