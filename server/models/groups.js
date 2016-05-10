@@ -83,6 +83,7 @@ Groups.getExpensesByGroupId = function(groupId){
 };
 
 Groups.createExpense = function(expenseAttrs){
+  console.log('our expense attributes',expenseAttrs)
   var members = expenseAttrs.members;
   delete expenseAttrs.members;
 
@@ -168,33 +169,5 @@ Groups.updateBalance = function(attrs){
 Groups.deleteGroupById = function(groupId){
   return db('groups')
     .where('id', '=', groupId)
-    .del().then();
-};
-
-Groups.deleteExpensesByGroupId = function(groupId){
-  return Groups.getExpensesByGroupId(groupId)
-    .then(function(expenses){
-      expenses.forEach(function(expense){
-        db('user_expenses')
-          .where('id', '=', expense.id)
-          .del()
-          .then(function(){
-            db('expenses')
-              .where('id', '=', expense.id)
-              .del().then();
-          });
-      });
-    });
-};
-
-Groups.deletePaymentsByGroupId = function(groupId){
-  return db('payments')
-    .where('group_id', '=', groupId)
-    .del().then();
-};
-
-Groups.deleteUserGroups = function(groupId){
-  return db('user_groups')
-    .where('group_id', '=', groupId)
     .del().then();
 };

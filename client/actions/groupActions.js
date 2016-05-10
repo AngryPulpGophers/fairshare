@@ -33,6 +33,14 @@ export function getActivity(id) {
   }
 }
 
+export const CURRENT_GROUP = 'CURRENT_GROUP';
+export function setCurrentGroup(id) {
+  return {
+      type: CURRENT_GROUP,
+      id: id
+  }
+}
+
 export const USERBYGROUP_REQUEST = 'USERBYGROUP_REQUEST';
 export const USERBYGROUP_SUCCESS = 'USERBYGROUP_SUCCESS';
 export const USERBYGROUP_FAILURE = 'USERBYGROUP_FAILURE';
@@ -64,6 +72,21 @@ export function createGroup(members, formData) {
       types: [CREATE_REQUEST, CREATE_SUCCESS, CREATE_FAILURE]
     }
 
+  }
+}
+
+export const DELETE_REQUEST = 'DELETE_REQUEST';
+export const DELETE_SUCCESS = 'DELETE_SUCCESS';
+export const DELETE_FAILURE = 'DELETE_FAILURE';
+
+export function deleteGroup(id) {
+  console.log('triggered', id)
+  return {
+    [CALL_API]: {
+      endpoint: 'groups/'+id.id,
+      req: 'DELETE',
+      types: [DELETE_REQUEST, DELETE_SUCCESS, DELETE_FAILURE]
+    }
   }
 }
 

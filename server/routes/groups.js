@@ -114,6 +114,7 @@ router.post('/', function(req, res){
   if (process.env.NODE_ENV !== 'test' && req.body.members.indexOf(req.user.id) === -1){
     req.body.members.push(req.user.id);
   }
+  req.body.created_by = req.user.id;
   Groups.createGroup(req.body)
     .then(function(data){
       res.status(200).send(data);
@@ -205,16 +206,7 @@ router.put('/balance/:userid/:group/:balance',Middleware.checkGroup, function(re
 
 
 router.delete('/:group', Middleware.checkOwner, function(req, res){
-  Groups.deletePaymentsByGroupId( req.group )
-    .then(function(){
-      Groups.deleteExpensesByGroupId( req.group );
-    })
-    .then(function(){
-      Groups.deleteUserGroups( req.group );
-    })
-    .then(function(){
-      Groups.deleteGroupById( req.group );
-    })
+  Groups.deleteGroupById( req.group )
     .then(function(){
       res.status(200).send({
         id: req.group,
