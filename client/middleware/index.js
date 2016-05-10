@@ -17,8 +17,9 @@ function callApi(endpoint, id, req, body){
     config.method = req;
     config.body = body;
   } else if(req === 'DELETE'){
-    console.log('delete the group!');
     config.method = req
+    //console.log('method',config.method,'method',config.body,'body')
+
   } else {
     // console.log('making GET req')
 

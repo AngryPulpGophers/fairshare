@@ -17,7 +17,7 @@ describe("Groups API", function() {
   var group1, group2;
   var expense1, payment1;
 
-  it_("returns a users's groups", function * () {
+  xit_("returns a users's groups", function * () {
     yield Users.create({ username: 'aliceinchains', name: 'Alice' })
       .then(function(resp){ user1 = resp[0]; });
     yield Users.create({ username: 'bobthebuilder', name: 'Bob' })
@@ -50,7 +50,7 @@ describe("Groups API", function() {
       });
   });
 
-  it_("returns a group's users", function * () {
+  xit_("returns a group's users", function * () {
 
     yield request(app)
       .get('/groups/users/' + group1)
@@ -60,7 +60,7 @@ describe("Groups API", function() {
       });
   });
 
-  it_("creates a new group", function * () {
+  xit_("creates a new group", function * () {
 
     yield request(app)
       .post('/groups')
@@ -83,6 +83,29 @@ describe("Groups API", function() {
   });
 
   it_("creates a group expense", function * (){
+    yield Users.create({ username: 'aliceinchains', name: 'Alice' })
+      .then(function(resp){ user1 = resp[0]; });
+    yield Users.create({ username: 'bobthebuilder', name: 'Bob' })
+      .then(function(resp){ user2 = resp[0]; });
+    yield Users.create({ username: 'icarly', name: 'Carly' })
+      .then(function(resp){ user3 = resp[0]; });
+
+    yield Groups.createGroup({
+      name: 'Japan Trip',
+      desc: 'Travel Group for going to Japan.',
+      created_by: user1,
+      members: [user1, user2, user3]
+    })
+    .then(function(resp){ group1 = resp.id; });
+
+    yield Groups.createGroup({
+      name: 'Room 404',
+      desc: 'Roommate expenses',
+      created_by: user3,
+      members: [user1, user3]
+    })
+    .then(function(resp){ group2 = resp.id; });
+
     yield request(app)
       .post('/groups/expenses')
         .send({

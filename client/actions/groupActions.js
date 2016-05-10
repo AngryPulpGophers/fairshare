@@ -124,7 +124,22 @@ export function makePayment(formData) {
   }
 }
 
+export const INDBALANCE_REQUEST = 'INDBALANCE_REQUEST';
+export const INDBALANCE_SUCCESS = 'INDBALANCE_SUCCESS';
+export const INDBALANCE_FAILURE = 'INDBALANCE_FAILURE';
+//object should have properties of user id group id and balance to that group
+export function indBalance(indObj) {
+  //console.log('updated user balance to group:', indObj);
+  return {
+    [CALL_API]: {
+      endpoint: 'groups/balance/'+indObj.user_id+'/'+indObj.group_id+'/'+indObj.balance,
+      body: indObj,
+      req: 'PUT',
+      types: [INDBALANCE_REQUEST, INDBALANCE_SUCCESS, INDBALANCE_FAILURE]
+    }
 
+  }
+}
 
 
 
