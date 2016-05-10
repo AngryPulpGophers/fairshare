@@ -19,10 +19,7 @@ function callApi(endpoint, id, req, body){
     config.method = req;
     config.body = body;
   } else {
-    console.log('*******making GET req w/in callAPI *****')
-
     config.id = id;
-    console.log('here is our config',config)
   }
 
   return fetch( BASE_URL + endpoint, config)

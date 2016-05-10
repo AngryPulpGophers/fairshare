@@ -17,9 +17,7 @@ export function users(state = { isFetching: false, users: [], friendProfile : {}
         return update(state, {
           isFetching: {$set: false}})
 
-// what does this reducer need to do differently vs. USERS_SUCCESS?
-// needs action. 
-
+      // for viewing a friends profile
       case ActionTypes.FRIEND_REQUEST:
         return update(state, {
           isFetching: {$set: true}
@@ -29,7 +27,7 @@ export function users(state = { isFetching: false, users: [], friendProfile : {}
         console.log("*******Inside action response*******", action)
         return update(state, {
           isFetching: {$set: false},
-          friendProfile: {$set: action.response}
+          friendProfile: {$set: JSON.parse(action.response)}
         })
 
         case ActionTypes.FRIEND_FAILURE:

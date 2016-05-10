@@ -27,23 +27,16 @@ export function getUsers(bool) {
   }
 }
 
-
-// action passes logic - to component from container
-// call action or function from component
-// set state in reducer
-
-
 export const FRIEND_REQUEST = 'FRIEND_REQUEST';
 export const FRIEND_SUCCESS = 'FRIEND_SUCCESS';
 export const FRIEND_FAILURE = 'FRIEND_FAILURE';
 
 export function getFriendProfile (username) {
-  console.log("TAO DE MOI ", username)
   return  {
 
       [CALL_API] : {
         endpoint : 'users/'+username,
-        req: 'POST',
+        req: 'GET',
         types : [FRIEND_REQUEST, FRIEND_SUCCESS, FRIEND_FAILURE]
         }
   }

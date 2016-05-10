@@ -20,7 +20,6 @@ export const ACTIVITY_SUCCESS = 'ACTIVITY_SUCCESS';
 export const ACTIVITY_FAILURE = 'ACTIVITY_FAILURE';
 
 export function getActivity(id) {
-  // console.log('got an id:', id)
   return {
     [CALL_API]: {
       endpoint: 'groups/activity/'+id,

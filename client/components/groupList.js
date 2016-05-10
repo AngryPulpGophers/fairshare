@@ -21,7 +21,6 @@ export default class GroupList extends Component {
           stopSocialModal={this.props.stopSocialModal}
         />
       <div>
-        { console.log('OUR GROUP INFO', this.props.groups) }
          {this.props.groups.map(function(group){
             return (
 

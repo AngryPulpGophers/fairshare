@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
+import { browserHistory, location } from 'react-router';
 import Profile from '../components/profile';
 import Friend from '../components/friendProfileView'
 import { getFriendProfile } from '../actions/userActions'
+import { getGroups } from '../actions/groupActions'
 import {updateUserInfo, resetAlert, unlinkSocialAcc} from '../actions/authActions'
 
 class PageProfile extends Component {
 
   componentWillMount(){
-    getFriendProfile('PJMatteucci')
-
     let currentURL = window.location.href.split('username=')[1];
     if(!window.localStorage.isAuthed){
       browserHistory.push('/login')
@@ -21,16 +20,19 @@ class PageProfile extends Component {
       browserHistory.push('/login')
     }
   }
+  componentDidMount(){ 
+       this.props.getGroups()
+  }
 
   render() {
+ 
     let username = window.location.href.split('username=')[1];
-    console.log("User profile url", username);
-
     let isFriend = true;
+
     if ( username === undefined || this.props.userInfo.username === username) {
       isFriend = false;
-    } else {
-      username? getFriendProfile(username) : null;
+    } else if (this.props.friendProfile.username !== username){
+      username ? this.props.getFriendProfile(username) : null;
     }
 
     const myInitialValues = {
@@ -52,7 +54,11 @@ class PageProfile extends Component {
         unlinkSocialAcc = {this.props.unlinkSocialAcc} 
      />
     ) :
-    (<Friend/>
+    (<Friend
+      friendProfile = {this.props.friendProfile}
+      groups = { this.props.groups }
+      userInfo = {this.props.userInfo}
+    />
     )
   }
 }
@@ -62,14 +68,17 @@ function mapStateToProps(state) {
    userInfo : state.auth.userInfo,
    isAuthed: state.auth.isAuthed,
    userIsUpdated: state.auth.userIsUpdated,
+   friendProfile : state.users.friendProfile,
+   groups: state.groups.groups
   }
 }
 
-
-// injection to child
+// injection to this class
 export default connect(mapStateToProps, {
   updateUserInfo,
   resetAlert,
-  unlinkSocialAcc
+  getFriendProfile,
+  unlinkSocialAcc,
+  getGroups
 })(PageProfile);
 
