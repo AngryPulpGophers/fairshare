@@ -163,31 +163,32 @@ router.post('/addMember/', Middleware.checkGroup, function(req, res){
 
 // add/remove members
 router.put('/expenses', Middleware.checkGroup, function(req, res){
-  var newMembers = req.body.membersAdded;
-  var oldMembers = req.body.membersDeleted;
-  var members    = req.body.members;
-
-  delete req.body.membersAdded;
-  delete req.body.membersDeleted;
-  delete req.body.members;
-
-  newMembers.forEach(function(member){
-    Groups.addExpenseMember({
-      expense_id: req.body.id,
-      user_id: member
-    }).then();
-  });
-
-  oldMembers.forEach(function(member){
-    Groups.removeExpenseMember({
-      expense_id: req.body.id,
-      user_id: member
-    }).then();
-  });
+  if (req.body.membersAdded){
+    req.body.membersAdded.forEach(function(member){
+      Groups.addExpenseMember({
+        expense_id: req.body.id,
+        user_id: member
+      }).then();
+    });
+    delete req.body.membersAdded;
+  }
+  if (req.body.membersDeleted){
+    req.body.membersDeleted.forEach(function(member){
+      Groups.removeExpenseMember({
+        expense_id: req.body.id,
+        user_id: member
+      }).then();
+    });
+    delete req.body.membersDeleted;
+  }
+  if (req.body.members){
+    var members    = req.body.members;
+    delete req.body.members;
+  }
 
   Groups.updateExpense( req.body )
     .then(function(data){
-      data.members = members;
+      if (members){ data.members = members; }
       res.send(data);
     })
     .catch(function(err){
