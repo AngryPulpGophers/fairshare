@@ -1,26 +1,30 @@
 import { UPDATE_LOCATION } from 'react-router-redux';
 import fetch from 'isomorphic-fetch';
 const BASE_URL = 'http://' + window.location.href.split('/')[2] + '/';
-//const BASE_URL = 'http://localhost:3000/';
+// const BASE_URL = 'http://localhost:3000/';
+
 
 function callApi(endpoint, id, req, body){
   let config = {credentials : 'include' };
+  console.log("call api's ENDPOINT!!!!!!!! ", endpoint)
   // console.log('got an id:', id);
   //config.header = { Accept: 'application/json'};
   //console.log(arguments);
   if(req === 'POST' || req === 'PUT'){
-    //console.log('making POST or PUT req');
+   console.log('making POST or PUT req');
     config.headers= {
       "Content-Type":"application/json",
       "Accept":"application/json"
     }
     config.method = req;
     config.body = body;
-  } else {
-    // console.log('making GET req')
+  } else if(req === 'DELETE'){
+    console.log('we are deleting', req)
+    config.method = req
+    //console.log('method',config.method,'method',config.body,'body')
 
+  } else {
     config.id = id;
-    console.log('here is our config',config)
   }
 
   return fetch( BASE_URL + endpoint, config)
@@ -29,7 +33,7 @@ function callApi(endpoint, id, req, body){
         .then(text => ({ text, response }))
       )
     .then(({ text, response }) => {
-      // console.log('text:', text, 'response:', response)
+      console.log('text:', text, 'response:', response)
       // console.log('response.ok in middleware:', response.ok)
       if (!response.ok) {
         // throw new Error (text);

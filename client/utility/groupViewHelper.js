@@ -77,6 +77,7 @@ for (var key in groupObj){
             } 
           }
           else {
+            console.log('what is breaking',this.props.activity[i],groupObj)
             groupObj[this.props.activity[i].members[x].id].balance -= round((this.props.activity[i].amount/this.props.activity[i].members.length));
           }
         }
@@ -113,6 +114,31 @@ for (var key in groupObj){
       groupObj[this.props.activity[i].recipient].balance = round(groupObj[this.props.activity[i].recipient].balance)  
     }
   }
+
+
+//this code sets up balance in user_groups table
+ //refactor this to use a state variable later
+ var currentURL = window.location.href
+    var ID = currentURL.split('id=')[1] 
+
+var tempObj = {}
+for (var ind in groupObj){
+  tempObj.user_id = Number(ind)
+  tempObj.group_id = Number(ID)
+  tempObj.balance = round(groupObj[ind].balance)
+  // console.log('NEW PJ',tempObj.user_id,'USER',
+  // tempObj.group_id,'group',
+  // tempObj.balance);
+  this.props.indBalance(tempObj);
+  tempObj = {}
+}
+
+
+
+
+
+
+
 
   //for some reason I thought it was logical to sort the group before I settled all of the debt
   // so that is done here

@@ -12,7 +12,6 @@ export function getGroups() {
       req: 'GET',
       types: [GROUPS_REQUEST, GROUPS_SUCCESS, GROUPS_FAILURE]
     }
-
   }
 }
 
@@ -21,7 +20,6 @@ export const ACTIVITY_SUCCESS = 'ACTIVITY_SUCCESS';
 export const ACTIVITY_FAILURE = 'ACTIVITY_FAILURE';
 
 export function getActivity(id) {
-  // console.log('got an id:', id)
   return {
     [CALL_API]: {
       endpoint: 'groups/activity/'+id,
@@ -29,7 +27,14 @@ export function getActivity(id) {
       req: 'GET',
       types: [ACTIVITY_REQUEST, ACTIVITY_SUCCESS, ACTIVITY_FAILURE]
     }
+  }
+}
 
+export const CURRENT_GROUP = 'CURRENT_GROUP';
+export function setCurrentGroup(id) {
+  return {
+      type: CURRENT_GROUP,
+      id: id
   }
 }
 
@@ -46,7 +51,6 @@ export function getUserByGroup(id) {
       types: [USERBYGROUP_REQUEST, USERBYGROUP_SUCCESS, USERBYGROUP_FAILURE]
 
     }
-
   }
 }
 
@@ -63,7 +67,21 @@ export function createGroup(members, formData) {
       req: 'POST',
       types: [CREATE_REQUEST, CREATE_SUCCESS, CREATE_FAILURE]
     }
+  }
+}
 
+export const DELETE_REQUEST = 'DELETE_REQUEST';
+export const DELETE_SUCCESS = 'DELETE_SUCCESS';
+export const DELETE_FAILURE = 'DELETE_FAILURE';
+
+export function deleteGroup(id) {
+  console.log('triggered', id)
+  return {
+    [CALL_API]: {
+      endpoint: 'groups/'+id.id,
+      req: 'DELETE',
+      types: [DELETE_REQUEST, DELETE_SUCCESS, DELETE_FAILURE]
+    }
   }
 }
 
@@ -80,9 +98,27 @@ export function addExpense(formData) {
       req: 'POST',
       types: [EXPENSE_REQUEST, EXPENSE_SUCCESS, EXPENSE_FAILURE]
     }
+  }
+}
+
+export const UPDATE_EXPENSE_REQUEST = 'UPDATE_EXPENSE_REQUEST';
+export const UPDATE_EXPENSE_SUCCESS = 'UPDATE_EXPENSE_SUCCESS';
+export const UPDATE_EXPENSE_FAILURE = 'UPDATE_EXPENSE_FAILURE';
+
+export function updateExpense(formData,id) {
+  //console.log('called actions with:', members, formData)
+  return {
+    [CALL_API]: {
+      id: id,
+      endpoint: 'groups/expenses',
+      body: formData,
+      req: 'PUT',
+      types: [UPDATE_EXPENSE_REQUEST, UPDATE_EXPENSE_SUCCESS, UPDATE_EXPENSE_FAILURE]
+    }
 
   }
 }
+
 
 export const PAYMENT_REQUEST = 'PAYMENT_REQUEST';
 export const PAYMENT_SUCCESS = 'PAYMENT_SUCCESS';
@@ -97,11 +133,25 @@ export function makePayment(formData) {
       req: 'POST',
       types: [PAYMENT_REQUEST, PAYMENT_SUCCESS, PAYMENT_FAILURE]
     }
-
   }
 }
 
+export const INDBALANCE_REQUEST = 'INDBALANCE_REQUEST';
+export const INDBALANCE_SUCCESS = 'INDBALANCE_SUCCESS';
+export const INDBALANCE_FAILURE = 'INDBALANCE_FAILURE';
+//object should have properties of user id group id and balance to that group
+export function indBalance(indObj) {
+  //console.log('updated user balance to group:', indObj);
+  return {
+    [CALL_API]: {
+      endpoint: 'groups/balance/'+indObj.user_id+'/'+indObj.group_id+'/'+indObj.balance,
+      body: indObj,
+      req: 'PUT',
+      types: [INDBALANCE_REQUEST, INDBALANCE_SUCCESS, INDBALANCE_FAILURE]
+    }
 
+  }
+}
 
 
 

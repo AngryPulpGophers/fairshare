@@ -19,7 +19,7 @@ Groups.getGroupById = function(groupID) {
 
 Groups.getGroupsByUserId = function(userID) {
   return db('groups')
-    .select('name', 'desc', 'created_at', 'group_id AS id')
+    .select('name', 'desc', 'created_at', 'group_id AS id', 'user_groups.balance')
     .innerJoin('user_groups', 'groups.id', 'user_groups.group_id')
     .where({
       user_id: userID
@@ -113,7 +113,21 @@ Groups.updateExpense = function(expenseAttrs){
     });
 };
 
-Groups.getPaymentById = function(paymentId) {
+Groups.addExpenseMember = function(attrs){
+  return db('user_expenses')
+    .insert(attrs, 'id');
+};
+
+Groups.removeExpenseMember = function(attrs){
+  return db('user_expenses')
+    .where({
+      user_id: attrs.user_id,
+      expense_id: attrs.expense_id
+    })
+    .del();
+};
+
+Groups.getPaymentById = function(paymentId){
   return db.select().table('payments')
     .where({
       id: paymentId
@@ -127,7 +141,7 @@ Groups.getPaymentsByGroupId = function(groupId){
     });
 };
 
-Groups.createPayment = function(paymentAttrs) {
+Groups.createPayment = function(paymentAttrs){
   return db('payments')
     .insert(paymentAttrs, 'id')
     .then(function(id){
@@ -168,36 +182,5 @@ Groups.updateBalance = function(attrs){
 Groups.deleteGroupById = function(groupId){
   return db('groups')
     .where('id', '=', groupId)
-    .del().then();
-};
-
-// get all expenses
-// delete user_expenses
-// then delete the expense
-Groups.deleteExpensesByGroupId = function(groupId){
-  return Groups.getExpensesByGroupId(groupId)
-    .then(function(expenses){
-      expenses.forEach(function(expense){
-        db('user_expenses')
-          .where('id', '=', expense.id)
-          .del()
-          .then(function(){
-            db('expenses')
-            .where('id', '=', expense.id)
-            .del().then();
-          });
-      });
-    });
-};
-
-Groups.deletePaymentsByGroupId = function(groupId){
-  return db('payments')
-    .where('group_id', '=', groupId)
-    .del().then();
-};
-
-Groups.deleteUserGroups = function(groupId){
-  return db('user_groups')
-    .where('group_id', '=', groupId)
     .del().then();
 };

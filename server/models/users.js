@@ -7,12 +7,6 @@ Users.create = function(reqObj){
     .insert(reqObj, 'id');
 };
 
-Users.getByFacebookId = function(id){
-  return db('users')
-    .select('id', 'name', 'username', 'email', 'facebookId', 'img_url')
-    .where('users.facebookId', '=', id);
-};
-
 Users.getByUsername = function(username){
   return db('users')
     .select('id', 'name', 'username', 'email', 'img_url')
@@ -22,7 +16,7 @@ Users.getByUsername = function(username){
 Users.getById = function(reqObj){
   return db('users')
     .select()
-    .where('id', '=', reqObj.id)
+    .where('id', '=', reqObj.id);
 };
 
 Users.editProfile = function(profAttrs){

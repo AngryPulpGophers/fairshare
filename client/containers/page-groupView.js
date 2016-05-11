@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
-import {  getGroups, getActivity, getUserByGroup , addExpense, makePayment} from '../actions/groupActions';
+import {  getGroups, getActivity,getUserByGroup , addExpense, makePayment, deleteGroup, setCurrentGroup, indBalance, updateExpense } from '../actions/groupActions';
 import GroupView from '../components/groupView';
 import { startDisplay, toggleDisplay } from '../actions/calloutActions';
+
 
 class PageGroupView extends Component {
   // our hacky way of dealing with auth
@@ -22,14 +23,21 @@ class PageGroupView extends Component {
     var currentURL = window.location.href
     var ID = currentURL.split('id=')
     this.props.getUserByGroup(ID[1])
-
+    this.props.getGroups();
     //var clickedOnGroup = (this.props.url.location.query.id)
     this.props.getActivity(ID[1])
     //the number on the next line should be the number of activities for the group but PJ had issues with that
     //this number can be as big as you want, just takes up more space in state
     this.props.startDisplay(100)
-  }
 
+    this.props.setCurrentGroup(ID[1])
+  }
+  componentWillUpdate(nextProps, nextState){
+    //this conditional handles if a group was deleted. if so, go back to dashboard
+    if(nextProps.groups.length < this.props.groups.length){
+      browserHistory.push('/');
+    }
+  }
   render() {
     return (
     <div>
@@ -37,14 +45,18 @@ class PageGroupView extends Component {
         getActivity={this.props.getActivity}
         activity={this.props.activity}
         currentGroupUsers = {this.props.currentGroupUsers}
+        currentGroup = {this.props.currentGroup}
         userInfo = {this.props.userInfo}
         url = {this.props.url}
         getUserByGroup = {this.props.getUserByGroup}
         toggleDisplay = {this.props.toggleDisplay}
         displayActive = {this.props.displayActive}
-        userInfo = {this.props.userInfo}
         addExpense = {this.props.addExpense}
         makePayment = {this.props.makePayment}
+        deleteGroup = {this.props.deleteGroup}
+        indBalance = {this.props.indBalance}
+        groups = {this.props.groups}
+        updateExpense = {this.props.updateExpense}
       />
     </div>
     )
@@ -54,6 +66,8 @@ class PageGroupView extends Component {
 PageGroupView.propTypes = {
   getActivity: PropTypes.func.isRequired,
   activity:PropTypes.array.isRequired,
+  makePayment: PropTypes.func.isRequired,
+  deleteGroup: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -67,10 +81,21 @@ function mapStateToProps(state) {
     userInfo: state.auth.userInfo,
     isAuthed: state.auth.isAuthed,
     auth: state.auth,
-    makePayment: PropTypes.func.isRequired
+    currentGroup: state.groups.currentGroup,
+    groups: state.groups.groups
   }
 }
 
 export default connect(mapStateToProps, {
-  getActivity,getUserByGroup,startDisplay,toggleDisplay, addExpense,makePayment
+  getActivity,
+  getUserByGroup,
+  startDisplay,
+  toggleDisplay,
+  addExpense,
+  makePayment,
+  deleteGroup,
+  setCurrentGroup,
+  indBalance,
+  getGroups,
+  updateExpense
 })(PageGroupView)

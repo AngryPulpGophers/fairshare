@@ -23,6 +23,16 @@ router.param('group', function(req, res, next, group){
   next();
 });
 
+router.param('userid', function(req, res, next, userid){
+  req.userid = userid;
+  next();
+});
+
+router.param('balance', function(req, res, next, balance){
+  req.balance = balance;
+  next();
+});
+
 router.get('/', function(req, res){
   Groups.getGroupsByUserId( req.user.id )
     .then(function(data){
@@ -113,12 +123,10 @@ router.post('/', function(req, res){
 router.post('/expenses', Middleware.checkGroup, function(req, res){
   Groups.createExpense( req.body )
     .then(function(data){
-      //console.log('expense id:', data[0].id)
       Users.getUsersByExpenseId(data.id)
         .then(function(members){
           data.members = members;
           data.type = 'expense';
-          //console.log('expense posted data:',data)
           res.send(data);
         })
         .catch(function(err){
@@ -127,7 +135,6 @@ router.post('/expenses', Middleware.checkGroup, function(req, res){
     });
 });
 
-// ADD SECURITY
 router.post('/expenses/upload', upload.single('photo') ,function(req, res){
   res.end(req.file.path);
 });
@@ -139,12 +146,11 @@ router.post('/payments', Middleware.checkGroup, function(req, res){
       res.send(data);
     })
     .catch(function(err){
-      console.log('err in payment post:', err);
       res.status(400).send({err: err});
     });
 });
 
-router.post('/addMember/', Middleware.checkGroup,  function(req, res){
+router.post('/addMember/', Middleware.checkGroup, function(req, res){
   Groups.addMember( req.body )
     .then(function(){
       res.send('succesfully added member');
@@ -155,8 +161,34 @@ router.post('/addMember/', Middleware.checkGroup,  function(req, res){
 });
 
 router.put('/expenses', Middleware.checkGroup, function(req, res){
+  if (req.body.membersAdded){
+    req.body.membersAdded.forEach(function(member){
+      Groups.addExpenseMember({
+        expense_id: req.body.id,
+        user_id: member
+      }).then();
+    });
+    delete req.body.membersAdded;
+  }
+  if (req.body.membersDeleted){
+    req.body.membersDeleted.forEach(function(member){
+      Groups.removeExpenseMember({
+        expense_id: req.body.id,
+        user_id: member
+      }).then();
+    });
+    delete req.body.membersDeleted;
+  }
+  if (req.body.members){
+    var members    = req.body.members;
+    delete req.body.members;
+  }
+
   Groups.updateExpense( req.body )
     .then(function(data){
+      if (members){ data.members = members; }
+      // console.log('rico WTF',data)
+      data.type = 'expense';
       res.send(data);
     })
     .catch(function(err){
@@ -174,10 +206,14 @@ router.put('/payments', Middleware.checkGroup, function(req, res){
     });
 });
 
-router.put('/balance/', Middleware.checkGroup, function(req, res){
+router.put('/balance/:userid/:group/:balance', Middleware.checkGroup, function(req, res){
+  req.body.user_id = Number(req.userid);
+  req.body.group_id = Number(req.group);
+  req.body.balance = Number(req.balance);
+
   Groups.updateBalance( req.body )
     .then(function(data){
-      res.send(data);
+      res.status(204).send(data);
     })
     .catch(function(err){
       res.status(400).send({err: err});
@@ -185,16 +221,7 @@ router.put('/balance/', Middleware.checkGroup, function(req, res){
 });
 
 router.delete('/:group', Middleware.checkOwner, function(req, res){
-  Groups.deletePaymentsByGroupId( req.group )
-    .then(function(){
-      Groups.deleteExpensesByGroupId( req.group );
-    })
-    .then(function(){
-      Groups.deleteUserGroups( req.group );
-    })
-    .then(function(){
-      Groups.deleteGroupById( req.group );
-    })
+  Groups.deleteGroupById( req.group )
     .then(function(){
       res.status(200).send({
         id: req.group,

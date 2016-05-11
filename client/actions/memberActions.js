@@ -9,9 +9,11 @@ export const INPUT_FOCUSED = 'INPUT_FOCUSED';
 //add a member to a group
 export const MEMBER_ADDED = 'MEMBER_ADDED';
 export function addMember(userObj) {
-  return {
-      type: MEMBER_ADDED,
-      userObj: userObj,
+  if(Object.keys(userObj).length > 0){
+    return {
+        type: MEMBER_ADDED,
+        userObj: userObj,
+    }
   }
 }
 

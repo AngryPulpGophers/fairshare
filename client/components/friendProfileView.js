@@ -1,40 +1,43 @@
-// import React, { Component, PropTypes } from 'react';
-
-// export default class FriendProfileView extends Component {
-
-//   render() {
-//     return (
-//       <div className="login">
-//         <div className="row">
-//             <div className="small-12 large-7 large-centered columns">
-//               <div className="component-wrapper">
-//                 <h3> {this.(friend?).name} Profile</h3>
-//                   <div className="row">
-//                     <div className="small-12 large-12 columns">
-//                         <img className="image" src={this.props.friend.img_url}/> 
-//                       </div>
-//                           <div className="small-12 large-8 columns">            
-//                               <div> friend user name </div>
-//                               <div> friend email </div>
-//                           </div>  
-//                 </div>
-//               </div>
-//             </div>      
-//         </div>
-//     </div>
-//     );
-//   }
-// }
+import React, { Component } from 'react';
+import { Link } from 'react-router'
 
 
-// FriendProfileView.propTypes = {
-// }
+export default class FriendProfileView extends Component {
+ render() {
+    return (
+    <div className="login">
+    <div className="row">
+    <div className="small-12 large-7 large-centered columns">
+      <div className="component-wrapper">
+      <h3>{this.props.friendProfile.name}'s Profile</h3>
+        <div className="row">
+          <div className="small-12 large-4 columns">
+            <img className="image" src={this.props.friendProfile.img_url}/>
+          </div>
 
+          <div className="small-12 large-8 columns"> 
+            <div> name: {this.props.friendProfile.name} </div>  
+            <div> username: {this.props.friendProfile.username} </div>
+            <div> email: {this.props.friendProfile.email} </div>
+            <div> our shared expenses: </div>
 
-// /*
-// 1 - click on user image at dashboard
-// 2 - use friend profile container 
-// 3 - to pass state to friendProfileView
-// 4 - write page display in render()
+            <div>
+              {this.props.groups.map(function(group) {
+                for (var i = 0; i < group.members.length; i++) {
+                  if (group.members[i].user_id === this.props.friendProfile.id) {
+                    return (
+                      <div><Link key={group.id} to={{pathname:'/groupView',query:{ id: group.id }}} title="groupView" className="callout callout-nav"> {group.name} </Link></div>
+                    )}
+                }
+              }.bind(this))}
+            </div>
+          </div>  
+        </div>
+      </div>
+    </div>      
+    </div>
+    </div>
+    );
+  }
+}
 
-// */

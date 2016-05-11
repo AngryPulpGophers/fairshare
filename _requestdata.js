@@ -22,6 +22,12 @@ req.body = {
   "img_url": "optional"
 };
 
+// 'POST' /users/invite
+
+req.body = {
+  "email": "user@mail.com"
+};
+
 // 'PUT' /users/username
 // replace undefined with new data
 
@@ -80,13 +86,15 @@ req.body = {
   // updates the properties of an expense
 
 req.body = {
-  id: "expense id",
+  id: "expense id", // NEED THIS
   group_id: "number", // NEED THIS TO PASS MIDDLEWARE
   title: undefined,
   amount: undefined,
   img_url: undefined,
   note: undefined,
-  // members: undefined (possibly will add this at some point, discuss?)
+  membersAdded: [1,2,3], //optional
+  membersDeleted: [4,5,6], //optional
+  members: [1,2,3,7] //optional
 };
 
 
