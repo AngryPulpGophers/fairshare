@@ -25,7 +25,8 @@ req.body = {
 // 'POST' /users/invite
 
 req.body = {
-  "email": "user@mail.com"
+  "email": "user@mail.com",
+  "note": "string"
 };
 
 // 'PUT' /users/username

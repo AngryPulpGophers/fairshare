@@ -46,7 +46,11 @@ router.get('/', function(req, res){
 router.get('/:group', Middleware.checkGroup, function(req, res){
   Groups.getGroupById( req.group )
     .then(function(data){
-      res.send(data);
+      Users.getUsersByGroupId( req.group )
+        .then(function(members){
+          data.members = members;
+          res.send(data);
+        });
     })
     .catch(function(err){
       res.status(400).send({err: err, text: 'Error in getting the group'});

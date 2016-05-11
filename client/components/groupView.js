@@ -17,7 +17,7 @@ export default class GroupView extends Component {
       isModalOpen: false
     })
   }
-  
+
   seeIfYou(name) {
     if (name===this.props.userInfo.name || name[0]===this.props.userInfo.name){
       return ('You')
@@ -30,7 +30,7 @@ export default class GroupView extends Component {
   handleDeleteGroup(){
     this.setState({isModalOpen:true});
   }
-  
+
   render() {
     var currentURL = window.location.href
       //console.log('pjpjpjp',currentURL.split('/')[2])
@@ -45,7 +45,7 @@ export default class GroupView extends Component {
     //   displayObj[counter] = {
     //     display: 'none'
     //   }
-
+    var localGroupObj = {};
     var groupExists = false;
     for(var i = 0; i < this.props.groups.length; i++){
       if(this.props.groups[i].id == ID[1]){
@@ -95,24 +95,24 @@ export default class GroupView extends Component {
                 <div key={index+user.name}>
 
 
-                
-                  {this.seeIfYou(user.name)} {this.seeIfYou(user.name)==='You' ? " owe " +Object.keys(person)+" $"+ -1*person[Object.keys(person)] 
+
+                  {this.seeIfYou(user.name)} {this.seeIfYou(user.name)==='You' ? " owe " +Object.keys(person)+" $"+ -1*person[Object.keys(person)]
                   : "owes " + this.seeIfYou(Object.keys(person)) +" $"+ -1*person[Object.keys(person)]}
-                  
+
                 </div>
-              
+
               )
             }.bind(this))
-            
+
            }
-           </span> 
+           </span>
            )
           }.bind(this)
         )
       }
 
-        <h2>Activity</h2>  
-            
+        <h2>Activity</h2>
+
         <PaymentForm
         userArray = {showUserBalance}
         groupMembers = {this.props.currentGroupUsers}
@@ -138,25 +138,25 @@ export default class GroupView extends Component {
                 title: activity.title,
                 note: activity.note,
                 amount: activity.amount,
-              }  
+              }
           for(var x =0 ; x< activity.members.length ; x++){
             holdMemberId.push(activity.members[x].id);
           }
           for (var i = 0; i < this.props.currentGroupUsers.length ; i++){
             if (holdMemberId.indexOf(this.props.currentGroupUsers[i].user_id) !== -1){
-              expenseValues[activity.id]['members'+i] = true;  
+              expenseValues[activity.id]['members'+i] = true;
             }
           }
             console.log('all my hard work for this',expenseValues[activity.id])
         }
-          
+
             return <div key={activity.id + activity.type} className= {activity.type==='expense' ? "callout alert" :"callout success"}>
-              
+
               {activity.type==='expense' ?
               <div>
-                <div>Title: {activity.title} Time:{prettyDate(activity.created_at)} Amount: ${activity.amount}    
+                <div>Title: {activity.title} Time:{prettyDate(activity.created_at)} Amount: ${activity.amount}
                 <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
-        
+
                   {this.props.userInfo.id===activity.paid_by?
                     <UpdateExpense
                     formKey = {'updateExpense'+activity.id}
@@ -175,7 +175,7 @@ export default class GroupView extends Component {
                       <div className = 'small-12 large-6 columns'>
                         <div>Note: {activity.note}</div>
                         <div>Paid: {this.seeIfYou(localGroupObj[activity.paid_by].name)}</div>
-                          <div>Members: 
+                          <div>Members:
                             {activity.members.map(function(member,index,members){
                               return <div>
                               {this.seeIfYou(member.name)}{index===members.length-1? "" : " "}</div>
@@ -190,24 +190,24 @@ export default class GroupView extends Component {
                       </div>
                     </div>
                   </div>
-                </div>  
+                </div>
               </div>
               :
               <div>{this.seeIfYou(localGroupObj[activity.payee].name)} paid {this.seeIfYou(localGroupObj[activity.recipient].name)} ${activity.amount} Time:{prettyDate(activity.created_at)}
                 {activity.pending ? <div><button className="button success tiny button" disabled={this.props.userInfo.id !== activity.recipient} onClick={()=>this.props.updatePaymentStatus({id:activity.id, pending:0})}><i className="fa fa-check circle"></i>Received</button>
-                <br></br><p>Pending recipient approval</p></div>:<span></span>} 
+                <br></br><p>Pending recipient approval</p></div>:<span></span>}
                 <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
                  <div style={this.props.displayActive[index]}>
                     Note: {activity.note}
                   </div>
               </div>
-              } 
+              }
             </div>
           }.bind(this))}
         </div>
       </div>
-      
-     
+
+
     )
   }
 }
