@@ -3,7 +3,7 @@ import * as ActionTypes from '../actions/groupActions';
 import update from 'react-addons-update';
 //console.log(ActionTypes);
 
-export function groups(state = { isFetching: false, currentGroup: {}, isDeleting: false, newGroup:{}, groups: [],activity : [], currentGroupUsers: []}, action) {
+export function groups(state = { isFetching: false, editGroup: {}, currentGroup: {}, isDeleting: false, newGroup:{}, groups: [],activity : [], currentGroupUsers: []}, action) {
     //console.log('groups actions:', action)
     // console.log('groups actions:', action)
     switch (action.type) {
@@ -24,9 +24,26 @@ export function groups(state = { isFetching: false, currentGroup: {}, isDeleting
         return update(state, {
           isFetching: {$set: false}})
 
+
+      // getting single group by id
+      case ActionTypes.GROUP_REQUEST:
+      return update(state, 
+        {isFetching: {$set: true}}
+        )
+
+      case ActionTypes.GROUP_SUCCESS:
+        return update(state, {
+          isFetching: {$set: false},
+          editGroup: {$set: JSON.parse(action.response)}
+        })
+
+      case ActionTypes.GROUP_FAILURE:
+        return update(state, {
+          isFetching: {$set: false}})
+
       //set CURRENT group
       case ActionTypes.CURRENT_GROUP:
-       console.log('time to set the current group with', action.id)
+       //console.log('time to set the current group with', action.id)
         return update(state, {
           currentGroup: {$set:{id:action.id}}
         })

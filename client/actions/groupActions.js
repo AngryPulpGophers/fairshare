@@ -15,6 +15,22 @@ export function getGroups() {
   }
 }
 
+
+export const GROUP_REQUEST = 'GROUP_REQUEST';
+export const GROUP_SUCCESS = 'GROUP_SUCCESS';
+export const GROUP_FAILURE = 'GROUP_FAILURE';
+
+export function getGroup(id) {
+  console.log('$$$$$$$$$$$$got an id:', id)
+  return {
+    [CALL_API]: {
+      endpoint: 'groups/'+id,
+      req: 'GET',
+      types: [GROUP_REQUEST, GROUP_SUCCESS, GROUP_FAILURE]
+    }
+  }
+}
+
 export const ACTIVITY_REQUEST = 'ACTIVITY_REQUEST';
 export const ACTIVITY_SUCCESS = 'ACTIVITY_SUCCESS';
 export const ACTIVITY_FAILURE = 'ACTIVITY_FAILURE';
@@ -193,7 +209,6 @@ export function clearError() {
       type: CLEAR_ERROR,
   }
 }
-
 
 function processGroup(members,formData){
   console.log('all our stuff:', members, formData)

@@ -1,36 +1,42 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory, Router, Route, Link } from 'react-router'
 import { getUsers } from '../actions/userActions';
 import { addMember, removeMember, clearMembers } from '../actions/memberActions';
-import { createGroup } from '../actions/groupActions';
+import { createGroup, getGroup } from '../actions/groupActions';
+import { formatData } from '../utility/createGroupHelper';
 import CreateGroup from '../components/createGroup';
 
 class PageCreateGroup extends Component {
+
  
-  constructor(props){
+  constructor(props,context){
     super(props)
-    this.state = {newMem: {}}
+    this.state = {newMem: {}, formData: {} }
+
   }
   componentWillMount(){
     if(!window.localStorage.isAuthed){
       browserHistory.push('/login')
     }
+    //call
+   this.props.getGroup(this.props.location.query.id)
+
   }
+
   componentWillReceiveProps(nextProps){
     if(!nextProps.isAuthed){
       browserHistory.push('/login')
     }
   }
-  
+
   handleNewMem(option, state){
     //set a temp state to handle our fuzzy search
     this.setState({ newMem: option})
-
   }
 
   render() {
-    //console.log('checking members existence:',this.state.members)
+    let formData = formatData(this.props.editGroup)
     return (
       <div className="create-group">
         <CreateGroup 
@@ -46,6 +52,7 @@ class PageCreateGroup extends Component {
           groups={this.props.groups}
           groupForm={this.props.groupForm}
           clearMembers={this.props.clearMembers}
+          initialValues ={formData}
         />
       </div>
     );
@@ -69,13 +76,17 @@ function mapStateToProps(state) {
     members: state.members.members,
     isAuthed: state.auth.isAuthed,
     groupForm: state.form.group,
+    editGroup: state.groups.editGroup
   };
 }
-
+PageCreateGroup.contextTypes = {  
+    router: React.PropTypes.func.isRequired
+};
 export default connect(mapStateToProps, {
   getUsers,
   addMember,
   removeMember,
   createGroup,
-  clearMembers
+  clearMembers,
+  getGroup
 })(PageCreateGroup);
