@@ -146,7 +146,6 @@ router.post('/payments', Middleware.checkGroup, function(req, res){
       res.send(data);
     })
     .catch(function(err){
-      console.log('err in payment post:', err);
       res.status(400).send({err: err});
     });
 });
@@ -161,9 +160,7 @@ router.post('/addMember/', Middleware.checkGroup, function(req, res){
     });
 });
 
-// add/remove members
 router.put('/expenses', Middleware.checkGroup, function(req, res){
-  // console.log('rico is wrong',req.body)
   if (req.body.membersAdded){
     req.body.membersAdded.forEach(function(member){
       Groups.addExpenseMember({

@@ -1,8 +1,9 @@
-var Users = require('../models/users.js');
-var Identity = require('../models/Identity');
-var express = require('express');
-var router = express.Router();
+var Users      = require('../models/users.js');
+var Identity   = require('../models/Identity');
 var Middleware = require('../middleware');
+var nodemailer = require('nodemailer');
+var express    = require('express');
+var router     = express.Router();
 
 module.exports = router;
 
@@ -95,6 +96,24 @@ router.post('/', function(req, res){
 	  .catch(function(err){
 	  	res.status(400).send({err:err});
 	  });
+});
+
+router.post('/invite', function(req, res, next){
+  var transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
+  var mailOptions = {
+    from: '"Fred Foo 👥" <foo@blurdybloop.com>', // sender address
+    to: 'bar@blurdybloop.com, baz@blurdybloop.com', // list of receivers
+    subject: 'Hello ✔', // Subject line
+    text: 'Hello world 🐴', // plaintext body
+    html: '<b>Hello world 🐴</b>' // html body
+  };
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+        return console.log(error);
+    }
+    console.log('Message sent: ' + info.response);
+  });
 });
 
 router.put('/username', function(req, res){
