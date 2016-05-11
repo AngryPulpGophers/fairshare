@@ -21,9 +21,6 @@ router.get('/paypal', passport.authenticate('paypal', {scope:['openid', 'profile
 router.get('/paypal/callback', passport.authenticate('paypal',
   {failureRedirect: '/paypal', successRedirect:'/'}));
 
-
-
-
 router.get(('/logout'),function(req,res){
   User.editProfile({id:req.user.id, showModal: 1})
     .then(() => {

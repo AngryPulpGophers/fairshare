@@ -8,15 +8,15 @@ var router     = express.Router();
 
 module.exports = router;
 
-if (process.env.NODE_ENV !== 'test'){
-  router.use(function(req, res, next){
-    if(req.isAuthenticated()){
-      return next();
-    }else{
-      res.status(401).send('user not authenticated');
-    }
-  });
-}
+// if (process.env.NODE_ENV !== 'test'){
+//   router.use(function(req, res, next){
+//     if(req.isAuthenticated()){
+//       return next();
+//     }else{
+//       res.status(401).send('user not authenticated');
+//     }
+//   });
+// }
 
 router.param('username',function(req, res, next, username){
 
@@ -100,16 +100,14 @@ router.post('/invite', function(req, res, next){
     user: 'info@fairshare.cloud',
     pass: 'AeK6yxhT'
   };
-  console.log("config:", config);
   var transporter = nodemailer.createTransport(config);
 
   var mailOptions = {
-    from: '"Info" <info@fairshare.cloud>', // sender address
-    to: '<djizco@yahoo.com>',
-    // to: req.body.receiver, // list of receivers
-    subject: "You've been invited to join Fairshare", // Subject line
-    text: 'Hello world 🐴', // plaintext body
-    html: '<b>Hello world 🐴</b>' // html body
+    from: '"Info" <info@fairshare.cloud>',
+    to: '<' + req.body.email + '>',
+    subject: "You've been invited to join Fairshare.",
+    text: 'Please visit fairshare.cloud to create an account.',
+    html: "Please visit <a href='http://www.fairshare.cloud'>fairshare.cloud</a> to create an account."
   };
 
   transporter.sendMail(mailOptions, function(error, info){

@@ -22,6 +22,12 @@ req.body = {
   "img_url": "optional"
 };
 
+// 'POST' /users/invite
+
+req.body = {
+  "email": "user@mail.com"
+};
+
 // 'PUT' /users/username
 // replace undefined with new data
 
