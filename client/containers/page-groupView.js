@@ -23,7 +23,7 @@ class PageGroupView extends Component {
     var currentURL = window.location.href
     var ID = currentURL.split('id=')
     this.props.getUserByGroup(ID[1])
-
+    this.props.getGroups();
     //var clickedOnGroup = (this.props.url.location.query.id)
     this.props.getActivity(ID[1])
     //the number on the next line should be the number of activities for the group but PJ had issues with that
@@ -32,7 +32,12 @@ class PageGroupView extends Component {
 
     this.props.setCurrentGroup(ID[1])
   }
-
+  componentWillUpdate(nextProps, nextState){
+    //this conditional handles if a group was deleted. if so, go back to dashboard
+    if(nextProps.groups.length < this.props.groups.length){
+      browserHistory.push('/');
+    }
+  }
   render() {
     return (
     <div>
@@ -46,11 +51,11 @@ class PageGroupView extends Component {
         getUserByGroup = {this.props.getUserByGroup}
         toggleDisplay = {this.props.toggleDisplay}
         displayActive = {this.props.displayActive}
-        userInfo = {this.props.userInfo}
         addExpense = {this.props.addExpense}
         makePayment = {this.props.makePayment}
         deleteGroup = {this.props.deleteGroup}
         indBalance = {this.props.indBalance}
+        groups = {this.props.groups}
         updateExpense = {this.props.updateExpense}
       />
     </div>
@@ -76,7 +81,8 @@ function mapStateToProps(state) {
     userInfo: state.auth.userInfo,
     isAuthed: state.auth.isAuthed,
     auth: state.auth,
-    currentGroup: state.groups.currentGroup
+    currentGroup: state.groups.currentGroup,
+    groups: state.groups.groups
   }
 }
 
@@ -90,5 +96,6 @@ export default connect(mapStateToProps, {
   deleteGroup,
   setCurrentGroup,
   indBalance,
+  getGroups,
   updateExpense
 })(PageGroupView)

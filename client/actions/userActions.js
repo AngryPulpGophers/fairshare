@@ -26,3 +26,18 @@ export function getUsers(bool) {
     }
   }
 }
+
+export const FRIEND_REQUEST = 'FRIEND_REQUEST';
+export const FRIEND_SUCCESS = 'FRIEND_SUCCESS';
+export const FRIEND_FAILURE = 'FRIEND_FAILURE';
+
+export function getFriendProfile (username) {
+  return  {
+
+      [CALL_API] : {
+        endpoint : 'users/'+username,
+        req: 'GET',
+        types : [FRIEND_REQUEST, FRIEND_SUCCESS, FRIEND_FAILURE]
+        }
+  }
+}
