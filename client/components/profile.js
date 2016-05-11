@@ -24,26 +24,19 @@ const FIELDS = {
 let alert = false;
 export default class Profile extends Component {
     
-
-    //setup for our alert
-    
-
     componentWillReceiveProps(nextProps){
-      //console.log('*************OUR PROPS:',nextProps)
       if(nextProps.userIsUpdated){
         alert = !alert
       }
     }
 
-    handleSubmit(userData) {
+    handleSubmit(userData) { // update profile
      userData.id = this.props.userInfo.id
      this.props.updateUserInfo(userData)
-     //alert("profile updated successfully");
     }
 
     renderField(fieldConfig, field) { // one helper per ea field declared
       const fieldHelper = this.props.fields[field];
-      console.log('deafultValue',fieldConfig.defaultValue);
       return (
         <label>{fieldConfig.label}
           <fieldConfig.type type="text" placeholder={fieldConfig.label} {...fieldHelper}/>
