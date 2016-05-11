@@ -146,7 +146,7 @@ Strategies.google_strat = new GoogleStrategy({
 Strategies.paypal_strat = new PayPalStrategy({
     clientID: PaypalID,
     clientSecret: PaypalSecret,
-    callbackURL: 'http://127.0.0.1:3000/auth/paypal/callback',
+    callbackURL: 'http://www.fairshare.cloud/auth/paypal/callback',
     passReqToCallback: true
   },
   (req, accessToken, refreshToken, params, profile, done) => {

@@ -1,26 +1,30 @@
 "use strict"
+
 var Users        = require('../models/users.js');
 var Identity     = require('../models/Identity');
 var express      = require('express');
-var http         = require('http-request');
+var http         = require('http-request');//remove from package json
 var Middleware   = require('../middleware');
 var Paypal       = require('paypal-adaptive');
 var uuid         = require('node-uuid');//remove from package json
-var ipn          = require('paypal-ipn');
+var ipn          = require('paypal-ipn');//remove from ipn
 var Credentials  = require('../config/auth_secrets.js')
 var router       = express.Router();
 
 module.exports = router;
 
 
-var paypalSDK = new Paypal({
-    userId:  Credentials.paypalAPI.userID,
-    password:  Credentials.paypalAPI.password,
-    signature: Credentials.paypalAPI.signature,
-    appID: 'APP-80W284485P519543T',
-    sandbox:   true //defaults to false 
-});
+let PayPalUser_id   = process.env.PAYPAL_USER_ID      || Credentials.paypalAPI.userID;
+let PaypalPassword  = process.env.PAYPAL_PASSWORD     || Credentials.paypalAPI.password;
+let PaypalSignature = process.env.PAYPAL_SIGNATURE    || Credentials.paypalAPI.signature;
 
+var paypalSDK = new Paypal({
+  userId:  PayPalUser_id,
+  password:  PaypalPassword,
+  signature: PaypalSignature,
+  appID: 'APP-80W284485P519543T',
+  sandbox:   true //defaults to false 
+});
 
 if (process.env.NODE_ENV !== 'test'){
   router.use(function(req, res, next){
