@@ -69,5 +69,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  createCallout,getUserInfo,logoutUser
+  createCallout,getUserInfo,logoutUser,emailNewUser
 })(App)

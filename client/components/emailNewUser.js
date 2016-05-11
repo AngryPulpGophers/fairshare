@@ -22,11 +22,11 @@ export default class EmailNewUser extends Component {
   }
 
   componentWillMount(){
-    console.log('currentURL type',typeof window.location.href )
+    // console.log('currentURL type',typeof window.location.href )
     //call our get groups function only if we haven't called it yet
-    var currentURL = window.location.href;
-    console.log(currentURL);
-    var ID = currentURL.split('id=');
+    // var currentURL = window.location.href;
+    // console.log(currentURL);
+    // var ID = currentURL.split('id=');
     //ID= ID[1].split('&')
     // this.props.getUserByGroup(ID[1]);
     //console.log('maybe work33', this.props.currentGroupUsers);
@@ -43,14 +43,14 @@ export default class EmailNewUser extends Component {
        
         //obj.paid_by = this.props.userInfo.id;
         //obj.title = data.title;
-        obj.amount = Number(Number(data.amount).toFixed(2))
-        
+       // obj.amount = Number(Number(data.amount).toFixed(2))
+        obj.email = data.email
         obj.note = data.note;
-        obj.group_id = Number(ID[1]);
+        //obj.group_id = Number(ID[1]);
         console.log('send to post expense', obj);
         this.setState({isModalOpen:false})
         this.props.destroyForm();
-        //this.props.addExpense(JSON.stringify(obj));
+        this.props.emailNewUser(JSON.stringify(obj));
 
         //location.replace(baseURL+'/groupView?id='+ID[1]);
      
