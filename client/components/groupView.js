@@ -110,22 +110,26 @@ export default class GroupView extends Component {
       {/*<p> hi add expense<Link  to={{pathname:'/addExpense',query:{ id:ID[1] , pj:'holly'}}} title="groupView"  className="button primary float-left tiny button">Add Expense</Link> </p>*/}
 
          {this.props.activity.map(function(activity,index){
-          var holdMemberId=[]
-          expenseValues[activity.id]= {
-            title: activity.title,
-            note: activity.note,
-            amount: activity.amount,
-          }
-          for(var x =0 ; x< activity.members.length ; x++){
-            holdMemberId.push(activity.members[x].id);
-          }
-          for (var i = 0; i < this.props.currentGroupUsers.length ; i++){
-            if (holdMemberId.indexOf(this.props.currentGroupUsers[i].user_id) !== -1){
-              expenseValues[activity.id]['members'+i] = true;
-            }
-          }
           
-          console.log('all my hard work for this',expenseValues[activity.id])
+          if(activity.type==='expense'){
+            var holdMemberId=[]
+            expenseValues[activity.id]= {
+              title: activity.title,
+              note: activity.note,
+              amount: activity.amount,
+            }
+
+            for(var x =0 ; x< activity.members.length ; x++){
+              holdMemberId.push(activity.members[x].id);
+            }
+            for (var i = 0; i < this.props.currentGroupUsers.length ; i++){
+              if (holdMemberId.indexOf(this.props.currentGroupUsers[i].user_id) !== -1){
+                expenseValues[activity.id]['members'+i] = true;
+              }
+            }
+            
+            console.log('all my hard work for this',expenseValues[activity.id])
+          }
             return <div key={activity.id + activity.type} className= {activity.type==='expense' ? "callout alert" :"callout success"}>
               
               {activity.type==='expense' ?
