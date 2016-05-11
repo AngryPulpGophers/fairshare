@@ -2,6 +2,7 @@ var Users      = require('../models/users.js');
 var Identity   = require('../models/Identity');
 var Middleware = require('../middleware');
 var nodemailer = require('nodemailer');
+var wellknown  = require('nodemailer-wellknown');
 var express    = require('express');
 var router     = express.Router();
 
@@ -17,11 +18,8 @@ if (process.env.NODE_ENV !== 'test'){
   });
 }
 
-//console.log('middleware.checkAuth:', Middleware.checkAuth);
 router.param('username',function(req, res, next, username){
-	//validation here of username
-  // console.log('validating username:', username);
-  //reassign req.query.username to req.username;
+
   req.username = username;
 	next();
 });
@@ -44,7 +42,6 @@ router.get('/', function(req, res){
       res.status(400).send({err: err});
     });
   }
-
 });
 
 router.get('/id', function(req, res){
@@ -62,7 +59,6 @@ router.get('/id', function(req, res){
 });
 
 router.get('/:username', function(req, res){
-  console.log("****Req.body ", req.body);
   Users.getByUsername(req.username)
     .then(function(data){
 			if(data[0]){
@@ -99,11 +95,19 @@ router.post('/', function(req, res){
 });
 
 router.post('/invite', function(req, res, next){
-  var transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
+  var config = wellknown('GandiMail');
+  config.auth = {
+    user: 'info@fairshare.cloud',
+    pass: 'AeK6yxhT'
+  };
+  console.log("config:", config);
+  var transporter = nodemailer.createTransport(config);
+
   var mailOptions = {
-    from: '"Fred Foo 👥" <foo@blurdybloop.com>', // sender address
-    to: 'bar@blurdybloop.com, baz@blurdybloop.com', // list of receivers
-    subject: 'Hello ✔', // Subject line
+    from: '"Info" <info@fairshare.cloud>', // sender address
+    to: '<djizco@yahoo.com>',
+    // to: req.body.receiver, // list of receivers
+    subject: "You've been invited to join Fairshare", // Subject line
     text: 'Hello world 🐴', // plaintext body
     html: '<b>Hello world 🐴</b>' // html body
   };
@@ -113,6 +117,7 @@ router.post('/invite', function(req, res, next){
         return console.log(error);
     }
     console.log('Message sent: ' + info.response);
+    res.end();
   });
 });
 
