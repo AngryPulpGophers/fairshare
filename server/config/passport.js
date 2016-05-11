@@ -33,14 +33,15 @@ app.use(cookieParser('kitkat'));
 
 passport.serializeUser((user, done) => {
   // console.log('in serializeUser');
-  // console.log('user in serializeUser:', user);
+  console.log('user in serializeUser:', user);
   return done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-  // console.log('in deserialize');
+  console.log('in deserialize');
   User.getById({id: id})
   .then( userObj => {
+    console.log('userObj in deserialize:', userObj);
     return done(null, userObj[0]);
   })
   .catch( err => {

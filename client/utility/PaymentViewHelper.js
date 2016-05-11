@@ -24,7 +24,12 @@ PayHelp.buildPaymentEntry = (obj,data) => {
   data.payee = obj.props.userInfo.id;
   data.amount = Number(data.amount);
   data.group_id = Number(data.group_id);
-  obj.props.destroyForm();
+  if(data.email){
+    data.pending = 1;
+  }else{
+    data.pending = 0;
+  }
+  // obj.props.destroyForm();
   return data;
 }
 

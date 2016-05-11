@@ -2,9 +2,9 @@ import React, { Component, PropTypes, Link } from 'react';
 import ReactDOM from 'react-dom';
 import { reduxForm } from 'redux-form';
 import Modal from './modal';
-import PayHelp from '../utility/PaymentViewHelper'
+import PayHelp from '../utility/PaymentViewHelper';
 
-export const fields = ['payee', 'recipient', 'amount', 'note'];
+export const fields = ['payee', 'recipient', 'email', 'amount', 'note'];
 
 export default class PaymentForm extends Component{
 
@@ -13,7 +13,6 @@ export default class PaymentForm extends Component{
     this.state = ({
       isModalOpen: false,
       chosenOne:null,
-      isInnerModalOpen:false
     })
   }
 
@@ -29,7 +28,16 @@ export default class PaymentForm extends Component{
   handleSubmit = (data) => {
     data = PayHelp.buildPaymentEntry(this,data);
     this.setState({isModalOpen:false, chosenOne: null});
-    this.props.makePayment(JSON.stringify(data)); 
+    if(!data.pending){
+      delete data.email;
+      this.props.makePayment(JSON.stringify(data));
+    }else{
+      let dbPaymentEntry = Object.assign({},data);
+      delete dbPaymentEntry.email;
+      data.returnURL = window.location.href.match(/g.+/)[0];
+      this.props.usePaypal(JSON.stringify(data),JSON.stringify(dbPaymentEntry));
+    } 
+
   }
 
   onChange = () => {
@@ -38,9 +46,10 @@ export default class PaymentForm extends Component{
   }
 
 
+
 	render(){
 		const{
-		  fields: {payee, recipient, amount, note},
+		  fields: {payee, recipient, email, amount, note},
 		  handleSubmit,
 		  resetForm,
       submitting
@@ -50,9 +59,9 @@ export default class PaymentForm extends Component{
 
     return(
     	<div>
-    	 <button className = 'button primary button tiny' onClick={this.openModal}>Make Payment</button>
+       <button className = 'button primary button tiny' onClick={this.openModal}>Make Payment</button>
             <Modal className='modal' isOpen={this.state.isModalOpen} transitionName="modal-anim">
-    	<form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
+      <form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
          <i onClick={this.closeModal} className="fa fa-times-circle-o" aria-hidden="true" style = {{cursor:'pointer'}}></i>
           <div>
             <h2>Make a Payment</h2>
@@ -61,6 +70,13 @@ export default class PaymentForm extends Component{
                 {[...RadioButtons]}
               </div>
           </div>
+            <div>
+            <label>Email</label>
+            <div>
+              <input type="text" placeholder="blahblah@blah.com"  title ='If using paypal, recipient email is required.'
+              {...email}/>
+            </div>
+          </div>
           <div>
             <label>Amount</label>
             <div>
@@ -68,12 +84,6 @@ export default class PaymentForm extends Component{
               {...amount} required/>
             </div>
           </div>
-            <Modal className='modal' isOpen={this.state.isInnerModalOpen} transitionName="modal-anim">
-              <div>
-                <i onClick={this.closeModal} className="fa fa-times-circle-o" aria-hidden="true" style = {{cursor:'pointer'}}></i>
-                <span> All fields are required</span>
-              </div>
-            </Modal>
           <div>
             <label>Notes</label>
             <div>
@@ -88,7 +98,7 @@ export default class PaymentForm extends Component{
           <button type="button" className = 'button alert button tiny' disabled={submitting} onClick={resetForm} style={{marginLeft: 5}}>
             Clear Values
           </button>
-          <a href=' https://www.paypal.com/home' className = 'button primary expand' style={{marginLeft: 5}}><i className= 'fa fa-paypal' style={{marginRight:'2px'}}></i>Settle up through PayPal</a>
+          <button type='submit' className = 'button primary expand' disabled={submitting} style={{marginLeft: 5}}><i className= 'fa fa-paypal' style={{marginRight:'2px'}}></i>Settle up through PayPal</button>
         </div>
       </form>
       </Modal>
@@ -104,11 +114,16 @@ PaymentForm.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   makePayment: PropTypes.func.isRequired,
+  usePaypal: PropTypes.func.isRequired,
   resetForm: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired
 }
+
+
 
 export default reduxForm({
   form: 'payment',
   fields
 })(PaymentForm)
+
+
