@@ -34,12 +34,32 @@ if (process.env.NODE_ENV !== 'test'){
 }
 
 router.post('/paypal', function(req,res){
-  console.log('req.body:', req.body);
+
+  let createPaymentObj = (obj) => {
+    let payLoad = {
+        requestEnvelope: {
+            errorLanguage:  'en_US'
+        },
+        actionType:     'PAY',
+        currencyCode:   'USD',
+        feesPayer:      'EACHRECEIVER',
+        memo:            obj.note,
+        cancelUrl:      'http://www.fairshare.cloud/cancel',
+        returnUrl:      'http://www.fairshare.cloud/'+ obj.returnURL,
+        receiverList: {
+            receiver:
+                {
+                    email: obj.email,
+                    amount: obj.amount,
+                    primary: false
+                }
+            }
+      };
+    return payLoad;
+  };
+
   var payment = createPaymentObj(req.body);
   var sync_mode = false;
-
-  console.log('payment:', payment);
-
 
   return paypalSDK.pay(payment, function (error, paymentResp) {
 	  if (error) {
@@ -48,37 +68,5 @@ router.post('/paypal', function(req,res){
 	  } else {
       res.status(200).send({redirect: paymentResp.paymentApprovalUrl});
 	  }
-	})
+	});
 });
-
-let createPaymentObj = (obj) => {
-
-let payLoad = {
-    requestEnvelope: {
-        errorLanguage:  'en_US'
-    },
-    actionType:     'PAY',
-    currencyCode:   'USD',
-    feesPayer:      'EACHRECEIVER',
-    memo:            obj.note,
-    cancelUrl:      'http://www.fairshare.cloud/cancel',
-    returnUrl:      'http://www.fairshare.cloud/'+ obj.returnURL,
-    receiverList: {
-        receiver:
-            {
-                email: obj.email,
-                amount: obj.amount,
-                primary: false
-            }
-        }
-  };
-  return payLoad;
-};
-
-
-
-
-
-
-
-
