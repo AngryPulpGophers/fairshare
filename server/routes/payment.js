@@ -64,8 +64,8 @@ let payLoad = {
     currencyCode:   'USD',
     feesPayer:      'EACHRECEIVER',
     memo:            obj.note,
-    cancelUrl:      'http://127.0.0.1:3000/cancel',
-    returnUrl:      'http://127.0.0.1:3000/'+ obj.returnURL,
+    cancelUrl:      'http://www.fairshare.cloud/cancel',
+    returnUrl:      'http://www.fairshare.cloud/'+ obj.returnURL,
     receiverList: {
         receiver: 
             {
