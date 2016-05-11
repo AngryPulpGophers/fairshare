@@ -211,7 +211,7 @@ Strategies.paypal_strat = new PayPalStrategy({
               name: profile.name,
               username:'',
               email: profile._json.email,
-              img_url:"", 
+              img_url:"",
               primary: 'paypal',
               facebook: 0,
               google: 0,
@@ -227,7 +227,7 @@ Strategies.paypal_strat = new PayPalStrategy({
 
           let mailOptions = {
             from: '"Info" <info@fairshare.cloud>',
-            to: '<'+ profile.emails[0].value +'>',
+            to: '<'+ profile._json.email +'>',
             subject: "Welcome to Fairshare",
             text: 'Thank you for joining!',
           };

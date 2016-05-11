@@ -1,14 +1,11 @@
-"use strict"
+"use strict";
 
 var Users        = require('../models/users.js');
 var Identity     = require('../models/Identity');
 var express      = require('express');
-var http         = require('http-request');//remove from package json
 var Middleware   = require('../middleware');
 var Paypal       = require('paypal-adaptive');
-var uuid         = require('node-uuid');//remove from package json
-var ipn          = require('paypal-ipn');//remove from ipn
-var Credentials  = require('../config/auth_secrets.js')
+var Credentials  = require('../config/auth_secrets.js');
 var router       = express.Router();
 
 module.exports = router;
@@ -23,7 +20,7 @@ var paypalSDK = new Paypal({
   password:  PaypalPassword,
   signature: PaypalSignature,
   appID: 'APP-80W284485P519543T',
-  sandbox:   true //defaults to false 
+  sandbox:   true //defaults to false
 });
 
 if (process.env.NODE_ENV !== 'test'){
@@ -67,7 +64,7 @@ let payLoad = {
     cancelUrl:      'http://www.fairshare.cloud/cancel',
     returnUrl:      'http://www.fairshare.cloud/'+ obj.returnURL,
     receiverList: {
-        receiver: 
+        receiver:
             {
                 email: obj.email,
                 amount: obj.amount,
