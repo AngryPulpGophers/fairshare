@@ -131,7 +131,7 @@ export const PAYMENT_SUCCESS = 'PAYMENT_SUCCESS';
 export const PAYMENT_FAILURE = 'PAYMENT_FAILURE';
 
 export function makePayment(formData) {
-  console.log('called Payment action with:', formData);
+  sessionStorage.clear();
   return {
     [CALL_API]: {
       endpoint: 'groups/payments',
@@ -156,13 +156,50 @@ export function indBalance(indObj) {
       req: 'PUT',
       types: [INDBALANCE_REQUEST, INDBALANCE_SUCCESS, INDBALANCE_FAILURE]
     }
+  }
+}
+
+export const PAYPAL_PAYMENT_REQUEST = 'PAYPAL_PAYMENT_REQUEST';
+export const PAYPAL_PAYMENT_SUCCESS = 'PAYPAL_PAYMENT_SUCCESS';
+export const PAYPAL_PAYMENT_FAILURE = 'PAYPAL_PAYMENT_FAILURE';
+
+
+export function usePaypal(formData,dbEntry) {
+  sessionStorage.setItem('locale', window.location.href);
+  sessionStorage.setItem('dbEntry', dbEntry);
+  return {
+    [CALL_API]: {
+      endpoint: 'payment/paypal',
+      body: formData,
+      req: 'POST',
+      types: [PAYPAL_PAYMENT_REQUEST, PAYPAL_PAYMENT_SUCCESS, PAYPAL_PAYMENT_FAILURE],
+    }
+  }
+}
+
+export const UPDATE_PAYSTAT_REQUEST = 'UPDATE_PAYSTAT_REQUEST';
+export const UPDATE_PAYSTAT_SUCCESS = 'UPDATE_PAYSTAT_REQUEST';
+export const UPDATE_PAYSTAT_FAILURE = 'UPDATE_PAYSTAT_REQUEST';
+
+export function updatePaymentStatus(data) {
+  console.log('called Payment action with:', data);
+  return {
+    [CALL_API]: {
+      endpoint: 'groups/payments',
+      body: data,
+      req: 'PUT',
+      types: [UPDATE_PAYSTAT_REQUEST, UPDATE_PAYSTAT_SUCCESS, UPDATE_PAYSTAT_FAILURE]
+    }
 
   }
 }
 
-
-
-
+export const CLEAR_ERROR = 'CLEAR_ERROR';
+export function clearError() {
+  return {
+      type: CLEAR_ERROR,
+  }
+}
 
 
 function processGroup(members,formData){

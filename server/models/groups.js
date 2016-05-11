@@ -184,3 +184,22 @@ Groups.deleteGroupById = function(groupId){
     .where('id', '=', groupId)
     .del().then();
 };
+
+Groups.deleteExpensesByGroupId = function(groupId){
+  return db('expenses')
+    .where('group_id', '=', groupId)
+    .del().then();
+};
+
+Groups.deletePaymentsByGroupId = function(groupId){
+  return db('payments')
+    .where('group_id', '=', groupId)
+    .del().then();
+};
+
+Groups.deleteUserGroups = function(groupId){
+  return db('user_groups')
+    .where('group_id', '=', groupId)
+    .del().then();
+};
+

@@ -5,6 +5,7 @@ import update from 'react-addons-update';
 
 export function groups(state = { isFetching: false, currentGroup: {}, isDeleting: false, newGroup:{}, groups: [],activity : [], currentGroupUsers: []}, action) {
     //console.log('groups actions:', action)
+    // console.log('groups actions:', action)
     switch (action.type) {
 
       // GET GROUP DATA
@@ -133,17 +134,51 @@ export function groups(state = { isFetching: false, currentGroup: {}, isDeleting
 
       case ActionTypes.PAYMENT_REQUEST:
         return update(state, {
-          isFetching: {$set: true}
+          isFetching: {$set: true},
         })
 
       case ActionTypes.PAYMENT_SUCCESS:
-      // console.log('pj test payment',JSON.parse(action.response))
         return update(state, {
           isFetching: {$set: false},
           activity: {$unshift: [JSON.parse(action.response)]}
         })
 
       case ActionTypes.PAYMENT_FAILURE:
+        return update(state, {
+          isFetching: {$set: false},
+        })
+
+       case ActionTypes.PAYPAL_PAYMENT_REQUEST:
+       console.log('action in paypal req:', action)
+        return update(state, {
+          isFetching: {$set: true}
+        })
+      case ActionTypes.PAYPAL_PAYMENT_SUCCESS:
+       sessionStorage.setItem('success',true);
+       var authURL = JSON.parse(action.response)
+       window.location.href = authURL.redirect;
+        return update(state, {
+          isFetching:{$set: false},
+        })
+      case ActionTypes.PAYPAL_PAYMENT_FAILURE:
+        return update(state, {
+          isFetching: {$set: false},
+          activityError:{$set: true},
+          errorMessage:{$set: "There was a problem processing the payment. Verify the email address before trying again."}
+        })
+
+      case ActionTypes.UPDATE_PAYSTAT_REQUEST:
+        return update(state, {
+          isFetching: {$set: true}
+        })
+      case ActionTypes.UPDATE_PAYSTAT_SUCCESS:
+        const {id} = action.response;
+        const idx = findPayment(state.activity,id,'payment');
+        return update(state, {
+          isFetching: {$set: false},
+          activity: {$splice: [[idx,1,JSON.parse(action.response)]]}
+        })
+      case ActionTypes.UPDATE_PAYSTAT_FAILURE:
         return update(state, {
           isFetching: {$set: false}
         })
@@ -161,9 +196,20 @@ export function groups(state = { isFetching: false, currentGroup: {}, isDeleting
         return update(state, {
           isFetching: {$set: false}})
 
+      case ActionTypes.CLEAR_ERROR:
+        return update(state, {
+          activityError:{$set: false},
+          errorMessage: {$set: null}
+        })
       default:
         return state
       }
     }
-
-   
+  
+let findPayment = (array,id,type) => {
+  for(var i = 0; i<array.length;i++){
+    if(array[i].id === id && array[i].type === type){
+      return i;
+    }
+  }
+}

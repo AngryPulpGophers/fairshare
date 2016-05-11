@@ -5,6 +5,7 @@ import GroupList from './groupList';
 import {prettyDate, calcBalance, makeGroupObj, test} from '../utility/groupViewHelper';
 import Modal from './modal';
 import PaymentForm from './paymentForm';
+import PaymentError from './paymentError';
 import AddExpense from './addExpense';
 import defaultPicture from '../images/defaultPicture.jpg';
 import UpdateExpense from './updateExpense';
@@ -17,6 +18,8 @@ export default class GroupView extends Component {
     })
   }
 
+  
+  
   seeIfYou(name) {
     if (name===this.props.userInfo.name || name[0]===this.props.userInfo.name){
       return ('You')
@@ -31,13 +34,29 @@ export default class GroupView extends Component {
   }
   
  render() {
-  var currentURL = window.location.href
-    //console.log('pjpjpjp',currentURL.split('/')[2])
-  var ID = currentURL.split('id=')
-
-  //console.log('groupView CurrentUser',this.props.userInfo)
+    var currentURL = window.location.href
+    // console.log('pjpjpjp',currentURL.split('/')[2])
+    var ID = currentURL.split('id=')
+    // console.log('did this work',ID[1])
+    // console.log('HAIL MARY',__dirname)
+  //   var { query } = this.props.location
+  //  console.log('samsam',this.props,'and pj', this.props.params)
+  //    var what = new Date(this.props.activity[0].created_at)
+  // console.log(this.props.activity)
+  // console.log('maybe work222', this.props.currentGroupUsers)
+  // console.log('groupView CurrentUser',this.props.userInfo)
   var showUserBalance=[];
-  var localGroupObj ={};
+  showUserBalance=calcBalance.call(this)//this.calcBalance();
+  // console.log('hi pj, stuff should be here^^^^', showUserBalance)
+    var localGroupObj=makeGroupObj.call(this) //this.makeGroupObj()
+    console.log('this.props in groupView:', this.props)
+    // console.log('localGroupOBJ',localGroupObj)
+    // var counter = 0;
+    // var displayObj={};
+    // for (var i = 0; i<this.props.activity.length ; i++){
+    //   displayObj[counter] = {
+    //     display: 'none'
+    //   }
 
   var groupExists = false;
   for(var i = 0; i < this.props.groups.length; i++){
@@ -54,7 +73,7 @@ export default class GroupView extends Component {
 
   // setting this to bypas the need for authentication
     return(
-      <div id='hanger'>
+      <div>
         <Modal className='modal' isOpen={this.state.isModalOpen} transitionName="modal-anim">
           <div className="row">
             <div className="small-12 large-7 large-centered columns text-center">
@@ -65,6 +84,18 @@ export default class GroupView extends Component {
           </div>
         </Modal>
         <button onClick={() => { this.handleDeleteGroup()} } className="alert button">Delete Group</button>
+    <div>
+      <PaymentError
+      clearError={this.props.clearError}
+      errorStatus={this.props.errorStatus}
+      errMessage={this.props.errMessage}
+      />
+      <Modal isOpen={sessionStorage.getItem('success')}>
+        <div style={{textAlign:'center'}}>
+          <h2>Your Transaction was successful!!</h2>
+          <p onClick={() => this.props.makePayment(sessionStorage.getItem('dbEntry'))} style = {{cursor:'pointer', textDecoration:'underline'}}>close</p>
+        </div>
+      </Modal>
         <h2>Balance</h2>
           {showUserBalance.map(function(user){
             return (
@@ -97,6 +128,7 @@ export default class GroupView extends Component {
         groupMembers = {this.props.currentGroupUsers}
         userInfo = {this.props.userInfo}
         makePayment = {this.props.makePayment}
+        usePaypal={this.props.usePaypal}
         />
         <AddExpense
         getActivity={this.props.getActivity}
@@ -110,6 +142,7 @@ export default class GroupView extends Component {
       {/*<p> hi add expense<Link  to={{pathname:'/addExpense',query:{ id:ID[1] , pj:'holly'}}} title="groupView"  className="button primary float-left tiny button">Add Expense</Link> </p>*/}
 
          {this.props.activity.map(function(activity,index){
+          if(activity.type==='expense'){
           var holdMemberId=[]
           expenseValues[activity.id]= {
             title: activity.title,
@@ -126,6 +159,7 @@ export default class GroupView extends Component {
           }
           
           console.log('all my hard work for this',expenseValues[activity.id])
+        }
             return <div key={activity.id + activity.type} className= {activity.type==='expense' ? "callout alert" :"callout success"}>
               
               {activity.type==='expense' ?
@@ -169,7 +203,9 @@ export default class GroupView extends Component {
                 </div>  
               </div>
               :
-              <div>{this.seeIfYou(localGroupObj[activity.payee].name)} paid {this.seeIfYou(localGroupObj[activity.recipient].name)} ${activity.amount} Time:{prettyDate(activity.created_at)} 
+              <div>{this.seeIfYou(localGroupObj[activity.payee].name)} paid {this.seeIfYou(localGroupObj[activity.recipient].name)} ${activity.amount} Time:{prettyDate(activity.created_at)}
+                {activity.pending ? <div><button className="button success tiny button" disabled={this.props.userInfo.id !== activity.recipient} onClick={()=>this.props.updatePaymentStatus({id:activity.id, pending:0})}><i className="fa fa-check circle"></i>Received</button>
+                <br></br><p>Pending recipient approval</p></div>:<span></span>} 
                 <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
                  <div style={this.props.displayActive[index]}>
                     Note: {activity.note}
@@ -178,13 +214,21 @@ export default class GroupView extends Component {
               } 
             </div>
           }.bind(this))}
+        </div>
       </div>
+      
      
     )
   }
 }
 GroupView.propTypes = {
-  makePayment: PropTypes.func.isRequired
+  makePayment: PropTypes.func.isRequired,
+  usePaypal: PropTypes.func.isRequired,
+  updatePaymentStatus: PropTypes.func.isRequired,
+  clearError: PropTypes.func.isRequired,
+  errorStatus: PropTypes.bool.isRequired,
+  errMessage: PropTypes.string.isRequired,
+  authPaypal: PropTypes.string.isRequired,
 }
 
 

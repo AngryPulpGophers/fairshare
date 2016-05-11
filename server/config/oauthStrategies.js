@@ -1,10 +1,10 @@
 "use strict"
 
-var GoogleStrategy    = require('passport-google-oauth2').Strategy;
-var PayPalStrategy    = require('passport-paypal-oauth').Strategy;
-var FacebookStrategy  = require('passport-facebook').Strategy;
-var User              = require('../models/users');
-var Identity          = require('../models/Identity');
+var GoogleStrategy      = require('passport-google-oauth2').Strategy;
+var PayPalStrategy      = require('passport-paypal-oauth').Strategy;
+var FacebookStrategy    = require('passport-facebook').Strategy;
+var User                = require('../models/users');
+var Identity            = require('../models/Identity');
 
 if (process.env.NODE_ENV !== 'production'){
   var Credentials       = require('./auth_secrets.js');
@@ -13,14 +13,14 @@ if (process.env.NODE_ENV !== 'production'){
 var Strategies = module.exports
 
 const identityEntry = (uid,pid,params,provider) => {
-  var obj = {};
-  obj.user_id = uid;
-  obj.provider_id = pid;
-  obj.provider = provider;
-  obj.token = params.access_token;
-  obj.refresh = params.refresh_token;
-  obj.expires = params.expires;
-  return obj;
+  var identityObj = {};
+  identityObj.user_id = uid;
+  identityObj.provider_id = pid;
+  identityObj.provider = provider;
+  identityObj.token = params.access_token;
+  identityObj.refresh = params.refresh_token;
+  identityObj.expires = params.expires;
+  return identityObj;
 }
 
 let FacebookID     = process.env.FACEBOOK_APP_ID     || Credentials.facebook.ID;
@@ -146,14 +146,12 @@ Strategies.google_strat = new GoogleStrategy({
 Strategies.paypal_strat = new PayPalStrategy({
     clientID: PaypalID,
     clientSecret: PaypalSecret,
-    callbackURL: 'http://fairshare.cloud/auth/paypal/callback',
+    callbackURL: 'http://127.0.0.1:3000/auth/paypal/callback',
     passReqToCallback: true
   },
   (req, accessToken, refreshToken, params, profile, done) => {
-  console.log('params at start of strategy:', params)
     //check DB for user--IF exists, execute cb->line 68
     //ELSE create profile, store in DB, execute cb->lines 70-85
-  console.log('profile from paypal:', profile)
   if(!req.user){
     Identity.getByProviderID(profile.id)
       .then( userObj => {
@@ -163,10 +161,10 @@ Strategies.paypal_strat = new PayPalStrategy({
             .catch( err => console.warn(err))
         }else{
           let userProfile = {
-              name: profile.displayName,
+              name: profile.name,
               username:'',
-              email: profile.emails[0].value,
-              img_url: profile.photos[0].value,
+              email: profile._json.email,
+              img_url:"", 
               primary: 'paypal',
               facebook: 0,
               google: 0,
@@ -187,7 +185,7 @@ Strategies.paypal_strat = new PayPalStrategy({
       .catch( err => console.warn('Error @paypal strategy:', err));
   }else{
     let ID = identityEntry(req.user.id, profile.id, params,'google');
-    req.user.google = 1;
+    req.user.paypal = 1;
     User.editProfile(req.user)
       .then( () => {
         Identity.create(ID)

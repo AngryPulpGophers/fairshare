@@ -55,6 +55,7 @@ exports.up = function(knex, Promise){
       table.integer('payee').references('id').inTable('users').onDelete('CASCADE');
       table.integer('recipient').references('id').inTable('users').onDelete('CASCADE');
       table.decimal('amount', 8, 2);
+      table.integer('pending');
       table.text('note', 200);
     }),
 

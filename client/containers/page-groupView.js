@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
-import {  getGroups, getActivity,getUserByGroup , addExpense, makePayment, deleteGroup, setCurrentGroup, indBalance, updateExpense } from '../actions/groupActions';
+import {  getGroups, getActivity,getUserByGroup , addExpense, makePayment, deleteGroup, setCurrentGroup, indBalance, updateExpense, usePaypal, updatePaymentStatus, clearError } from '../actions/groupActions';
 import GroupView from '../components/groupView';
 import { startDisplay, toggleDisplay } from '../actions/calloutActions';
 
@@ -39,6 +39,7 @@ class PageGroupView extends Component {
     }
   }
   render() {
+    console.log('this.props in page groupview:', this.props)
     return (
     <div>
       <GroupView
@@ -58,6 +59,11 @@ class PageGroupView extends Component {
         indBalance = {this.props.indBalance}
         groups = {this.props.groups}
         updateExpense = {this.props.updateExpense}
+        usePaypal={this.props.usePaypal}
+        updatePaymentStatus={this.props.updatePaymentStatus}
+        errorStatus={this.props.errorStatus}
+        errMessage={this.props.errMessage}
+        clearError={this.props.clearError}
       />
     </div>
     )
@@ -83,7 +89,9 @@ function mapStateToProps(state) {
     isAuthed: state.auth.isAuthed,
     auth: state.auth,
     currentGroup: state.groups.currentGroup,
-    groups: state.groups.groups
+    groups: state.groups.groups,
+    errorStatus: state.groups.activityError,
+    errMessage: state.groups.errorMessage,
   }
 }
 
@@ -98,5 +106,8 @@ export default connect(mapStateToProps, {
   setCurrentGroup,
   indBalance,
   getGroups,
-  updateExpense
+  updateExpense,
+  usePaypal,
+  updatePaymentStatus,
+  clearError,
 })(PageGroupView)
