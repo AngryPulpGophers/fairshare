@@ -174,6 +174,18 @@ router.post('/addMember/', Middleware.checkGroup, function(req, res){
     });
 });
 
+// FINISH UPDATING MEMBERS
+router.put('/', Middleware.checkOwner, function(req, res){
+
+
+
+  Groups.update( req.body )
+    .then(function(data){
+      res.send(data);
+    });
+});
+
+// FINISH UPDATING EXPENSES
 router.put('/expenses', Middleware.checkGroup, function(req, res){
   if (req.body.membersAdded){
     req.body.membersAdded.forEach(function(member){

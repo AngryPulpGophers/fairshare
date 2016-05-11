@@ -6,7 +6,7 @@ var Groups = module.exports;
 Groups.getAllGroups = function(){
   return db.select().table('groups');
 };
-//id: 22, created_at: "2016-05-10T22:33:41.536Z", name: "dzzdc", created_by: 2, desc: "afczx"
+
 Groups.getGroupById = function(groupID) {
   return db.select().table('groups')
     .where({
@@ -54,6 +54,17 @@ Groups.createGroup = function(groupAttrs) {
         .then(function(resp){
           return resp;
         });
+    });
+};
+
+Groups.update = function(groupAttrs){
+  return db('groups')
+    .where({
+      id: groupAttrs.id
+    })
+    .update(groupAttrs, 'id')
+    .then(function(id){
+      return Groups.getGroupById(id[0]);
     });
 };
 
