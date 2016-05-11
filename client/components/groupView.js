@@ -30,27 +30,27 @@ export default class GroupView extends Component {
     this.setState({isModalOpen:true});
   }
   
- render() {
-  var currentURL = window.location.href
-    //console.log('pjpjpjp',currentURL.split('/')[2])
-  var ID = currentURL.split('id=')
+  render() {
+    var currentURL = window.location.href
+      //console.log('pjpjpjp',currentURL.split('/')[2])
+    var ID = currentURL.split('id=')
 
-  //console.log('groupView CurrentUser',this.props.userInfo)
-  var showUserBalance=[];
-  var localGroupObj ={};
+    //console.log('groupView CurrentUser',this.props.userInfo)
+    var showUserBalance=[];
+    var localGroupObj ={};
 
-  var groupExists = false;
-  for(var i = 0; i < this.props.groups.length; i++){
-    if(this.props.groups[i].id == ID[1]){
-      groupExists = true;
-      break;
+    var groupExists = false;
+    for(var i = 0; i < this.props.groups.length; i++){
+      if(this.props.groups[i].id == ID[1]){
+        groupExists = true;
+        break;
+      }
     }
-  }
-  if(groupExists){
-    showUserBalance=calcBalance.call(this)//this.calcBalance();
-    localGroupObj=makeGroupObj.call(this) //this.makeGroupObj()
-  }
-  var expenseValues={};
+    if(groupExists){
+      showUserBalance=calcBalance.call(this)//this.calcBalance();
+      localGroupObj=makeGroupObj.call(this) //this.makeGroupObj()
+    }
+    var expenseValues={};
 
   // setting this to bypas the need for authentication
     return(
@@ -65,6 +65,8 @@ export default class GroupView extends Component {
           </div>
         </Modal>
         <button onClick={() => { this.handleDeleteGroup()} } className="alert button">Delete Group</button>
+
+        <Link to={{pathname:'/create-group',query:{ id: this.props.currentGroup.id }}}  className="secondary button">Edit Group</Link>
         <h2>Balance</h2>
           {showUserBalance.map(function(user){
             return (
