@@ -8,15 +8,15 @@ var router     = express.Router();
 
 module.exports = router;
 
-// if (process.env.NODE_ENV !== 'test'){
-//   router.use(function(req, res, next){
-//     if(req.isAuthenticated()){
-//       return next();
-//     }else{
-//       res.status(401).send('user not authenticated');
-//     }
-//   });
-// }
+if (process.env.NODE_ENV !== 'test'){
+  router.use(function(req, res, next){
+    if(req.isAuthenticated()){
+      return next();
+    }else{
+      res.status(401).send('user not authenticated');
+    }
+  });
+}
 
 router.param('username',function(req, res, next, username){
 
