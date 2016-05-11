@@ -73,7 +73,6 @@ function mapStateToProps(state) {
   }
 }
 
-// injection to this class
 export default connect(mapStateToProps, {
   updateUserInfo,
   resetAlert,

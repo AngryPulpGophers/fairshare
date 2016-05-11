@@ -16,7 +16,7 @@ Users.getByUsername = function(username){
 Users.getById = function(reqObj){
   return db('users')
     .select()
-    .where('id', '=', reqObj.id)
+    .where('id', '=', reqObj.id);
 };
 
 Users.editProfile = function(profAttrs){
