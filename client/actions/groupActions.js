@@ -12,7 +12,6 @@ export function getGroups() {
       req: 'GET',
       types: [GROUPS_REQUEST, GROUPS_SUCCESS, GROUPS_FAILURE]
     }
-
   }
 }
 
@@ -21,7 +20,6 @@ export const ACTIVITY_SUCCESS = 'ACTIVITY_SUCCESS';
 export const ACTIVITY_FAILURE = 'ACTIVITY_FAILURE';
 
 export function getActivity(id) {
-  // console.log('got an id:', id)
   return {
     [CALL_API]: {
       endpoint: 'groups/activity/'+id,
@@ -29,7 +27,6 @@ export function getActivity(id) {
       req: 'GET',
       types: [ACTIVITY_REQUEST, ACTIVITY_SUCCESS, ACTIVITY_FAILURE]
     }
-
   }
 }
 
@@ -54,7 +51,6 @@ export function getUserByGroup(id) {
       types: [USERBYGROUP_REQUEST, USERBYGROUP_SUCCESS, USERBYGROUP_FAILURE]
 
     }
-
   }
 }
 
@@ -71,7 +67,6 @@ export function createGroup(members, formData) {
       req: 'POST',
       types: [CREATE_REQUEST, CREATE_SUCCESS, CREATE_FAILURE]
     }
-
   }
 }
 
@@ -103,7 +98,6 @@ export function addExpense(formData) {
       req: 'POST',
       types: [EXPENSE_REQUEST, EXPENSE_SUCCESS, EXPENSE_FAILURE]
     }
-
   }
 }
 
@@ -139,7 +133,6 @@ export function makePayment(formData) {
       req: 'POST',
       types: [PAYMENT_REQUEST, PAYMENT_SUCCESS, PAYMENT_FAILURE]
     }
-
   }
 }
 

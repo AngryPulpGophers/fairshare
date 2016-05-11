@@ -52,7 +52,6 @@ class PageGroupView extends Component {
         getUserByGroup = {this.props.getUserByGroup}
         toggleDisplay = {this.props.toggleDisplay}
         displayActive = {this.props.displayActive}
-        userInfo = {this.props.userInfo}
         addExpense = {this.props.addExpense}
         makePayment = {this.props.makePayment}
         deleteGroup = {this.props.deleteGroup}

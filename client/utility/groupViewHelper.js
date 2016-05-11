@@ -77,6 +77,7 @@ for (var key in groupObj){
             } 
           }
           else {
+            console.log('what is breaking',this.props.activity[i],groupObj)
             groupObj[this.props.activity[i].members[x].id].balance -= round((this.props.activity[i].amount/this.props.activity[i].members.length));
           }
         }

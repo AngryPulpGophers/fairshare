@@ -22,6 +22,12 @@ req.body = {
   "img_url": "optional"
 };
 
+// 'POST' /users/invite
+
+req.body = {
+  "email": "user@mail.com"
+};
+
 // 'PUT' /users/username
 // replace undefined with new data
 
@@ -86,9 +92,9 @@ req.body = {
   amount: undefined,
   img_url: undefined,
   note: undefined,
-  membersAdded: [1,2,3],
-  membersDeleted: [4,5,6],
-  members: undefined //(possibly will add this at some point, discuss?)
+  membersAdded: [1,2,3], //optional
+  membersDeleted: [4,5,6], //optional
+  members: [1,2,3,7] //optional
 };
 
 

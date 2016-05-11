@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import ExpireAlert from '../components/alert';
 import SocialAccount from '../components/socialAccounts'
-//import { load as loadAccount } from '../redux/modules/account';
 
 const FIELDS = {
     name : {
@@ -20,30 +19,23 @@ const FIELDS = {
     }
 };
 
-
 let alert = false;
+
 export default class Profile extends Component {
     
-
-    //setup for our alert
-    
-
     componentWillReceiveProps(nextProps){
-      //console.log('*************OUR PROPS:',nextProps)
       if(nextProps.userIsUpdated){
         alert = !alert
       }
     }
 
-    handleSubmit(userData) {
+    handleSubmit(userData) { // update profile
      userData.id = this.props.userInfo.id
      this.props.updateUserInfo(userData)
-     //alert("profile updated successfully");
     }
 
     renderField(fieldConfig, field) { // one helper per ea field declared
       const fieldHelper = this.props.fields[field];
-      console.log('deafultValue',fieldConfig.defaultValue);
       return (
         <label>{fieldConfig.label}
           <fieldConfig.type type="text" placeholder={fieldConfig.label} {...fieldHelper}/>
@@ -53,19 +45,19 @@ export default class Profile extends Component {
     }
 
   render() {
-      const {resetForm, handleSubmit, submitting, initialValues} = this.props;
-    return (
+    const {resetForm, handleSubmit, submitting, initialValues} = this.props;
+      return (
         <div className="login">
           <div className="row">
             <div className="small-12 large-7 large-centered columns">
               <div className="component-wrapper">
-                  <ExpireAlert 
+                <ExpireAlert 
                     set={this.props.userIsUpdated}
                     reset={this.props.resetAlert}
                     status="success"
                     delay={3000}>
                     <strong> That was a splendid update! </strong>
-                  </ExpireAlert>
+                </ExpireAlert>
                 <h3>Your Profile</h3>
                 <SocialAccount
                   userInfo={this.props.userInfo}
@@ -89,36 +81,27 @@ export default class Profile extends Component {
               </div>
             </div>
           </div>
-        </div>
-    );
+      </div>
+   );
   }
 }
 
 const validate = values => {
   const errors = {}
-     // if (!values.name) {
-     //    errors.name = 'Required'
-     //  }
-     //  if (!values.username) {
-     //    errors.username = 'Required'
-     //  } else if (values.username.length > 15) {
-     //    errors.username = 'Must be 15 characters or less'
-     //  }
-     //  if (!values.email) {
-     //    errors.email = 'Required'
-     //  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-     //    errors.email = 'Invalid email address'
-     //  }
-
-    //type is config obj, field is actual field-name
-
- _.each(FIELDS, (type, field) => {
-    if (!values[field]) {
-        errors[field] = `${field} required`;
-    }
- }); 
-
-  return errors
+     if (!values.name) {
+        errors.name = 'Name is Required'
+      }
+      if (!values.username) {
+        errors.username = 'Username is Required'
+      } else if (values.username.length > 30) {
+        errors.username = 'Must be 30 characters or less'
+      }
+      if (!values.email) {
+        errors.email = 'Email is Required'
+      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address'
+      }
+  return errors;
 }
 
 Profile.propTypes = {
@@ -134,12 +117,3 @@ export default reduxForm({
   validate
 })(Profile)
 
-
-/*
-1. create a form
-2. default text is user's info from userInfo
-    editable field
-4. update info to db
-5. change image later?
-
-*/
