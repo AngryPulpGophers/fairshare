@@ -1,5 +1,1 @@
-<<<<<<< 8b33d12acfa0334a301e70432bb25814d2d7a60e
 ./node_modules/.bin/mocha --recursive -r test/bootstrap.js "$@"
-=======
-./node_modules/.bin/mocha --recursive -r test/bootstrap.js "$@" --compilers /test/client/css-null-compiler.js
->>>>>>> saving changes
