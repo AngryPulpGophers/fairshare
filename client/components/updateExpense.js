@@ -110,6 +110,19 @@ export default class UpdateExpense extends Component {
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         //obj.paid_by = this.props.userInfo.id;
+        for (var i = 0 ; i < obj.members.length ; i ++){
+          for (var x = 0  ; x < this.props.currentGroupUsers.length; x++){
+            if (obj.members[i]===this.props.currentGroupUsers[x].user_id){
+              obj.members[i]=this.props.currentGroupUsers[x]
+              obj.members[i].id = obj.members[i].user_id;
+            }
+          }
+        }
+
+
+
+
+
         obj.title = data.title;
         obj.amount = Number(Number(data.amount).toFixed(2))
         obj.img_url = resp.text //|| data.imgUrl;
@@ -181,11 +194,18 @@ export default class UpdateExpense extends Component {
           }
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        for (var i = 0 ; i < obj.members.length ; i ++){
+          for (var x = 0  ; x < this.props.currentGroupUsers.length; x++){
+            if (obj.members[i]===this.props.currentGroupUsers[x].user_id){
+              obj.members[i]=this.props.currentGroupUsers[x];
+              obj.members[i].id = obj.members[i].user_id;
+            }
+          }
+        }
         //obj.paid_by = this.props.userInfo.id;
         obj.title = data.title;
         obj.amount = Number(Number(data.amount).toFixed(2))
-        obj.img_url = 'client/images/download.jpg'
+        //obj.img_url = 'client/images/download.jpg'
         obj.note = data.note;
         obj.group_id = Number(ID[1]);
         obj.id = this.props.currentActivity.id;
