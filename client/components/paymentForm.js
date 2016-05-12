@@ -16,7 +16,7 @@ export default class PaymentForm extends Component{
     })
   }
 
-//PayHelp methods and explanations --> PaymentViewHelper.js
+//PayHelp methods and explanations --> client/utility/PaymentViewHelper.js
 
   openModal = () => {
     PayHelp.openModal(this);
@@ -26,18 +26,7 @@ export default class PaymentForm extends Component{
   }
 
   handleSubmit = (data) => {
-    data = PayHelp.buildPaymentEntry(this,data);
-    this.setState({isModalOpen:false, chosenOne: null});
-    if(!data.pending){
-      delete data.email;
-      this.props.makePayment(JSON.stringify(data));
-    }else{
-      let dbPaymentEntry = Object.assign({},data);
-      delete dbPaymentEntry.email;
-      data.returnURL = window.location.href.match(/g.+/)[0];
-      this.props.usePaypal(JSON.stringify(data),JSON.stringify(dbPaymentEntry));
-    } 
-
+    PayHelp.handleSubmit(this,data);
   }
 
   onChange = () => {
@@ -58,8 +47,8 @@ export default class PaymentForm extends Component{
     let RadioButtons = PayHelp.memberButtons(this, PayHelp.makeRadioButton);
 
     return(
-    	<div>
-       <button className = 'button primary button tiny' onClick={this.openModal}>Make Payment</button>
+    	<span>
+       <button className = 'button info button extended' onClick={this.openModal}>Make Payment</button>
             <Modal className='modal' isOpen={this.state.isModalOpen} transitionName="modal-anim">
       <form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
          <i onClick={this.closeModal} className="fa fa-times-circle-o" aria-hidden="true" style = {{cursor:'pointer'}}></i>
@@ -71,9 +60,9 @@ export default class PaymentForm extends Component{
               </div>
           </div>
             <div>
-            <label>Email</label>
+              <label>Email</label>
             <div>
-              <input type="text" placeholder="blahblah@blah.com"  title ='If using paypal, recipient email is required.'
+              <input type="text"  placeholder="Required for PayPal transaction only"  title ='If using paypal,recipient email is required.'
               {...email}/>
             </div>
           </div>
@@ -87,22 +76,22 @@ export default class PaymentForm extends Component{
           <div>
             <label>Notes</label>
             <div>
-              <textarea placeholder="Additional Info" defaultValue=""
+              <textarea placeholder="Additional Info" defaultValue= ""
               {...note} required/>
             </div>
           </div>
         <div>
-          <button type="submit" className='button primary button tiny' disabled={submitting}>
+          <button type="submit" onClick={()=>sessionStorage.setItem('cash',true)} className='button primary button tiny' disabled={submitting}>
             {submitting ? <i/> : <i/>} Register Cash Payment
           </button>
           <button type="button" className = 'button alert button tiny' disabled={submitting} onClick={resetForm} style={{marginLeft: 5}}>
             Clear Values
           </button>
-          <button type='submit' className = 'button primary expand' disabled={submitting} style={{marginLeft: 5}}><i className= 'fa fa-paypal' style={{marginRight:'2px'}}></i>Settle up through PayPal</button>
+          <button type='submit' onClick={()=>sessionStorage.setItem('paypal',true)} className = 'button info expand' disabled={submitting} style={{marginLeft: 5}}><i className= 'fa fa-paypal' style={{marginRight:'2px'}}></i>Settle up through PayPal</button>
         </div>
       </form>
       </Modal>
-     </div> 
+     </span> 
 			)
          
   }

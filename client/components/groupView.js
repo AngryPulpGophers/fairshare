@@ -85,12 +85,28 @@ export default class GroupView extends Component {
         <button onClick={() => { this.handleDeleteGroup()} } className="alert button">Delete Group</button>
 
         <Link to={{pathname:'/create-group',query:{ id: this.props.currentGroup.id }}}  className="secondary button">Edit Group</Link>
+         <PaymentForm
+          userArray = {showUserBalance}
+          groupMembers = {this.props.currentGroupUsers}
+          userInfo = {this.props.userInfo}
+          makePayment = {this.props.makePayment}
+          usePaypal={this.props.usePaypal}
+        />
+        <AddExpense
+          getActivity={this.props.getActivity}
+          activity={this.props.activity}
+          currentGroupUsers = {this.props.currentGroupUsers}
+          url = {this.props.url}
+          getUserByGroup = {this.props.getUserByGroup}
+          addExpense = {this.props.addExpense}
+          userInfo = {this.props.userInfo}
+        />
+        <PaymentError
+          clearError={this.props.clearError}
+          errorStatus={this.props.errorStatus}
+          errMessage={this.props.errMessage}
+        />
     <div>
-      <PaymentError
-      clearError={this.props.clearError}
-      errorStatus={this.props.errorStatus}
-      errMessage={this.props.errMessage}
-      />
       <Modal isOpen={sessionStorage.getItem('success')}>
         <div style={{textAlign:'center'}}>
           <h2>Your Transaction was successful!!</h2>
@@ -123,23 +139,6 @@ export default class GroupView extends Component {
       }
 
         <h2>Activity</h2>
-
-        <PaymentForm
-        userArray = {showUserBalance}
-        groupMembers = {this.props.currentGroupUsers}
-        userInfo = {this.props.userInfo}
-        makePayment = {this.props.makePayment}
-        usePaypal={this.props.usePaypal}
-        />
-        <AddExpense
-        getActivity={this.props.getActivity}
-        activity={this.props.activity}
-        currentGroupUsers = {this.props.currentGroupUsers}
-        url = {this.props.url}
-        getUserByGroup = {this.props.getUserByGroup}
-        addExpense = {this.props.addExpense}
-        userInfo = {this.props.userInfo}
-        />
       {/*<p> hi add expense<Link  to={{pathname:'/addExpense',query:{ id:ID[1] , pj:'holly'}}} title="groupView"  className="button primary float-left tiny button">Add Expense</Link> </p>*/}
 
          {this.props.activity.map(function(activity,index){
@@ -205,8 +204,8 @@ export default class GroupView extends Component {
               </div>
               :
               <div>{this.seeIfYou(localGroupObj[activity.payee].name)} paid {this.seeIfYou(localGroupObj[activity.recipient].name)} ${activity.amount} Time:{prettyDate(activity.created_at)}
-                {activity.pending ? <div><button className="button success tiny button" disabled={this.props.userInfo.id !== activity.recipient} onClick={()=>this.props.updatePaymentStatus({id:activity.id, pending:0})}><i className="fa fa-check circle"></i>Received</button>
-                <br></br><p>Pending recipient approval</p></div>:<span></span>}
+                {activity.pending ? <div><button className="button success tiny button" disabled={this.props.userInfo.id !== activity.recipient} onClick={()=>this.props.updatePaymentStatus({group_id: +ID[1], id:activity.id, pending:0})}><i className="fa fa-check circle"></i>Received</button>
+                <br></br><p>Pending recipient approval</p></div>:<div><i className="fa fa-check-circle-o" aria-hidden="true"></i>Received</div>}
                 <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
                  <div style={this.props.displayActive[index]}>
                     Note: {activity.note}

@@ -34,6 +34,18 @@ let PaypalID       = process.env.PAYPAL_APP_ID       || Credentials.paypal.ID;
 let PaypalSecret   = process.env.PAYPAL_APP_SECRET   || Credentials.paypal.SECRET;
 
 
+/*To allow mutiple Oauth strategies without creating duplicate records 
+in database, strategies check current request for user property (Ex. ln.60). This is allowed
+by using 'passReqToCallback' in respective strategy's option object(Ex. ln.55). 
+If this prop is present, the user has already authenticated through one of 
+the various strategies and is attempting to link another social account to 
+the current record. At this point in the flow, the user passes into the else block 
+of the appropriate strategy(Ex. ln.108). An identity record is created and 
+stored in the identity table linking the current user to this social account. The user profile
+is also updated with this information(Ex.ln. 115,116);thus, a
+single user can have multiple identities--all of which can be used to sign in. */
+
+
 
 Strategies.facebook_strat = new FacebookStrategy({
     clientID: FacebookID,
@@ -60,7 +72,7 @@ Strategies.facebook_strat = new FacebookStrategy({
             username:profile.displayName.split(' ').join(''),
             email: profile.emails[0].value,
             img_url: profile.photos[0].value,
-            primary: 'facebook',
+            primary: 'Facebook',
             facebook: 1,
             google: 0,
             paypal: 0,
@@ -116,7 +128,7 @@ Strategies.facebook_strat = new FacebookStrategy({
 Strategies.google_strat = new GoogleStrategy({
     clientID: GoogleID,
     clientSecret: GoogleSecret,
-    callbackURL: 'http://fairshare.com/auth/google/callback',
+    callbackURL: '/auth/google/callback',
     passReqToCallback: true
   },
    (req, accessToken, refreshToken,params, profile, done) => {
@@ -137,7 +149,7 @@ Strategies.google_strat = new GoogleStrategy({
             username:'',
             email: profile.emails[0].value,
             img_url: profile.photos[0].value,
-            primary: 'google',
+            primary: 'Google',
             facebook: 0,
             google: 1,
             paypal: 0,
@@ -212,7 +224,7 @@ Strategies.paypal_strat = new PayPalStrategy({
               username:'',
               email: profile._json.email,
               img_url:"",
-              primary: 'paypal',
+              primary: 'PayPal',
               facebook: 0,
               google: 0,
               paypal: 1,
