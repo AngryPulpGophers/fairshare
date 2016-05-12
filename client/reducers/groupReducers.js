@@ -189,13 +189,14 @@ export function groups(state = { isFetching: false, editGroup: {}, currentGroup:
           isFetching: {$set: true}
         })
       case ActionTypes.UPDATE_PAYSTAT_SUCCESS:
-        const {id} = action.response;
-        const idx = findPayment(state.activity,id,'payment');
-        return update(state, {
-          isFetching: {$set: false},
-          activity: {$splice: [[idx,1,JSON.parse(action.response)]]}
-        })
-      case ActionTypes.UPDATE_PAYSTAT_FAILURE:
+        var action = JSON.parse(action.response);
+        var idx;
+        state.activity.forEach((obj,i) => {if(obj.id === action.id && obj.type === action.type) idx = i})
+        return update(state,{
+          isFetching: {$set:false},
+          activity:{$splice:[[idx,1,action]]}
+        })      
+        case ActionTypes.UPDATE_PAYSTAT_FAILURE:
         return update(state, {
           isFetching: {$set: false}
         })
