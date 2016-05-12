@@ -205,7 +205,7 @@ export default class GroupView extends Component {
               </div>
               :
               <div>{this.seeIfYou(localGroupObj[activity.payee].name)} paid {this.seeIfYou(localGroupObj[activity.recipient].name)} ${activity.amount} Time:{prettyDate(activity.created_at)}
-                {activity.pending ? <div><button className="button success tiny button" disabled={this.props.userInfo.id !== activity.recipient} onClick={()=>this.props.updatePaymentStatus({id:activity.id, pending:0})}><i className="fa fa-check circle"></i>Received</button>
+                {activity.pending ? <div><button className="button success tiny button" disabled={this.props.userInfo.id !== activity.recipient} onClick={()=>this.props.updatePaymentStatus({group_id: +ID[1], id:activity.id, pending:0})}><i className="fa fa-check circle"></i>Received</button>
                 <br></br><p>Pending recipient approval</p></div>:<div><i className="fa fa-check-circle-o" aria-hidden="true"></i>Received</div>}
                 <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
                  <div style={this.props.displayActive[index]}>
