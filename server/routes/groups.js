@@ -155,31 +155,31 @@ router.post('/payments', Middleware.checkGroup, function(req, res){
 });
 
 router.put('/', Middleware.checkGroupOwner, function(req, res){
-  // console.log('what is being sent',req.body)
+  console.log('what is being sent',req.body);
   var members;
   var memberIds = req.body.members;
   //var memberIds  = members.map(function(val){ return val.user_id; });
   var newMembers = [];
   delete req.body.members;
-  // console.log("members:", members);
+  console.log("members:", members);
 
   // only add new members, not delete old ones.
   Users.getUsersByGroupId( req.body.id )
     .then(function(data){
       members = data;
-      //console.log("data:", data);
+      console.log("data:", data);
       return data.map(function(data){
         return data.user_id;
       });
     })
     .then(function(ids){
-      //console.log("ids:", ids);
-      //console.log("memberIds:", memberIds);
+      console.log("ids:", ids);
+      console.log("memberIds:", memberIds);
       // find new members
       memberIds.forEach(function(member){
         if (ids.indexOf(member) === -1){ newMembers.push(member); }
       });
-      //console.log("newMembers:", newMembers);
+      console.log("newMembers:", newMembers);
       newMembers.forEach(function(member){
         Groups.addMember({
           user_id: member,
@@ -188,18 +188,18 @@ router.put('/', Middleware.checkGroupOwner, function(req, res){
 
         Users.getById(member)
         .then(function(result){
-          //console.log('this should be first step', result)
-          members.push(result)
-        })
+          console.log('this should be first step', result);
+          members.push(result);
+        });
       });
-    });
-
-
-  Groups.update( req.body )
-    .then(function(data){
-      //console.log('making sure promise happens2',members)
-      if (members){ data.members = members; }
-      res.send(data);
+    })
+    .then(function(){
+      Groups.update( req.body )
+        .then(function(data){
+          console.log('making sure promise happens2',members);
+          if (members){ data.members = members; }
+          res.send(data);
+        });
     });
 });
 
