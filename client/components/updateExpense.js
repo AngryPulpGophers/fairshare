@@ -202,6 +202,9 @@ export default class UpdateExpense extends Component {
             }
           }
         }
+        console.log('whats is this PJ??',obj.members)
+        console.log(obj.membersAdded)
+        console.log(obj.membersDeleted)
         //obj.paid_by = this.props.userInfo.id;
         obj.title = data.title;
         obj.amount = Number(Number(data.amount).toFixed(2))

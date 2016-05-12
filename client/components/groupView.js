@@ -36,8 +36,19 @@ export default class GroupView extends Component {
       //console.log('pjpjpjp',currentURL.split('/')[2])
     var ID = currentURL.split('id=')
 
-    var showUserBalance=[];
+    // console.log('did this work',ID[1])
+    // console.log('HAIL MARY',__dirname)
+  //   var { query } = this.props.location
+  //  console.log('samsam',this.props,'and pj', this.props.params)
+  //    var what = new Date(this.props.activity[0].created_at)
+  // console.log(this.props.activity)
+  // console.log('maybe work222', this.props.currentGroupUsers)
+  // console.log('groupView CurrentUser',this.props.userInfo)
+  var showUserBalance=[];
   // console.log('hi pj, stuff should be here^^^^', showUserBalance)
+    var localGroupObj={}
+  //console.log('this.props in groupView:', this.props)
+
     // console.log('localGroupOBJ',localGroupObj)
     // var counter = 0;
     // var displayObj={};

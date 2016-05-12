@@ -47,4 +47,3 @@ module.exports = (app,express) => {
   passport.use(Strategies.google_strat);
   passport.use(Strategies.paypal_strat);
 };
-
