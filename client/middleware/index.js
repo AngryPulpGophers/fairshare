@@ -35,7 +35,7 @@ function callApi(endpoint, id, req, body){
         .then(text => ({ text, response }))
       )
     .then(({ text, response }) => {
-      console.log('text:', text, 'response:', response)
+      //console.log('text:', text, 'response:', response)
       // console.log('response.ok in middleware:', response.ok)
       if (!response.ok) {
         // throw new Error (text);

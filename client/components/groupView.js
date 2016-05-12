@@ -30,6 +30,9 @@ export default class GroupView extends Component {
   handleDeleteGroup(){
     this.setState({isModalOpen:true});
   }
+  componentWillUnmount(){
+    this.props.clearActivity()
+  }
 
   render() {
     var currentURL = window.location.href
