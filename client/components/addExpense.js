@@ -36,6 +36,10 @@ export default class AddExpense extends Component {
 
 
   handleSubmit(data) {
+    for (var i = 0 ; i<100000000; i++){
+      if (i%100000===0)
+      console.log('look at me sam'+i)
+    }
     if (this.props.userInfo){
     var photo = new FormData();
     console.log('PHOTO',data.photo)
