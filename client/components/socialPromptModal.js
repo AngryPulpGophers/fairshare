@@ -5,6 +5,10 @@ import Modal from './modal';
 
 export default class SocialModal extends Component{
 
+/*stopSocialModal fires async action that flips boolean in userProfile to close modal 
+permanently during current session.*/
+
+//href lines 20,23,26 sends user through respective Oauth strategy
 
 
   render(){
