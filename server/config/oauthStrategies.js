@@ -1,7 +1,7 @@
 "use strict";
 
 var GoogleStrategy    = require('passport-google-oauth2').Strategy;
-var PayPalStrategy    = require('passport-paypal-oauth').Strategy;
+var PayPalStrategy    = require('../../passport-paypal-oauth').Strategy;
 var FacebookStrategy  = require('passport-facebook').Strategy;
 var User              = require('../models/users');
 var Identity          = require('../models/Identity');
