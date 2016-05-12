@@ -17,10 +17,10 @@ export default class SocialAccounts extends Component {
                       <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}><i className="fa fa-lock"></i>Facebook</button>
                       : fbook && primary === 'Facebook' ? <div>Primary Account: {primary}</div> : <span></span>}
                   {google && primary !== 'Google' ?
-                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}><i className="fa fa-lock"></i>Google+</button>
+                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,google:0,provider:'google'})}><i className="fa fa-lock"></i>Google+</button>
                       : google && primary === 'Google' ? <div>Primary Account: {primary}</div> : <span></span>}
                   {pay && primary !== 'Paypal' ?
-                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}><i className="fa fa-lock"></i>PayPal</button>
+                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,paypal:0,provider:'paypal'})}><i className="fa fa-lock"></i>PayPal</button>
                       : pay && primary === 'Paypal' ? <div>Primary Account: {primary}</div> : <span></span>}
                 </span>
             </div>
