@@ -1,16 +1,16 @@
 import React, { Component, PropTypes } from 'react';
-import Modal from './modal';
+import ErrorModal from './errorModal';
 
 export default class PaymentError extends Component {
 
   render(){
     return(
-    	<Modal isOpen={this.props.errorStatus}>
+    	<ErrorModal isOpen={this.props.errorStatus}>
         <div style={{backgroundColor:'#ffb3b3',height:'100%',width:'100%',textAlign:'center'}}>
           <p>{this.props.errMessage}</p>
           <p onClick={() => this.props.clearError()} style = {{cursor:'pointer', textDecoration:'underline'}}>close</p>
         </div>
-      </Modal>
+      </ErrorModal>
     )
   }
 }
