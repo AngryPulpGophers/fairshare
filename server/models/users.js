@@ -63,4 +63,11 @@ Users.getUsersByGroupId = function(groupID){
     });
 };
 
+Users.getUsersByExpenseId = function(expenseId){
+  return db('user_expenses')
+    .select('user_id')
+    .where({
+      expense_id: expenseId
+    });
+};
 

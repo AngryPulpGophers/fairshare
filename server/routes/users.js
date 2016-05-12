@@ -100,6 +100,7 @@ router.post('/invite', function(req, res, next){
     user: 'info@fairshare.cloud',
     pass: 'AeK6yxhT'
   };
+
   var transporter = nodemailer.createTransport(config);
 
   var mailOptions = {
@@ -107,7 +108,7 @@ router.post('/invite', function(req, res, next){
     to: '<' + req.body.email + '>',
     subject: "You've been invited to join Fairshare.",
     text: 'Please visit fairshare.cloud to create an account.',
-    html: "Please visit <a href='http://www.fairshare.cloud'>fairshare.cloud</a> to create an account."
+    html: "<p>Please visit <a href='http://www.fairshare.cloud'>fairshare.cloud</a> to create an account.</p><p>" + req.body.note +"</p>"
   };
 
   transporter.sendMail(mailOptions, function(error, info){

@@ -186,34 +186,59 @@ router.put('/', Middleware.checkOwner, function(req, res){
 });
 
 // FINISH UPDATING EXPENSES
-router.put('/expenses', Middleware.checkGroup, function(req, res){
-  if (req.body.membersAdded){
-    req.body.membersAdded.forEach(function(member){
-      Groups.addExpenseMember({
-        expense_id: req.body.id,
-        user_id: member
-      }).then();
-    });
-    delete req.body.membersAdded;
-  }
-  if (req.body.membersDeleted){
-    req.body.membersDeleted.forEach(function(member){
-      Groups.removeExpenseMember({
-        expense_id: req.body.id,
-        user_id: member
-      }).then();
-    });
-    delete req.body.membersDeleted;
-  }
+router.put('/expenses', /*Middleware.checkGroup,*/ function(req, res){
+
   if (req.body.members){
     var members    = req.body.members;
+    var memberIds  = members.map(function(val){ return val.user_id; });
+    var newMembers = [];
+    var removedMembers = [];
     delete req.body.members;
+    delete req.body.membersAdded;
+    delete req.body.membersDeleted;
+
+    console.log("req.body", req.body);
+    Users.getUsersByExpenseId( req.body.id )
+      .then(function(data){
+        console.log("data", data);
+        return data.map(function(data){
+          return data.user_id;
+        });
+      })
+      .then(function(ids){
+        // find new members
+        console.log("(passed in) memberIds", memberIds);
+        console.log("(database) ids", ids);
+        memberIds.forEach(function(member){
+          if (ids.indexOf(member) === -1){ newMembers.push(member); }
+        });
+        // find members to remove
+        ids.forEach(function(id){
+          if (memberIds.indexOf(id) === -1) { removedMembers.push(id); }
+        });
+
+        console.log("newMembers", newMembers);
+        console.log("removedMembers", removedMembers);
+
+        newMembers.forEach(function(member){
+          Groups.addExpenseMember({
+            user_id: member,
+            expense_id: req.body.id
+          }).then();
+        });
+
+        removedMembers.forEach(function(member){
+          Groups.removeExpenseMember({
+            user_id: member,
+            expense_id: req.body.id
+          }).then();
+        });
+      });
   }
 
   Groups.updateExpense( req.body )
     .then(function(data){
       if (members){ data.members = members; }
-      // console.log('rico WTF',data)
       data.type = 'expense';
       res.send(data);
     })
