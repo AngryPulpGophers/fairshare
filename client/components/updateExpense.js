@@ -249,7 +249,7 @@ export default class UpdateExpense extends Component {
       <form onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this)).bind(this)}>
         <i onClick={this.closeModal} className="fa fa-times-circle-o" aria-hidden="true" style = {{cursor:'pointer'}}></i>
         <div>
-          <h2>Add Expense</h2>
+          <h2>Update Expense</h2>
           <label>Title</label>
           <div>
             <input type="text" placeholder="Title" required{...title}/>
