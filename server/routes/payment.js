@@ -5,8 +5,11 @@ var Identity     = require('../models/Identity');
 var express      = require('express');
 var Middleware   = require('../middleware');
 var Paypal       = require('paypal-adaptive');
-var Credentials  = require('../config/auth_secrets.js');
 var router       = express.Router();
+
+if (process.env.NODE_ENV !== 'production'){
+  var Credentials  = require('../config/auth_secrets.js');
+}
 
 module.exports = router;
 
