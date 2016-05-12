@@ -9,7 +9,7 @@ import CreateGroup from '../components/createGroup';
 
 class PageCreateGroup extends Component {
 
- 
+
   constructor(props,context){
     super(props)
     this.state = {newMem: {}, formData: {} }
@@ -20,7 +20,9 @@ class PageCreateGroup extends Component {
       browserHistory.push('/login')
     }
     //call
-   this.props.getGroup(this.props.location.query.id)
+    if (this.props.location.query.id){
+      this.props.getGroup(this.props.location.query.id);
+    }
 
   }
 
@@ -39,8 +41,8 @@ class PageCreateGroup extends Component {
     let formData = formatData(this.props.editGroup)
     return (
       <div className="create-group">
-        <CreateGroup 
-          getUsers={this.props.getUsers} 
+        <CreateGroup
+          getUsers={this.props.getUsers}
           users={this.props.users}
           addMember={this.props.addMember}
           removeMember={this.props.removeMember}
@@ -79,7 +81,7 @@ function mapStateToProps(state) {
     editGroup: state.groups.editGroup
   };
 }
-PageCreateGroup.contextTypes = {  
+PageCreateGroup.contextTypes = {
     router: React.PropTypes.func.isRequired
 };
 export default connect(mapStateToProps, {

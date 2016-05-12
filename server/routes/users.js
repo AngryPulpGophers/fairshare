@@ -19,7 +19,6 @@ if (process.env.NODE_ENV !== 'test'){
 }
 
 router.param('username',function(req, res, next, username){
-
   req.username = username;
 	next();
 });

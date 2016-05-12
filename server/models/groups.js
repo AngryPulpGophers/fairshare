@@ -77,7 +77,8 @@ Groups.addMember = function(attrs){
 };
 
 Groups.getExpenseById = function(expenseId) {
-  return db.select().table('expenses')
+  return db('expenses')
+    .select()
     .where({
       id: expenseId
     })

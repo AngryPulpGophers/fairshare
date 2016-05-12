@@ -60,14 +60,8 @@ Users.getUsersByGroupId = function(groupID){
     .innerJoin('user_groups', 'users.id', 'user_groups.user_id')
     .where({
       group_id: groupID
+    })
+    .then(function(data){
+      return data;
     });
 };
-
-Users.getUsersByExpenseId = function(expenseId){
-  return db('user_expenses')
-    .select('user_id')
-    .where({
-      expense_id: expenseId
-    });
-};
-
