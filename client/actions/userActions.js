@@ -41,3 +41,20 @@ export function getFriendProfile (username) {
         }
   }
 }
+
+
+export const NEW_EMAIL_REQUEST = 'NEW_EMAIL_REQUEST';
+export const NEW_EMAIL_SUCCESS = 'NEW_EMAIL_SUCCESS';
+export const NEW_EMAIL_FAILURE = 'NEW_EMAIL_FAILURE';
+
+export function emailNewUser(formData) {
+  //console.log('called actions with:', members, formData)
+  return {
+    [CALL_API]: {
+      endpoint: 'users/invite',
+      body: formData,
+      req: 'POST',
+      types: [NEW_EMAIL_REQUEST, NEW_EMAIL_SUCCESS, NEW_EMAIL_FAILURE]
+    }
+  }
+}

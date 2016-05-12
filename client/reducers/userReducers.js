@@ -34,6 +34,18 @@ export function users(state = { isFetching: false, users: [], friendProfile : {}
         return update(state, {
           isFetching: {$set: false}})
 
+        case ActionTypes.NEW_EMAIL_REQUEST:
+        return update(state, {isFetching: {$set: true}})
+
+      case ActionTypes.NEW_EMAIL_SUCCESS:
+        return update(state, {
+          isFetching: {$set: false}
+        })
+
+      case ActionTypes.NEW_EMAIL_FAILURE:
+        return update(state, {
+          isFetching: {$set: false}})
+
       default:
         return state
       }
