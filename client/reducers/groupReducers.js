@@ -3,7 +3,7 @@ import * as ActionTypes from '../actions/groupActions';
 import update from 'react-addons-update';
 //console.log(ActionTypes);
 
-export function groups(state = { isFetching: false, editGroup: {}, currentGroup: {}, isDeleting: false, newGroup:{}, groups: [],activity : [], currentGroupUsers: []}, action) {
+export function groups(state = { isFetching: false, editGroup: {}, currentGroup: {}, isDeleting: false, newGroup:{}, groups: [],activity : [], currentGroupUsers: [], isUpdating: false}, action) {
     //console.log('groups actions:', action)
     // console.log('groups actions:', action)
     switch (action.type) {
@@ -40,6 +40,35 @@ export function groups(state = { isFetching: false, editGroup: {}, currentGroup:
       case ActionTypes.GROUP_FAILURE:
         return update(state, {
           isFetching: {$set: false}})
+
+      //update a group
+      case ActionTypes.UPDATE_GROUP_REQUEST:
+        return update(state, {
+          isUpdating: {$set: true}
+        })
+
+      case ActionTypes.UPDATE_GROUP_SUCCESS:
+        var groupIndex;
+        for (var i = 0; i < state.groups.length; i++) {
+          if(action.id === state.groups[i].id){
+            groupIndex = i; 
+          }
+        }
+        return update(state, {
+          isUpdating: {$set: false},
+          groups: {$splice: [[groupIndex, 1, JSON.parse(action.response)]]}
+        })
+
+      case ActionTypes.UPDATE_GROUP_FAILURE:
+        return update(state, {
+          isUpdating: {$set: false}
+        })
+
+      case ActionTypes.GROUP_CLEAR:
+        //console.log('trigger clearing editGroup State')
+        return update(state, {
+          editGroup: {$set: {} }
+        })
 
       //set CURRENT group
       case ActionTypes.CURRENT_GROUP:
@@ -139,7 +168,7 @@ export function groups(state = { isFetching: false, editGroup: {}, currentGroup:
         }
 
         //console.log('got our type and resp:', action.response)
-         console.log('pj test UPDATE EXPENSE',JSON.parse(action.response))
+        // console.log('pj test UPDATE EXPENSE',JSON.parse(action.response))
         return update(state, {
           isFetching: {$set: false},
           activity: {$splice: [[activityIndex, 1,JSON.parse(action.response)]]}
@@ -166,7 +195,7 @@ export function groups(state = { isFetching: false, editGroup: {}, currentGroup:
         })
 
        case ActionTypes.PAYPAL_PAYMENT_REQUEST:
-       console.log('action in paypal req:', action)
+       //console.log('action in paypal req:', action)
         return update(state, {
           isFetching: {$set: true}
         })
