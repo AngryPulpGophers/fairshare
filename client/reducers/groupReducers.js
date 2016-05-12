@@ -223,10 +223,4 @@ export function groups(state = { isFetching: false, editGroup: {}, currentGroup:
       }
     }
   
-let findPayment = (array,id,type) => {
-  for(var i = 0; i<array.length;i++){
-    if(array[i].id === id && array[i].type === type){
-      return i;
-    }
-  }
-}
+
