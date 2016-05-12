@@ -76,17 +76,14 @@ Strategy.prototype.userProfile = function(accessToken, done) {
     
     try {
       var json = JSON.parse(body);
-      
       var profile = { provider: 'paypal' };
-      profile.id = json.identity.userId;
-      profile.displayName = json.identity.firstName + " " + json.identity.lastName;
-      profile.name = { familyName: json.identity.lastName,
-                       givenName: json.identity.firstName,
-                       formatted: json.identity.fullName };
-      profile.emails = [];
-      json.identity.emails.forEach(function(email) {
-        profile.emails.push({ value: email });
-      });
+      profile.id = json.user_id;
+      // profile.displayName = json.identity.firstName + " " + json.identity.lastName;
+      profile.name = json.name;
+      // profile.emails = [];
+      // json.identity.emails.forEach(function(email) {
+      //   profile.emails.push({ value: email });
+      // });
       
       profile._raw = body;
       profile._json = json;
