@@ -181,7 +181,7 @@ export function groups(state = { isFetching: false, editGroup: {}, currentGroup:
         return update(state, {
           isFetching: {$set: false},
           activityError:{$set: true},
-          errorMessage:{$set: "There was a problem processing the payment. Verify the email address before trying again."}
+          errorMessage:{$set: "There was a problem processing the payment.\nVerify the email address before trying again."}
         })
 
       case ActionTypes.UPDATE_PAYSTAT_REQUEST:

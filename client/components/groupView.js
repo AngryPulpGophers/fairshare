@@ -85,12 +85,28 @@ export default class GroupView extends Component {
         <button onClick={() => { this.handleDeleteGroup()} } className="alert button">Delete Group</button>
 
         <Link to={{pathname:'/create-group',query:{ id: this.props.currentGroup.id }}}  className="secondary button">Edit Group</Link>
+         <PaymentForm
+          userArray = {showUserBalance}
+          groupMembers = {this.props.currentGroupUsers}
+          userInfo = {this.props.userInfo}
+          makePayment = {this.props.makePayment}
+          usePaypal={this.props.usePaypal}
+        />
+        <AddExpense
+          getActivity={this.props.getActivity}
+          activity={this.props.activity}
+          currentGroupUsers = {this.props.currentGroupUsers}
+          url = {this.props.url}
+          getUserByGroup = {this.props.getUserByGroup}
+          addExpense = {this.props.addExpense}
+          userInfo = {this.props.userInfo}
+        />
+        <PaymentError
+          clearError={this.props.clearError}
+          errorStatus={this.props.errorStatus}
+          errMessage={this.props.errMessage}
+        />
     <div>
-      <PaymentError
-      clearError={this.props.clearError}
-      errorStatus={this.props.errorStatus}
-      errMessage={this.props.errMessage}
-      />
       <Modal isOpen={sessionStorage.getItem('success')}>
         <div style={{textAlign:'center'}}>
           <h2>Your Transaction was successful!!</h2>
@@ -123,23 +139,6 @@ export default class GroupView extends Component {
       }
 
         <h2>Activity</h2>
-
-        <PaymentForm
-        userArray = {showUserBalance}
-        groupMembers = {this.props.currentGroupUsers}
-        userInfo = {this.props.userInfo}
-        makePayment = {this.props.makePayment}
-        usePaypal={this.props.usePaypal}
-        />
-        <AddExpense
-        getActivity={this.props.getActivity}
-        activity={this.props.activity}
-        currentGroupUsers = {this.props.currentGroupUsers}
-        url = {this.props.url}
-        getUserByGroup = {this.props.getUserByGroup}
-        addExpense = {this.props.addExpense}
-        userInfo = {this.props.userInfo}
-        />
       {/*<p> hi add expense<Link  to={{pathname:'/addExpense',query:{ id:ID[1] , pj:'holly'}}} title="groupView"  className="button primary float-left tiny button">Add Expense</Link> </p>*/}
 
          {this.props.activity.map(function(activity,index){

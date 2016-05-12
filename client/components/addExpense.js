@@ -145,8 +145,8 @@ export default class AddExpense extends Component {
 
 
     return (
-      <div>
-      <button className = 'button primary button tiny'onClick={this.openModal}>Add Expense</button>
+      <span>
+      <button className = 'button primary'onClick={this.openModal}>Add Expense</button>
             <Modal isOpen={this.state.isModalOpen}
                    transitionName="modal-anim">
       <form onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this)).bind(this)}>
@@ -219,7 +219,7 @@ export default class AddExpense extends Component {
         </div>
       </form>
       </Modal>
-      </div>
+      </span>
     )
   }
 }

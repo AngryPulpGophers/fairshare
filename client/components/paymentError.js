@@ -6,8 +6,8 @@ export default class PaymentError extends Component {
   render(){
     return(
     	<ErrorModal isOpen={this.props.errorStatus}>
-        <div style={{backgroundColor:'#ffb3b3',height:'100%',width:'100%',textAlign:'center'}}>
-          <p>{this.props.errMessage}</p>
+        <div className='text-center' style={{backgroundColor:'#ffb3b3'}}>
+          <h4>{this.props.errMessage}</h4>
           <p onClick={() => this.props.clearError()} style = {{cursor:'pointer', textDecoration:'underline'}}>close</p>
         </div>
       </ErrorModal>

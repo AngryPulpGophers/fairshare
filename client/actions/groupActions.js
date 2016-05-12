@@ -187,15 +187,15 @@ export function usePaypal(formData,dbEntry) {
 }
 
 export const UPDATE_PAYSTAT_REQUEST = 'UPDATE_PAYSTAT_REQUEST';
-export const UPDATE_PAYSTAT_SUCCESS = 'UPDATE_PAYSTAT_REQUEST';
-export const UPDATE_PAYSTAT_FAILURE = 'UPDATE_PAYSTAT_REQUEST';
+export const UPDATE_PAYSTAT_SUCCESS = 'UPDATE_PAYSTAT_SUCCESS';
+export const UPDATE_PAYSTAT_FAILURE = 'UPDATE_PAYSTAT_FAILURE';
 
 export function updatePaymentStatus(data) {
   console.log('called Payment action with:', data);
   return {
     [CALL_API]: {
       endpoint: 'groups/payments',
-      body: data,
+      body: JSON.stringify(data),
       req: 'PUT',
       types: [UPDATE_PAYSTAT_REQUEST, UPDATE_PAYSTAT_SUCCESS, UPDATE_PAYSTAT_FAILURE]
     }

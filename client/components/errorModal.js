@@ -8,7 +8,7 @@ export default class ErrorModal extends Component {
       if(this.props.isOpen){
         return(   
           <div className = 'modal-overlay'>
-            <div className='modal' style={{backgroundColor:'#ffb3b3'}}>
+            <div className='modal' style={{backgroundColor:'#ffb3b3',width:'35%'}}>
               {this.props.children}
             </div>
           </div>
