@@ -16,12 +16,10 @@ router.get('/google', passport.authenticate('google', {scope:['email', 'profile'
 router.get('/google/callback', passport.authenticate('google',
   {failureRedirect: '/google', successRedirect: '/'}));
 
-router.get('/paypal', passport.authenticate('paypal', {scope:['openid', 'profile']}));
+router.get('/paypal', passport.authenticate('paypal', {scope:['openid','email','profile']}));
 
 router.get('/paypal/callback', passport.authenticate('paypal',
-  {failureRedirect: '/paypal', successRedirect:'/'}));
-
-
+	{failureRedirect: '/paypal', successRedirect:'/'}))
 
 
 router.get(('/logout'),function(req,res){

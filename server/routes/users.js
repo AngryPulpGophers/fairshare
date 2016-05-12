@@ -1,8 +1,10 @@
-var Users = require('../models/users.js');
-var Identity = require('../models/Identity');
-var express = require('express');
-var router = express.Router();
+var Users      = require('../models/users.js');
+var Identity   = require('../models/Identity');
 var Middleware = require('../middleware');
+var nodemailer = require('nodemailer');
+var wellknown  = require('nodemailer-wellknown');
+var express    = require('express');
+var router     = express.Router();
 
 module.exports = router;
 
@@ -16,11 +18,7 @@ if (process.env.NODE_ENV !== 'test'){
   });
 }
 
-//console.log('middleware.checkAuth:', Middleware.checkAuth);
 router.param('username',function(req, res, next, username){
-	//validation here of username
-  // console.log('validating username:', username);
-  //reassign req.query.username to req.username;
   req.username = username;
 	next();
 });
@@ -43,7 +41,6 @@ router.get('/', function(req, res){
       res.status(400).send({err: err});
     });
   }
-
 });
 
 router.get('/id', function(req, res){
@@ -61,7 +58,6 @@ router.get('/id', function(req, res){
 });
 
 router.get('/:username', function(req, res){
-  console.log("****Req.body ", req.body);
   Users.getByUsername(req.username)
     .then(function(data){
 			if(data[0]){
@@ -95,6 +91,31 @@ router.post('/', function(req, res){
 	  .catch(function(err){
 	  	res.status(400).send({err:err});
 	  });
+});
+
+router.post('/invite', function(req, res, next){
+  var config = wellknown('GandiMail');
+  config.auth = {
+    user: 'info@fairshare.cloud',
+    pass: 'AeK6yxhT'
+  };
+
+  var transporter = nodemailer.createTransport(config);
+  var mailOptions = {
+    from: '"Info" <info@fairshare.cloud>',
+    to: '<' + req.body.email + '>',
+    subject: "You've been invited to join Fairshare.",
+    text: 'Please visit fairshare.cloud to create an account.',
+    html: "<p>" + req.user.name + " has invited you to join Fairshare.</p><p>A note from your friend: " + req.body.note +"</p><br><p>Please visit <a href='http://www.fairshare.cloud'>fairshare.cloud</a> to create an account.</p>"
+  };
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+        return console.log(error);
+    }
+    console.log('Message sent: ' + info.response);
+    res.end();
+  });
 });
 
 router.put('/username', function(req, res){

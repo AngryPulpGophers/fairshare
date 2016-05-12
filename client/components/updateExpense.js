@@ -39,7 +39,7 @@ export default class UpdateExpense extends Component {
   handleSubmit(data) {
     if (this.props.userInfo){
     var photo = new FormData();
-    console.log('PHOTO',data.photo)
+    //console.log('PHOTO',data.photo)
     if(data.photo == undefined){
       data.photo = [];
     }
@@ -56,7 +56,7 @@ export default class UpdateExpense extends Component {
       .then(function(resp){
         var currentURL = window.location.href;
         var baseURL = currentURL.split('/')[0];
-            console.log(currentURL);
+            //console.log(currentURL);
         var ID = currentURL.split('id=');
         //ID= ID[1].split('&')
         var obj = {}
@@ -78,18 +78,18 @@ export default class UpdateExpense extends Component {
          obj.membersAdded = [];
         obj.membersDeleted = [];
         var membersFlag = false;
-        console.log('I NEED HELP', this.props.currentActivity.members,'obj',obj.members)
+        //console.log('I NEED HELP', this.props.currentActivity.members,'obj',obj.members)
         for (var i = 0 ; i < this.props.currentActivity.members.length ; i++){
           membersFlag = false;
           for(var x = 0 ; x < obj.members.length ; x++){
-            console.log('what',this.props.currentActivity.members[i].id ,obj.members[x])
+            //console.log('what',this.props.currentActivity.members[i].id ,obj.members[x])
             if (this.props.currentActivity.members[i].id === obj.members[x]){
               membersFlag = true;
             }
           }
           if (!membersFlag){
             if (this.props.currentActivity.members[i].id!==undefined){
-                 console.log('seriously',this.props.currentActivity.members[i].id)
+                 //console.log('seriously',this.props.currentActivity.members[i].id)
             obj.membersDeleted.push(this.props.currentActivity.members[i].id)
           }
           }
@@ -131,7 +131,7 @@ export default class UpdateExpense extends Component {
         obj.id = this.props.currentActivity.id;
         console.log('send to post update', obj);
         this.setState({isModalOpen:false})
-        this.props.destroyForm();
+       // this.props.destroyForm();
         this.props.updateExpense(JSON.stringify(obj),this.props.currentActivity.id);
 
         //location.replace(baseURL+'/groupView?id='+ID[1]);
@@ -202,6 +202,9 @@ export default class UpdateExpense extends Component {
             }
           }
         }
+        console.log('whats is this PJ??',obj.members)
+        console.log(obj.membersAdded)
+        console.log(obj.membersDeleted)
         //obj.paid_by = this.props.userInfo.id;
         obj.title = data.title;
         obj.amount = Number(Number(data.amount).toFixed(2))
@@ -211,7 +214,7 @@ export default class UpdateExpense extends Component {
         obj.id = this.props.currentActivity.id;
         console.log('send to post UPDATE', obj);
         this.setState({isModalOpen:false})
-        this.props.destroyForm();
+        //this.props.destroyForm();
         this.props.updateExpense(JSON.stringify(obj),this.props.currentActivity.id);
 
         //location.replace(baseURL+'/groupView?id='+ID[1]);

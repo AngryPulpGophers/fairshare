@@ -1,5 +1,6 @@
 import { UPDATE_LOCATION } from 'react-router-redux';
 import fetch from 'isomorphic-fetch';
+
 const BASE_URL = 'http://' + window.location.href.split('/')[2] + '/';
 // const BASE_URL = 'http://localhost:3000/';
 
@@ -9,9 +10,10 @@ function callApi(endpoint, id, req, body){
   console.log("call api's ENDPOINT!!!!!!!! ", endpoint)
   // console.log('got an id:', id);
   //config.header = { Accept: 'application/json'};
-  //console.log(arguments);
+  // console.log(arguments);
   if(req === 'POST' || req === 'PUT'){
-   console.log('making POST or PUT req');
+    console.log('making POST or PUT req:', body );
+    
     config.headers= {
       "Content-Type":"application/json",
       "Accept":"application/json"
@@ -52,7 +54,7 @@ export default store => next => action => {
   //   // console.log('page changed')
   // }
   // return next(action)
-
+  console.log('got into middleware');
   const callAPI = action[CALL_API]
   //console.log('here is our callAPI', callAPI)
   // So the middleware doesn't get applied to every single action
@@ -61,6 +63,7 @@ export default store => next => action => {
   }
 
   let { endpoint, id, req, body, types } = callAPI
+  let dbEntry = callAPI.cookie ? callAPI.cookie : null;
   const [ requestType, successType, errorType ] = types
 
   return callApi(endpoint, id, req, body, types).then(
@@ -68,7 +71,6 @@ export default store => next => action => {
       response,
       type: successType,
       id: id
-
     }),
     error => next({
       type: errorType

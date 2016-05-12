@@ -11,11 +11,12 @@ var auth       = require('./routes/auth.js');
 var users      = require('./routes/users.js');
 var groups     = require('./routes/groups.js');
 var dashboard  = require('./routes/dashboard.js');
+var payment    = require('./routes/payment.js');
 var routes     = require('./routes/index.js');
 var app = express();
 
 console.log("NODE_ENV", process.env.NODE_ENV);
-console.log("DB URL", process.env.DATABASE_URL);
+console.log("DB_URL", process.env.DATABASE_URL);
 // using webpack-dev-server and middleware in development environment
 
 if (process.env.NODE_ENV !== 'production') {
@@ -49,6 +50,7 @@ if (process.env.NODE_ENV !== 'test') {
   app.use('/users', users);
   app.use('/groups', groups);
   app.use('/dashboard', dashboard);
+  app.use('/payment', payment);
   app.use('/', routes);
 
   // Start the server!

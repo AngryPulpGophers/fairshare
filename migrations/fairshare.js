@@ -4,7 +4,7 @@ exports.up = function(knex, Promise){
     knex.schema.createTable('users', function(table){
       table.increments('id').primary();
       table.string('name', 40);
-      table.string('username', 20);
+      table.string('username', 30);
       table.string('email');
       table.string('img_url');
       table.string('primary');
@@ -55,6 +55,7 @@ exports.up = function(knex, Promise){
       table.integer('payee').references('id').inTable('users').onDelete('CASCADE');
       table.integer('recipient').references('id').inTable('users').onDelete('CASCADE');
       table.decimal('amount', 8, 2);
+      table.integer('pending');
       table.text('note', 200);
     }),
 

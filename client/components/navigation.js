@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import EmailNewUser from './emailNewUser';
 
 
 export default class Navigation extends Component {
@@ -12,7 +13,6 @@ export default class Navigation extends Component {
           <button className="menu-icon" type="button" data-toggle></button>
           <div className="title-bar-title"><h1>Fairshare</h1></div>
         </div>
-
         <div className="top-bar" id="example-menu">
           <div className="top-bar-left">
             <ul className="dropdown menu" data-dropdown-menu ref={(elem) => {console.log(instance)}}>
@@ -22,6 +22,7 @@ export default class Navigation extends Component {
               <li style={{width: '20px'}}></li>
             </ul>
           </div>
+          
           <div className="top-bar-right" style={{marginRight: 20}}>
             {/*<span> Welcome, {this.props.userInfo.name.split(' ')[0]}</span>*/}
             <ul className="menu">
@@ -34,8 +35,14 @@ export default class Navigation extends Component {
             </ul>
           </div>
         </div>
-
+        <div>
+          <EmailNewUser
+            userInfo = {this.props.userInfo}
+            emailNewUser = {this.props.emailNewUser}
+          />
+        </div>
       </div>
+      
     ) :
     (
 

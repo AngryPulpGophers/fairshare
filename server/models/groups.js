@@ -57,6 +57,17 @@ Groups.createGroup = function(groupAttrs) {
     });
 };
 
+Groups.update = function(groupAttrs){
+  return db('groups')
+    .where({
+      id: groupAttrs.id
+    })
+    .update(groupAttrs, 'id')
+    .then(function(id){
+      return Groups.getGroupById(id[0]);
+    });
+};
+
 Groups.addMember = function(attrs){
   return db('user_groups')
     .insert({
@@ -66,7 +77,8 @@ Groups.addMember = function(attrs){
 };
 
 Groups.getExpenseById = function(expenseId) {
-  return db.select().table('expenses')
+  return db('expenses')
+    .select()
     .where({
       id: expenseId
     })
@@ -182,5 +194,23 @@ Groups.updateBalance = function(attrs){
 Groups.deleteGroupById = function(groupId){
   return db('groups')
     .where('id', '=', groupId)
+    .del().then();
+};
+
+Groups.deleteExpensesByGroupId = function(groupId){
+  return db('expenses')
+    .where('group_id', '=', groupId)
+    .del().then();
+};
+
+Groups.deletePaymentsByGroupId = function(groupId){
+  return db('payments')
+    .where('group_id', '=', groupId)
+    .del().then();
+};
+
+Groups.deleteUserGroups = function(groupId){
+  return db('user_groups')
+    .where('group_id', '=', groupId)
     .del().then();
 };

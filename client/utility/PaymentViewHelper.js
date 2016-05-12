@@ -24,8 +24,25 @@ PayHelp.buildPaymentEntry = (obj,data) => {
   data.payee = obj.props.userInfo.id;
   data.amount = Number(data.amount);
   data.group_id = Number(data.group_id);
+  data.pending = 1;
   obj.props.destroyForm();
   return data;
+}
+
+PayHelp.handleSubmit = (obj,data) => {
+  obj.setState({isModalOpen:false, chosenOne: null});
+  data = PayHelp.buildPaymentEntry(obj,data);
+  if(sessionStorage.getItem('cash')){
+    delete data.email;
+    sessionStorage.clear();
+    obj.props.makePayment(JSON.stringify(data));
+  }else{
+    let dbPaymentEntry = Object.assign({},data);
+    delete dbPaymentEntry.email;
+    data.returnURL = window.location.href.match(/g.+/)[0];
+    sessionStorage.clear();
+    obj.props.usePaypal(JSON.stringify(data),JSON.stringify(dbPaymentEntry));
+  } 
 }
 
 //following functions control both form modal and inner modal using local state variable

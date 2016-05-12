@@ -3,8 +3,9 @@ import * as ActionTypes from '../actions/groupActions';
 import update from 'react-addons-update';
 //console.log(ActionTypes);
 
-export function groups(state = { isFetching: false, currentGroup: {}, isDeleting: false, newGroup:{}, groups: [],activity : [], currentGroupUsers: []}, action) {
+export function groups(state = { isFetching: false, editGroup: {}, currentGroup: {}, isDeleting: false, newGroup:{}, groups: [],activity : [], currentGroupUsers: [], isUpdating: false}, action) {
     //console.log('groups actions:', action)
+    // console.log('groups actions:', action)
     switch (action.type) {
 
       // GET GROUP DATA
@@ -23,9 +24,55 @@ export function groups(state = { isFetching: false, currentGroup: {}, isDeleting
         return update(state, {
           isFetching: {$set: false}})
 
+
+      // getting single group by id
+      case ActionTypes.GROUP_REQUEST:
+      return update(state, 
+        {isFetching: {$set: true}}
+        )
+
+      case ActionTypes.GROUP_SUCCESS:
+        return update(state, {
+          isFetching: {$set: false},
+          editGroup: {$set: JSON.parse(action.response)}
+        })
+
+      case ActionTypes.GROUP_FAILURE:
+        return update(state, {
+          isFetching: {$set: false}})
+
+      //update a group
+      case ActionTypes.UPDATE_GROUP_REQUEST:
+        return update(state, {
+          isUpdating: {$set: true}
+        })
+
+      case ActionTypes.UPDATE_GROUP_SUCCESS:
+        var groupIndex;
+        for (var i = 0; i < state.groups.length; i++) {
+          if(action.id === state.groups[i].id){
+            groupIndex = i; 
+          }
+        }
+        return update(state, {
+          isUpdating: {$set: false},
+          groups: {$splice: [[groupIndex, 1, JSON.parse(action.response)]]}
+        })
+
+      case ActionTypes.UPDATE_GROUP_FAILURE:
+        return update(state, {
+          isUpdating: {$set: false}
+        })
+
+      case ActionTypes.GROUP_CLEAR:
+        //console.log('trigger clearing editGroup State')
+        return update(state, {
+          editGroup: {$set: {} }
+        })
+
       //set CURRENT group
       case ActionTypes.CURRENT_GROUP:
-       console.log('time to set the current group with', action.id)
+       //console.log('time to set the current group with', action.id)
         return update(state, {
           currentGroup: {$set:{id:action.id}}
         })
@@ -121,7 +168,7 @@ export function groups(state = { isFetching: false, currentGroup: {}, isDeleting
         }
 
         //console.log('got our type and resp:', action.response)
-         console.log('pj test UPDATE EXPENSE',JSON.parse(action.response))
+        // console.log('pj test UPDATE EXPENSE',JSON.parse(action.response))
         return update(state, {
           isFetching: {$set: false},
           activity: {$splice: [[activityIndex, 1,JSON.parse(action.response)]]}
@@ -133,17 +180,52 @@ export function groups(state = { isFetching: false, currentGroup: {}, isDeleting
 
       case ActionTypes.PAYMENT_REQUEST:
         return update(state, {
-          isFetching: {$set: true}
+          isFetching: {$set: true},
         })
 
       case ActionTypes.PAYMENT_SUCCESS:
-      // console.log('pj test payment',JSON.parse(action.response))
         return update(state, {
           isFetching: {$set: false},
           activity: {$unshift: [JSON.parse(action.response)]}
         })
 
       case ActionTypes.PAYMENT_FAILURE:
+        return update(state, {
+          isFetching: {$set: false},
+        })
+
+       case ActionTypes.PAYPAL_PAYMENT_REQUEST:
+       //console.log('action in paypal req:', action)
+        return update(state, {
+          isFetching: {$set: true}
+        })
+      case ActionTypes.PAYPAL_PAYMENT_SUCCESS:
+       sessionStorage.setItem('success',true);
+       var authURL = JSON.parse(action.response)
+       window.location.href = authURL.redirect;
+        return update(state, {
+          isFetching:{$set: false},
+        })
+      case ActionTypes.PAYPAL_PAYMENT_FAILURE:
+        return update(state, {
+          isFetching: {$set: false},
+          activityError:{$set: true},
+          errorMessage:{$set: "There was a problem processing the payment.\nVerify the email address before trying again."}
+        })
+
+      case ActionTypes.UPDATE_PAYSTAT_REQUEST:
+        return update(state, {
+          isFetching: {$set: true}
+        })
+      case ActionTypes.UPDATE_PAYSTAT_SUCCESS:
+        var action = JSON.parse(action.response);
+        var idx;
+        state.activity.forEach((obj,i) => {if(obj.id === action.id && obj.type === action.type) idx = i})
+        return update(state,{
+          isFetching: {$set:false},
+          activity:{$splice:[[idx,1,action]]}
+        })      
+        case ActionTypes.UPDATE_PAYSTAT_FAILURE:
         return update(state, {
           isFetching: {$set: false}
         })
@@ -161,9 +243,14 @@ export function groups(state = { isFetching: false, currentGroup: {}, isDeleting
         return update(state, {
           isFetching: {$set: false}})
 
+      case ActionTypes.CLEAR_ERROR:
+        return update(state, {
+          activityError:{$set: false},
+          errorMessage: {$set: null}
+        })
       default:
         return state
       }
     }
+  
 
-   

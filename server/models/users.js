@@ -16,7 +16,7 @@ Users.getByUsername = function(username){
 Users.getById = function(reqObj){
   return db('users')
     .select()
-    .where('id', '=', reqObj.id)
+    .where('id', '=', reqObj.id);
 };
 
 Users.editProfile = function(profAttrs){
@@ -37,6 +37,7 @@ Users.getAllButCurr = function(reqObj){
     .where('id', '!=', reqObj.id);
 };
 
+// change this to inner join. (need to make changes on front end)
 Users.getUsersByExpenseId = function(expenseId){
   return db('user_expenses')
     .select('user_id')
@@ -60,7 +61,8 @@ Users.getUsersByGroupId = function(groupID){
     .innerJoin('user_groups', 'users.id', 'user_groups.user_id')
     .where({
       group_id: groupID
+    })
+    .then(function(data){
+      return data;
     });
 };
-
-
