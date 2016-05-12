@@ -12,39 +12,34 @@ export default class SocialAccounts extends Component {
           {fbook || google || pay  ?
             <div>
               <h5>Social Connections</h5>
-                <ul className='menu simple'>
+                <span>
                   {fbook && primary !== 'facebook' ? 
-                    <li>
-                      <p>Facebook</p><i className="fa fa-lock" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}></i>
-                    </li>: fbook && primary === 'facebook' ? <span>Primary Account: {primary}</span> : <span></span>}
+                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}><i className="fa fa-lock"></i>Facebook</button>
+                      : fbook && primary === 'facebook' ? <div>Primary Account: {primary}</div> : <span></span>}
                   {google && primary !== 'google' ?
-                    <li>
-                      <p>Google+</p><i className="fa fa-lock"  onClick={()=>this.props.unlinkSocialAcc({id:id,google:0,provider:'google'})}></i>
-                    </li>: google && primary === 'google' ? <span>Primary Account: {primary}</span> : <span></span>}
+                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}><i className="fa fa-lock"></i>Google+</button>
+                      : google && primary === 'google' ? <div>Primary Account: {primary}</div> : <span></span>}
                   {pay && primary !== 'paypal' ?
-                    <li>
-                      <p>PayPal</p><i className="fa fa-lock" onClick={()=>this.props.unlinkSocialAcc({id:id, paypal:0,provider:'paypal'})}></i>
-                    </li>: google && primary === 'paypal' ? <span>Primary Account: {primary}</span> : <span></span>}
-                </ul>
+                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}><i className="fa fa-lock"></i>PayPal</button>
+                      : google && primary === 'paypal' ? <div>Primary Account: {primary}</div> : <span></span>}
+                </span>
             </div>
             :<span></span>}
           {!fbook || !google || !pay ?
               <div>
                 <h5>Link Accounts</h5>
-                  <ul className='menu simple'>
+                  <span>
                     {!fbook ? 
-                      <li>
-                        <a href='auth/facebook'><i className="fa fa-unlock"></i></a><p>Facebook</p>
-                      </li>:<span></span>}
+                        <a href='auth/facebook' className="button alert button tiny"><i className="fa fa-unlock"></i>Facebook</a>
+                      :<span></span>}
                     {!google ? 
-                      <li>
-                        <a href='auth/google'><i className="fa fa-unlock"></i></a><p>Google+</p>
-                      </li>:<span></span>}
+                        <a href='auth/google' className="button alert button tiny"><i className="fa fa-unlock"></i>Google+</a>
+                      :<span></span>}
                     {!pay ? 
-                      <li>
-                        <a href='auth/paypal'><i className="fa fa-unlock"></i></a><p>PayPal</p>
-                      </li>:<span></span>}
-                  </ul>
+                      
+                        <a href='auth/paypal' className="button alert button tiny"><i className="fa fa-unlock"></i>PayPal</a>
+                      :<span></span>}
+                  </span>
               </div>
           :<span></span>} 
       </div>

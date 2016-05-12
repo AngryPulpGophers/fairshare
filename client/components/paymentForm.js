@@ -8,7 +8,7 @@ export const fields = ['payee', 'recipient', 'email', 'amount', 'note'];
 
 export default class PaymentForm extends Component{
 
-  constructor(props){
+	constructor(props){
     super(props)
     this.state = ({
       isModalOpen: false,
@@ -36,19 +36,19 @@ export default class PaymentForm extends Component{
 
 
 
-  render(){
-    const{
-      fields: {payee, recipient, email, amount, note},
-      handleSubmit,
-      resetForm,
+	render(){
+		const{
+		  fields: {payee, recipient, email, amount, note},
+		  handleSubmit,
+		  resetForm,
       submitting
      } = this.props
 
     let RadioButtons = PayHelp.memberButtons(this, PayHelp.makeRadioButton);
 
     return(
-      <span>
-       <button className = 'button info' onClick={this.openModal}>Make Payment</button>
+    	<span>
+       <button className = 'button info button extended' onClick={this.openModal}>Make Payment</button>
             <Modal className='modal' isOpen={this.state.isModalOpen} transitionName="modal-anim">
       <form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
          <i onClick={this.closeModal} className="fa fa-times-circle-o" aria-hidden="true" style = {{cursor:'pointer'}}></i>
@@ -60,7 +60,7 @@ export default class PaymentForm extends Component{
               </div>
           </div>
             <div>
-            <label>Email</label>
+              <label>Email</label>
             <div>
               <input type="text"  placeholder="Required for PayPal transaction only"  title ='If using paypal,recipient email is required.'
               {...email}/>
@@ -92,14 +92,14 @@ export default class PaymentForm extends Component{
       </form>
       </Modal>
      </span> 
-      )
+			)
          
   }
 }
 
 PaymentForm.propTypes = {
-  userInfo: PropTypes.object.isRequired,
-  groupMembers: PropTypes.array.isRequired,
+	userInfo: PropTypes.object.isRequired,
+	groupMembers: PropTypes.array.isRequired,
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   makePayment: PropTypes.func.isRequired,
