@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
-import {  getGroups, getActivity,getUserByGroup , addExpense, makePayment, deleteGroup, setCurrentGroup, indBalance, updateExpense, usePaypal, updatePaymentStatus, clearError } from '../actions/groupActions';
+import {  getGroups, getActivity,getUserByGroup , addExpense, makePayment, deleteGroup, setCurrentGroup, indBalance, updateExpense, usePaypal, updatePaymentStatus, clearError, clearActivity } from '../actions/groupActions';
 import GroupView from '../components/groupView';
 import { startDisplay, toggleDisplay } from '../actions/calloutActions';
 
@@ -63,6 +63,7 @@ class PageGroupView extends Component {
         errorStatus={this.props.errorStatus}
         errMessage={this.props.errMessage}
         clearError={this.props.clearError}
+        clearActivity = {this.props.clearActivity}
       />
     </div>
     )
@@ -109,4 +110,5 @@ export default connect(mapStateToProps, {
   usePaypal,
   updatePaymentStatus,
   clearError,
+  clearActivity
 })(PageGroupView)

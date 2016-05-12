@@ -21,6 +21,12 @@ export function clearEdit() {
       type: GROUP_CLEAR
   }
 }
+export const ACTIVITY_CLEAR = 'ACTIVITY_CLEAR';
+export function clearActivity() {
+  return {
+      type: ACTIVITY_CLEAR
+  }
+}
 
 export const UPDATE_GROUP_REQUEST = 'UPDATE_GROUP_REQUEST';
 export const UPDATE_GROUP_SUCCESS = 'UPDATE_GROUP_SUCCESS';
