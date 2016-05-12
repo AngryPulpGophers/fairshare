@@ -37,7 +37,7 @@ Helper.prettyDate = function(milliseconds){
         <img src="http://i.imgur.com/4GXzMQB.jpg" />
       </div>
       */
- 
+
   Helper.calcBalance = function() {
     if (this.props.currentGroupUsers){
 console.log('what is going on',this.props.activity)
@@ -57,10 +57,10 @@ for (var key in groupObj){
 
     //console.log('where are the strings',this.props.activity[i].amount, typeof this.props.activity[i].amount)
     if (this.props.activity[i].type==='expense'){
-      
-      
-      
-      //loop through each member in each activity 
+
+
+
+      //loop through each member in each activity
       for (var x = 0 ; x < this.props.activity[i].members.length ; x++){
         //console.log('this is important',this.props.activity[i].members.length )
         //if the member you are looking at is the one that paid, go down to else
@@ -74,7 +74,7 @@ for (var key in groupObj){
             }
             else {
               groupObj[this.props.activity[i].members[x].id].balance -= round((this.props.activity[i].amount/this.props.activity[i].members.length));
-            } 
+            }
           }
           else {
             console.log('what is breaking',this.props.activity[i],groupObj)
@@ -89,7 +89,7 @@ for (var key in groupObj){
               groupObj[this.props.activity[i].paid_by].balance +=  round((this.props.activity[i].amount* ((this.props.activity[i].members.length-1)/this.props.activity[i].members.length))+
                 round(this.props.activity[i].amount-round(this.props.activity[i].amount/this.props.activity[i].members.length)*this.props.activity[i].members.length));
               groupObj[this.props.activity[i].paid_by].balance =  round(groupObj[this.props.activity[i].paid_by].balance)
-            } 
+            }
             else {
               groupObj[this.props.activity[i].paid_by].balance +=  round((this.props.activity[i].amount* ((this.props.activity[i].members.length-1)/this.props.activity[i].members.length)));
               groupObj[this.props.activity[i].paid_by].balance =  round(groupObj[this.props.activity[i].paid_by].balance)
@@ -111,7 +111,7 @@ for (var key in groupObj){
       groupObj[this.props.activity[i].payee].balance = round(groupObj[this.props.activity[i].payee].balance)
       groupObj[this.props.activity[i].recipient].balance=round(groupObj[this.props.activity[i].recipient].balance)
       groupObj[this.props.activity[i].recipient].balance -= round(this.props.activity[i].amount)
-      groupObj[this.props.activity[i].recipient].balance = round(groupObj[this.props.activity[i].recipient].balance)  
+      groupObj[this.props.activity[i].recipient].balance = round(groupObj[this.props.activity[i].recipient].balance)
     }
   }
 
@@ -119,7 +119,7 @@ for (var key in groupObj){
 //this code sets up balance in user_groups table
  //refactor this to use a state variable later
  var currentURL = window.location.href
-    var ID = currentURL.split('id=')[1] 
+    var ID = currentURL.split('id=')[1]
 
 var tempObj = {}
 for (var ind in groupObj){
@@ -129,7 +129,7 @@ for (var ind in groupObj){
   // console.log('NEW PJ',tempObj.user_id,'USER',
   // tempObj.group_id,'group',
   // tempObj.balance);
-  this.props.indBalance(tempObj);
+  this.props.indBalance(JSON.stringify(tempObj));
   tempObj = {}
 }
 
@@ -164,12 +164,12 @@ sortedGroup = sortedGroup.sort(function(a,b){
     sortedGroup[i].tempBalance = round(sortedGroup[i].balance);
    // console.log('holly',sortedGroup[i].tempBalance)
     sortedGroup[i].owed = [];
-   
+
   }
 
   //console.log('current status', sortedGroup)
 //ADD user_ to all id below this point
-  
+
   //loop through every member in group
   for (var p1 = 0; p1 < sortedGroup.length; p1++){
     //only do logic if member is owed money
@@ -238,7 +238,7 @@ else{
 }
 
 }
-  
+
 Helper.makeGroupObj = function(){
   var makeGroupObject = {}
   for (var i = 0 ; i < this.props.currentGroupUsers.length ; i++){
