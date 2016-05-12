@@ -87,7 +87,7 @@ export default class EmailNewUser extends Component {
           <h2>Suggest Friend to join</h2>
           <label>Friends Email Address</label>
           <div>
-            <input type="email" placeholder="Title" required{...email}/>
+            <input type="email" placeholder="Email" required{...email}/>
           </div>
         </div>
         <div>
