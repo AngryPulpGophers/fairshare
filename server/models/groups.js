@@ -214,4 +214,3 @@ Groups.deleteUserGroups = function(groupId){
     .where('group_id', '=', groupId)
     .del().then();
 };
-

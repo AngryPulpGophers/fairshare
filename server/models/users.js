@@ -37,6 +37,7 @@ Users.getAllButCurr = function(reqObj){
     .where('id', '!=', reqObj.id);
 };
 
+// change this to inner join. (need to make changes on front end)
 Users.getUsersByExpenseId = function(expenseId){
   return db('user_expenses')
     .select('user_id')
