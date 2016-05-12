@@ -205,6 +205,7 @@ export function updatePaymentStatus(data) {
 
 export const CLEAR_ERROR = 'CLEAR_ERROR';
 export function clearError() {
+  sessionStorage.clear()
   return {
       type: CLEAR_ERROR,
   }
