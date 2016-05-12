@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { browserHistory, Router, Route,Link } from 'react-router';
 import GroupList from './groupList';
-import {prettyDate, calcBalance, makeGroupObj, test} from '../utility/groupViewHelper';
+import {prettyDate, calcBalance, makeGroupObj, test, showDebt} from '../utility/groupViewHelper';
 import Modal from './modal';
 import PaymentForm from './paymentForm';
 import PaymentError from './paymentError';
@@ -106,21 +106,7 @@ export default class GroupView extends Component {
             </div>
           </Modal>
           <h2>Balance</h2>
-          {showUserBalance.map(function(user){
-            return (
-              <span key={user.user_id}>
-                {user.owed.map(function(person, index){
-                  return (
-                    <div key={index+user.name}>
-                      {this.seeIfYou(user.name)} {this.seeIfYou(user.name) === 'You' ? " owe " + Object.keys(person) + " $" + -1 * person[Object.keys(person)]
-                  : "owes " + this.seeIfYou(Object.keys(person)) +" $"+ -1*person[Object.keys(person)]}
-                    </div>
-                    )
-                  }.bind(this))
-                }
-              </span>
-            )
-          }.bind(this))}
+          {showDebt.call(this,showUserBalance)}
           <h2>Activity</h2>
           {this.props.activity.map(function(activity,index){
             if(activity.type==='expense'){
