@@ -27,11 +27,12 @@ export const UPDATE_GROUP_SUCCESS = 'UPDATE_GROUP_SUCCESS';
 export const UPDATE_GROUP_FAILURE = 'UPDATE_GROUP_FAILURE';
 
 export function updateGroup(members,formData, id) {
-  console.log('$$$$$$$$$$$$got an id:', id)
+  //console.log('$$$$$$$$$$$$got an id:', id)
   return {
     [CALL_API]: {
       endpoint: 'groups/',
       body: processGroup(members,formData, id),
+      id: id,
       req: 'PUT',
       types: [UPDATE_GROUP_REQUEST, UPDATE_GROUP_SUCCESS, UPDATE_GROUP_FAILURE]
     }
@@ -43,7 +44,7 @@ export const GROUP_SUCCESS = 'GROUP_SUCCESS';
 export const GROUP_FAILURE = 'GROUP_FAILURE';
 
 export function getGroup(id) {
-  console.log('$$$$$$$$$$$$got an id:', id)
+  //console.log('$$$$$$$$$$$$got an id:', id)
   return {
     [CALL_API]: {
       endpoint: 'groups/'+id,
@@ -81,7 +82,7 @@ export const USERBYGROUP_SUCCESS = 'USERBYGROUP_SUCCESS';
 export const USERBYGROUP_FAILURE = 'USERBYGROUP_FAILURE';
 
 export function getUserByGroup(id) {
-   console.log('pj got an id:', id)
+   //console.log('pj got an id:', id)
   return {
     [CALL_API]: {
       endpoint: 'groups/users/'+id,
@@ -97,7 +98,7 @@ export const CREATE_SUCCESS = 'CREATE_SUCCESS';
 export const CREATE_FAILURE = 'CREATE_FAILURE';
 
 export function createGroup(members, formData) {
-  console.log('called actions with:', members, formData)
+  //console.log('called actions with:', members, formData)
   return {
     [CALL_API]: {
       endpoint: 'groups',
@@ -113,7 +114,7 @@ export const DELETE_SUCCESS = 'DELETE_SUCCESS';
 export const DELETE_FAILURE = 'DELETE_FAILURE';
 
 export function deleteGroup(id) {
-  console.log('triggered', id)
+  //console.log('triggered', id)
   return {
     [CALL_API]: {
       endpoint: 'groups/'+id.id,
@@ -213,7 +214,7 @@ export const UPDATE_PAYSTAT_SUCCESS = 'UPDATE_PAYSTAT_REQUEST';
 export const UPDATE_PAYSTAT_FAILURE = 'UPDATE_PAYSTAT_REQUEST';
 
 export function updatePaymentStatus(data) {
-  console.log('called Payment action with:', data);
+  //console.log('called Payment action with:', data);
   return {
     [CALL_API]: {
       endpoint: 'groups/payments',
@@ -233,15 +234,18 @@ export function clearError() {
 }
 
 function processGroup(members,formData, id){
-  console.log('all our stuff:', members, formData, id)
+  //console.log('all our stuff:', members, formData, id)
   let groupObj = {};
-  groupObj.id = id ? id : null
+  if(id != undefined){
+   groupObj.id = id;
+   } 
 
   groupObj.name = formData.groupName.value;
   groupObj.desc = formData.groupDesc.value;
   groupObj.members= [];
   for(var i = 0; i < members.length; i++){
-    groupObj.members.push(Number(members[i].value))
+    groupObj.members.push( Number(members[i].value || members[i].user_id))
   }
+  //console.log('our entire group object to send to server', groupObj)
   return JSON.stringify(groupObj);
 }

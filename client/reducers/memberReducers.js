@@ -12,7 +12,6 @@ export function members(state = { members: []}, action) {
 
       // add a member
       case MEMBER_ADDED:
-        console.log('member state', state)
         if(checkMem(state,action.userObj)){
           return update(state, {
             members: {$push: [action.userObj]}
@@ -21,18 +20,17 @@ export function members(state = { members: []}, action) {
 
       // remove a member
       case MEMBER_REMOVED:
-        console.log('TO BE REMOVED',action.id)
         return update(state, {
           members: {$set: removeMem(state,action.id)}
         })
 
-    default:
-      return state
+      default:
+        return state
     }
 }
 
 function checkMem(state,userObj) {
-  console.log('each of our members', userObj)
+
   for (var i = 0; i < state.members.length; i++) {
     //console.log(Number(state.members[i].value), 'does not equal', userObj)
     if (state.members[i].value && state.members[i].value === userObj.value) {

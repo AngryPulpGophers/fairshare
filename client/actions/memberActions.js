@@ -10,6 +10,9 @@ export const INPUT_FOCUSED = 'INPUT_FOCUSED';
 export const MEMBER_ADDED = 'MEMBER_ADDED';
 export function addMember(userObj) {
   if(Object.keys(userObj).length > 0){
+    if(userObj.value){
+      userObj.user_id = userObj.value
+    }
     return {
         type: MEMBER_ADDED,
         userObj: userObj,
@@ -20,7 +23,6 @@ export function addMember(userObj) {
 //remove a member from a group
 export const MEMBER_REMOVED = 'MEMBER_REMOVED';
 export function removeMember(id) {
-  console.log('Made an attempt to remove', id)
   return {
       type: MEMBER_REMOVED,
       id: id,

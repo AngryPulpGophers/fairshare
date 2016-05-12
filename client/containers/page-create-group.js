@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { browserHistory, Router, Route, Link } from 'react-router'
+import { browserHistory, Route, Link } from 'react-router'
 import { getUsers } from '../actions/userActions';
 import { addMember, removeMember, clearMembers } from '../actions/memberActions';
 import { createGroup, getGroup, clearEdit, updateGroup } from '../actions/groupActions';
@@ -12,8 +12,8 @@ class PageCreateGroup extends Component {
   constructor(props,context){
     super(props)
     this.state = {newMem: {} }
-
   }
+
   componentWillMount(){
     if(!window.localStorage.isAuthed){
       browserHistory.push('/login')
@@ -22,7 +22,6 @@ class PageCreateGroup extends Component {
     if (this.props.location.query.id){
       this.props.getGroup(this.props.location.query.id);
     }
-
   }
 
   componentWillReceiveProps(nextProps){
@@ -37,10 +36,12 @@ class PageCreateGroup extends Component {
       }
     }
   }
+
   componentWillUnmount(){
     //clear out our saved form data
     this.props.clearEdit();
   }
+  
   handleNewMem(option, state){
     //set a temp state to handle our fuzzy search
     this.setState({ newMem: option})
@@ -66,6 +67,7 @@ class PageCreateGroup extends Component {
           initialValues ={formData}
           clearEdit={this.props.clearEdit}
           groupID ={this.props.location.query.id}
+          updateGroup = {this.props.updateGroup}
         />
       </div>
     );
@@ -79,7 +81,8 @@ PageCreateGroup.PropTypes = {
   removeMember: PropTypes.func.isRequired,
   createGroup: PropTypes.func.isRequired,
   clearMembers: PropTypes.func.isRequired,
-  isAuthed: PropTypes.bool.isRequired
+  isAuthed: PropTypes.bool.isRequired,
+  updateGroup: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {

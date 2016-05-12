@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { reduxForm } from 'redux-form';
-import { browserHistory, Router, Route, Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import SelectSearch from 'react-select-search';
 
 export const fields = [ 'groupName', 'groupDesc' ];
@@ -14,7 +14,6 @@ export default class CreateGroup extends Component {
 
   //handles adding members to the page
   renderMembers(data) {
-    //console.log('called', data)
     return (
       <li key={data.name}><img className="small-mem" src={data.img_url} /><strong>{data.name} - <a disabled={data.disabled} className="tiny alert button remove-user" onClick={!data.disabled ? () => { this.props.removeMember(Number(data.value))}: null}> remove</a></strong></li>
     )
@@ -27,7 +26,6 @@ export default class CreateGroup extends Component {
     } else {
       this.props.clearMembers();
     }
-    //console.log(this.props.location.query.id)
   }
 
   componentWillUpdate(nextProps, nextState){
@@ -35,7 +33,13 @@ export default class CreateGroup extends Component {
     if(nextProps.groups.length !== this.props.groups.length){
       let dest = nextProps.groups.pop()
       browserHistory.push('/groupView?id='+ dest.id);
+    } else if(nextProps.groups !== this.props.groups){
+      browserHistory.push('/groupView?id='+ this.props.groupID);
     }
+  }
+  componentWillUnmount(){
+    //clear out our saved form data
+    this.props.clearEdit();
   }
 
   render() {
@@ -43,7 +47,7 @@ export default class CreateGroup extends Component {
     var formAction;
     if(this.props.groupID){
       submitButton = (
-          <button disabled={!this.props.members.length} onClick={ () => { this.props.updateGroup(this.props.members,this.props.groupForm,this.props.groupID) }} className="expanded primary button">Update Group!</button>
+          <button onClick={ () => { this.props.updateGroup(this.props.members,this.props.groupForm,this.props.groupID) }} className="expanded primary button">Update Group!</button>
         );
       formAction = 'Update';
     } else {
@@ -127,7 +131,8 @@ CreateGroup.propTypes = {
   removeMember: PropTypes.func.isRequired,
   handleNewMem: PropTypes.func.isRequired,
   createGroup: PropTypes.func.isRequired,
-  memState: PropTypes.object.isRequired
+  memState: PropTypes.object.isRequired,
+  updateGroup: PropTypes.func.isRequired
 }
 
 export default reduxForm({

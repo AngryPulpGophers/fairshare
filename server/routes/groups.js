@@ -155,8 +155,10 @@ router.post('/payments', Middleware.checkGroup, function(req, res){
 });
 
 router.put('/', Middleware.checkGroupOwner, function(req, res){
-  var members = req.body.members;
-  var memberIds  = members.map(function(val){ return val.user_id; });
+  console.log('what is being sent',req.body)
+  var members;
+  var memberIds = req.body.members;
+  //var memberIds  = members.map(function(val){ return val.user_id; });
   var newMembers = [];
   delete req.body.members;
   console.log("members:", members);
@@ -164,6 +166,7 @@ router.put('/', Middleware.checkGroupOwner, function(req, res){
   // only add new members, not delete old ones.
   Users.getUsersByGroupId( req.body.id )
     .then(function(data){
+      members = data;
       console.log("data:", data);
       return data.map(function(data){
         return data.user_id;
@@ -182,12 +185,19 @@ router.put('/', Middleware.checkGroupOwner, function(req, res){
           user_id: member,
           group_id: req.body.id
         }).then();
+
+        Users.getById(member)
+        .then(function(result){
+          console.log('this should be first step', result)
+          members.push(result)
+        })
       });
     });
 
 
   Groups.update( req.body )
     .then(function(data){
+      console.log('making sure promise happens2',members)
       if (members){ data.members = members; }
       res.send(data);
     });

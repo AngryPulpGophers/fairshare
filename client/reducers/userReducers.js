@@ -24,7 +24,6 @@ export function users(state = { isFetching: false, users: [], friendProfile : {}
         })
 
       case ActionTypes.FRIEND_SUCCESS:
-        console.log("*******Inside action response*******", action)
         return update(state, {
           isFetching: {$set: false},
           friendProfile: {$set: JSON.parse(action.response)}

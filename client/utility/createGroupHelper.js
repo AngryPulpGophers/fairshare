@@ -1,7 +1,6 @@
 var EditGroup = module.exports;
 
 EditGroup.formatData = function(obj,currUser){
-  console.log('currentUser',currUser)
   var mems = [];
   if(obj.name !== undefined){
     for (var i = 0; i < obj.members.length; i++) {
@@ -17,7 +16,6 @@ EditGroup.formatData = function(obj,currUser){
       updateGroup: true,
       groupID: obj.id
     }
-    console.log('our complete obj*#$&#',groupObj);
     return groupObj;
   } else {
     return null;
