@@ -26,18 +26,7 @@ export default class PaymentForm extends Component{
   }
 
   handleSubmit = (data) => {
-    data = PayHelp.buildPaymentEntry(this,data);
-    this.setState({isModalOpen:false, chosenOne: null});
-    if(!data.pending){
-      delete data.email;
-      this.props.makePayment(JSON.stringify(data));
-    }else{
-      let dbPaymentEntry = Object.assign({},data);
-      delete dbPaymentEntry.email;
-      data.returnURL = window.location.href.match(/g.+/)[0];
-      this.props.usePaypal(JSON.stringify(data),JSON.stringify(dbPaymentEntry));
-    } 
-
+    PayHelp.handleSubmit(this,data);
   }
 
   onChange = () => {
