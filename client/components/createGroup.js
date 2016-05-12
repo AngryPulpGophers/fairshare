@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { reduxForm } from 'redux-form';
-import { browserHistory } from 'react-router';
+import { browserHistory, Router, Route, Link } from 'react-router';
 import SelectSearch from 'react-select-search';
 
 export const fields = [ 'groupName', 'groupDesc' ];
@@ -16,7 +16,7 @@ export default class CreateGroup extends Component {
   renderMembers(data) {
     //console.log('called', data)
     return (
-      <li><img className="small-mem" src={data.image} /><strong>{data.name} - <a className="tiny alert button remove-user" onClick={() => { this.props.removeMember(Number(data.value))}}> remove</a></strong></li>
+      <li key={data.name}><img className="small-mem" src={data.img_url} /><strong>{data.name} - <a disabled={data.disabled} className="tiny alert button remove-user" onClick={!data.disabled ? () => { this.props.removeMember(Number(data.value))}: null}> remove</a></strong></li>
     )
   }
 
@@ -27,6 +27,7 @@ export default class CreateGroup extends Component {
     } else {
       this.props.clearMembers();
     }
+    //console.log(this.props.location.query.id)
   }
 
   componentWillUpdate(nextProps, nextState){
@@ -38,7 +39,19 @@ export default class CreateGroup extends Component {
   }
 
   render() {
-
+    var submitButton;
+    var formAction;
+    if(this.props.groupID){
+      submitButton = (
+          <button disabled={!this.props.members.length} onClick={ () => { this.props.updateGroup(this.props.members,this.props.groupForm,this.props.groupID) }} className="expanded primary button">Update Group!</button>
+        );
+      formAction = 'Update';
+    } else {
+      submitButton = (
+          <button disabled={!this.props.members.length} onClick={ () => { this.props.createGroup(this.props.members,this.props.groupForm) }} className="expanded primary button">+ Create New Group!</button>
+        );
+      formAction = 'Create';
+    }
     const {
         fields: { groupName, groupDesc },
         handleSubmit,
@@ -49,6 +62,7 @@ export default class CreateGroup extends Component {
     const memberElements = this.props.members.map((data) => {
       return this.renderMembers(data);
     })
+    const updating = this.props.initialValues ? true : false;
 
     return (  
       
@@ -57,7 +71,7 @@ export default class CreateGroup extends Component {
             <div className="component-wrapper">
               <div className="row">
                 <div className="small-12 columns">
-                  <h2>Create a New Group</h2>
+                  <h2>{formAction} Group</h2>
                 </div>
                 <div className="small-12 large-7 columns">
                   <form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
@@ -83,7 +97,7 @@ export default class CreateGroup extends Component {
                       </div>
                     }
                   </form>
-                  <button disabled={!this.props.members.length} onClick={() => { this.props.createGroup(this.props.members,this.props.groupForm) }} className="expanded primary button">+ Create New Group!</button>
+                  {submitButton}
                 </div>
                 <div className="small-12 large-5 columns">
                   <div className="callout text-center members-list">

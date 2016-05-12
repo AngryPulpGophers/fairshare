@@ -32,10 +32,13 @@ export function members(state = { members: []}, action) {
 }
 
 function checkMem(state,userObj) {
+  console.log('each of our members', userObj)
   for (var i = 0; i < state.members.length; i++) {
-    console.log(Number(state.members[i].value), 'does not equal', userObj)
-    if (state.members[i].value === userObj.value) {
+    //console.log(Number(state.members[i].value), 'does not equal', userObj)
+    if (state.members[i].value && state.members[i].value === userObj.value) {
       return false;
+    } else if (state.members[i].user_id && state.members[i].user_id === userObj.user_id) {
+      return false
     }
   }
   return true;

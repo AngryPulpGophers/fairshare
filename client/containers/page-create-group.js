@@ -3,16 +3,15 @@ import { connect } from 'react-redux';
 import { browserHistory, Router, Route, Link } from 'react-router'
 import { getUsers } from '../actions/userActions';
 import { addMember, removeMember, clearMembers } from '../actions/memberActions';
-import { createGroup, getGroup } from '../actions/groupActions';
+import { createGroup, getGroup, clearEdit, updateGroup } from '../actions/groupActions';
 import { formatData } from '../utility/createGroupHelper';
 import CreateGroup from '../components/createGroup';
 
 class PageCreateGroup extends Component {
 
-
   constructor(props,context){
     super(props)
-    this.state = {newMem: {}, formData: {} }
+    this.state = {newMem: {} }
 
   }
   componentWillMount(){
@@ -30,15 +29,25 @@ class PageCreateGroup extends Component {
     if(!nextProps.isAuthed){
       browserHistory.push('/login')
     }
+    if(this.props.editGroup && this.props.editGroup.members && this.props.editGroup.members.length && this.props.members.length == 0){
+      for (var i = 0; i < this.props.editGroup.members.length; i++) {
+        if(this.props.currUser.id !== this.props.editGroup.members[i].user_id){
+         this.props.addMember(this.props.editGroup.members[i]);
+        }
+      }
+    }
   }
-
+  componentWillUnmount(){
+    //clear out our saved form data
+    this.props.clearEdit();
+  }
   handleNewMem(option, state){
     //set a temp state to handle our fuzzy search
     this.setState({ newMem: option})
   }
 
   render() {
-    let formData = formatData(this.props.editGroup)
+    let formData = formatData(this.props.editGroup,this.props.currUser)
     return (
       <div className="create-group">
         <CreateGroup
@@ -55,6 +64,8 @@ class PageCreateGroup extends Component {
           groupForm={this.props.groupForm}
           clearMembers={this.props.clearMembers}
           initialValues ={formData}
+          clearEdit={this.props.clearEdit}
+          groupID ={this.props.location.query.id}
         />
       </div>
     );
@@ -78,7 +89,8 @@ function mapStateToProps(state) {
     members: state.members.members,
     isAuthed: state.auth.isAuthed,
     groupForm: state.form.group,
-    editGroup: state.groups.editGroup
+    editGroup: state.groups.editGroup,
+    currUser: state.auth.userInfo
   };
 }
 PageCreateGroup.contextTypes = {
@@ -90,5 +102,7 @@ export default connect(mapStateToProps, {
   removeMember,
   createGroup,
   clearMembers,
-  getGroup
+  getGroup,
+  clearEdit,
+  updateGroup
 })(PageCreateGroup);

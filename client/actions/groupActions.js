@@ -15,6 +15,28 @@ export function getGroups() {
   }
 }
 
+export const GROUP_CLEAR = 'GROUP_CLEAR';
+export function clearEdit() {
+  return {
+      type: GROUP_CLEAR
+  }
+}
+
+export const UPDATE_GROUP_REQUEST = 'UPDATE_GROUP_REQUEST';
+export const UPDATE_GROUP_SUCCESS = 'UPDATE_GROUP_SUCCESS';
+export const UPDATE_GROUP_FAILURE = 'UPDATE_GROUP_FAILURE';
+
+export function updateGroup(members,formData, id) {
+  console.log('$$$$$$$$$$$$got an id:', id)
+  return {
+    [CALL_API]: {
+      endpoint: 'groups/',
+      body: processGroup(members,formData, id),
+      req: 'PUT',
+      types: [UPDATE_GROUP_REQUEST, UPDATE_GROUP_SUCCESS, UPDATE_GROUP_FAILURE]
+    }
+  }
+}
 
 export const GROUP_REQUEST = 'GROUP_REQUEST';
 export const GROUP_SUCCESS = 'GROUP_SUCCESS';
@@ -210,9 +232,11 @@ export function clearError() {
   }
 }
 
-function processGroup(members,formData){
-  console.log('all our stuff:', members, formData)
+function processGroup(members,formData, id){
+  console.log('all our stuff:', members, formData, id)
   let groupObj = {};
+  groupObj.id = id ? id : null
+
   groupObj.name = formData.groupName.value;
   groupObj.desc = formData.groupDesc.value;
   groupObj.members= [];
