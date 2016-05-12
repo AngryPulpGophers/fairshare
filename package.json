@@ -7,7 +7,7 @@
     "start": "nodemon server/",
     "dev": "webpack-dev-server",
     "postinstall": "webpack -p",
-    "test": "NODE_ENV=test ./scripts/test",
+    "test": "mocha --compilers js:babel-register ./test-client/css-null-compiler.js --require ./test-server/test-helper.js ./test-client/specs/*.spec.js --recursive",
     "test/client:watch": "npm test -- --watch"
   },
   "repository": {
