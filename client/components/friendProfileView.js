@@ -47,3 +47,4 @@ export default class FriendProfileView extends Component {
     );
   }
 }
+
