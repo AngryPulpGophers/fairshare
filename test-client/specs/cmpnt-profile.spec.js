@@ -32,8 +32,11 @@ describe('Front End @Profile Component', () => {
       });
     });
 
+    it('clicks a button ', () => {
+        wrapper.find('button').simulate('click');
+        expect(onButtonClick.calledOnce).to.equal(true);
+    });
+
 });
 
 
-// wrapper.find('button').simulate('click');
-//     expect(onButtonClick.calledOnce).to.equal(true);
