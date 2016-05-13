@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { reduxForm } from 'redux-form';
 import { browserHistory } from 'react-router';
 import SelectSearch from 'react-select-search';
+import DeleteGroup from './deleteGroup';
 
 export const fields = [ 'groupName', 'groupDesc' ];
 
@@ -30,7 +31,9 @@ export default class CreateGroup extends Component {
 
   componentWillUpdate(nextProps, nextState){
     //this conditional handles if groups was updated - render the new group view
-    if(nextProps.groups.length !== this.props.groups.length){
+    if(nextProps.groups.length < this.props.groups.length){
+      browserHistory.push('/');
+    } else if(nextProps.groups.length !== this.props.groups.length){
       let dest = nextProps.groups.pop()
       browserHistory.push('/groupView?id='+ dest.id);
     } else if(nextProps.groups !== this.props.groups){
@@ -75,7 +78,11 @@ export default class CreateGroup extends Component {
             <div className="component-wrapper">
               <div className="row">
                 <div className="small-12 columns">
-                  <h2>{formAction} Group</h2>
+                  <h2 className="float-left">{formAction} Group</h2>
+                  <DeleteGroup
+                    deleteGroup = {this.props.deleteGroup}
+                    groupID = {this.props.groupID}
+                  />
                 </div>
                 <div className="small-12 large-7 columns">
                   <form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
@@ -132,7 +139,8 @@ CreateGroup.propTypes = {
   handleNewMem: PropTypes.func.isRequired,
   createGroup: PropTypes.func.isRequired,
   memState: PropTypes.object.isRequired,
-  updateGroup: PropTypes.func.isRequired
+  updateGroup: PropTypes.func.isRequired,
+  groupID: PropTypes.number.isRequired
 }
 
 export default reduxForm({

@@ -26,6 +26,8 @@ dist/
 images/
 client/images/expenses/
 !client/images/
+logo.eps
+logo.ai
 
 # Dependency directory
 # Deployed apps should consider commenting these lines out:

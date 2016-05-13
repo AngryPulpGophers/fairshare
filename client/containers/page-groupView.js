@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
-import {  getGroups, getActivity,getUserByGroup , addExpense, makePayment, deleteGroup, setCurrentGroup, indBalance, updateExpense, usePaypal, updatePaymentStatus, clearError, clearActivity } from '../actions/groupActions';
+import {  getGroups, getActivity,getUserByGroup , addExpense, makePayment, setCurrentGroup, indBalance, updateExpense, usePaypal, updatePaymentStatus, clearError, clearActivity } from '../actions/groupActions';
 import GroupView from '../components/groupView';
 import { startDisplay, toggleDisplay } from '../actions/calloutActions';
 
@@ -32,12 +32,7 @@ class PageGroupView extends Component {
 
     this.props.setCurrentGroup(ID[1])
   }
-  componentWillUpdate(nextProps, nextState){
-    //this conditional handles if a group was deleted. if so, go back to dashboard
-    if(nextProps.groups.length < this.props.groups.length){
-      browserHistory.push('/');
-    }
-  }
+
   render() {
     console.log('this.props in page groupview:', this.props)
     return (
@@ -54,7 +49,6 @@ class PageGroupView extends Component {
         displayActive = {this.props.displayActive}
         addExpense = {this.props.addExpense}
         makePayment = {this.props.makePayment}
-        deleteGroup = {this.props.deleteGroup}
         indBalance = {this.props.indBalance}
         groups = {this.props.groups}
         updateExpense = {this.props.updateExpense}
@@ -102,7 +96,6 @@ export default connect(mapStateToProps, {
   toggleDisplay,
   addExpense,
   makePayment,
-  deleteGroup,
   setCurrentGroup,
   indBalance,
   getGroups,
