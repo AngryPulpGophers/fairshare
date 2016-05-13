@@ -1,47 +1,19 @@
 import React, { Component, PropTypes } from 'react';
+import SocialHelper from '../utility/socialAccountHelper'
+
 
 
 export default class SocialAccounts extends Component {
-  render() {
-    let [fbook,google,pay] = [this.props.userInfo.facebook,this.props.userInfo.google,this.props.userInfo.paypal];
-    let id = this.props.userInfo.id;
-    let primary = this.props.userInfo.primary;
 
+  render() {
+    // console.log('info in render method:', this.props.userInfo)
+    let userInfo = this.props.userInfo;
+    let [buttons,anchors] = SocialHelper.createLinkedAccounts(userInfo, SocialHelper.makeButtons, SocialHelper.makeAnchors,this)
     return(
-      <div style={{float:'right'}}>
-          {fbook || google || pay  ?
-            <div>
-              <h5>Social Connections</h5>
-                <span>
-                  {fbook && primary !== 'Facebook' ? 
-                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}><i className="fa fa-lock"></i>Facebook</button>
-                      : fbook && primary === 'Facebook' ? <div>Primary Account: {primary}</div> : <span></span>}
-                  {google && primary !== 'Google' ?
-                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,google:0,provider:'google'})}><i className="fa fa-lock"></i>Google+</button>
-                      : google && primary === 'Google' ? <div>Primary Account: {primary}</div> : <span></span>}
-                  {pay && primary !== 'PayPal' ?
-                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,paypal:0,provider:'paypal'})}><i className="fa fa-lock"></i>PayPal</button>
-                      : pay && primary === 'PayPal' ? <div>Primary Account: {primary}</div> : <span></span>}
-                </span>
-            </div>
-            :<span></span>}
-          {!fbook || !google || !pay ?
-              <div>
-                <h5>Link Accounts</h5>
-                  <span>
-                    {!fbook ? 
-                        <a href='auth/facebook' className="button alert button tiny"><i className="fa fa-unlock"></i>Facebook</a>
-                      :<span></span>}
-                    {!google ? 
-                        <a href='auth/google' className="button alert button tiny"><i className="fa fa-unlock"></i>Google+</a>
-                      :<span></span>}
-                    {!pay ? 
-                      
-                        <a href='auth/paypal' className="button alert button tiny"><i className="fa fa-unlock"></i>PayPal</a>
-                      :<span></span>}
-                  </span>
-              </div>
-          :<span></span>} 
+      <div>
+        {[...buttons]}
+        <h5>Link Accounts</h5>
+        {[...anchors]}          
       </div>
     )
   }
