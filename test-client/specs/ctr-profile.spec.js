@@ -3,9 +3,10 @@ import { shallow } from "enzyme";
 import Profile from "../../client/containers/page-profile";
 
 
-  describe('Container : Profile ', () => {
+describe('Front End @Profile Container', () => {
+  const wrapper = shallow( <div/>);
+  
     it('renders as a  <Profile/> element', () => {
-      const wrapper = shallow( <div/>);
       expect(wrapper.type()).to.eql('div');
     });
 });

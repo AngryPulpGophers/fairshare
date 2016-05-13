@@ -2,39 +2,35 @@ import React from "react";
 import { shallow } from "enzyme";
 import Profile from "../../client/components/profile";
 
+describe('Front End @Profile Component', () => {
+  const wrapper = shallow(<Profile/>);
 
-describe('Component : Profile ', () => {
-    beforeEach(function() {
-      let {TestUtils} = React.addons;
-
-      this.component = TestUtils.renderIntoDocument(<Profile initialName="my first test" />);
-      this.renderedDOM = () => React.findDOMNode(this.component);
+    it ('should contain three form input fields ', () => {
+      expect(wrapper.prop('fields').length).to.eql(3);
     });
 
-    it("renders a paragraph which greets someone", function() {
-      let renderedParagraphs = this.renderedDOM().querySelectorAll("div");
+    it('has an image element ', () => {
+        wrapper.find('.image').forEach(function (node) {
+        expect(node.hasClass('.image')).to.equal(true);
+      });
+    });
 
-      expect(this.renderedDOM().children.length).toEqual(1);
-      expect(renderedParagraphs.length).toEqual(1);
-      expect(renderedParagraphs[0].textContent).toEqual("Hello, my first test!");
-  });
+    it('has an name field ', () => {
+      const context = { name: 'Christina Mitchell' };
+      const wrapper = shallow(<Profile/>, { context });
+         wrapper.find('div').forEach(function (node) {
+          expect(wrapper.text()).to.equal('Christina Mitchell');
+        });   
+    });
 
-  // it("wraps a paragraph with a <div> with a proper class name", function() {
-  //   let rootElement = this.renderedDOM();
+    it('has a form ', () => {
+        wrapper.find('div').forEach(function (node) {
+        expect(node.hasClass('.profile-form')).to.equal(true);
+      });
+    });
 
-  //   expect(rootElement.tagName).toEqual("DIV");
-  //   expect(rootElement.classList.length).toEqual(1);
-  //   expect(rootElement.classList[0]).toEqual("greeter");
-  // });
 });
 
-// it renders three input fields
-// one is labeled name
-    // it contains text of username
 
-// one is labeled username
-    // it contains username
-    // username can't be longer than 40 chars
-
-// one is labeled email
-    // it must be a valid email
+// wrapper.find('button').simulate('click');
+//     expect(onButtonClick.calledOnce).to.equal(true);
