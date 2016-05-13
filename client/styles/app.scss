@@ -60,7 +60,10 @@ input[type='search']{
 .button.alert{
   color: $white;
 }
-
+.delete-group{
+  float: right;
+  margin-top: 10px;
+}
 .example-appear {
   opacity: 0.01;
 }

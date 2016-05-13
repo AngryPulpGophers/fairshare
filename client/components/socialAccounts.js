@@ -8,35 +8,34 @@ export default class SocialAccounts extends Component {
     let primary = this.props.userInfo.primary;
     
     return(
-      <div style={{float:'right'}}>
+      <div>
           {fbook || google || pay  ?
-            <div>
-                <span>
-                  {fbook && primary !== 'Facebook' ? 
-                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}><i className="fa fa-lock"></i>Facebook</button>
-                      : fbook && primary === 'Facebook' ? <div>Logged in with: {primary}</div> : null}
-                  {google && primary !== 'Google' ?
-                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,google:0,provider:'google'})}><i className="fa fa-lock"></i>Google+</button>
-                      : google && primary === 'Google' ? <div>Logged in with: {primary}</div> : null}
-                  {pay && primary !== 'Paypal' ?
-                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,paypal:0,provider:'paypal'})}><i className="fa fa-lock"></i>PayPal</button>
-                      : pay && primary === 'Paypal' ? <div>Logged in with: {primary}</div> : null}
-                </span>
-            </div>
+            <span>
+              {fbook && primary !== 'Facebook' ? 
+                  <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}><i className="fa fa-lock"></i>Facebook</button>
+                  : fbook && primary === 'Facebook' ? <div>Logged in with: {primary}</div> : null}
+              {google && primary !== 'Google' ?
+                  <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,google:0,provider:'google'})}><i className="fa fa-lock"></i>Google+</button>
+                  : google && primary === 'Google' ? <div>Logged in with: {primary}</div> : null}
+              {pay && primary !== 'Paypal' ?
+                  <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,paypal:0,provider:'paypal'})}><i className="fa fa-lock"></i>PayPal</button>
+                  : pay && primary === 'Paypal' ? <div>Logged in with: {primary}</div> : null}
+            </span>
+           
             :null}
           {!fbook || !google || !pay ?
               <div>
                 <h6>Link Accounts:</h6>
                   <span>
                     {!fbook ? 
-                        <a href='auth/facebook' className="button alert button tiny"><i className="fa fa-unlock"></i>Facebook</a> 
+                        <a href='auth/facebook' className="button secondary button tiny"><i className="fa fa-unlock"></i>Facebook</a> 
                       :null}
                     {!google ? 
-                        <a href='auth/google' className="button alert button tiny"><i className="fa fa-unlock"></i>Google+</a> 
+                        <a href='auth/google' className="button secondary button tiny"><i className="fa fa-unlock"></i>Google+</a> 
                       :null}
                     {!pay ? 
                       
-                        <a href='auth/paypal' className="button alert button tiny"><i className="fa fa-unlock"></i>PayPal</a>
+                        <a href='auth/paypal' className="button secondary button tiny"><i className="fa fa-unlock"></i>PayPal</a>
                       :null}
                   </span>
               </div>
