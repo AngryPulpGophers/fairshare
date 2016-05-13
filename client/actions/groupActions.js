@@ -120,10 +120,10 @@ export const DELETE_SUCCESS = 'DELETE_SUCCESS';
 export const DELETE_FAILURE = 'DELETE_FAILURE';
 
 export function deleteGroup(id) {
-  //console.log('triggered', id)
+  console.log('triggered', id)
   return {
     [CALL_API]: {
-      endpoint: 'groups/'+id.id,
+      endpoint: 'groups/'+id,
       req: 'DELETE',
       types: [DELETE_REQUEST, DELETE_SUCCESS, DELETE_FAILURE]
     }

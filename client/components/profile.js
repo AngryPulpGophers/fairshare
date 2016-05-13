@@ -48,11 +48,11 @@ export default class Profile extends Component {
   render() {
     const {resetForm, handleSubmit, submitting, initialValues} = this.props;
       return (
-        <div className="login">
-        <SocialModal
-          userInfo = {this.props.userInfo}
-          stopSocialModal = {this.props.stopSocialModal}
-        />
+        <div className="profile">
+          <SocialModal
+            userInfo = {this.props.userInfo}
+            stopSocialModal = {this.props.stopSocialModal}
+          />
           <div className="row">
             <div className="small-12 large-7 large-centered columns">
               <div className="component-wrapper">
@@ -64,19 +64,17 @@ export default class Profile extends Component {
                     <strong> That was a splendid update! </strong>
                 </ExpireAlert>
                 <h3>Your Profile</h3>
-                <SocialAccount
-                  userInfo={this.props.userInfo}
-                  unlinkSocialAcc={this.props.unlinkSocialAcc}
-                />
                 <form className="profile-form" onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this))}>
                   <div className="row">
-                    <div className="small-12 large-4 columns">
+                    <div className="small-12 large-5 columns">
                       <img className="image" src={this.props.userInfo.img_url}/>
+                      <SocialAccount
+                        userInfo={this.props.userInfo}
+                        unlinkSocialAcc={this.props.unlinkSocialAcc}
+                      />
                     </div>
-                    <div className="small-12 large-8 columns">
+                    <div className="small-12 large-7 columns">
                       {_.map(FIELDS, this.renderField.bind(this))}
-                    </div>
-                    <div className="small-12 columns">
                       <button type="submit" className="primary button expanded" disabled={submitting}>
                         {submitting ? <i/> : <i/>} Update
                       </button>
