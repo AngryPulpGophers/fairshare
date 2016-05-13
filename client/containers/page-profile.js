@@ -5,7 +5,7 @@ import Profile from '../components/profile';
 import Friend from '../components/friendProfileView'
 import { getFriendProfile } from '../actions/userActions'
 import { getGroups } from '../actions/groupActions'
-import {updateUserInfo, resetAlert, unlinkSocialAcc} from '../actions/authActions'
+import {updateUserInfo, resetAlert, unlinkSocialAcc, stopSocialModal} from '../actions/authActions'
 
 class PageProfile extends Component {
 
@@ -51,7 +51,8 @@ class PageProfile extends Component {
         updateUserInfo = {this.props.updateUserInfo}
         userIsUpdated = {this.props.userIsUpdated}
         resetAlert = {this.props.resetAlert}
-        unlinkSocialAcc = {this.props.unlinkSocialAcc} 
+        unlinkSocialAcc = {this.props.unlinkSocialAcc}
+        stopSocialModal = {this.props.stopSocialModal} 
      />
     ) :
     (<Friend
@@ -78,6 +79,7 @@ export default connect(mapStateToProps, {
   resetAlert,
   getFriendProfile,
   unlinkSocialAcc,
+  stopSocialModal,
   getGroups
 })(PageProfile);
 

@@ -37,21 +37,13 @@ Users.getAllButCurr = function(reqObj){
     .where('id', '!=', reqObj.id);
 };
 
-// change this to inner join. (need to make changes on front end)
+// Possibly change user_id AS id to match other models.
 Users.getUsersByExpenseId = function(expenseId){
-  return db('user_expenses')
-    .select('user_id')
+  return db('users')
+    .select('name', 'username', 'email', 'img_url', 'user_id AS id')
+    .innerJoin('user_expenses', 'users.id', 'user_expenses.user_id')
     .where({
       expense_id: expenseId
-    })
-    .then(function(users){
-      var usersFull = users.map(function(user){
-        return Users.getById({id: user.user_id})
-          .then(function(user){
-            return user[0];
-          });
-      });
-      return Promise.resolve(Promise.all(usersFull));
     });
 };
 

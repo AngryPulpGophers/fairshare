@@ -9,27 +9,42 @@ module.exports = router;
 router.get('/facebook', passport.authenticate('facebook', {scope: ['email']}));
 
 router.get('/facebook/callback', passport.authenticate('facebook',
-  {failureRedirect: '/facebook', successRedirect: '/'}));
+  {failureRedirect: '/facebook'}), function(req,res){
+  	if(req.user.showModal){
+	    res.redirect('/profile');
+	  }else{
+	  	res.redirect('/');
+	  }
+});
 
 router.get('/google', passport.authenticate('google', {scope:['email', 'profile']}));
 
 router.get('/google/callback', passport.authenticate('google',
-  {failureRedirect: '/google', successRedirect: '/'}));
+  {failureRedirect: '/google'}), function(req,res){
+  	if(req.user.showModal){
+	    res.redirect('/profile');
+	  }else{
+	  	res.redirect('/');
+	  }
+});
 
 router.get('/paypal', passport.authenticate('paypal', {scope:['openid']}));
 
 router.get('/paypal/callback', passport.authenticate('paypal',
-	{failureRedirect: '/paypal', successRedirect:'/'}));
+	{failureRedirect: '/paypal'}), function(req,res){
+  	if(req.user.showModal){
+	    res.redirect('/profile');
+	  }else{
+	  	res.redirect('/');
+	  }
+});
 
 
 router.get(('/logout'),function(req,res){
-  User.editProfile({id:req.user.id, showModal: 1})
-    .then(() => {
-	    req.session.destroy(function(){
-	    req.sessionID = null;
-	    req.logout();
-	    res.redirect('/');
-      });
-    })
-	 .catch(err => console.warn(err));
-});
+	req.session.destroy(function(err){
+	req.sessionID = null;
+	req.logout();
+	res.redirect('/');
+	});
+})
+

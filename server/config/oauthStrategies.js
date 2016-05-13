@@ -59,6 +59,7 @@ Strategies.facebook_strat = new FacebookStrategy({
 
     //check DB for user--IF exists, execute cb->line 68
     //ELSE create profile, store in DB, execute cb->lines 70-85
+    console.log("req.user in facebook", req.user);
   if(!req.user){
     Identity.getByProviderID(profile.id)
       .then( userObj => {
@@ -113,7 +114,7 @@ Strategies.facebook_strat = new FacebookStrategy({
       })
       .catch( err => console.warn('Error @facebook strategy:', err));
   }else{
-    let ID = identityEntry(req.user.id, profile.id, params,'google');
+    let ID = identityEntry(req.user.id, profile.id, params,'facebook');
     req.user.facebook = 1;
     User.editProfile(req.user)
       .then( () => {
@@ -128,7 +129,7 @@ Strategies.facebook_strat = new FacebookStrategy({
 Strategies.google_strat = new GoogleStrategy({
     clientID: GoogleID,
     clientSecret: GoogleSecret,
-    callbackURL: '/auth/google/callback',
+    callbackURL: 'http://www.fairshare.cloud/auth/google/callback',
     passReqToCallback: true
   },
    (req, accessToken, refreshToken,params, profile, done) => {
@@ -136,6 +137,8 @@ Strategies.google_strat = new GoogleStrategy({
     //check DB for user--IF exists, execute cb->line 68
     //ELSE create profile, store in DB, execute cb->lines 70-85
     // console.log('profile from google:', profile);
+    console.log('profile in google strat:', profile);
+    console.log("req.user in google", req.user);
   if(!req.user){
     Identity.getByProviderID(profile.id)
       .then( userObj => {
@@ -211,6 +214,7 @@ Strategies.paypal_strat = new PayPalStrategy({
   (req, accessToken, refreshToken, params, profile, done) => {
     //check DB for user--IF exists, execute cb->line 68
     //ELSE create profile, store in DB, execute cb->lines 70-85
+    console.log("req.user in paypal", req.user);
   if(!req.user){
     Identity.getByProviderID(profile.id)
       .then( userObj => {
@@ -263,7 +267,7 @@ Strategies.paypal_strat = new PayPalStrategy({
       })
       .catch( err => console.warn('Error @paypal strategy:', err));
   }else{
-    let ID = identityEntry(req.user.id, profile.id, params,'google');
+    let ID = identityEntry(req.user.id, profile.id, params,'paypal');
     req.user.paypal = 1;
     User.editProfile(req.user)
       .then( () => {

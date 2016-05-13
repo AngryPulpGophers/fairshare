@@ -133,7 +133,8 @@ router.put('/username', function(req, res){
 });
 
 router.post('/unlinkAccount',function(req,res){
-  console.log('in unlink endpoint with following:', req.body);
+  var providerKey = req.body.provider;
+  req.body[providerKey] = 0;
   Identity.unlink(req.body)
     .then(function(){
       delete req.body.provider;
