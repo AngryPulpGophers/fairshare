@@ -113,7 +113,7 @@ Strategies.facebook_strat = new FacebookStrategy({
       })
       .catch( err => console.warn('Error @facebook strategy:', err));
   }else{
-    let ID = identityEntry(req.user.id, profile.id, params,'google');
+    let ID = identityEntry(req.user.id, profile.id, params,'facebook');
     req.user.facebook = 1;
     User.editProfile(req.user)
       .then( () => {
@@ -263,7 +263,7 @@ Strategies.paypal_strat = new PayPalStrategy({
       })
       .catch( err => console.warn('Error @paypal strategy:', err));
   }else{
-    let ID = identityEntry(req.user.id, profile.id, params,'google');
+    let ID = identityEntry(req.user.id, profile.id, params,'paypal');
     req.user.paypal = 1;
     User.editProfile(req.user)
       .then( () => {

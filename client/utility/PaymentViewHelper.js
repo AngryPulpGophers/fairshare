@@ -45,24 +45,15 @@ PayHelp.handleSubmit = (obj,data) => {
   } 
 }
 
-//following functions control both form modal and inner modal using local state variable
+//following functions controls form modal 
 
 PayHelp.openModal = (obj) => {
-    if(obj.state.isModalOpen){
-      obj.setState({isInnerModalOpen: true})
-    }else{
-      obj.setState({isModalOpen: true})
-    }
-  }
+  obj.setState({isModalOpen: true})
+}
 
 PayHelp.closeModal = (obj) => {
-    if(obj.state.isInnerModalOpen){
-      obj.setState({isInnerModalOpen: false});
-    }else{
-      obj.setState({isModalOpen: false})
-    }
-
-  }
+  obj.setState({isModalOpen: false})
+}
 
 
 PayHelp.makeRadioButton = (data,obj) => {
@@ -74,9 +65,9 @@ PayHelp.makeRadioButton = (data,obj) => {
 //creates JSX elements for form radio buttons using previous func while excluding the signed in user;
 
 PayHelp.memberButtons = (obj,func) => obj.props.groupMembers.filter( member => {
-      return member.user_id !== obj.props.userInfo.id;
-    }).map( member => { 
-      return func(member,obj);  
-    })
+  return member.user_id !== obj.props.userInfo.id;
+  }).map( member => { 
+    return func(member,obj);  
+  })
 
 
