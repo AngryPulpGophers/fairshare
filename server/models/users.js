@@ -44,10 +44,6 @@ Users.getUsersByExpenseId = function(expenseId){
     .innerJoin('user_expenses', 'users.id', 'user_expenses.user_id')
     .where({
       expense_id: expenseId
-    })
-    .then(function(data){
-      console.log("data:", data);
-      return data;
     });
 };
 
