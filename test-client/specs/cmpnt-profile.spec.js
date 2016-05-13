@@ -22,7 +22,7 @@ describe('Front End @Profile Component', () => {
       const wrapper = shallow(<Profile/>, { context });
          wrapper.find('div').forEach(function (node) {
           expect(wrapper.text()).to.equal('Christina Mitchell');
-        });   
+        });
     });
 
     it('has a form ', () => {
