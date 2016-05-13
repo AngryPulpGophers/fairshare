@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 // import MemberList from './memberList';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-export default class Modal extends Component {
+export default class ErrorModal extends Component {
   render(){
       if(this.props.isOpen){
         return(   
           <div className = 'modal-overlay'>
-            <div className='modal'>
+            <div className='modal' style={{backgroundColor:'#ffb3b3',width:'35%'}}>
               {this.props.children}
             </div>
           </div>

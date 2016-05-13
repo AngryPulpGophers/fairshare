@@ -23,16 +23,6 @@ router.param('group', function(req, res, next, group){
   next();
 });
 
-router.param('userid', function(req, res, next, userid){
-  req.userid = userid;
-  next();
-});
-
-router.param('balance', function(req, res, next, balance){
-  req.balance = balance;
-  next();
-});
-
 router.get('/', function(req, res){
   Groups.getGroupsByUserId( req.user.id )
     .then(function(data){
@@ -40,6 +30,20 @@ router.get('/', function(req, res){
     })
     .catch(function(err){
       res.status(400).send({err: err, text: 'Error in getting a users groups'});
+    });
+});
+
+router.get('/:group', Middleware.checkGroup, function(req, res){
+  Groups.getGroupById( req.group )
+    .then(function(data){
+      Users.getUsersByGroupId( req.group )
+        .then(function(members){
+          data.members = members;
+          res.send(data);
+        });
+    })
+    .catch(function(err){
+      res.status(400).send({err: err, text: 'Error in getting the group'});
     });
 });
 
@@ -150,44 +154,105 @@ router.post('/payments', Middleware.checkGroup, function(req, res){
     });
 });
 
-router.post('/addMember/', Middleware.checkGroup, function(req, res){
-  Groups.addMember( req.body )
-    .then(function(){
-      res.send('succesfully added member');
+router.put('/', Middleware.checkGroupOwner, function(req, res){
+  console.log('what is being sent',req.body);
+  var members;
+  var memberIds = req.body.members;
+  //var memberIds  = members.map(function(val){ return val.user_id; });
+  var newMembers = [];
+  delete req.body.members;
+  console.log("members:", members);
+
+  // only add new members, not delete old ones.
+  Users.getUsersByGroupId( req.body.id )
+    .then(function(data){
+      members = data;
+      console.log("data:", data);
+      return data.map(function(data){
+        return data.user_id;
+      });
     })
-    .catch(function(err){
-      res.send({err: err});
+    .then(function(ids){
+      console.log("ids:", ids);
+      console.log("memberIds:", memberIds);
+      // find new members
+      memberIds.forEach(function(member){
+        if (ids.indexOf(member) === -1){ newMembers.push(member); }
+      });
+      console.log("newMembers:", newMembers);
+      newMembers.forEach(function(member){
+        Groups.addMember({
+          user_id: member,
+          group_id: req.body.id
+        }).then();
+
+        Users.getById(member)
+        .then(function(result){
+          console.log('this should be first step', result);
+          members.push(result);
+        });
+      });
+    })
+    .then(function(){
+      Groups.update( req.body )
+        .then(function(data){
+          console.log('making sure promise happens2',members);
+          if (members){ data.members = members; }
+          res.send(data);
+        });
     });
 });
 
+// FINISH UPDATING EXPENSES
 router.put('/expenses', Middleware.checkGroup, function(req, res){
-  if (req.body.membersAdded){
-    req.body.membersAdded.forEach(function(member){
-      Groups.addExpenseMember({
-        expense_id: req.body.id,
-        user_id: member
-      }).then();
-    });
-    delete req.body.membersAdded;
-  }
-  if (req.body.membersDeleted){
-    req.body.membersDeleted.forEach(function(member){
-      Groups.removeExpenseMember({
-        expense_id: req.body.id,
-        user_id: member
-      }).then();
-    });
-    delete req.body.membersDeleted;
-  }
+
   if (req.body.members){
     var members    = req.body.members;
+    var memberIds  = members.map(function(val){ return val.user_id; });
+
+    var newMembers = [];
+    var removedMembers = [];
     delete req.body.members;
+
+    //SHOULD REMOVE THESE AT SOME POINT
+    delete req.body.membersAdded;
+    delete req.body.membersDeleted;
+
+    Users.getUsersByExpenseId( req.body.id )
+      .then(function(data){
+        return data.map(function(data){
+          return data.id;
+        });
+      })
+      .then(function(ids){
+        // find new members
+        memberIds.forEach(function(member){
+          if (ids.indexOf(member) === -1){ newMembers.push(member); }
+        });
+        // find members to remove
+        ids.forEach(function(id){
+          if (memberIds.indexOf(id) === -1) { removedMembers.push(id); }
+        });
+
+        newMembers.forEach(function(member){
+          Groups.addExpenseMember({
+            user_id: member,
+            expense_id: req.body.id
+          }).then();
+        });
+
+        removedMembers.forEach(function(member){
+          Groups.removeExpenseMember({
+            user_id: member,
+            expense_id: req.body.id
+          }).then();
+        });
+      });
   }
 
   Groups.updateExpense( req.body )
     .then(function(data){
       if (members){ data.members = members; }
-      // console.log('rico WTF',data)
       data.type = 'expense';
       res.send(data);
     })
@@ -206,11 +271,7 @@ router.put('/payments', Middleware.checkGroup, function(req, res){
     });
 });
 
-router.put('/balance/:userid/:group/:balance', Middleware.checkGroup, function(req, res){
-  req.body.user_id = Number(req.userid);
-  req.body.group_id = Number(req.group);
-  req.body.balance = Number(req.balance);
-
+router.put('/balance/', Middleware.checkGroup, function(req, res){
   Groups.updateBalance( req.body )
     .then(function(data){
       res.status(204).send(data);

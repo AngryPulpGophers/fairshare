@@ -5,6 +5,7 @@ import Navigation from '../components/navigation';
 import { createCallout } from '../actions/calloutActions';
 import { getUserInfo } from '../actions/authActions';
 import { logoutUser }  from '../actions/authActions';
+import { emailNewUser } from '../actions/userActions';
 import '../styles/index.css';
 import '../styles/foundation.scss';
 
@@ -26,7 +27,10 @@ class App extends Component {
     return (
       <div>
         <Navigation createCallout={this.props.createCallout} 
-          isAuthed={this.props.isAuthed} userInfo = {this.props.userInfo} logoutUser ={this.props.logoutUser} />
+          isAuthed={this.props.isAuthed} 
+          userInfo = {this.props.userInfo} 
+          logoutUser ={this.props.logoutUser} 
+          emailNewUser = {this.props.emailNewUser}/>
         <div className='row'>
           <div className='large-12 columns'>
             {children}
@@ -65,5 +69,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  createCallout,getUserInfo,logoutUser
+  createCallout,getUserInfo,logoutUser,emailNewUser
 })(App)

@@ -24,28 +24,36 @@ PayHelp.buildPaymentEntry = (obj,data) => {
   data.payee = obj.props.userInfo.id;
   data.amount = Number(data.amount);
   data.group_id = Number(data.group_id);
+  data.pending = 1;
   obj.props.destroyForm();
   return data;
 }
 
-//following functions control both form modal and inner modal using local state variable
+PayHelp.handleSubmit = (obj,data) => {
+  obj.setState({isModalOpen:false, chosenOne: null});
+  data = PayHelp.buildPaymentEntry(obj,data);
+  if(sessionStorage.getItem('cash')){
+    delete data.email;
+    sessionStorage.clear();
+    obj.props.makePayment(JSON.stringify(data));
+  }else{
+    let dbPaymentEntry = Object.assign({},data);
+    delete dbPaymentEntry.email;
+    data.returnURL = window.location.href.match(/g.+/)[0];
+    sessionStorage.clear();
+    obj.props.usePaypal(JSON.stringify(data),JSON.stringify(dbPaymentEntry));
+  } 
+}
+
+//following functions controls form modal 
 
 PayHelp.openModal = (obj) => {
-    if(obj.state.isModalOpen){
-      obj.setState({isInnerModalOpen: true})
-    }else{
-      obj.setState({isModalOpen: true})
-    }
-  }
+  obj.setState({isModalOpen: true})
+}
 
 PayHelp.closeModal = (obj) => {
-    if(obj.state.isInnerModalOpen){
-      obj.setState({isInnerModalOpen: false});
-    }else{
-      obj.setState({isModalOpen: false})
-    }
-
-  }
+  obj.setState({isModalOpen: false})
+}
 
 
 PayHelp.makeRadioButton = (data,obj) => {
@@ -57,9 +65,9 @@ PayHelp.makeRadioButton = (data,obj) => {
 //creates JSX elements for form radio buttons using previous func while excluding the signed in user;
 
 PayHelp.memberButtons = (obj,func) => obj.props.groupMembers.filter( member => {
-      return member.user_id !== obj.props.userInfo.id;
-    }).map( member => { 
-      return func(member,obj);  
-    })
+  return member.user_id !== obj.props.userInfo.id;
+  }).map( member => { 
+    return func(member,obj);  
+  })
 
 

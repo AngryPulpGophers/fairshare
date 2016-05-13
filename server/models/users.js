@@ -37,20 +37,13 @@ Users.getAllButCurr = function(reqObj){
     .where('id', '!=', reqObj.id);
 };
 
+// Possibly change user_id AS id to match other models.
 Users.getUsersByExpenseId = function(expenseId){
-  return db('user_expenses')
-    .select('user_id')
+  return db('users')
+    .select('name', 'username', 'email', 'img_url', 'user_id AS id')
+    .innerJoin('user_expenses', 'users.id', 'user_expenses.user_id')
     .where({
       expense_id: expenseId
-    })
-    .then(function(users){
-      var usersFull = users.map(function(user){
-        return Users.getById({id: user.user_id})
-          .then(function(user){
-            return user[0];
-          });
-      });
-      return Promise.resolve(Promise.all(usersFull));
     });
 };
 
@@ -60,7 +53,8 @@ Users.getUsersByGroupId = function(groupID){
     .innerJoin('user_groups', 'users.id', 'user_groups.user_id')
     .where({
       group_id: groupID
+    })
+    .then(function(data){
+      return data;
     });
 };
-
-

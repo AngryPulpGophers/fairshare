@@ -19,7 +19,6 @@ if (process.env.NODE_ENV !== 'test'){
 }
 
 router.param('username',function(req, res, next, username){
-
   req.username = username;
 	next();
 });
@@ -100,14 +99,14 @@ router.post('/invite', function(req, res, next){
     user: 'info@fairshare.cloud',
     pass: 'AeK6yxhT'
   };
-  var transporter = nodemailer.createTransport(config);
 
+  var transporter = nodemailer.createTransport(config);
   var mailOptions = {
     from: '"Info" <info@fairshare.cloud>',
     to: '<' + req.body.email + '>',
     subject: "You've been invited to join Fairshare.",
     text: 'Please visit fairshare.cloud to create an account.',
-    html: "Please visit <a href='http://www.fairshare.cloud'>fairshare.cloud</a> to create an account."
+    html: "<p>" + req.user.name + " has invited you to join Fairshare.</p><p>A note from your friend: " + req.body.note +"</p><br><p>Please visit <a href='http://www.fairshare.cloud'>fairshare.cloud</a> to create an account.</p>"
   };
 
   transporter.sendMail(mailOptions, function(error, info){

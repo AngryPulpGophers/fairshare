@@ -6,53 +6,51 @@ export default class SocialAccounts extends Component {
     let [fbook,google,pay] = [this.props.userInfo.facebook,this.props.userInfo.google,this.props.userInfo.paypal];
     let id = this.props.userInfo.id;
     let primary = this.props.userInfo.primary;
-  	
-  	return(
+    
+    return(
       <div style={{float:'right'}}>
-		  	  {fbook || google || pay  ?
+          {fbook || google || pay  ?
             <div>
               <h5>Social Connections</h5>
-                <ul className='menu simple'>
-                  {fbook && primary !== 'facebook' ? 
-                    <li>
-                      <p>Facebook</p><i className="fa fa-lock" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}></i>
-                    </li>:<span>Primary Account: {primary}</span>}
-                  {google && primary !== 'google' ?
-                    <li>
-                      <p>Google+</p><i className="fa fa-lock"  onClick={()=>this.props.unlinkSocialAcc({id:id,google:0,provider:'google'})}></i>
-                    </li>:<span></span>}
-                  {pay && primary !== 'paypal' ?
-                    <li>
-                      <p>PayPal</p><i className="fa fa-lock" onClick={()=>this.props.unlinkSocialAcc({id:id, paypal:0,provider:'paypal'})}></i>
-                    </li>: <span></span>}
-                </ul>
+                <span>
+                  {fbook && primary !== 'Facebook' ? 
+                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}><i className="fa fa-lock"></i>Facebook</button>
+                      : fbook && primary === 'Facebook' ? <div>Primary Account: {primary}</div> : <span></span>}
+                  {google && primary !== 'Google' ?
+                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,google:0,provider:'google'})}><i className="fa fa-lock"></i>Google+</button>
+                      : google && primary === 'Google' ? <div>Primary Account: {primary}</div> : <span></span>}
+                  {pay && primary !== 'Paypal' ?
+                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,paypal:0,provider:'paypal'})}><i className="fa fa-lock"></i>PayPal</button>
+                      : pay && primary === 'PayPal' ? <div>Primary Account: {primary}</div> : <span></span>}
+                </span>
             </div>
             :<span></span>}
           {!fbook || !google || !pay ?
               <div>
                 <h5>Link Accounts</h5>
-                  <ul className='menu simple'>
+                  <span>
                     {!fbook ? 
-                      <li>
-                        <a href='auth/facebook'><i className="fa fa-unlock"></i></a><p>Facebook</p>
-                      </li>:<span></span>}
+                        <a href='auth/facebook' className="button alert button tiny"><i className="fa fa-unlock"></i>Facebook</a>
+                      :<span></span>}
                     {!google ? 
-                      <li>
-                        <a href='auth/google'><i className="fa fa-unlock"></i></a><p>Google+</p>
-                      </li>:<span></span>}
+                        <a href='auth/google' className="button alert button tiny"><i className="fa fa-unlock"></i>Google+</a>
+                      :<span></span>}
                     {!pay ? 
-                      <li>
-                        <a href='auth/paypal'><i className="fa fa-unlock"></i></a><p>PayPal</p>
-                      </li>:<span></span>}
-                  </ul>
+                      
+                        <a href='auth/paypal' className="button alert button tiny"><i className="fa fa-unlock"></i>PayPal</a>
+                      :<span></span>}
+                  </span>
               </div>
-		      :<span></span>}	
+          :<span></span>} 
       </div>
     )
   }
 }
 
+//unlinkSocialAcc--fires async action that clears database of auth token issued by provider
+//href in lines 37,41,and 45 sends user through respective Oauth strategy(facebook,google+ or paypal)
+
 SocialAccounts.propTypes = {
-	unlinkSocialAcc : PropTypes.func.isRequired,
-	userInfo: PropTypes.object.isRequired
+  unlinkSocialAcc : PropTypes.func.isRequired,
+  userInfo: PropTypes.object.isRequired
 }

@@ -25,7 +25,8 @@ req.body = {
 // 'POST' /users/invite
 
 req.body = {
-  "email": "user@mail.com"
+  "email": "user@mail.com",
+  "note": "string"
 };
 
 // 'PUT' /users/username
@@ -63,10 +64,12 @@ req.body = {
   members: ["id(number)", "id", "id"]
 };
 
-// 'POST' to /groups/addMember/
+// 'PUT' to /groups/
 req.body = {
-  group_id: 'id',
-  user_id: 'id'
+  id: 'id',
+  name: "string",
+  desc: "text",
+  members: [{userinfo},{userinfo},{userinfo}] // updated members
 };
 
 // 'POST' to /groups/expenses
