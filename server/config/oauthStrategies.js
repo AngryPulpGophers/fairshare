@@ -1,7 +1,7 @@
 "use strict";
 
 var GoogleStrategy    = require('passport-google-oauth2').Strategy;
-var PayPalStrategy    = require('passport-paypal-oauth').Strategy;
+var PayPalStrategy    = require('../../passport-paypal-oauth').Strategy;
 var FacebookStrategy  = require('passport-facebook').Strategy;
 var User              = require('../models/users');
 var Identity          = require('../models/Identity');
@@ -69,7 +69,7 @@ Strategies.facebook_strat = new FacebookStrategy({
         }else{
           let userProfile = {
             name: profile.displayName,
-            username:profile.displayName.split(' ').join(''),
+            username:profile.displayName.split(' ').join(' '),
             email: profile.emails[0].value,
             img_url: profile.photos[0].value,
             primary: 'Facebook',

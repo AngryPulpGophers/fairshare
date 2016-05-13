@@ -69,6 +69,11 @@ export function groups(state = { isFetching: false, editGroup: {}, currentGroup:
         return update(state, {
           editGroup: {$set: {} }
         })
+        case ActionTypes.ACTIVITY_CLEAR:
+        //console.log('trigger clearing editGroup State')
+        return update(state, {
+          activity: {$set: [] }
+        })
 
       //set CURRENT group
       case ActionTypes.CURRENT_GROUP:

@@ -12,15 +12,15 @@ export default class SocialAccounts extends Component {
           {fbook || google || pay  ?
             <div>
                 <span>
-                  {fbook && primary !== 'facebook' ? 
+                  {fbook && primary !== 'Facebook' ? 
                       <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}><i className="fa fa-lock"></i>Facebook</button>
-                      : fbook && primary === 'facebook' ? <div>Logged in with: {primary}</div> : null}
-                  {google && primary !== 'google' ?
-                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}><i className="fa fa-lock"></i>Google+</button>
-                      : google && primary === 'google' ? <div>Logged in with: {primary}</div> : null}
-                  {pay && primary !== 'paypal' ?
-                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}><i className="fa fa-lock"></i>PayPal</button>
-                      : google && primary === 'paypal' ? <div>Logged in with: {primary}</div> : null}
+                      : fbook && primary === 'Facebook' ? <div>Logged in with: {primary}</div> : null}
+                  {google && primary !== 'Google' ?
+                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,google:0,provider:'google'})}><i className="fa fa-lock"></i>Google+</button>
+                      : google && primary === 'Google' ? <div>Logged in with: {primary}</div> : null}
+                  {pay && primary !== 'Paypal' ?
+                      <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,paypal:0,provider:'paypal'})}><i className="fa fa-lock"></i>PayPal</button>
+                      : pay && primary === 'Paypal' ? <div>Logged in with: {primary}</div> : null}
                 </span>
             </div>
             :null}

@@ -1,3 +1,5 @@
+import React from 'react';
+
 var Helper = module.exports
 
 Helper.prettyDate = function(milliseconds){
@@ -261,3 +263,23 @@ Helper.test = function(x,obj){
     }
   }
 }
+
+
+Helper.showDebt = function(showUserBalance){
+  return showUserBalance.map(function(user){
+    return (
+      <span key={user.user_id}>
+        {user.owed.map(function(person, index){
+          return (
+            <div key={index+user.name}>
+              {this.seeIfYou(user.name)} {this.seeIfYou(user.name) === 'You' ? " owe " + Object.keys(person) + " $" + -1 * person[Object.keys(person)]
+          : "owes " + this.seeIfYou(Object.keys(person)) +" $"+ -1*person[Object.keys(person)]}
+            </div>
+            )
+          }.bind(this))
+        }
+      </span>
+    )
+  }.bind(this))
+}
+
