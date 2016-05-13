@@ -21,7 +21,7 @@ const FIELDS = {
 
 let alert = false;
 
-export Profile extends Component {
+export default class Profile extends Component {
     
     componentWillReceiveProps(nextProps){
       if(nextProps.userIsUpdated){
