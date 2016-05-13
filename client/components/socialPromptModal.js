@@ -15,7 +15,6 @@ permanently during current session.*/
     return(
         <Modal className='modal' isOpen={this.props.userInfo.showModal} transitionName="modal-anim">
             <div className="component-wrapper text-center">
-              <span onClick={ ()=> this.props.stopSocialModal({id:this.props.userInfo.id, showModal:0})} aria-hidden="true" style = {{cursor:'pointer'}}>skip</span>
                <h3>Link other accounts?</h3>
                 <div className="row">
                   <div className="small-12 large-4 columns">
@@ -27,6 +26,7 @@ permanently during current session.*/
                   <div className="small-12 large-4 columns">
                     <a href='/auth/paypal' disabled={this.props.userInfo.paypal} className="large secondary button"><i className='fa fa-paypal'></i> PayPal</a>
                   </div>
+                  <span onClick={ ()=> this.props.stopSocialModal({id:this.props.userInfo.id, showModal:0})} aria-hidden="true" style = {{cursor:'pointer'}}>close</span>
                 </div>
             </div>
         </Modal>
