@@ -108,6 +108,10 @@ export default class GroupView extends Component {
           <h2>Balance</h2>
           {showDebt.call(this,showUserBalance)}
           <h2>Activity</h2>
+          {!this.props.activity.length ? 
+            <div>Add an expense or payment to get started!</div>
+            : null
+          }
           {this.props.activity.map(function(activity,index){
             if(activity.type==='expense'){
               var holdMemberId=[]

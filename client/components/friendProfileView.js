@@ -16,10 +16,10 @@ export default class FriendProfileView extends Component {
           </div>
 
           <div className="small-12 large-8 columns"> 
-            <div> name: {this.props.friendProfile.name} </div>  
-            <div> username: {this.props.friendProfile.username} </div>
-            <div> email: {this.props.friendProfile.email} </div>
-            <div> our shared expenses: </div>
+            <div> Name: {this.props.friendProfile.name} </div>  
+            <div> Username: {this.props.friendProfile.username} </div>
+            <div> Email: {this.props.friendProfile.email} </div>
+            <div> Our shared groups: </div>
 
             <div>
               {this.props.groups.map(function(group) {

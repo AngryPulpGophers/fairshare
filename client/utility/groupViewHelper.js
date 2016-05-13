@@ -52,7 +52,7 @@ console.log('what is going on',this.props.activity)
   }
 
 for (var key in groupObj){
-  console.log('look at me mom',groupObj[key].balance)
+  console.log('Groups Object in Calc Balance function',groupObj[key].balance)
 }
 //loop through each activity the group has
   for (var i = 0 ; i < this.props.activity.length ; i++){
@@ -266,6 +266,17 @@ Helper.test = function(x,obj){
 
 
 Helper.showDebt = function(showUserBalance){
+  var testBal = 0;
+  for (var i = 0 ; i < showUserBalance.length ; i++){
+    for (var x = 0 ; x < showUserBalance[i].owed.length ; x++){
+      testBal = testBal + Number(showUserBalance[i].owed[x][Object.keys(showUserBalance[i].owed[x])])
+    }
+  }
+  if (testBal===0){
+    return (
+      <div>Your group has a $0 balance</div>)
+  }
+
   return showUserBalance.map(function(user){
     return (
       <span key={user.user_id}>
