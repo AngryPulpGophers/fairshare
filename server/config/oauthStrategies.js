@@ -128,7 +128,7 @@ Strategies.facebook_strat = new FacebookStrategy({
 Strategies.google_strat = new GoogleStrategy({
     clientID: GoogleID,
     clientSecret: GoogleSecret,
-    callbackURL: '/auth/google/callback',
+    callbackURL: 'http://www.fairshare.cloud/auth/google/callback',
     passReqToCallback: true
   },
    (req, accessToken, refreshToken,params, profile, done) => {
@@ -136,6 +136,7 @@ Strategies.google_strat = new GoogleStrategy({
     //check DB for user--IF exists, execute cb->line 68
     //ELSE create profile, store in DB, execute cb->lines 70-85
     // console.log('profile from google:', profile);
+    console.log('profile in google strat:', profile);
   if(!req.user){
     Identity.getByProviderID(profile.id)
       .then( userObj => {
