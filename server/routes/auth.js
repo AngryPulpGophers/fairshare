@@ -10,7 +10,7 @@ router.get('/facebook', passport.authenticate('facebook', {scope: ['email']}));
 
 router.get('/facebook/callback', passport.authenticate('facebook',
   {failureRedirect: '/facebook'}), function(req,res){
-  	if(req.user.showModal === 1){
+  	if(req.user.showModal){
 	    res.redirect('/profile');
 	  }else{
 	  	res.redirect('/');
