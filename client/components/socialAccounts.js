@@ -11,37 +11,36 @@ export default class SocialAccounts extends Component {
       <div style={{float:'right'}}>
           {fbook || google || pay  ?
             <div>
-              <h5>Social Connections</h5>
                 <span>
                   {fbook && primary !== 'facebook' ? 
                       <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}><i className="fa fa-lock"></i>Facebook</button>
-                      : fbook && primary === 'facebook' ? <div>Primary Account: {primary}</div> : <span></span>}
+                      : fbook && primary === 'facebook' ? <div>Logged in with: {primary}</div> : null}
                   {google && primary !== 'google' ?
                       <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}><i className="fa fa-lock"></i>Google+</button>
-                      : google && primary === 'google' ? <div>Primary Account: {primary}</div> : <span></span>}
+                      : google && primary === 'google' ? <div>Logged in with: {primary}</div> : null}
                   {pay && primary !== 'paypal' ?
                       <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,facebook:0,provider:'facebook'})}><i className="fa fa-lock"></i>PayPal</button>
-                      : google && primary === 'paypal' ? <div>Primary Account: {primary}</div> : <span></span>}
+                      : google && primary === 'paypal' ? <div>Logged in with: {primary}</div> : null}
                 </span>
             </div>
-            :<span></span>}
+            :null}
           {!fbook || !google || !pay ?
               <div>
-                <h5>Link Accounts</h5>
+                <h6>Link Accounts:</h6>
                   <span>
                     {!fbook ? 
-                        <a href='auth/facebook' className="button alert button tiny"><i className="fa fa-unlock"></i>Facebook</a>
-                      :<span></span>}
+                        <a href='auth/facebook' className="button alert button tiny"><i className="fa fa-unlock"></i>Facebook</a> 
+                      :null}
                     {!google ? 
-                        <a href='auth/google' className="button alert button tiny"><i className="fa fa-unlock"></i>Google+</a>
-                      :<span></span>}
+                        <a href='auth/google' className="button alert button tiny"><i className="fa fa-unlock"></i>Google+</a> 
+                      :null}
                     {!pay ? 
                       
                         <a href='auth/paypal' className="button alert button tiny"><i className="fa fa-unlock"></i>PayPal</a>
-                      :<span></span>}
+                      :null}
                   </span>
               </div>
-          :<span></span>} 
+          :null} 
       </div>
     )
   }

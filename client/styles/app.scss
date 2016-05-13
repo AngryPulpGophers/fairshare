@@ -3,6 +3,7 @@
 body{
   z-index: -1;
   background: $white url(../images/dinnerBlur.jpg) no-repeat center center;
+  background-attachment:fixed;
 }
 h5,h6 {font-family: 'Helvetica Neue', sans-serif;}
 .component-wrapper{
@@ -11,13 +12,14 @@ h5,h6 {font-family: 'Helvetica Neue', sans-serif;}
   border-radius: .33em;
   border: 1px solid #ccc;
   box-shadow: 1px 1px 20px #888;
+  margin-bottom: 40px;
 }
 
-.login,.create-group{
-  margin-top: 130px;
+.login,.create-group,.profile{
+  margin-top: 60px;
 }
 .dashboard{
-  margin-top: 100px;
+  margin-top: 60px;
 }
 .input-group{
   position: relative;
