@@ -21,7 +21,7 @@ export default class FriendProfileView extends Component {
                 <div><span className="secondary label">Email:</span><h5> <a href={mailToLink}>{this.props.friendProfile.email}</a></h5></div>
               </div>  
               <div className="small-12 columns">
-                <h4>Your shared expenses: </h4>
+                <h4>Your shared groups: </h4>
                 <div className="shared-groups">
                   {this.props.groups.map(function(group) {
                     for (var i = 0; i < group.members.length; i++) {
