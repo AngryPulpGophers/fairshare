@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
-import SocialModal from '../components/socialPromptModal';
 
 
 function puke (obj) {
@@ -16,10 +15,6 @@ export default class GroupList extends Component {
   render(){
     return(
       <div>
-        <SocialModal
-          userInfo={this.props.userInfo}
-          stopSocialModal={this.props.stopSocialModal}
-        />
       <div>
          {this.props.groups.map(function(group){
             return (
@@ -45,6 +40,5 @@ export default class GroupList extends Component {
 
 GroupList.propTypes = {
   userInfo: PropTypes.object.isRequired,
-  stopSocialModal: PropTypes.func.isRequired
 }
 

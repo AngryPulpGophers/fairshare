@@ -102,7 +102,7 @@ export default class GroupView extends Component {
           <Modal isOpen={sessionStorage.getItem('success')}>
             <div style={{textAlign:'center'}}>
               <h2>Your Transaction was successful!!</h2>
-              <p onClick={() => this.props.makePayment(sessionStorage.getItem('dbEntry'))} style = {{cursor:'pointer', textDecoration:'underline'}}>close</p>
+              <span onClick={() => this.props.makePayment(sessionStorage.getItem('dbEntry'))} style = {{cursor:'pointer', textDecoration:'underline'}}>close</span>
             </div>
           </Modal>
           <h2>Balance</h2>

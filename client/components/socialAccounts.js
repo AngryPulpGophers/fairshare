@@ -6,7 +6,7 @@ export default class SocialAccounts extends Component {
     let [fbook,google,pay] = [this.props.userInfo.facebook,this.props.userInfo.google,this.props.userInfo.paypal];
     let id = this.props.userInfo.id;
     let primary = this.props.userInfo.primary;
-    
+
     return(
       <div style={{float:'right'}}>
           {fbook || google || pay  ?
@@ -19,7 +19,7 @@ export default class SocialAccounts extends Component {
                   {google && primary !== 'Google' ?
                       <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,google:0,provider:'google'})}><i className="fa fa-lock"></i>Google+</button>
                       : google && primary === 'Google' ? <div>Primary Account: {primary}</div> : <span></span>}
-                  {pay && primary !== 'Paypal' ?
+                  {pay && primary !== 'PayPal' ?
                       <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,paypal:0,provider:'paypal'})}><i className="fa fa-lock"></i>PayPal</button>
                       : pay && primary === 'PayPal' ? <div>Primary Account: {primary}</div> : <span></span>}
                 </span>

@@ -2,7 +2,8 @@ import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import ExpireAlert from '../components/alert';
-import SocialAccount from '../components/socialAccounts'
+import SocialAccount from '../components/socialAccounts';
+import SocialModal from '../components/socialPromptModal'
 
 const FIELDS = {
     name : {
@@ -48,6 +49,10 @@ export default class Profile extends Component {
     const {resetForm, handleSubmit, submitting, initialValues} = this.props;
       return (
         <div className="login">
+        <SocialModal
+          userInfo = {this.props.userInfo}
+          stopSocialModal = {this.props.stopSocialModal}
+        />
           <div className="row">
             <div className="small-12 large-7 large-centered columns">
               <div className="component-wrapper">
@@ -108,7 +113,9 @@ Profile.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   resetForm: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired
+  submitting: PropTypes.bool.isRequired,
+  stopSocialModal: PropTypes.func.isRequired,
+  unlinkSocialAcc: PropTypes.func.isRequired
 }
 
 export default reduxForm({
