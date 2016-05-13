@@ -21,7 +21,7 @@ export default class SocialAccounts extends Component {
                       : google && primary === 'Google' ? <div>Primary Account: {primary}</div> : <span></span>}
                   {pay && primary !== 'Paypal' ?
                       <button className="button info button tiny" onClick={()=>this.props.unlinkSocialAcc({id:id,paypal:0,provider:'paypal'})}><i className="fa fa-lock"></i>PayPal</button>
-                      : pay && primary === 'Paypal' ? <div>Primary Account: {primary}</div> : <span></span>}
+                      : pay && primary === 'PayPal' ? <div>Primary Account: {primary}</div> : <span></span>}
                 </span>
             </div>
             :<span></span>}
