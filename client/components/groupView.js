@@ -58,34 +58,24 @@ export default class GroupView extends Component {
       <div className="group-view">
         <div className="row">
           <div className="small-12 columns">
-            <div className="component-wrapper">
+            <div className="component-wrapper group-view">
               <div className="row">
                 <div className="small-12 columns">
-                  <PaymentForm
-                    userArray = {showUserBalance}
-                    groupMembers = {this.props.currentGroupUsers}
-                    userInfo = {this.props.userInfo}
-                    makePayment = {this.props.makePayment}
-                    usePaypal={this.props.usePaypal}
-                  />
-                  <AddExpense
-                    getActivity={this.props.getActivity}
-                    activity={this.props.activity}
-                    currentGroupUsers = {this.props.currentGroupUsers}
-                    url = {this.props.url}
-                    getUserByGroup = {this.props.getUserByGroup}
-                    addExpense = {this.props.addExpense}
-                    userInfo = {this.props.userInfo}
-                  />
+                  <div className="group-header">
+                    <h2>{this.props.currGroup.name}</h2>
+                    {this.props.currGroup.created_by == this.props.userInfo.id ?
+                    <Link className="edit-group" to={{pathname:'/create-group',query:{ id: this.props.currentGroup.id }}}><i className="fa fa-cog"></i></Link> : null}
+                  </div>
                   <PaymentError
                     clearError={this.props.clearError}
                     errorStatus={this.props.errorStatus}
                     errMessage={this.props.errMessage}
                   />
-                  <Link className="edit-group" to={{pathname:'/create-group',query:{ id: this.props.currentGroup.id }}}><i className="fa fa-cog"></i></Link>
+                  
                 </div>
+                <div className="group-view-pad">
                 <div className="small-12 large-4 large-push-8 columns">
-                  <h2>Balance</h2>
+                  <h3>Balance</h3>
                   { showDebt.call(this,showUserBalance) }
                 </div>
                 <div className="small-12 large-8 large-pull-4 columns">
@@ -93,14 +83,31 @@ export default class GroupView extends Component {
               
                 <Modal isOpen={sessionStorage.getItem('success')}>
                   <div style={{textAlign:'center'}}>
-                    <h2>Your Transaction was successful!!</h2>
+                    <h3>Your Transaction was successful!!</h3>
                     <p onClick={() => this.props.makePayment(sessionStorage.getItem('dbEntry'))} style = {{cursor:'pointer', textDecoration:'underline'}}>close</p>
                   </div>
                 </Modal>
-                
-                <h2>Activity</h2>
+                <div className="activity-header">
+                  <h3>Activity</h3>
+                  <AddExpense
+                      getActivity={this.props.getActivity}
+                      activity={this.props.activity}
+                      currentGroupUsers = {this.props.currentGroupUsers}
+                      url = {this.props.url}
+                      getUserByGroup = {this.props.getUserByGroup}
+                      addExpense = {this.props.addExpense}
+                      userInfo = {this.props.userInfo}
+                    />
+                  <PaymentForm
+                    userArray = {showUserBalance}
+                    groupMembers = {this.props.currentGroupUsers}
+                    userInfo = {this.props.userInfo}
+                    makePayment = {this.props.makePayment}
+                    usePaypal={this.props.usePaypal}
+                  />
+                </div>
                 {!this.props.activity.length ? 
-                  <div>Add an expense or payment to get started!</div>
+                  <span className="warning label">Add an expense or payment to get started!</span>
                   : null
                 }
                 {this.props.activity.map(function(activity,index){
@@ -120,72 +127,86 @@ export default class GroupView extends Component {
                       }
                     }
                   }
-                  return <div key={activity.id + activity.type} className= {activity.type==='expense' ? "callout alert" :"callout success"}>
-                  {activity.type==='expense' ?
+                  return (
                     <div>
-                      <div>Title: {activity.title} Time:{prettyDate(activity.created_at)} Amount: ${activity.amount}
-                        <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
-                        { this.props.userInfo.id === activity.paid_by ?
-                          <UpdateExpense
-                            formKey = {'updateExpense'+activity.id}
-                            getActivity={this.props.getActivity}
-                            activity={this.props.activity}
-                            currentActivity = {activity}
-                            currentGroupUsers = {this.props.currentGroupUsers}
-                            url = {this.props.url}
-                            getUserByGroup = {this.props.getUserByGroup}
-                            updateExpense = {this.props.updateExpense}
-                            userInfo = {this.props.userInfo}
-                            initialValues = {expenseValues[activity.id]}
-                          /> : null }
-                        <div style={this.props.displayActive[index]}>
-                          <div className = 'row'>
-                            <div className = 'small-12 large-6 columns'>
-                              <div>Note: {activity.note}</div>
-                              <div>Paid: {this.seeIfYou(localGroupObj[activity.paid_by].name)}</div>
-                              <div>Members:
-                                { activity.members.map(function(member,index,members){
-                                  return (
-                                      <div>{this.seeIfYou(member.name)}{index===members.length-1? "" : " "}</div>
-                                    )
-                                }.bind(this))}
+                    <div key={activity.id + activity.type} className= {activity.type==='expense' ? "callout expense " :"callout payment"}>
+                    {activity.type==='expense' ?
+                      <div className="row">
+                        <div className="small-9 columns">
+                          <div>
+                            <h5 className="item-title">{this.seeIfYou(localGroupObj[activity.paid_by].name)} spent ${activity.amount} for {activity.title}<a onClick={()=>this.props.toggleDisplay(index)}> details</a></h5>
+                            <span className="small-aside">{prettyDate(activity.created_at)}</span>
+                            <div style={this.props.displayActive[index]}>
+                              <div className = 'row'>
+                                <div className = 'small-12 large-6 columns'>
+                                  <div>Members:
+                                  { activity.members.map(function(member,index,members){
+                                    return (
+                                        <div>{this.seeIfYou(member.name)}{index===members.length-1? "" : " "}</div>
+                                      )
+                                  }.bind(this))}
+                                  </div>
+                                </div>
+                                <div className = "small-12 large-3 columns">
+                                  <div> Reciept: 
+                                    <img src={"/"+(activity.img_url.split('dist/')[1] ? activity.img_url.split('dist/')[1] : defaultPicture)} />
+                                  </div>
+                                </div>
+                                <div className = 'large-3 columns'></div>
                               </div>
                             </div>
-                            <div className = "small-12 large-3 columns">
-                              <div> Reciept: 
-                                <img src={"/"+(activity.img_url.split('dist/')[1] ? activity.img_url.split('dist/')[1] : defaultPicture)} />
-                              </div>
-                            </div>
-                            <div className = 'large-3 columns'></div>
                           </div>
                         </div>
+                        <div className="small-3 columns">
+                          { this.props.userInfo.id === activity.paid_by ?
+                              <UpdateExpense
+                                formKey = {'updateExpense'+activity.id}
+                                getActivity={this.props.getActivity}
+                                activity={this.props.activity}
+                                currentActivity = {activity}
+                                currentGroupUsers = {this.props.currentGroupUsers}
+                                url = {this.props.url}
+                                getUserByGroup = {this.props.getUserByGroup}
+                                updateExpense = {this.props.updateExpense}
+                                userInfo = {this.props.userInfo}
+                                initialValues = {expenseValues[activity.id]}
+                              /> 
+                              : null }
+                        </div>
                       </div>
-                    </div>
                       :
-                    <div>{this.seeIfYou(localGroupObj[activity.payee].name)} paid {this.seeIfYou(localGroupObj[activity.recipient].name)} ${activity.amount} Time:{prettyDate(activity.created_at)}
-                      {activity.pending ? 
-                        <div>
-                          <button className="button success tiny button" disabled={this.props.userInfo.id !== activity.recipient} onClick={()=>this.props.updatePaymentStatus({group_id: +ID[1], id:activity.id, pending:0})}><i className="fa fa-check circle"></i>Received</button>
-                          <br />
-                          <p>Pending recipient approval</p>
+                      <div className="row">
+                        <div className="small-12 columns">
+                          <h5 className="item-title">{this.seeIfYou(localGroupObj[activity.payee].name)} paid {this.seeIfYou(localGroupObj[activity.recipient].name)} ${activity.amount} <a title="groupView" className="" onClick={()=>this.props.toggleDisplay(index)}> details</a></h5>
+                            
+                            <span className="small-aside">{prettyDate(activity.created_at)}</span>
+                          
                         </div>
-                        :
-                        <div>
-                          <i className="fa fa-check-circle-o" aria-hidden="true"></i>
-                          Received
+                        
+                        <div className="small-12 columns">
+                          {activity.pending ? 
+                          <span>
+                            <button className="button success tiny button" disabled={this.props.userInfo.id !== activity.recipient} onClick={()=>this.props.updatePaymentStatus({group_id: +ID[1], id:activity.id, pending:0})}><i className="fa fa-check circle"></i>Received</button> <span className="small-aside">Pending recipient approval</span>
+                          </span>
+                          :
+                          <span>
+                            <i className="fa fa-check-circle-o" aria-hidden="true"></i> Received
+                          </span>
+                          }
                         </div>
-                      }
-                      <button title="groupView"  className="button primary tiny button" onClick={()=>this.props.toggleDisplay(index)}>details</button>
-                      <div style={this.props.displayActive[index]}>
-                        Note: {activity.note}
                       </div>
-                    </div>
-                  }
+                    }
+                  </div>
+                  <div className="note" style={this.props.displayActive[index]}>
+                    Note: {activity.note}
+                  </div>
                 </div>
+                  )
                 }.bind(this))}
               </div>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

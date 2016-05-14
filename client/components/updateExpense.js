@@ -232,20 +232,17 @@ export default class UpdateExpense extends Component {
     
 
     const {
-
-      fields: { title, note, imgUrl, photo, members0,members1,members2,
-                members3, members4, members5, members6, members7, members8, members9, amount },
+      fields: { title, note, imgUrl, photo, members0,members1,members2, members3, members4, members5, members6, members7, members8, members9, amount },
       handleSubmit,
       resetForm,
       submitting
-      } = this.props
+    } = this.props
 
 
     return (
       <div>
-      <button className = 'button primary button tiny'onClick={this.openModal}>Edit Expense</button>
-            <Modal isOpen={this.state.isModalOpen}
-                   transitionName="modal-anim">
+      <a className = 'edit-expense' onClick={this.openModal}><i className="fa fa-cog"></i></a>
+      <Modal isOpen={this.state.isModalOpen} transitionName="modal-anim">
       <form onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this)).bind(this)}>
         <i onClick={this.closeModal} className="fa fa-times-circle-o" aria-hidden="true" style = {{cursor:'pointer'}}></i>
         <div>

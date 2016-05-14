@@ -130,9 +130,9 @@ export default class AddExpense extends Component {
 
 
   render(){
-    console.log('maybe work444',this.props.currentGroupUsers);
+    //console.log('maybe work444',this.props.currentGroupUsers);
 
-    {console.log('EXPENSEcurrent user:', this.props.userInfo)}
+    //{console.log('EXPENSEcurrent user:', this.props.userInfo)}
 
     const {
 
@@ -146,7 +146,7 @@ export default class AddExpense extends Component {
 
     return (
       <span>
-      <button className = 'button primary'onClick={this.openModal}>Add Expense</button>
+      <a onClick={this.openModal}><i className="fa fa-plus-circle"></i> Add Expense</a>
             <Modal isOpen={this.state.isModalOpen}
                    transitionName="modal-anim">
       <form onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this)).bind(this)}>
