@@ -8,24 +8,24 @@ export function members(state = { members: []}, action) {
       case MEMBER_CLEAR:
         return update(state, {
           members: {$set: []}
-        })
+        });
 
       // add a member
       case MEMBER_ADDED:
         if(checkMem(state,action.userObj)){
           return update(state, {
             members: {$push: [action.userObj]}
-          })
-        } 
+          });
+        }
 
       // remove a member
       case MEMBER_REMOVED:
         return update(state, {
           members: {$set: removeMem(state,action.id)}
-        })
+        });
 
       default:
-        return state
+        return state;
     }
 }
 
@@ -36,15 +36,14 @@ function checkMem(state,userObj) {
     if (state.members[i].value && state.members[i].value === userObj.value) {
       return false;
     } else if (state.members[i].user_id && state.members[i].user_id === userObj.user_id) {
-      return false
+      return false;
     }
   }
   return true;
 }
 
-
 function removeMem(state,id){
   return state.members.filter(function(item){
-    return Number(item.value) !== id
-  })
+    return Number(item.value) !== id;
+  });
 }
