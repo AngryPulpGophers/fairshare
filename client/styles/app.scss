@@ -13,6 +13,12 @@ h5,h6 {font-family: 'Helvetica Neue', sans-serif;}
   border: 1px solid #ccc;
   box-shadow: 1px 1px 20px #888;
   margin-bottom: 40px;
+  &.group-view{
+    padding: 0 0 60px 0;
+  }
+}
+.group-view-pad{
+  padding: 20px 40px;
 }
 
 .login,.create-group,.profile{
@@ -134,5 +140,55 @@ input[type='search']{
   border: 1px solid $white;
   float: right;
 }
-
+.activity-header,.group-header{
+  clear: both;
+  overflow: hidden;
+  h2,h3{
+    float:left;
+    margin-right: 10px;
+  }
+  > span {
+    margin-top: 20px;
+    display: block;
+    margin-left: 20px;
+    float:left;
+  }
+}
+.group-header{
+  border-top-right-radius: .33em;
+  border-top-left-radius: .33em;
+  background-color: $black;
+  color: $white;
+  padding: 20px;
+  margin-bottom: 40px;
+}
+.small-aside{
+  color: $secondary-color;
+  font-size: .9rem;
+}
+.item-title{
+  a{
+    font-size: .9rem;
+  }
+}
+.large-display{
+  font-family: 'Lobster';
+  color: #ddd;
+  font-size: 2.5rem;
+  float: right;
+}
+.note{
+  background-color: #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-left:10px solid #ccc;
+}
+.edit-expense{
+  float: right;
+  font-size: 1.5rem;
+  color: #ddd;
+  padding: 0;
+  margin: 0;
+  vertical-align: top; 
+}
 

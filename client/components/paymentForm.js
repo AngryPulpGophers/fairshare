@@ -48,8 +48,8 @@ export default class PaymentForm extends Component{
 
     return(
     	<span>
-       <button className = 'button info button extended' onClick={this.openModal}>Make Payment</button>
-            <Modal className='modal' isOpen={this.state.isModalOpen} transitionName="modal-anim">
+       <a onClick={this.openModal}><i className="fa fa-dollar"></i> Make Payment</a>
+      <Modal className='modal' isOpen={this.state.isModalOpen} transitionName="modal-anim">
       <form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
          <i onClick={this.closeModal} className="fa fa-times-circle-o" aria-hidden="true" style = {{cursor:'pointer'}}></i>
           <div>

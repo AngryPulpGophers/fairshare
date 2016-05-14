@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 
 import Login from '../components/login';
 class PageLogin extends Component {
-
+	//pjs potential hotfix
+	// componentWillReceiveProps(nextProps){
+	//     if(nextProps.isAuthed){
+	//       browserHistory.push('/profile')
+	//     }
+	//   }
 
   render() {
     return (

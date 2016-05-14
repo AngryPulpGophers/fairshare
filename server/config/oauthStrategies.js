@@ -262,6 +262,9 @@ Strategies.paypal_strat = new PayPalStrategy({
                 Identity.create(ID)
                   .then( () => done(null, userProfile))
                   .catch( err => console.warn(err));
+            })
+            .catch(err => {
+              console.log("err:", err);
             });
         }
       })
