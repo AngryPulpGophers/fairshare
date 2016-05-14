@@ -12,6 +12,5 @@ export function getDashboard() {
       req: 'GET',
       types: [DASH_REQUEST, DASH_SUCCESS, DASH_FAILURE]
     }
-
-  }
+  };
 }

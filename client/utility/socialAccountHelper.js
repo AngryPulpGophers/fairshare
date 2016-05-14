@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 import React from 'react';
 
@@ -22,11 +22,11 @@ SocialHelper.makeButtons = (socialObj,key, context) => {
 
   if(primary !== key){
 	  return (
-      <button className="button info button tiny" key='b' onClick={()=> context.props.unlinkSocialAcc({id:id, provider:smallKey})}><i className="fa fa-lock"></i>{key}</button>
+      <button className="button info button tiny" onClick={()=> context.props.unlinkSocialAcc({id:id, provider:smallKey})}><i className="fa fa-lock"></i>{key}</button>
     )
   }else{
   	return (
-  	  <div key='a'> You are logged in with: {primary}</div>
+  	  <div> You are logged in with: {primary}</div>
   	)
   }
 }
@@ -52,5 +52,5 @@ SocialHelper.createLinkedAccounts = (obj, buttonMaker, anchorMaker, context) => 
 		  }
 	  }
 	}
-	return [buttons.sort((a,b) => a.key - b.key) ,anchors];
+	return [buttons.sort((a,b) => b.type - a.type) ,anchors];
 }

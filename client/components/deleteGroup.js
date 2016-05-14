@@ -4,10 +4,10 @@ import Modal from './modal';
 
 export default class DeleteGroup extends Component {
   constructor(props){
-    super(props)
+    super(props);
     this.state = ({
-        isModalOpen: false
-      })
+      isModalOpen: false
+    });
   }
 
   handleDeleteGroup(){
@@ -15,7 +15,7 @@ export default class DeleteGroup extends Component {
   }
 
   render(){
-    console.log('the group to delete:',this.props.groupID)
+    console.log('the group to delete:',this.props.groupID);
     return this.props.groupID ? (
       <div className="delete-group">
       <button onClick={() => { this.handleDeleteGroup()} } className="alert button">Delete Group</button>

@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import SocialHelper from '../utility/socialAccountHelper'
-
+import SocialHelper from '../utility/socialAccountHelper';
 
 
 export default class SocialAccounts extends Component {
@@ -8,12 +7,12 @@ export default class SocialAccounts extends Component {
   render() {
     // console.log('info in render method:', this.props.userInfo)
     let userInfo = this.props.userInfo;
-    let [buttons,anchors] = SocialHelper.createLinkedAccounts(userInfo, SocialHelper.makeButtons, SocialHelper.makeAnchors,this)
+    let [buttons,anchors] = SocialHelper.createLinkedAccounts(userInfo, SocialHelper.makeButtons, SocialHelper.makeAnchors,this);
     return(
       <div>
         {[...buttons]}
         <h5>Link Accounts</h5>
-        {[...anchors]}          
+        {[...anchors]}
       </div>
     )
   }

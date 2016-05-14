@@ -1,12 +1,12 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react';
 
 class PureInput extends Component {
   shouldComponentUpdate(nextProps) {
-    return this.props.field !== nextProps.field
+    return this.props.field !== nextProps.field;
   }
 
   render() {
-    const { field, ...rest } = this.props
+    const { field, ...rest } = this.props;
     return <input  {...field} {...rest}/>
   }
 }

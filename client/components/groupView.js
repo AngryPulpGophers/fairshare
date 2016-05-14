@@ -12,34 +12,34 @@ import UpdateExpense from './updateExpense';
 
 export default class GroupView extends Component {
   constructor(props){
-    super(props)
+    super(props);
     this.state = ({
-        isModalOpen: false
-      })
+      isModalOpen: false
+    });
   }
   seeIfYou(name) {
     if (name===this.props.userInfo.name || name[0]===this.props.userInfo.name){
-      return ('You')
+      return ('You');
     }
     else {
-      return name
+      return name;
     }
   }
 
   componentWillUnmount(){
-    this.props.clearActivity()
+    this.props.clearActivity();
   }
 
   render() {
     // get the current group id
-    var currentURL = window.location.href
-    var ID = currentURL.split('id=')
+    var currentURL = window.location.href;
+    var ID = currentURL.split('id=');
 
     //set array to populate with related balances - who owes who what
     var showUserBalance=[];
 
     //object to hold the users of the current group (just id)
-    var localGroupObj={}
+    var localGroupObj={};
 
     //avoid error on inital page load
     var groupExists = false;
@@ -52,8 +52,8 @@ export default class GroupView extends Component {
       }
     }
     if(groupExists){
-      showUserBalance=calcBalance.call(this)//this.calcBalance();
-      localGroupObj=makeGroupObj.call(this) //this.makeGroupObj()
+      showUserBalance=calcBalance.call(this); //this.calcBalance();
+      localGroupObj=makeGroupObj.call(this); //this.makeGroupObj()
     }
 
     //holding all data for each activity that will be loaded into update modal
@@ -76,7 +76,7 @@ export default class GroupView extends Component {
                     errorStatus={this.props.errorStatus}
                     errMessage={this.props.errMessage}
                   />
-                  
+
                 </div>
                 <div className="group-view-pad">
                 <div className="small-12 large-4 large-push-8 columns">
@@ -84,8 +84,8 @@ export default class GroupView extends Component {
                   { showDebt.call(this,showUserBalance) }
                 </div>
                 <div className="small-12 large-8 large-pull-4 columns">
-                  
-              
+
+
                 <Modal isOpen={sessionStorage.getItem('success')}>
                   <div style={{textAlign:'center'}}>
                     <h3>Your Transaction was successful!!</h3>
@@ -111,7 +111,7 @@ export default class GroupView extends Component {
                     usePaypal={this.props.usePaypal}
                   />
                 </div>
-                {!this.props.activity.length ? 
+                {!this.props.activity.length ?
                   <span className="warning label">Add an expense or payment to get started!</span>
                   : null
                 }
@@ -141,7 +141,7 @@ export default class GroupView extends Component {
                           <div>
                             <h5 className="item-title">{this.seeIfYou(localGroupObj[activity.paid_by].name)} spent ${activity.amount} on {activity.title}<a onClick={()=>this.props.toggleDisplay(index)}> details</a></h5>
                             <span className="small-aside">{prettyDate(activity.created_at)}</span>
-                            <div style={this.props.displayActive[index]}>
+                            <div className={this.props.displayActive[index].display == "none" ? 'details closed': 'details'}>
                               <div className = 'row'>
                                 <div className = 'small-12 columns'>
                                   <div>Members:
@@ -169,10 +169,10 @@ export default class GroupView extends Component {
                                 updateExpense = {this.props.updateExpense}
                                 userInfo = {this.props.userInfo}
                                 initialValues = {expenseValues[activity.id]}
-                              /> 
+                              />
                               : null }
-                              <div className="receipt-holder" style={this.props.displayActive[index]}> 
-                                Reciept: 
+                              <div className={this.props.displayActive[index].display == "none" ? 'receipt-holder closed': 'receipt-holder'}>
+                                Reciept:
                                 <a onClick={()=> { this.setState({isModalOpen:true}) } }>
                                   <img src={"/"+(activity.img_url.split('dist/')[1] ? activity.img_url.split('dist/')[1] : defaultPicture)} />
                                 </a>
@@ -198,13 +198,13 @@ export default class GroupView extends Component {
                       <div className="row">
                         <div className="small-12 columns">
                           <h5 className="item-title">{this.seeIfYou(localGroupObj[activity.payee].name)} paid {this.seeIfYou(localGroupObj[activity.recipient].name)} ${activity.amount} <a title="groupView" className="" onClick={()=>this.props.toggleDisplay(index)}> details</a></h5>
-                            
+
                             <span className="small-aside">{prettyDate(activity.created_at)}</span>
-                          
+
                         </div>
-                        
+
                         <div className="small-12 columns">
-                          {activity.pending ? 
+                          {activity.pending ?
                           <span>
                             <button className="button success tiny button" disabled={this.props.userInfo.id !== activity.recipient} onClick={()=>this.props.updatePaymentStatus({group_id: +ID[1], id:activity.id, pending:0})}><i className="fa fa-check circle"></i>Received</button> <span className="small-aside">Pending recipient approval</span>
                           </span>
@@ -217,7 +217,7 @@ export default class GroupView extends Component {
                       </div>
                     }
                   </div>
-                  <div className="note" style={this.props.displayActive[index]}>
+                  <div className={this.props.displayActive[index].display == "none" ? 'note closed': 'note'}>
                     Note: {activity.note}
                   </div>
                 </div>

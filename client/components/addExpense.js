@@ -44,7 +44,7 @@ export default class AddExpense extends Component {
     }
     if (data.photo.length){
       photo.append('photo', data.photo[0]);
-    
+
 
       request.post('/groups/expenses/upload')
       .send(photo)
@@ -88,7 +88,7 @@ export default class AddExpense extends Component {
       }.bind(this));
     }
     else{
-      
+
       var currentURL = window.location.href;
         var baseURL = currentURL.split('/')[0];
             console.log(currentURL);
@@ -149,8 +149,10 @@ export default class AddExpense extends Component {
       <a onClick={this.openModal}><i className="fa fa-plus-circle"></i> Add Expense</a>
             <Modal isOpen={this.state.isModalOpen}
                    transitionName="modal-anim">
-      <form onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this)).bind(this)}>
         <i onClick={this.closeModal} className="fa fa-times-circle-o" aria-hidden="true" style = {{cursor:'pointer'}}></i>
+
+      <form onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this)).bind(this)}>
+       
         <div>
           <h2>Add Expense</h2>
           <label>Title</label>
@@ -210,13 +212,15 @@ export default class AddExpense extends Component {
         </div>
 
         <div>
-          <button type="submit" className="button primary float-left tiny button" disabled={submitting}>
+          <button type="submit" className="button primary float-left button" disabled={submitting}>
             {submitting ? <i/> : <i/>} Submit
           </button>
-          <button type="button" disabled={submitting} onClick={resetForm}>
-            Clear Values
+          <button onClick={this.closeModal} className="button secondary float-left button">Cancel</button>
+          <button type="button" className="button alert float-left button" onClick={resetForm}>
+            Clear Form
           </button>
         </div>
+      
       </form>
       </Modal>
       </span>

@@ -6,7 +6,7 @@ EditGroup.formatData = function(obj,currUser){
     for (var i = 0; i < obj.members.length; i++) {
       if(obj.members[i].user_id != currUser.id){
         obj.members[i].disabled = true;
-        mems.push(obj.members[i])
+        mems.push(obj.members[i]);
       }
     }
     var groupObj = {
@@ -15,9 +15,9 @@ EditGroup.formatData = function(obj,currUser){
       groupMems: mems,
       updateGroup: true,
       groupID: obj.id
-    }
+    };
     return groupObj;
   } else {
     return null;
   }
-}
+};

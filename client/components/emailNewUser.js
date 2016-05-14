@@ -35,26 +35,26 @@ export default class EmailNewUser extends Component {
 
 
   handleSubmit(data) {
-    if (this.props.userInfo){  
+    if (this.props.userInfo){
       //ID= ID[1].split('&')
-        var obj = {}
+        var obj = {};
         //obj.members = []
         //hard coded to 10, which is number of hard coded members max
-       
+
         //obj.paid_by = this.props.userInfo.id;
         //obj.title = data.title;
        // obj.amount = Number(Number(data.amount).toFixed(2))
-        obj.email = data.email
+        obj.email = data.email;
         obj.note = data.note;
         //obj.group_id = Number(ID[1]);
         console.log('send to post expense', obj);
-        this.setState({isModalOpen:false})
+        this.setState({isModalOpen:false});
         this.props.destroyForm();
         this.props.emailNewUser(JSON.stringify(obj));
 
         //location.replace(baseURL+'/groupView?id='+ID[1]);
-     
-    
+
+
     }
     else{
       console.log("ERROR NO CURRENT USER");
@@ -65,7 +65,7 @@ export default class EmailNewUser extends Component {
   render(){
     //console.log('maybe work444',this.props.currentGroupUsers);
 
-    {console.log('EXPENSEcurrent user:', this.props.userInfo)}
+    {console.log('EXPENSEcurrent user:', this.props.userInfo);}
 
     const {
 
@@ -73,12 +73,12 @@ export default class EmailNewUser extends Component {
       handleSubmit,
       resetForm,
       submitting
-      } = this.props
+      } = this.props;
 
 
     return (
-      <div>
-      <button className = 'button primary button tiny'onClick={this.openModal}>Suggest Friends</button>
+      <span>
+      <a onClick={this.openModal}>Invite a Friend</a>
             <Modal isOpen={this.state.isModalOpen}
                    transitionName="modal-anim">
       <form onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this)).bind(this)}>
@@ -106,7 +106,7 @@ export default class EmailNewUser extends Component {
         </div>
       </form>
       </Modal>
-      </div>
+      </span>
     )
   }
 }

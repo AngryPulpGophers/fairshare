@@ -17,8 +17,8 @@ var fs         = require('fs');
 var https      = require('https');
 var app        = express();
 
-console.log("NODE_ENV", process.env.NODE_ENV);
-console.log("DB_URL", process.env.DATABASE_URL);
+console.log("NODE_ENV:", process.env.NODE_ENV);
+console.log("DB_URL:", process.env.DATABASE_URL);
 // using webpack-dev-server and middleware in development environment
 
 if (process.env.NODE_ENV !== 'production') {

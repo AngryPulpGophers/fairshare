@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { reduxForm } from 'redux-form';
 import { browserHistory } from 'react-router';
-import SelectSearch from 'react-select';
+import SelectSearch from 'react-select-search';
 import DeleteGroup from './deleteGroup';
 
 export const fields = [ 'groupName', 'groupDesc' ];
@@ -10,7 +10,7 @@ export const fields = [ 'groupName', 'groupDesc' ];
 export default class CreateGroup extends Component {
 
   handleSubmit(data) {
-    console.log(data)
+    console.log("data on create group", data);
   }
 
   //handles adding members to the page
@@ -113,10 +113,12 @@ export default class CreateGroup extends Component {
                     <label>Add a few folks</label>
                     { this.props.users.length === 0 ? null :
                       <div className="input-group">
-                        <SelectSearch 
-                          valueChanged={this.props.handleNewMem} 
-                          options={this.props.users} 
-                          ref="users" 
+                        <SelectSearch
+                          onBlur={this.clearSearch()}
+                          valueChanged={this.props.handleNewMem}
+                          options={this.props.users}
+                          clearInput={true}
+                          ref="users"
                         />
                         <a id="add" onClick={() => { this.props.addMember(this.props.newMem, this.props.groupForm) }} className="input-group-button button">+ add</a>
                       </div>

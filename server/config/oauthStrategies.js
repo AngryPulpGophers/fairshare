@@ -120,9 +120,9 @@ Strategies.facebook_strat = new FacebookStrategy({
       .then( () => {
         Identity.create(ID)
           .then( () => done(null, req.user))
-          .catch( err => console.warn(err))
+          .catch( err => console.warn(err));
       })
-      .catch( err => console.warn(err))
+      .catch( err => console.warn(err));
   }
 });
 
@@ -145,7 +145,7 @@ Strategies.google_strat = new GoogleStrategy({
         if(userObj[0]){
           User.getById({id:userObj[0].user_id})
             .then( profile => done(null, profile[0]))
-            .catch( err => console.warn(err))
+            .catch( err => console.warn(err));
         }else{
           let userProfile = {
             name: profile.displayName,
@@ -167,7 +167,7 @@ Strategies.google_strat = new GoogleStrategy({
           let transporter = nodemailer.createTransport(config);
 
           let mailOptions = {
-            from: '"Info" <info@fairshare.cloud>',
+            from: '"Fairshare" <info@fairshare.cloud>',
             to: '<'+ profile.emails[0].value +'>',
             subject: "Welcome to Fairshare",
             text: 'Thank you for joining!',
@@ -199,9 +199,9 @@ Strategies.google_strat = new GoogleStrategy({
       .then( () => {
         Identity.create(ID)
           .then( () => done(null, req.user))
-          .catch( err => console.warn(err))
+          .catch( err => console.warn(err));
       })
-      .catch( err => console.warn(err))
+      .catch( err => console.warn(err));
   }
 });
 

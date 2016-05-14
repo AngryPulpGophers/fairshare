@@ -1,9 +1,7 @@
 /**
  * Module dependencies.
  */
-var util = require('util')
-  , OAuth2Strategy = require('passport-oauth').OAuth2Strategy
-  , InternalOAuthError = require('passport-oauth').InternalOAuthError;
+var util = require('util'), OAuth2Strategy = require('passport-oauth').OAuth2Strategy, InternalOAuthError = require('passport-oauth').InternalOAuthError;
 
 
 /**
@@ -44,10 +42,10 @@ function Strategy(options, verify) {
   options = options || {};
   options.authorizationURL = options.authorizationURL || 'https://www.paypal.com/webapps/auth/protocol/openidconnect/v1/authorize';
   options.tokenURL = options.tokenURL || 'https://api.paypal.com/v1/identity/openidconnect/tokenservice';
-  
+
   OAuth2Strategy.call(this, options, verify);
   this.name = 'paypal';
-  
+
   this._oauth2.setAccessTokenName("oauth_token");
 }
 
@@ -73,7 +71,7 @@ util.inherits(Strategy, OAuth2Strategy);
 Strategy.prototype.userProfile = function(accessToken, done) {
   this._oauth2.getProtectedResource('https://api.paypal.com/v1/identity/openidconnect/userinfo/?schema=openid ', accessToken, function (err, body, res) {
     if (err) { return done(new InternalOAuthError('failed to fetch user profile', err)); }
-    
+
     try {
       var json = JSON.parse(body);
       var profile = { provider: 'paypal' };
@@ -84,16 +82,16 @@ Strategy.prototype.userProfile = function(accessToken, done) {
       // json.identity.emails.forEach(function(email) {
       //   profile.emails.push({ value: email });
       // });
-      
+
       profile._raw = body;
       profile._json = json;
-      
+
       done(null, profile);
     } catch(e) {
       done(e);
     }
   });
-}
+};
 
 
 /**

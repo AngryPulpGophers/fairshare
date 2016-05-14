@@ -1,23 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import CancelPayment from '../components/cancelPaypal'
+import CancelPayment from '../components/cancelPaypal';
 
 class CancelPayPal extends Component {
 
-
-
   render() {
     return (
-    	<CancelPayment/>
-    )
+    	<CancelPayment />
+    );
   }
-
-};
+}
 
 function mapStateToProps(state) {
-  return {
-  
-  }
+  return {};
 }
 
 export default connect(mapStateToProps, {
