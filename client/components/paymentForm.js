@@ -47,11 +47,13 @@ export default class PaymentForm extends Component{
     let RadioButtons = PayHelp.memberButtons(this, PayHelp.makeRadioButton);
 
     return(
-    	<span>
+      <span>
        <a onClick={this.openModal}><i className="fa fa-dollar"></i> Make Payment</a>
       <Modal className='modal' isOpen={this.state.isModalOpen} transitionName="modal-anim">
+      <i onClick={this.closeModal} className="fa fa-times-circle-o" aria-hidden="true" style = {{cursor:'pointer'}}></i>
+    	
       <form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
-         <i onClick={this.closeModal} className="fa fa-times-circle-o" aria-hidden="true" style = {{cursor:'pointer'}}></i>
+         
           <div>
             <h2>Make a Payment</h2>
             <label>Select One</label>
@@ -81,17 +83,18 @@ export default class PaymentForm extends Component{
             </div>
           </div>
         <div>
-          <button type="submit" onClick={()=>sessionStorage.setItem('cash',true)} className='button primary button tiny' disabled={submitting}>
+          <button type="submit" onClick={()=>sessionStorage.setItem('cash',true)} className='button primary button ' disabled={submitting}>
             {submitting ? <i/> : <i/>} Register Cash Payment
           </button>
-          <button type="button" className = 'button alert button tiny' disabled={submitting} onClick={resetForm} style={{marginLeft: 5}}>
-            Clear Values
-          </button>
-          <button type='submit' onClick={()=>sessionStorage.setItem('paypal',true)} className = 'button info expand' disabled={submitting} style={{marginLeft: 5}}><i className= 'fa fa-paypal' style={{marginRight:'2px'}}></i>Settle up through PayPal</button>
+          <button type='submit' onClick={()=>sessionStorage.setItem('paypal',true)} className = 'success button ' disabled={submitting}><i className= 'fa fa-paypal' style={{marginRight:'2px'}}></i>Settle up through PayPal</button>
+          <button onClick={this.closeModal} className="button secondary button">Cancel</button>
+
         </div>
       </form>
+   
       </Modal>
-     </span> 
+     
+     </span>
 			)
          
   }

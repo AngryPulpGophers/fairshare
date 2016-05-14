@@ -2,13 +2,28 @@
 .top-bar{
   border-bottom: 3px solid $white;
   box-shadow: 1px 1px 20px #888;
+  a{
+    color:$black !important;
+    &:hover, &:active{
+      color: darken($black, 50%);
+    }
+  }
 }
 .menu > li > a.img-placeholder{
   padding: 0;
   margin-right: 20px;
 }
-.menu-text-name{
+.top-bar-left{
+  .menu{
+    margin-top: 10px;
+  }
+}
+.top-bar-right{
+  margin-right: 20px;
+}
+.top-bar-title{
  a {
+    display:block;
     padding: 0 0 0 20px!important;
     h1{
       color: $black;
@@ -27,3 +42,27 @@
   margin-right: 20px;
   border: 2px solid $white;
  }
+@media screen and (max-width: 39.9375em) {
+  .top-bar-title{
+    display: none;
+  }
+  .top-bar .menu li {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.3rem;
+    display: block;
+    float: none;
+    margin: 10px 0;
+  }
+  .top-bar-right{
+    margin-right: 0;
+  }
+  .menu > li > a.img-placeholder{
+    margin: 0;
+  }
+}
+@media screen and (min-width: 40em)  {
+  .top-bar-title{
+    display: block;
+  }
+}

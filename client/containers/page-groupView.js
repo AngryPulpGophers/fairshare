@@ -41,7 +41,7 @@ class PageGroupView extends Component {
     this.props.clearEdit();
   }
   render() {
-    console.log('this.props in page groupview:', this.props)
+    //console.log('this.props in page groupview:', this.props)
     return (
     <div>
       <GroupView
