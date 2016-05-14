@@ -20,8 +20,8 @@ module.exports = (app,express) => {
       tableName: 'sessions'
     }),
     secret: 'kitkat',
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false
   };
 
   app.use(session(sessionConfig));

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router'
+import { Link } from 'react-router';
+import defaultPicture from '../images/fs-logo.png';
 
 
 export default class FriendProfileView extends Component {
@@ -13,7 +14,7 @@ export default class FriendProfileView extends Component {
             <h3>{this.props.friendProfile.name}'s Profile</h3>
             <div className="row">
               <div className="small-12 large-4 columns">
-                <img className="image" src={this.props.friendProfile.img_url}/>
+                <img className="image" src={this.props.friendProfile.img_url || defaultPicture}/>
               </div>
               <div className="small-12 large-8 columns"> 
                 <div><span className="secondary label">Name:</span><h5> {this.props.friendProfile.name}</h5></div>  

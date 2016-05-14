@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
+import defaultPicture from '../images/fs-logo.png';
+
 import {prettyDate} from '../utility/groupViewHelper';
 
 
@@ -32,7 +34,7 @@ export default class GroupList extends Component {
                       {group.members.map(function(member){
                         return (
                           <Link key={group.created_at + member.user_id} to={{pathname:'/profile', query:{ username: member.username }}}>
-                            <img className="group-avatar" src={member.img_url} />
+                            <img className="group-avatar" src={member.img_url|| defaultPicture} />
                           </Link>
                         )
                       })}

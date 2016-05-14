@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import EmailNewUser from './emailNewUser';
+import defaultPicture from '../images/fs-logo.png';
 
 
 export default class Navigation extends Component {
@@ -36,7 +37,7 @@ export default class Navigation extends Component {
             <ul className="menu">
               <li>
                 <Link to="/profile" className="img-placeholder">
-                  <img className = 'roundCorner-image' src = {this.props.userInfo.img_url}/>
+                  <img className = 'roundCorner-image' src = {this.props.userInfo.img_url || defaultPicture}/>
                 </Link>
               </li>
               <li><button onClick={() => {this.props.logoutUser()}} type='button' className='primary button'>Logout</button></li>
