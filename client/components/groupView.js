@@ -52,6 +52,7 @@ export default class GroupView extends Component {
       }
     }
     if(groupExists){
+      console.log('SAM WHAT BROKE',this)
       showUserBalance=calcBalance.call(this); //this.calcBalance();
       localGroupObj=makeGroupObj.call(this); //this.makeGroupObj()
     }
