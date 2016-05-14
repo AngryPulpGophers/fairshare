@@ -196,7 +196,7 @@ export default class AddExpense extends Component {
          // console.log('pj',true)
        }
           return (
-          <label>
+          <label key = {this.props.activity.title+string+this.props.activity.id}>
               {this.props.userInfo.id===user.user_id ?
                <PureInput type="checkbox"   checked='checked' field = {this.props.fields[string]}/>
 
