@@ -3,7 +3,8 @@ import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import ExpireAlert from '../components/alert';
 import SocialAccount from '../components/socialAccounts';
-import SocialModal from '../components/socialPromptModal'
+import SocialModal from '../components/socialPromptModal';
+import defaultPicture from '../images/fs-logo.png';
 
 const FIELDS = {
     name : {
@@ -77,7 +78,7 @@ export default class Profile extends Component {
                 <form className="profile-form" onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this))}>
                   <div className="row">
                     <div className="small-12 large-4 columns">
-                      <img className="image" src={this.props.userInfo.img_url}/>
+                      <img className="image" src={this.props.userInfo.img_url || defaultPicture}/>
                     </div>
                     <div className="small-12 large-8 columns">
                       {_.map(FIELDS, this.renderField.bind(this))}

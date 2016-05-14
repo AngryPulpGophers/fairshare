@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
+import defaultPicture from '../images/fs-logo.png';
 
 
 function puke (obj) {
@@ -25,7 +26,7 @@ export default class GroupList extends Component {
                     return (
 
                       <Link to={{pathname:'/profile', query:{ username: member.username }}}>
-                      <img key={group.created_at + member.user_id} className="group-avatar" src={member.img_url} />
+                      <img key={group.created_at + member.user_id} className="group-avatar" src={member.img_url || defaultPicture}/>
                       </Link>
                     )
                   })}
