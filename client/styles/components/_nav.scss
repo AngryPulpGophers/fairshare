@@ -10,7 +10,14 @@
 .menu-text-name{
  a {
     padding: 0 0 0 20px!important;
-    h1{color: $black;font-size: 2.3em;margin: 0;padding:0; }
+    h1{
+      color: $black;
+      font-size: 2.3em;
+      margin: 0;
+      padding: 0 0 0 55px;
+      background: transparent url(../images/fs-logo.png) no-repeat left center;
+      background-size: contain; 
+    }
   }
 }
 .roundCorner-image{

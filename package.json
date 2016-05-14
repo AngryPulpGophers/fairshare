@@ -66,6 +66,7 @@
     "react-dropzone": "^3.4.0",
     "react-router": "^2.3.0",
     "react-router-redux": "^2.1.0",
+    "react-select": "^1.0.0-beta13",
     "react-select-search": "^0.4.0",
     "redux": "^3.2.1",
     "redux-devtools": "^3.1.0",

@@ -12,7 +12,6 @@ class PageDashboard extends Component {
   }
   render() {
     return (
-
           <Dashboard
             url={this.props.url}
             callouts={this.props.callouts}
