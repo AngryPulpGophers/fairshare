@@ -49,5 +49,5 @@ Dashboard.propTypes = {
   getGroups: PropTypes.func.isRequired,
   isAuthed: PropTypes.bool.isRequired,
   userInfo: PropTypes.object.isRequired,
-  dashboard: PropTypes.func.isRequired
+  dashboard: PropTypes.object.isRequired
 }

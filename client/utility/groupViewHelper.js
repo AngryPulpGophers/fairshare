@@ -274,8 +274,8 @@ Helper.showDebt = function(showUserBalance){
         {user.owed.map(function(person, index){
           return (
             <div key={index+user.name}>
-              {this.seeIfYou(user.name)} {this.seeIfYou(user.name) === 'You' ? " owe " + Object.keys(person) + " $" + -1 * person[Object.keys(person)]
-          : "owes " + this.seeIfYou(Object.keys(person)) +" $"+ -1*person[Object.keys(person)]}
+              {this.seeIfYou(user.name)} {this.seeIfYou(user.name) === 'You' ? " owe " + Object.keys(person) + " $" + (-1 * person[Object.keys(person)]).toFixed(2)
+          : "owes " + this.seeIfYou(Object.keys(person)) +" $"+ (-1*person[Object.keys(person)]).toFixed(2)}
             </div>
             )
           }.bind(this))

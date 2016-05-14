@@ -5,48 +5,48 @@ export function users(state = { isFetching: false, users: [], friendProfile : {}
     switch (action.type) {
 
       case ActionTypes.USERS_REQUEST:
-        return update(state, {isFetching: {$set: true}})
+        return update(state, {isFetching: {$set: true}});
 
       case ActionTypes.USERS_SUCCESS:
         return update(state, {
           isFetching: {$set: false},
           users: {$set: cleanUsers(action.response)}
-        })
+        });
 
       case ActionTypes.USERS_FAILURE:
         return update(state, {
-          isFetching: {$set: false}})
+          isFetching: {$set: false}});
 
       // for viewing a friends profile
       case ActionTypes.FRIEND_REQUEST:
         return update(state, {
           isFetching: {$set: true}
-        })
+        });
 
       case ActionTypes.FRIEND_SUCCESS:
         return update(state, {
           isFetching: {$set: false},
           friendProfile: {$set: JSON.parse(action.response)}
-        })
+        });
 
         case ActionTypes.FRIEND_FAILURE:
         return update(state, {
-          isFetching: {$set: false}})
+          isFetching: {$set: false}});
 
         case ActionTypes.NEW_EMAIL_REQUEST:
-        return update(state, {isFetching: {$set: true}})
+        return update(state, {isFetching: {$set: true}});
 
       case ActionTypes.NEW_EMAIL_SUCCESS:
         return update(state, {
           isFetching: {$set: false}
-        })
+        });
 
       case ActionTypes.NEW_EMAIL_FAILURE:
         return update(state, {
-          isFetching: {$set: false}})
+          isFetching: {$set: false}});
 
       default:
-        return state
+        return state;
       }
 }
 
@@ -57,5 +57,5 @@ function cleanUsers(text){
   for(var i = 0; i < obj.length; i++) {
     newObj.push({'name':obj[i].name,'img_url':obj[i].img_url,'value': ''+obj[i].id});
   }
-  return newObj
+  return newObj;
 }

@@ -52,6 +52,7 @@ export default class GroupView extends Component {
       }
     }
     if(groupExists){
+      console.log('SAM WHAT BROKE',this)
       showUserBalance=calcBalance.call(this); //this.calcBalance();
       localGroupObj=makeGroupObj.call(this); //this.makeGroupObj()
     }
@@ -147,7 +148,7 @@ export default class GroupView extends Component {
                                   <div>Members:
                                   { activity.members.map(function(member,index,members){
                                     return (
-                                        <div>{this.seeIfYou(member.name)}{index===members.length-1? "" : " "}</div>
+                                        <div key={activity.type+member.name+activity.id}>{this.seeIfYou(member.name)}{index===members.length-1? "" : " "}</div>
                                       )
                                   }.bind(this))}
                                   </div>
@@ -240,7 +241,6 @@ GroupView.propTypes = {
   clearError: PropTypes.func.isRequired,
   errorStatus: PropTypes.bool.isRequired,
   errMessage: PropTypes.string.isRequired,
-  authPaypal: PropTypes.string.isRequired,
 }
 
 
