@@ -14,7 +14,7 @@ export default class ErrorModal extends Component {
           </div>
         )
       }else {
-        return <ReactCSSTransitionGroup transitionName={this.props.transitionName} transitionEnterTimeout={500} transitionLeaveTimeout={300}/>;
+        return <ReactCSSTransitionGroup transitionName="modal-anim" transitionEnterTimeout={500} transitionLeaveTimeout={300}/>;
       }
     }
 
