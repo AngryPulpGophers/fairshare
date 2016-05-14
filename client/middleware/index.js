@@ -1,7 +1,6 @@
 import { UPDATE_LOCATION } from 'react-router-redux';
 import fetch from 'isomorphic-fetch';
-
- const BASE_URL = 'https://' + window.location.href.split('/')[2] + '/';
+ const BASE_URL = window.location.protocol+ '//' + window.location.href.split('/')[2] + '/';
 // const BASE_URL = 'http://localhost:3000/';
 
 
