@@ -167,7 +167,7 @@ Strategies.google_strat = new GoogleStrategy({
           let transporter = nodemailer.createTransport(config);
 
           let mailOptions = {
-            from: '"Info" <info@fairshare.cloud>',
+            from: '"Fairshare" <info@fairshare.cloud>',
             to: '<'+ profile.emails[0].value +'>',
             subject: "Welcome to Fairshare",
             text: 'Thank you for joining!',
