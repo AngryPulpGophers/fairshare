@@ -1,7 +1,7 @@
 import { DASH_REQUEST, DASH_SUCCESS, DASH_FAILURE } from '../actions/dashActions';
 import update from 'react-addons-update';
 
-export function dashboard(state = { dashboard: []}, action) {
+export function dashboard(state = { dashboard: {}}, action) {
   switch (action.type) {
     case DASH_REQUEST:
     return update(state, {isFetching: {$set: true}});
