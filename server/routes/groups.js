@@ -264,6 +264,7 @@ router.put('/expenses', Middleware.checkGroup, function(req, res){
 router.put('/payments', Middleware.checkGroup, function(req, res){
   Groups.updatePayment( req.body )
     .then(function(data){
+      data.type = 'payment';
       res.send(data);
     })
     .catch(function(err){
