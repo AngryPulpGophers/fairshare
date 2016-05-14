@@ -8,3 +8,9 @@
   }
 
 }
+.expense{
+  border-left: 10px solid $alert-color;
+}
+.payment{
+  border-left: 10px solid $success-color;
+}
