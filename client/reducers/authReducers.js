@@ -2,7 +2,7 @@ import * as ActionTypes from '../actions/authActions';
 //import { GROUPS_REQUEST, GROUPS_SUCCESS, GROUPS_FAILURE} from '../actions';
 import update from 'react-addons-update';
 console.log(ActionTypes);
-export function auth(state = {isFetching: false, isAuthed: false, isOpen: true, userInfo: {}}, action){
+export function auth(state = {isFetching: false, isAuthed: false, isOpen: true, userInfo: {}, error: false, errorMessage: null}, action){
 	switch (action.type){
 		
 		case ActionTypes.USER_LOGIN:
@@ -92,7 +92,12 @@ export function auth(state = {isFetching: false, isAuthed: false, isOpen: true, 
      case ActionTypes.UNLINK_FAILURE:
       return update(state, {
         isFetching: {$set: false}
-    })   
+    }) 
+    case ActionTypes.ClEAR_ERROR:
+      return update(state, {
+        error: {$set: false},
+        errorMessage: {$set: null}
+      })
     
     default: 
 			return state;

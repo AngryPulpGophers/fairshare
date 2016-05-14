@@ -18,7 +18,7 @@ export function getUserInfo (){
 }
 
 export function logoutUser (){
-  //make sure local storage is cleared
+  localStorage.clear();
 	return {
 		[CALL_API]:{
 			endpoint: 'auth/logout',
@@ -77,6 +77,16 @@ export function unlinkSocialAcc(obj){
       body: JSON.stringify(obj),
       types:[UNLINK_REQUEST,UNLINK_SUCCESS,UNLINK_FAILURE]
     }
+  }
+}
+
+// 
+
+export const CLEAR_ERROR = 'CLEAR_ERROR';
+export function clearError() {
+  sessionStorage.clear()
+  return {
+      type: CLEAR_ERROR,
   }
 }
 

@@ -11,9 +11,9 @@ export default class SocialAccounts extends Component {
     let [buttons,anchors] = SocialHelper.createLinkedAccounts(userInfo, SocialHelper.makeButtons, SocialHelper.makeAnchors,this)
     return(
       <div>
-        {[...buttons]}
+          {[...buttons]}
         <h5>Link Accounts</h5>
-        {[...anchors]}          
+          {[...anchors]}         
       </div>
     )
   }

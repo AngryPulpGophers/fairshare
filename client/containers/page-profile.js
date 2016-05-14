@@ -27,7 +27,6 @@ class PageProfile extends Component {
   }
 
   render() {
- 
     let username = window.location.href.split('username=')[1];
     let isFriend = true;
 
@@ -82,6 +81,6 @@ export default connect(mapStateToProps, {
   getFriendProfile,
   unlinkSocialAcc,
   stopSocialModal,
-  getGroups
+  getGroups,
 })(PageProfile);
 

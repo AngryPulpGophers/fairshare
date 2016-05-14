@@ -3,7 +3,8 @@ import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import ExpireAlert from '../components/alert';
 import SocialAccount from '../components/socialAccounts';
-import SocialModal from '../components/socialPromptModal'
+import SocialModal from '../components/socialPromptModal';
+import getUserInfo from '../actions/authActions';
 
 const FIELDS = {
     name : {
@@ -121,7 +122,7 @@ Profile.propTypes = {
   resetForm: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
   stopSocialModal: PropTypes.func.isRequired,
-  unlinkSocialAcc: PropTypes.func.isRequired
+  unlinkSocialAcc: PropTypes.func.isRequired,
 }
 
 export default reduxForm({

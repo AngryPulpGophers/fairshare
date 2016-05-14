@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import CancelPayment from '../components/cancelPaypal'
+import LinkError from '../components/linkProfileError'
 
-export default class CancelPayPal extends Component {
+export default class SocialAccountError extends Component {
 
 
 
   render() {
     return (
-    	<CancelPayment/>
+    	<LinkError/>
     )
   }
 
@@ -21,4 +21,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-})(CancelPayPal);
+})(SocialAccountError);
+
+

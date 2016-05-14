@@ -42,8 +42,7 @@ class App extends Component {
   }
 
   componentWillMount(){
-    this.props.getUserInfo()
-    
+    this.props.getUserInfo()  
   }
 
   componentDidMount() {

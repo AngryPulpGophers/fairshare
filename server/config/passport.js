@@ -25,24 +25,23 @@ module.exports = (app,express) => {
   };
 
   app.use(session(sessionConfig));
+  app.use(cookieParser('kitkat'));
   app.use(passport.initialize());
   app.use(passport.session());
-  app.use(cookieParser('kitkat'));
 
   passport.serializeUser((user, done) => {
-    console.log('user in serialize:', user);
     return done(null, user.id);
   });
 
   passport.deserializeUser((id, done) => {
-    User.getById({id: id})
+    return User.getById({id: id})
     .then( userObj => {
-      console.log('userObj in deserialize:', userObj);
       return done(null, userObj[0]);
     })
     .catch( err => {
       console.warn("err at deserialize:", err);
     });
+    // return undefined;
   });
 
   passport.use(Strategies.facebook_strat);
