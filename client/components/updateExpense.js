@@ -281,7 +281,7 @@ export default class UpdateExpense extends Component {
         </div>
 
         <div>
-          <label>Amount</label>
+          <label >Amount</label>
           <div>
             <input type="text" placeholder="Amount(must be of form ##.##)" pattern = '[0-9]{1,}\.[0-9]{2}' title = 'Must be in format ##.##' required{...amount}/>
           </div>
@@ -297,7 +297,7 @@ export default class UpdateExpense extends Component {
          // console.log('pj',true)
        }
           return (
-          <label>
+          <label key = {this.props.activity.title+string+'update'+this.props.activity.id}>
               {this.props.userInfo.id===user.user_id ?
                <PureInput type="checkbox"   checked='checked' field = {this.props.fields[string]}/>
 
