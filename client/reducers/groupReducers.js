@@ -3,7 +3,7 @@ import * as ActionTypes from '../actions/groupActions';
 import update from 'react-addons-update';
 //console.log(ActionTypes);
 
-export function groups(state = { isFetching: false, editGroup: {}, currentGroup: {}, isDeleting: false, newGroup:{}, groups: [],activity : [], currentGroupUsers: [], isUpdating: false}, action) {
+export function groups(state = { isFetching: false, editGroup: {}, currentGroup: {}, isDeleting: false, newGroup:{}, groups: [],activity : [], currentGroupUsers: [], activityError: false, errorMessage:"", isUpdating: false}, action) {
     //console.log('groups actions:', action)
     // console.log('groups actions:', action)
     switch (action.type) {

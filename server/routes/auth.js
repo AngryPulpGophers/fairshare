@@ -6,44 +6,40 @@ var passport = require('passport');
 
 module.exports = router;
 
-router.get('/facebook', passport.authenticate('facebook', {scope: ['email']}));
+var checkUser = (req,res,next) => {
+  console.log('req.user in new middleware:', req)
+  if(req.user) next();
+  else res.redirect('/linkerror');
+}
 
-router.get('/facebook/callback', passport.authenticate('facebook',
-  {failureRedirect: '/facebook'}), function(req,res){
-  	if(req.user.showModal){
-	    res.redirect('/profile');
-	  }else{
-	  	res.redirect('/');
-	  }
-});
+router.get('/facebook', passport.authenticate('facebook', {scope: ['email']},{session:true}));
 
-router.get('/google', passport.authenticate('google', {scope:['email', 'profile']}));
+router.get('/facebook/callback', passport.authenticate('facebook', 
+	{failureRedirect: '/facebook', successRedirect:'/'}));
+
+router.get('/google', passport.authenticate('google', {scope:['email', 'profile']},{session:true}));
 
 router.get('/google/callback', passport.authenticate('google',
-  {failureRedirect: '/google'}), function(req,res){
-  	if(req.user.showModal){
-	    res.redirect('/profile');
-	  }else{
-	  	res.redirect('/');
-	  }
-});
+  {failureRedirect: '/google',successRedirect: '/'}));
 
-router.get('/paypal', passport.authenticate('paypal', {scope:['openid']}));
+router.get('/paypal', passport.authenticate('paypal', {scope:['openid']}, {session:true}));
 
 router.get('/paypal/callback', passport.authenticate('paypal',
-	{failureRedirect: '/paypal'}), function(req,res){
-  	if(req.user.showModal){
-	    res.redirect('/profile');
-	  }else{
-	  	res.redirect('/');
-	  }
-});
+	{failureRedirect: '/paypal', successRedirect: '/'}))
+
+router.get('/link/facebook', checkUser, passport.authenticate('facebook', {scope: ['email']},{session:true}))
+
+router.get('/link/google', checkUser, passport.authenticate('google', {scope:['email', 'profile']},{session:true}));
+
+router.get('/link/paypal', checkUser, passport.authenticate('paypal', {scope:['openid']}, {session:true}));
 
 
-router.get(('/logout'),function(req,res){
+router.get('/logout',function(req,res){
 	req.session.destroy(function(err){
-	req.sessionID = null;
-	req.logout();
+	req.sessionID= null;
+	req.logOut();
+	req.sessionStore = null;
+	console.log('req.sessionStore:', req.sessionStore);
 	res.redirect('/');
 	});
 })
