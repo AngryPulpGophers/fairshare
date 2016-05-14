@@ -3,7 +3,7 @@ import * as ActionTypes from '../actions/groupActions';
 import update from 'react-addons-update';
 //console.log(ActionTypes);
 
-export function groups(state = { isFetching: false, editGroup: {}, currentGroup: {}, isDeleting: false, newGroup:{}, groups: [],activity : [], currentGroupUsers: [], isUpdating: false}, action) {
+export function groups(state = { isFetching: false, editGroup: {}, currentGroup: {}, isDeleting: false, newGroup:{}, groups: [],activity : [], currentGroupUsers: [], isUpdating: false, activityError:false, errorMessage:null}, action) {
     //console.log('groups actions:', action)
     // console.log('groups actions:', action)
     switch (action.type) {
@@ -197,6 +197,8 @@ export function groups(state = { isFetching: false, editGroup: {}, currentGroup:
       case ActionTypes.PAYMENT_FAILURE:
         return update(state, {
           isFetching: {$set: false},
+          activityError: {$set:true},
+          errorMessage: {$set: 'There was a problem with the transaction'}
         })
 
        case ActionTypes.PAYPAL_PAYMENT_REQUEST:

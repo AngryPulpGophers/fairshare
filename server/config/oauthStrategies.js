@@ -71,7 +71,7 @@ Strategies.facebook_strat = new FacebookStrategy({
           let userProfile = {
             name: profile.displayName,
             username:profile.displayName.split(' ').join(''),
-            email: profile.emails[0].value,
+            email: profile.emails[0].value.split('@')[0],
             img_url: profile.photos[0].value,
             primary: 'Facebook',
             facebook: 1,
@@ -149,7 +149,7 @@ Strategies.google_strat = new GoogleStrategy({
         }else{
           let userProfile = {
             name: profile.displayName,
-            username:'',
+            username:profile.emails[0].value.split('@')[0],
             email: profile.emails[0].value,
             img_url: profile.photos[0].value,
             primary: 'Google',
@@ -225,7 +225,7 @@ Strategies.paypal_strat = new PayPalStrategy({
         }else{
           let userProfile = {
               name: profile.name,
-              username:'',
+              username:profile._json.email.split('@')[0],
               email: profile._json.email,
               img_url:"",
               primary: 'PayPal',
