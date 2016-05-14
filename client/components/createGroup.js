@@ -10,7 +10,7 @@ export const fields = [ 'groupName', 'groupDesc' ];
 export default class CreateGroup extends Component {
 
   handleSubmit(data) {
-    console.log(data)
+    console.log("data on create group", data);
   }
 
   //handles adding members to the page
@@ -45,8 +45,8 @@ export default class CreateGroup extends Component {
     this.props.clearEdit();
   }
   clearSearch(){
-    if( 
-      document.getElementsByClassName("select-search-box__search") && 
+    if(
+      document.getElementsByClassName("select-search-box__search") &&
       document.getElementsByClassName("select-search-box__search")[0] &&
       document.getElementsByClassName("select-search-box__search")[0].value
       ){
@@ -81,8 +81,8 @@ export default class CreateGroup extends Component {
     })
     const updating = this.props.initialValues ? true : false;
 
-    return (  
-      
+    return (
+
         <div className="row">
           <div className="small-12 large-9 large-centered columns">
             <div className="component-wrapper">
@@ -99,26 +99,26 @@ export default class CreateGroup extends Component {
                     <label>Group Name
                       <input
                         type="text"
-                        placeholder="Make sure you're specific! (Trip to Detroit, College Reunion)" 
+                        placeholder="Make sure you're specific! (Trip to Detroit, College Reunion)"
                         {...groupName}
                       />
                     </label>
                     <label>Description
-                      <input 
-                        type="text" 
-                        placeholder="Describe the group" 
+                      <input
+                        type="text"
+                        placeholder="Describe the group"
                         {...groupDesc}
                       />
                     </label>
                     <label>Add a few folks</label>
-                    { this.props.users.length === 0 ? null :  
+                    { this.props.users.length === 0 ? null :
                       <div className="input-group">
-                        <SelectSearch 
-                          onBlur={this.clearSearch()} 
-                          valueChanged={this.props.handleNewMem} 
-                          options={this.props.users} 
+                        <SelectSearch
+                          onBlur={this.clearSearch()}
+                          valueChanged={this.props.handleNewMem}
+                          options={this.props.users}
                           clearInput={true}
-                          ref="users" 
+                          ref="users"
                         />
                         <a id="add" onClick={() => { this.props.addMember(this.props.newMem, this.props.groupForm) }} className="input-group-button button">+ add</a>
                       </div>
@@ -135,9 +135,9 @@ export default class CreateGroup extends Component {
                       {this.props.members.length > 0 ? <span>(and you!)</span> : null}
                     </ul>
                   </div>
-                </div>  
-              </div>     
-            </div> 
+                </div>
+              </div>
+            </div>
           </div>
           <div className="small-12 large-3 columns"></div>
         </div>

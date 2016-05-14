@@ -16,19 +16,18 @@ class PageLogin extends Component {
       <Login
 
       />
-    )
+    );
   }
 
-};
-
-PageLogin.propTypes = {
 }
+
+PageLogin.propTypes = {};
 
 function mapStateToProps(state) {
   console.log('mapstatetprops called:',state);
   return {
 
-  }
+  };
 }
 
 export default connect(mapStateToProps, {

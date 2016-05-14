@@ -48,7 +48,7 @@ router.get('/paypal/callback', passport.authenticate('paypal',
 	  }
 });
 
-router.get('/link/facebook', checkUser, passport.authenticate('facebook', {scope: ['email']},{session:true}))
+router.get('/link/facebook', checkUser, passport.authenticate('facebook', {scope: ['email']},{session:true}));
 
 router.get('/link/google', checkUser, passport.authenticate('google', {scope:['email', 'profile']},{session:true}));
 
@@ -61,5 +61,5 @@ router.get(('/logout'),function(req,res){
 	req.logout();
 	res.redirect('/');
 	});
-})
+});
 

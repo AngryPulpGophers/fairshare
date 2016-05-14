@@ -7,8 +7,8 @@ export default class Overview extends Component {
   render() {
     function round(num) {
     //console.log('broke here',num)
-    num=Number(num)
-    return Number(num.toFixed(2))
+    num=Number(num);
+    return Number(num.toFixed(2));
   }
     // setting this to bypas the need for authentication
     return (

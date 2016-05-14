@@ -2,32 +2,32 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory, location } from 'react-router';
 import Profile from '../components/profile';
-import Friend from '../components/friendProfileView'
-import { getFriendProfile } from '../actions/userActions'
-import { getGroups } from '../actions/groupActions'
-import {updateUserInfo, resetAlert, unlinkSocialAcc, stopSocialModal} from '../actions/authActions'
+import Friend from '../components/friendProfileView';
+import { getFriendProfile } from '../actions/userActions';
+import { getGroups } from '../actions/groupActions';
+import {updateUserInfo, resetAlert, unlinkSocialAcc, stopSocialModal} from '../actions/authActions';
 
 class PageProfile extends Component {
 
   componentWillMount(){
     let currentURL = window.location.href.split('username=')[1];
     if(!window.localStorage.isAuthed){
-      browserHistory.push('/login')
+      browserHistory.push('/login');
     }
   }
 
   componentWillReceiveProps(nextProps){
     //changed from nextProps.isAuthed
     if(!window.localStorage.isAuthed){
-      browserHistory.push('/login')
+      browserHistory.push('/login');
     }
   }
-  componentDidMount(){ 
-       this.props.getGroups()
+  componentDidMount(){
+    his.props.getGroups();
   }
 
   render() {
- 
+
     let username = window.location.href.split('username=')[1];
     let isFriend = true;
 
@@ -43,7 +43,7 @@ class PageProfile extends Component {
         email: this.props.userInfo.email,
         username: this.props.userInfo.username
       }
-    }; 
+    };
 
     return !isFriend ? (
 
@@ -54,7 +54,7 @@ class PageProfile extends Component {
         userIsUpdated = {this.props.userIsUpdated}
         resetAlert = {this.props.resetAlert}
         unlinkSocialAcc = {this.props.unlinkSocialAcc}
-        stopSocialModal = {this.props.stopSocialModal} 
+        stopSocialModal = {this.props.stopSocialModal}
      />
     ) :
     (<Friend
@@ -84,4 +84,3 @@ export default connect(mapStateToProps, {
   stopSocialModal,
   getGroups
 })(PageProfile);
-

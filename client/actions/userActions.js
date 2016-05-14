@@ -13,8 +13,7 @@ export function getUsers(bool) {
         id: bool,
         types: [USERS_REQUEST, USERS_SUCCESS, USERS_FAILURE]
       }
-
-    }
+    };
   } else {
     return {
       [CALL_API]: {
@@ -23,7 +22,7 @@ export function getUsers(bool) {
         id: bool,
         types: [USERS_REQUEST, USERS_SUCCESS, USERS_FAILURE]
       }
-    }
+    };
   }
 }
 
@@ -33,15 +32,13 @@ export const FRIEND_FAILURE = 'FRIEND_FAILURE';
 
 export function getFriendProfile (username) {
   return  {
-
-      [CALL_API] : {
-        endpoint : 'users/'+username,
-        req: 'GET',
-        types : [FRIEND_REQUEST, FRIEND_SUCCESS, FRIEND_FAILURE]
-        }
-  }
+    [CALL_API] : {
+      endpoint : 'users/'+username,
+      req: 'GET',
+      types : [FRIEND_REQUEST, FRIEND_SUCCESS, FRIEND_FAILURE]
+    }
+  };
 }
-
 
 export const NEW_EMAIL_REQUEST = 'NEW_EMAIL_REQUEST';
 export const NEW_EMAIL_SUCCESS = 'NEW_EMAIL_SUCCESS';
@@ -56,5 +53,5 @@ export function emailNewUser(formData) {
       req: 'POST',
       types: [NEW_EMAIL_REQUEST, NEW_EMAIL_SUCCESS, NEW_EMAIL_FAILURE]
     }
-  }
+  };
 }

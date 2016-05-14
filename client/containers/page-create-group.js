@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { browserHistory, Route, Link } from 'react-router'
+import { browserHistory, Route, Link } from 'react-router';
 import { getUsers } from '../actions/userActions';
 import { addMember, removeMember, clearMembers } from '../actions/memberActions';
 import { createGroup, getGroup, clearEdit, updateGroup, deleteGroup } from '../actions/groupActions';
@@ -10,15 +10,15 @@ import CreateGroup from '../components/createGroup';
 class PageCreateGroup extends Component {
 
   constructor(props,context){
-    super(props)
+    super(props);
     this.state = ({
       newMem: {}
-    })
+    });
   }
-  
+
   componentWillMount(){
     if(!window.localStorage.isAuthed){
-      browserHistory.push('/login')
+      browserHistory.push('/login');
     }
     //call
     if (this.props.location.query.id){
@@ -28,7 +28,7 @@ class PageCreateGroup extends Component {
 
   componentWillReceiveProps(nextProps){
     if(!nextProps.isAuthed){
-      browserHistory.push('/login')
+      browserHistory.push('/login');
     }
     if(this.props.editGroup && this.props.editGroup.members && this.props.editGroup.members.length && this.props.members.length == 0){
       for (var i = 0; i < this.props.editGroup.members.length; i++) {
@@ -38,7 +38,7 @@ class PageCreateGroup extends Component {
       }
     }
   }
-  
+
   componentWillUnmount(){
     //clear out our saved form data
     this.props.clearEdit();
@@ -46,11 +46,11 @@ class PageCreateGroup extends Component {
 
   handleNewMem(option, state){
     //set a temp state to handle our fuzzy search
-    this.setState({ newMem: option})
+    this.setState({ newMem: option});
   }
 
   render() {
-    let formData = formatData(this.props.editGroup,this.props.currUser)
+    let formData = formatData(this.props.editGroup,this.props.currUser);
     return (
       <div className="create-group">
         <CreateGroup

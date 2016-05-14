@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
-import { Link } from 'react-router'
+import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
+import { Link } from 'react-router';
 import defaultPicture from '../images/fs-logo.png';
 
 import {prettyDate} from '../utility/groupViewHelper';

@@ -15,9 +15,8 @@ export default class PaymentError extends Component {
   }
 }
 
-
-  PaymentError.propTypes = {
-	  errorStatus: PropTypes.bool.isRequired,
-	  clearError: PropTypes.func.isRequired,
-	  errMessage: PropTypes.string.isRequired
-  }
+PaymentError.propTypes = {
+  errorStatus: PropTypes.bool.isRequired,
+  clearError: PropTypes.func.isRequired,
+  errMessage: PropTypes.string.isRequired
+}

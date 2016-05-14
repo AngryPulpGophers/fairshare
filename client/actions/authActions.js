@@ -14,7 +14,7 @@ export function getUserInfo (){
 	    req: 'GET',
       types:[USER_REQUEST, USER_SUCCESS, USER_FAILURE]
 	  }
-	}
+	};
 }
 
 export function logoutUser (){
@@ -25,7 +25,7 @@ export function logoutUser (){
 			req: 'GET',
 			types: [LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE]
 		}
-	}
+	};
 }
 
 export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
@@ -37,18 +37,18 @@ export function updateUserInfo(userObj) {
     [CALL_API]: {
       endpoint: 'users/username',
       req: 'PUT',
-      body: JSON.stringify(userObj),	
+      body: JSON.stringify(userObj),
       types: [UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE]
     }
-  }
+  };
 }
 
 export const RESET_ALERT = 'RESET_ALERT';
 export function resetAlert() {
   return {
-      type: RESET_ALERT,
-      userIsUpdated: false
-  }
+    type: RESET_ALERT,
+    userIsUpdated: false
+  };
 }
 
 export const RESET_MODAL = 'RESET_MODAL';
@@ -63,7 +63,7 @@ export function stopSocialModal(obj){
       body: JSON.stringify(obj),
       types:[RESET_MODAL,RESET_MODAL_SUCCESS,RESET_MODAL_FAILURE]
     }
-  }
+  };
 }
 export const UNLINK_REQUEST = 'UNLINK_REQUEST';
 export const UNLINK_SUCCESS = 'UNLINK_SUCCESS';
@@ -77,6 +77,5 @@ export function unlinkSocialAcc(obj){
       body: JSON.stringify(obj),
       types:[UNLINK_REQUEST,UNLINK_SUCCESS,UNLINK_FAILURE]
     }
-  }
+  };
 }
-

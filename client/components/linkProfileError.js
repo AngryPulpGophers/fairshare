@@ -6,16 +6,16 @@ import ErrorModal from './errorModal';
 export default class LinkError extends Component{
 
 	constructor(props){
-     super(props)
+     super(props);
      this.state = ({
-       isModalOpen: true,
-     })
+       isModalOpen: true
+     });
    }
- 
+
    closeModal = () => {
      this.setState({isModalOpen: false});
    }
- 
+
  	  render(){
  	    return(
  	    	<ErrorModal isOpen={this.state.isModalOpen}>

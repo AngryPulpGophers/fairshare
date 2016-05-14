@@ -31,7 +31,6 @@ export default class Navigation extends Component {
               </li>
             </ul>
           </div>
-          
           <div className="top-bar-right">
             {/*<span> Welcome, {this.props.userInfo.name.split(' ')[0]}</span>*/}
             <ul className="menu">
@@ -45,10 +44,9 @@ export default class Navigation extends Component {
           </div>
         </div>
       </div>
-      
+
     ) :
     (
-
       <div>
         <div className="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
           <button className="menu-icon" type="button" data-toggle></button>
@@ -71,11 +69,8 @@ export default class Navigation extends Component {
             </ul>
           </div>
         </div>
-
       </div>
-
     )
-
   }
 }
 

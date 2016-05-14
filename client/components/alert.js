@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 
 export default class ExpireAlert extends Component {
   constructor(props){
-    super(props)
-    this.state = {visible: false}
+    super(props);
+    this.state = {visible: false};
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33,7 +33,7 @@ export default class ExpireAlert extends Component {
   }
   render() {
     let alertStyling = this.props.status +' callout';
-    return this.state.visible 
+    return this.state.visible
            ? <div className={alertStyling}>{this.props.children}</div>
            : <span />;
   }

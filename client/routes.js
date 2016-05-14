@@ -8,7 +8,7 @@ import NotFound from './containers/page-not-found';
 import GroupView from './containers/page-groupView';
 import Profile from './containers/page-profile';
 import CancelPayPal from './containers/page-cancel-paypal';
-import SocialAccountError from './containers/page-link-failure'
+import SocialAccountError from './containers/page-link-failure';
 import friendProfileView from './components/friendProfileView';
 
 

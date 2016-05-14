@@ -44,7 +44,7 @@ export default class AddExpense extends Component {
     }
     if (data.photo.length){
       photo.append('photo', data.photo[0]);
-    
+
 
       request.post('/groups/expenses/upload')
       .send(photo)
@@ -88,7 +88,7 @@ export default class AddExpense extends Component {
       }.bind(this));
     }
     else{
-      
+
       var currentURL = window.location.href;
         var baseURL = currentURL.split('/')[0];
             console.log(currentURL);

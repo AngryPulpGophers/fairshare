@@ -7,41 +7,40 @@ import { startDisplay, toggleDisplay } from '../actions/calloutActions';
 
 
 class PageGroupView extends Component {
+
   // our hacky way of dealing with auth
-
-
   componentWillReceiveProps(nextProps){
     if(!window.localStorage.isAuthed){
-      browserHistory.push('/login')
+      browserHistory.push('/login');
     }
   }
 
   componentWillMount(){
     if(!window.localStorage.isAuthed){
-      browserHistory.push('/login')
+      browserHistory.push('/login');
     }
-    var currentURL = window.location.href
-    var ID = currentURL.split('id=')
-    this.props.getUserByGroup(ID[1])
+    var currentURL = window.location.href;
+    var ID = currentURL.split('id=');
+    this.props.getUserByGroup(ID[1]);
     this.props.getGroups();
     //var clickedOnGroup = (this.props.url.location.query.id)
-    this.props.getActivity(ID[1])
+    this.props.getActivity(ID[1]);
     //the number on the next line should be the number of activities for the group but PJ had issues with that
     //this number can be as big as you want, just takes up more space in state
-    this.props.startDisplay(100)
+    this.props.startDisplay(100);
 
-    this.props.setCurrentGroup(ID[1])
+    this.props.setCurrentGroup(ID[1]);
     //call
 
     this.props.getGroup(ID[1]);
-    
+
   }
   componentWillUnmount(){
     //clear out our saved form data
     this.props.clearEdit();
   }
   render() {
-    //console.log('this.props in page groupview:', this.props)
+    console.log('this.props in page groupview:', this.props);
     return (
     <div>
       <GroupView

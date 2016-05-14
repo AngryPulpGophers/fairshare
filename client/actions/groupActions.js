@@ -12,20 +12,20 @@ export function getGroups() {
       req: 'GET',
       types: [GROUPS_REQUEST, GROUPS_SUCCESS, GROUPS_FAILURE]
     }
-  }
+  };
 }
 
 export const GROUP_CLEAR = 'GROUP_CLEAR';
 export function clearEdit() {
   return {
-      type: GROUP_CLEAR
-  }
+    type: GROUP_CLEAR
+  };
 }
 export const ACTIVITY_CLEAR = 'ACTIVITY_CLEAR';
 export function clearActivity() {
   return {
-      type: ACTIVITY_CLEAR
-  }
+    type: ACTIVITY_CLEAR
+  };
 }
 
 export const UPDATE_GROUP_REQUEST = 'UPDATE_GROUP_REQUEST';
@@ -42,7 +42,7 @@ export function updateGroup(members,formData, id) {
       req: 'PUT',
       types: [UPDATE_GROUP_REQUEST, UPDATE_GROUP_SUCCESS, UPDATE_GROUP_FAILURE]
     }
-  }
+  };
 }
 
 export const GROUP_REQUEST = 'GROUP_REQUEST';
@@ -57,7 +57,7 @@ export function getGroup(id) {
       req: 'GET',
       types: [GROUP_REQUEST, GROUP_SUCCESS, GROUP_FAILURE]
     }
-  }
+  };
 }
 
 export const ACTIVITY_REQUEST = 'ACTIVITY_REQUEST';
@@ -72,15 +72,15 @@ export function getActivity(id) {
       req: 'GET',
       types: [ACTIVITY_REQUEST, ACTIVITY_SUCCESS, ACTIVITY_FAILURE]
     }
-  }
+  };
 }
 
 export const CURRENT_GROUP = 'CURRENT_GROUP';
 export function setCurrentGroup(id) {
   return {
-      type: CURRENT_GROUP,
-      id: id
-  }
+    type: CURRENT_GROUP,
+    id: id
+  };
 }
 
 export const USERBYGROUP_REQUEST = 'USERBYGROUP_REQUEST';
@@ -96,7 +96,7 @@ export function getUserByGroup(id) {
       types: [USERBYGROUP_REQUEST, USERBYGROUP_SUCCESS, USERBYGROUP_FAILURE]
 
     }
-  }
+  };
 }
 
 export const CREATE_REQUEST = 'CREATE_REQUEST';
@@ -112,7 +112,7 @@ export function createGroup(members, formData) {
       req: 'POST',
       types: [CREATE_REQUEST, CREATE_SUCCESS, CREATE_FAILURE]
     }
-  }
+  };
 }
 
 export const DELETE_REQUEST = 'DELETE_REQUEST';
@@ -120,14 +120,14 @@ export const DELETE_SUCCESS = 'DELETE_SUCCESS';
 export const DELETE_FAILURE = 'DELETE_FAILURE';
 
 export function deleteGroup(id) {
-  console.log('triggered', id)
+  console.log('triggered', id);
   return {
     [CALL_API]: {
       endpoint: 'groups/'+id,
       req: 'DELETE',
       types: [DELETE_REQUEST, DELETE_SUCCESS, DELETE_FAILURE]
     }
-  }
+  };
 }
 
 export const EXPENSE_REQUEST = 'EXPENSE_REQUEST';
@@ -143,7 +143,7 @@ export function addExpense(formData) {
       req: 'POST',
       types: [EXPENSE_REQUEST, EXPENSE_SUCCESS, EXPENSE_FAILURE]
     }
-  }
+  };
 }
 
 export const UPDATE_EXPENSE_REQUEST = 'UPDATE_EXPENSE_REQUEST';
@@ -160,8 +160,7 @@ export function updateExpense(formData,id) {
       req: 'PUT',
       types: [UPDATE_EXPENSE_REQUEST, UPDATE_EXPENSE_SUCCESS, UPDATE_EXPENSE_FAILURE]
     }
-
-  }
+  };
 }
 
 
@@ -178,7 +177,7 @@ export function makePayment(formData) {
       req: 'POST',
       types: [PAYMENT_REQUEST, PAYMENT_SUCCESS, PAYMENT_FAILURE]
     }
-  }
+  };
 }
 
 export const INDBALANCE_REQUEST = 'INDBALANCE_REQUEST';
@@ -194,7 +193,7 @@ export function indBalance(indObj) {
       req: 'PUT',
       types: [INDBALANCE_REQUEST, INDBALANCE_SUCCESS, INDBALANCE_FAILURE]
     }
-  }
+  };
 }
 
 export const PAYPAL_PAYMENT_REQUEST = 'PAYPAL_PAYMENT_REQUEST';
@@ -212,7 +211,7 @@ export function usePaypal(formData,dbEntry) {
       req: 'POST',
       types: [PAYPAL_PAYMENT_REQUEST, PAYPAL_PAYMENT_SUCCESS, PAYPAL_PAYMENT_FAILURE],
     }
-  }
+  };
 }
 
 export const UPDATE_PAYSTAT_REQUEST = 'UPDATE_PAYSTAT_REQUEST';
@@ -228,16 +227,15 @@ export function updatePaymentStatus(data) {
       req: 'PUT',
       types: [UPDATE_PAYSTAT_REQUEST, UPDATE_PAYSTAT_SUCCESS, UPDATE_PAYSTAT_FAILURE]
     }
-
-  }
+  };
 }
 
 export const CLEAR_ERROR = 'CLEAR_ERROR';
 export function clearError() {
-  sessionStorage.clear()
+  sessionStorage.clear();
   return {
       type: CLEAR_ERROR,
-  }
+  };
 }
 
 function processGroup(members,formData, id){
@@ -245,13 +243,13 @@ function processGroup(members,formData, id){
   let groupObj = {};
   if(id != undefined){
    groupObj.id = id;
-   } 
+   }
 
   groupObj.name = formData.groupName.value;
   groupObj.desc = formData.groupDesc.value;
   groupObj.members= [];
   for(var i = 0; i < members.length; i++){
-    groupObj.members.push( Number(members[i].value || members[i].user_id))
+    groupObj.members.push( Number(members[i].value || members[i].user_id));
   }
   //console.log('our entire group object to send to server', groupObj)
   return JSON.stringify(groupObj);

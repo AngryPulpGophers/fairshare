@@ -27,23 +27,23 @@ const FIELDS = {
 let alert = false;
 
 export default class Profile extends Component {
-    
+
     componentWillReceiveProps(nextProps){
       if(nextProps.userIsUpdated){
-        alert = !alert
+        alert = !alert;
       }
     }
 
     handleSubmit(userData) { // update profile
-     userData.id = this.props.userInfo.id
-     this.props.updateUserInfo(userData)
+     userData.id = this.props.userInfo.id;
+     this.props.updateUserInfo(userData);
     }
 
     renderField(fieldConfig, field) { // one helper per ea field declared
       const fieldHelper = this.props.fields[field];
       return (
         <label>{fieldConfig.label}
-          <fieldConfig.type type={fieldConfig.fieldType} 
+          <fieldConfig.type type={fieldConfig.fieldType}
           className = {fieldHelper.touched && fieldHelper.error ? 'is-invalid-input' : ''}
           style = {{marginBottom:4.8}}
           placeholder={fieldConfig.label} {...fieldHelper}/>
@@ -63,7 +63,7 @@ export default class Profile extends Component {
           <div className="row">
             <div className="small-12 large-7 large-centered columns">
               <div className="component-wrapper">
-                <ExpireAlert 
+                <ExpireAlert
                     set={this.props.userIsUpdated}
                     reset={this.props.resetAlert}
                     status="success"
@@ -94,25 +94,25 @@ export default class Profile extends Component {
             </div>
           </div>
       </div>
-   );
+    );
   }
 }
 
 const validate = values => {
   const errors = {}
-     if (!values.name) {
-        errors.name = 'Name is Required'
-      }
-      if (!values.username) {
-        errors.username = 'Username is Required'
-      } else if (values.username.length > 30) {
-        errors.username = 'Must be 30 characters or less'
-      }
-      if (!values.email) {
-        errors.email = 'Email is Required'
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = ('Invalid email address')
-      }
+    if (!values.name) {
+      errors.name = 'Name is Required'
+    }
+    if (!values.username) {
+      errors.username = 'Username is Required'
+    } else if (values.username.length > 30) {
+      errors.username = 'Must be 30 characters or less'
+    }
+    if (!values.email) {
+      errors.email = 'Email is Required'
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      errors.email = ('Invalid email address')
+    }
   return errors;
 }
 
