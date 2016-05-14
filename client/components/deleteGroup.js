@@ -16,7 +16,7 @@ export default class DeleteGroup extends Component {
 
   render(){
     console.log('the group to delete:',this.props.groupID)
-    return(
+    return this.props.groupID ? (
       <div className="delete-group">
       <button onClick={() => { this.handleDeleteGroup()} } className="alert button">Delete Group</button>
       <Modal className='modal' isOpen={this.state.isModalOpen} transitionName="modal-anim">
@@ -32,6 +32,6 @@ export default class DeleteGroup extends Component {
         </div>
       </Modal>
       </div>
-    )
+    ): null
   }
 }

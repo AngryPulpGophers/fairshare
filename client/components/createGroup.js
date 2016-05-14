@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { reduxForm } from 'redux-form';
 import { browserHistory } from 'react-router';
-import SelectSearch from 'react-select-search';
+import SelectSearch from 'react-select'';
 import DeleteGroup from './deleteGroup';
 
 export const fields = [ 'groupName', 'groupDesc' ];
@@ -44,7 +44,17 @@ export default class CreateGroup extends Component {
     //clear out our saved form data
     this.props.clearEdit();
   }
-
+  clearSearch(){
+    if( 
+      document.getElementsByClassName("select-search-box__search") && 
+      document.getElementsByClassName("select-search-box__search")[0] &&
+      document.getElementsByClassName("select-search-box__search")[0].value
+      ){
+      let searchVal = document.getElementsByClassName("select-search-box__search")[0].value;
+      console.log(searchVal);
+      document.getElementsByClassName("select-search-box__search")[0].value = '';
+    }
+  }
   render() {
     var submitButton;
     var formAction;
@@ -103,7 +113,12 @@ export default class CreateGroup extends Component {
                     <label>Add a few folks</label>
                     { this.props.users.length === 0 ? null :  
                       <div className="input-group">
-                        <SelectSearch valueChanged={this.props.handleNewMem} options={this.props.users} ref="users" />
+                        <SelectSearch 
+                          onChange={this.props.handleNewMem} 
+                          options={this.props.users} 
+                          name="member-select"
+                          onBlurResetsInput={true}
+                        />
                         <a id="add" onClick={() => { this.props.addMember(this.props.newMem, this.props.groupForm) }} className="input-group-button button">+ add</a>
                       </div>
                     }
@@ -140,7 +155,7 @@ CreateGroup.propTypes = {
   createGroup: PropTypes.func.isRequired,
   memState: PropTypes.object.isRequired,
   updateGroup: PropTypes.func.isRequired,
-  groupID: PropTypes.number.isRequired
+  groupID: PropTypes.string.isRequired
 }
 
 export default reduxForm({
