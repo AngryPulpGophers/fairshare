@@ -32,7 +32,7 @@ SocialHelper.makeButtons = (socialObj,key, context) => {
 }
 
 SocialHelper.makeAnchors = (key) => {
-	let ref = 'auth/link'+key.toLowerCase();
+	let ref = 'auth/link/'+key.toLowerCase();
 	return(
 	  <a href= {ref} className="button alert button tiny"><i className="fa fa-unlock"></i>{key}</a>
   )

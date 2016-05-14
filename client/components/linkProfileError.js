@@ -25,4 +25,5 @@ export default class LinkError extends Component{
  	        </div>
  	      </ErrorModal>
      )
+  }
 }
