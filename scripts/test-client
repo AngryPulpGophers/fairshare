@@ -1,0 +1,1 @@
+mocha --compilers js:babel-register ./test/test-client/css-null-compiler.js --require ./test/test-helper.js ./test/test-client/specs/*.spec.js --recursive

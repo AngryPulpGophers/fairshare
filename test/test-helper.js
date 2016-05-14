@@ -10,6 +10,13 @@ process.env.NODE_ENV = 'test';
 global.__server = __dirname + '/../server';
 global.__client = __dirname + '/../client';
 
+// define the window object
+global.window = {
+  location: {
+    href: 'localhost:3000'
+  }
+};
+
 //
 // Assertions
 //
