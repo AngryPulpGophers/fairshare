@@ -27,7 +27,7 @@ export default class GroupList extends Component {
                     <h5>{group.name} </h5>
                   </div>
                   <div className="small-12 large-4 columns">
-                    <span>Status: </span>
+                    <span>Balance: </span>
                     <span style = {group.balance>=0 ? {color:'green'} : {color:'red'}}>${group.balance}</span>
                       {group.members.map(function(member){
                         return (

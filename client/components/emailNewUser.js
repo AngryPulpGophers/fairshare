@@ -77,8 +77,8 @@ export default class EmailNewUser extends Component {
 
 
     return (
-      <div>
-      <button className = 'button primary button tiny'onClick={this.openModal}>Suggest Friends</button>
+      <span>
+      <a onClick={this.openModal}>Invite a Friend</a>
             <Modal isOpen={this.state.isModalOpen}
                    transitionName="modal-anim">
       <form onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this)).bind(this)}>
@@ -106,7 +106,7 @@ export default class EmailNewUser extends Component {
         </div>
       </form>
       </Modal>
-      </div>
+      </span>
     )
   }
 }

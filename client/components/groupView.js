@@ -141,7 +141,7 @@ export default class GroupView extends Component {
                           <div>
                             <h5 className="item-title">{this.seeIfYou(localGroupObj[activity.paid_by].name)} spent ${activity.amount} on {activity.title}<a onClick={()=>this.props.toggleDisplay(index)}> details</a></h5>
                             <span className="small-aside">{prettyDate(activity.created_at)}</span>
-                            <div style={this.props.displayActive[index]}>
+                            <div className={this.props.displayActive[index].display == "none" ? 'details closed': 'details'}>
                               <div className = 'row'>
                                 <div className = 'small-12 columns'>
                                   <div>Members:
@@ -171,7 +171,7 @@ export default class GroupView extends Component {
                                 initialValues = {expenseValues[activity.id]}
                               /> 
                               : null }
-                              <div className="receipt-holder" style={this.props.displayActive[index]}> 
+                              <div className={this.props.displayActive[index].display == "none" ? 'receipt-holder closed': 'receipt-holder'}> 
                                 Reciept: 
                                 <a onClick={()=> { this.setState({isModalOpen:true}) } }>
                                   <img src={"/"+(activity.img_url.split('dist/')[1] ? activity.img_url.split('dist/')[1] : defaultPicture)} />
@@ -217,7 +217,7 @@ export default class GroupView extends Component {
                       </div>
                     }
                   </div>
-                  <div className="note" style={this.props.displayActive[index]}>
+                  <div className={this.props.displayActive[index].display == "none" ? 'note closed': 'note'}>
                     Note: {activity.note}
                   </div>
                 </div>
