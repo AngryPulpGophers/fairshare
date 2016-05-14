@@ -30,14 +30,12 @@ module.exports = (app,express) => {
   app.use(cookieParser('kitkat'));
 
   passport.serializeUser((user, done) => {
-    console.log('user in serialize:', user);
     return done(null, user.id);
   });
 
   passport.deserializeUser((id, done) => {
     User.getById({id: id})
     .then( userObj => {
-      console.log('userObj in deserialize:', userObj);
       return done(null, userObj[0]);
     })
     .catch( err => {
