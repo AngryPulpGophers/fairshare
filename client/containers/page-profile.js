@@ -23,7 +23,7 @@ class PageProfile extends Component {
     }
   }
   componentDidMount(){
-    his.props.getGroups();
+    this.props.getGroups();
   }
 
   render() {
