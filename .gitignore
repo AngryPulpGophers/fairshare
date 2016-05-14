@@ -44,6 +44,9 @@ bower_components
 # authentication keys
 server/config/auth_secrets.js
 
+# ssl certificate files
+ssl
+
 # seed data
 seeds
 

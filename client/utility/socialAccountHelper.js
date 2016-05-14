@@ -4,13 +4,13 @@ var SocialHelper = module.exports;
 
 SocialHelper.assignSpecificProps = (obj) => {
 	var socialObj = {};
-	socialObj.id = obj.id
+	socialObj.id = obj.id;
 	socialObj.primary = obj.primary;
 	socialObj.Facebook = obj.facebook;
 	socialObj.Google = obj.google;
 	socialObj.PayPal = obj.paypal;
 	return socialObj;
-} 
+};
 
 
 SocialHelper.makeButtons = (socialObj,key, context) => {
@@ -18,7 +18,7 @@ SocialHelper.makeButtons = (socialObj,key, context) => {
   let id = socialObj.id;
   console.log('id in makeButtons', id);
   let primary = socialObj.primary;
-  
+
   if(primary !== key){
 	  return (
       <button className="button info button tiny" onClick={()=> context.props.unlinkSocialAcc({id:id, provider:smallKey})}><i className="fa fa-lock"></i>{key}</button>
