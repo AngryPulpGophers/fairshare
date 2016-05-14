@@ -15,8 +15,10 @@ class PageProfile extends Component {
       browserHistory.push('/login')
     }
   }
+
   componentWillReceiveProps(nextProps){
-    if(!nextProps.isAuthed){
+    //changed from nextProps.isAuthed
+    if(!window.localStorage.isAuthed){
       browserHistory.push('/login')
     }
   }
