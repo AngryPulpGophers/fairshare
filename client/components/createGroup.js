@@ -114,10 +114,9 @@ export default class CreateGroup extends Component {
                     { this.props.users.length === 0 ? null :  
                       <div className="input-group">
                         <SelectSearch 
-                          onChange={this.props.handleNewMem} 
+                          valueChanged={this.props.handleNewMem} 
                           options={this.props.users} 
-                          name="member-select"
-                          onBlurResetsInput={true}
+                          ref="users" 
                         />
                         <a id="add" onClick={() => { this.props.addMember(this.props.newMem, this.props.groupForm) }} className="input-group-button button">+ add</a>
                       </div>
