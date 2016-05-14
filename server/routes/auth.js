@@ -8,7 +8,9 @@ module.exports = router;
 
 var checkUser = (req,res,next) => {
   console.log('req.user in new middleware:', req.user)
-  if(req.user) next();
+  if(req.isAuthenticated()){ 
+  console.log('req after isauth:', req.session, req.user);
+  next();
   else res.redirect('/linkerror');
 }
 
