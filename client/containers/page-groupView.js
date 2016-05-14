@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link, Route, browserHistory } from 'react-router';
-import {  getGroups, getGroup, getActivity,getUserByGroup , addExpense, makePayment, setCurrentGroup, indBalance, updateExpense, usePaypal, updatePaymentStatus, clearError, clearActivity } from '../actions/groupActions';
+import {  getGroups, getGroup, getActivity,getUserByGroup , addExpense, makePayment, setCurrentGroup, indBalance, updateExpense, usePaypal, updatePaymentStatus, clearError, clearActivity, clearEdit } from '../actions/groupActions';
 import GroupView from '../components/groupView';
 import { startDisplay, toggleDisplay } from '../actions/calloutActions';
 
@@ -36,7 +36,10 @@ class PageGroupView extends Component {
     this.props.getGroup(ID[1]);
     
   }
-
+  componentWillUnmount(){
+    //clear out our saved form data
+    this.props.clearEdit();
+  }
   render() {
     console.log('this.props in page groupview:', this.props)
     return (
@@ -74,7 +77,6 @@ PageGroupView.propTypes = {
   getActivity: PropTypes.func.isRequired,
   activity:PropTypes.array.isRequired,
   makePayment: PropTypes.func.isRequired,
-  deleteGroup: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -111,5 +113,6 @@ export default connect(mapStateToProps, {
   updatePaymentStatus,
   clearError,
   clearActivity,
-  getGroup
+  getGroup,
+  clearEdit
 })(PageGroupView)

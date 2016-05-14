@@ -5,9 +5,10 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 export default class Modal extends Component {
   render(){
+      let transition = this.props.transitionName ? this.props.transitionName : 'modal-anim';
       if(this.props.isOpen){
         return(   
-          <ReactCSSTransitionGroup transitionName={this.props.transitionName} transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+          <ReactCSSTransitionGroup transitionName={transition} transitionEnterTimeout={500} transitionLeaveTimeout={300}>
             <div className = 'modal-overlay'>
               <div className='modal'>
                 {this.props.children}
@@ -16,7 +17,7 @@ export default class Modal extends Component {
           </ReactCSSTransitionGroup>
         )
       }else {
-        return <ReactCSSTransitionGroup transitionName={this.props.transitionName} transitionEnterTimeout={500} transitionLeaveTimeout={300}/>;
+        return <ReactCSSTransitionGroup transitionName={transition} transitionEnterTimeout={500} transitionLeaveTimeout={300}/>;
       }
     }
 

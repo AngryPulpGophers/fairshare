@@ -7,10 +7,13 @@ var passport = require('passport');
 module.exports = router;
 
 var checkUser = (req,res,next) => {
-  console.log('req.user in new middleware:', req.user)
-  if(req.user) next();
-  else res.redirect('/linkerror');
-}
+  console.log('req.user in new middleware:', req.user);
+  if(req.isAuthenticated()){
+    console.log('req after isauth:', req.session, req.user);
+    next();
+  }
+  else { res.redirect('/linkerror'); }
+};
 
 router.get('/facebook', passport.authenticate('facebook', {scope: ['email']}));
 

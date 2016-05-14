@@ -101,7 +101,7 @@ function mapStateToProps(state) {
   };
 }
 PageCreateGroup.contextTypes = {
-    router: React.PropTypes.func.isRequired
+    router: PropTypes.object.isRequired
 };
 export default connect(mapStateToProps, {
   getUsers,
