@@ -13,7 +13,9 @@ var groups     = require('./routes/groups.js');
 var dashboard  = require('./routes/dashboard.js');
 var payment    = require('./routes/payment.js');
 var routes     = require('./routes/index.js');
-var app = express();
+var fs         = require('fs');
+var https      = require('https');
+var app        = express();
 
 console.log("NODE_ENV", process.env.NODE_ENV);
 console.log("DB_URL", process.env.DATABASE_URL);
@@ -55,8 +57,23 @@ if (process.env.NODE_ENV !== 'test') {
 
   // Start the server!
   var port = process.env.PORT || process.env.WEBPACK_PORT || 3000;
-  app.listen(port);
-  console.log('Listening on port', port);
+
+  if (process.env.NODE_ENV !== 'production'){
+    app.listen(port);
+    console.log('Listening on port', port);
+  } else {
+    var options = {
+      key: fs.readFileSync('./ssl/server.key'),
+      cert: fs.readFileSync('./ssl/server.crt'),
+      ca: fs.readFileSync('./ssl/ca.crt'),
+      requestCert: true,
+      rejectUnauthorized: false
+    };
+
+    var secureServer = https.createServer(options, app).listen(port, function() {
+        console.log("Secure Express server listening on port", port);
+    });
+  }
 } else {
   // We're in test mode; make this file importable instead.
   module.exports = routes;

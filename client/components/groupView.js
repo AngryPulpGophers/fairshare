@@ -11,7 +11,12 @@ import defaultPicture from '../images/defaultPicture.jpg';
 import UpdateExpense from './updateExpense';
 
 export default class GroupView extends Component {
-
+  constructor(props){
+    super(props)
+    this.state = ({
+        isModalOpen: false
+      })
+  }
   seeIfYou(name) {
     if (name===this.props.userInfo.name || name[0]===this.props.userInfo.name){
       return ('You')
@@ -134,11 +139,11 @@ export default class GroupView extends Component {
                       <div className="row">
                         <div className="small-9 columns">
                           <div>
-                            <h5 className="item-title">{this.seeIfYou(localGroupObj[activity.paid_by].name)} spent ${activity.amount} for {activity.title}<a onClick={()=>this.props.toggleDisplay(index)}> details</a></h5>
+                            <h5 className="item-title">{this.seeIfYou(localGroupObj[activity.paid_by].name)} spent ${activity.amount} on {activity.title}<a onClick={()=>this.props.toggleDisplay(index)}> details</a></h5>
                             <span className="small-aside">{prettyDate(activity.created_at)}</span>
                             <div style={this.props.displayActive[index]}>
                               <div className = 'row'>
-                                <div className = 'small-12 large-6 columns'>
+                                <div className = 'small-12 columns'>
                                   <div>Members:
                                   { activity.members.map(function(member,index,members){
                                     return (
@@ -147,12 +152,6 @@ export default class GroupView extends Component {
                                   }.bind(this))}
                                   </div>
                                 </div>
-                                <div className = "small-12 large-3 columns">
-                                  <div> Reciept: 
-                                    <img src={"/"+(activity.img_url.split('dist/')[1] ? activity.img_url.split('dist/')[1] : defaultPicture)} />
-                                  </div>
-                                </div>
-                                <div className = 'large-3 columns'></div>
                               </div>
                             </div>
                           </div>
@@ -172,6 +171,27 @@ export default class GroupView extends Component {
                                 initialValues = {expenseValues[activity.id]}
                               /> 
                               : null }
+                              <div className="receipt-holder" style={this.props.displayActive[index]}> 
+                                Reciept: 
+                                <a onClick={()=> { this.setState({isModalOpen:true}) } }>
+                                  <img src={"/"+(activity.img_url.split('dist/')[1] ? activity.img_url.split('dist/')[1] : defaultPicture)} />
+                                </a>
+                                <Modal className='modal' isOpen={this.state.isModalOpen} transitionName="modal-anim">
+                                  <div className="row">
+                                    <div className="small-12 large-10 large-centered columns text-center">
+                                      <img src={"/"+(activity.img_url.split('dist/')[1] ? activity.img_url.split('dist/')[1] : defaultPicture)} />
+                                      <div className="row">
+                                        <div className="align-center">
+                                        <p>
+                                          <br />
+                                          <button onClick={ ()=> {this.setState({isModalOpen:false}) } } className="secondary button">Close</button>
+                                        </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </Modal>
+                              </div>
                         </div>
                       </div>
                       :
