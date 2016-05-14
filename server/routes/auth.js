@@ -6,6 +6,12 @@ var passport = require('passport');
 
 module.exports = router;
 
+var checkUser = (req,res,next) => {
+  console.log('req.user in new middleware:', req.user)
+  if(req.user) next();
+  else res.redirect('/linkerror');
+}
+
 router.get('/facebook', passport.authenticate('facebook', {scope: ['email']}));
 
 router.get('/facebook/callback', passport.authenticate('facebook',
@@ -38,6 +44,12 @@ router.get('/paypal/callback', passport.authenticate('paypal',
 	  	res.redirect('/');
 	  }
 });
+
+router.get('/link/facebook', checkUser, passport.authenticate('facebook', {scope: ['email']},{session:true}))
+
+router.get('/link/google', checkUser, passport.authenticate('google', {scope:['email', 'profile']},{session:true}));
+
+router.get('/link/paypal', checkUser, passport.authenticate('paypal', {scope:['openid']}, {session:true}));
 
 
 router.get(('/logout'),function(req,res){
