@@ -32,6 +32,7 @@ PayHelp.buildPaymentEntry = (obj,data) => {
 PayHelp.handleSubmit = (obj,data) => {
   obj.setState({isModalOpen:false, chosenOne: null});
   data = PayHelp.buildPaymentEntry(obj,data);
+  console.log('data in form:', data);
   if(sessionStorage.getItem('cash')){
     delete data.email;
     sessionStorage.clear();
@@ -58,7 +59,7 @@ PayHelp.closeModal = (obj) => {
 
 PayHelp.makeRadioButton = (data,obj) => {
     return (
-      <label key={data.user_id + data.id}><input className='recip' name='recipient' onChange={obj.onChange} type='radio' value={data.user_id} required/>{data.name}</label>
+      <label key={data.user_id}><input className='recip' name='recipient' onChange={obj.onChange} type='radio' value={data.user_id} required/>{data.name}</label>
     )
   }
 

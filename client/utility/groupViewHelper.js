@@ -42,80 +42,52 @@ Helper.prettyDate = function(milliseconds){
 
   Helper.calcBalance = function() {
     if (this.props.currentGroupUsers){
-console.log('what is going on',this.props.activity);
+console.log('what is going on', this.props.currentGroupUsers);
 //make a group object from current group array
-  var groupObj = {};
-  for (var i = 0 ; i < this.props.currentGroupUsers.length ; i++){
-    groupObj[this.props.currentGroupUsers[i].user_id]=this.props.currentGroupUsers[i];
-    groupObj[this.props.currentGroupUsers[i].user_id].balance = 0;
-    groupObj[this.props.currentGroupUsers[i].user_id].tempBalance = 0;
-  }
 
-for (var key in groupObj){
-  console.log('Groups Object in Calc Balance function',groupObj[key].balance);
+var groupObj = this.props.currentGroupUsers.reduce((acc,member) => {
+  acc[member.user_id] = member;
+  acc[member.user_id].balance = 0;
+  acc[member.user_id].tempBalance = 0;
+  return acc;
+},{});
+
+console.log('groupObj in helper:', groupObj);
+
+var splitActivities = (array) => {
+  let [pay,cost] = [[],[]];
+  array.forEach( act => {
+    if(act.type === 'expense'){
+      cost.push(act);
+    }else{
+      pay.push(act);
+    }
+  })
+  return [pay,cost];
 }
+
+let [payments,expenses] = splitActivities(this.props.activity);
+
 //loop through each activity the group has
-  for (var i = 0 ; i < this.props.activity.length ; i++){
-
-    //console.log('where are the strings',this.props.activity[i].amount, typeof this.props.activity[i].amount)
-    if (this.props.activity[i].type==='expense'){
-
-
-
-      //loop through each member in each activity
-      for (var x = 0 ; x < this.props.activity[i].members.length ; x++){
-        //console.log('this is important',this.props.activity[i].members.length )
-        //if the member you are looking at is the one that paid, go down to else
-        if(this.props.activity[i].paid_by != this.props.activity[i].members[x].id){
-          //if it is the last member in the group he has to settle all the left over pennies
-          if (x===this.props.activity[i].members.length-1){
-            //if there are pennies left over, you have to add them to this person
-            if (round(this.props.activity[i].amount/this.props.activity[i].members.length)*this.props.activity[i].members.length!==this.props.activity[i].amount){
-              groupObj[this.props.activity[i].members[x].id].balance -= round((this.props.activity[i].amount/this.props.activity[i].members.length+
-                round(this.props.activity[i].amount-round(this.props.activity[i].amount/this.props.activity[i].members.length)*this.props.activity[i].members.length)));
-            }
-            else {
-              groupObj[this.props.activity[i].members[x].id].balance -= round((this.props.activity[i].amount/this.props.activity[i].members.length));
-            }
-          }
-          else {
-            console.log('what is breaking',this.props.activity[i],groupObj);
-            groupObj[this.props.activity[i].members[x].id].balance -= round((this.props.activity[i].amount/this.props.activity[i].members.length));
-          }
-        }
-        else {
-          //if the person who paied is the last member in the group
-          if (x===this.props.activity[i].members.length-1){
-            //if there are pennies left over after doing simple math, then there must be logic to assign them to this guy
-            if (round(this.props.activity[i].amount/this.props.activity[i].members.length)*this.props.activity[i].members.length!==this.props.activity[i].amount){
-              groupObj[this.props.activity[i].paid_by].balance +=  round((this.props.activity[i].amount* ((this.props.activity[i].members.length-1)/this.props.activity[i].members.length))+
-                round(this.props.activity[i].amount-round(this.props.activity[i].amount/this.props.activity[i].members.length)*this.props.activity[i].members.length));
-              groupObj[this.props.activity[i].paid_by].balance =  round(groupObj[this.props.activity[i].paid_by].balance);
-            }
-            else {
-              groupObj[this.props.activity[i].paid_by].balance +=  round((this.props.activity[i].amount* ((this.props.activity[i].members.length-1)/this.props.activity[i].members.length)));
-              groupObj[this.props.activity[i].paid_by].balance =  round(groupObj[this.props.activity[i].paid_by].balance);
-            }
-          }
-          else {
-            groupObj[this.props.activity[i].paid_by].balance +=  round((this.props.activity[i].amount* ((this.props.activity[i].members.length-1)/this.props.activity[i].members.length)));
-            groupObj[this.props.activity[i].paid_by].balance =  round(groupObj[this.props.activity[i].paid_by].balance);
-          }
-        }
+  expenses.forEach(act => {
+    act.members.filter( person => person.id !== act.paid_by)
+    .forEach( (person,idx) => {
+      let portion = round(act.amount/act.members.length)
+      let pennies = round(act.amount) - (round(act.amount/act.members.length) * act.members.length);
+      if(idx === act.members.length - 1){
+        groupObj[person.id].balance = round(groupObj[person.id].balance) - (portion + pennies);
+      }else{
+        groupObj[person.id].balance = round(groupObj[person.id].balance) - portion;
       }
-    }
+        groupObj[act.paid_by].balance = round(groupObj[act.paid_by].balance) + portion;
+    })
+  })
 
-    if ( this.props.activity[i].type === 'payment'){
-      //add and subtract the exact amount form the payee and recipient respenctively
-      //everything is a string or a long number so I am rounding alot
-      groupObj[this.props.activity[i].payee].balance= round(groupObj[this.props.activity[i].payee].balance);
-      groupObj[this.props.activity[i].payee].balance += round(this.props.activity[i].amount);
-      groupObj[this.props.activity[i].payee].balance = round(groupObj[this.props.activity[i].payee].balance);
-      groupObj[this.props.activity[i].recipient].balance=round(groupObj[this.props.activity[i].recipient].balance);
-      groupObj[this.props.activity[i].recipient].balance -= round(this.props.activity[i].amount);
-      groupObj[this.props.activity[i].recipient].balance = round(groupObj[this.props.activity[i].recipient].balance);
-    }
-  }
+
+payments.forEach(act => {
+  groupObj[act.payee].balance = round(groupObj[act.payee].balance) + round(act.amount);
+  groupObj[act.recipient].balance = round(groupObj[act.recipient].balance) - round(act.amount);
+})
 
 
 //this code sets up balance in user_groups table
@@ -141,27 +113,19 @@ for (var ind in groupObj){
 
   //maybe can use user ID instead if it is available
  // console.log('balances should be here',groupObj)
-var sortedGroup = [];
+  var sortedGroup = [];
   for (var user in groupObj){
     // console.log('real balance',groupObj[user].balance)
     sortedGroup.push(groupObj[user]);
   }
 
-sortedGroup = sortedGroup.sort(function(a,b){
-  if (a.user_id){
-   // console.log('user_id')
-    return a.user_id - b.user_id;
-  }
-  });
-// console.log('so confused',sortedGroup)
-  for (var i=0 ; i<sortedGroup.length; i++){
-   sortedGroup[i].balance = round(sortedGroup[i].balance);
-   // console.log('pj',sortedGroup[i].balance)
-    sortedGroup[i].tempBalance = round(sortedGroup[i].balance);
-   // console.log('holly',sortedGroup[i].tempBalance)
-    sortedGroup[i].owed = [];
 
-  }
+sortedGroup = sortedGroup.map( obj => {
+  obj.tempBalance = obj.balance;
+  obj.owed = [];
+  return obj;
+})
+
 
   //console.log('current status', sortedGroup)
 //ADD user_ to all id below this point
