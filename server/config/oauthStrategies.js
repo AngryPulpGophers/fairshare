@@ -70,8 +70,8 @@ Strategies.facebook_strat = new FacebookStrategy({
         }else{
           let userProfile = {
             name: profile.displayName,
-            username:profile.displayName.split(' ').join(''),
-            email: profile.emails[0].value.split('@')[0],
+            username: profile.emails[0].value.split('@')[0],
+            email: profile.emails[0].value,
             img_url: profile.photos[0].value,
             primary: 'Facebook',
             facebook: 1,
@@ -129,7 +129,7 @@ Strategies.facebook_strat = new FacebookStrategy({
 Strategies.google_strat = new GoogleStrategy({
     clientID: GoogleID,
     clientSecret: GoogleSecret,
-    callbackURL: 'https://www.fairshare.cloud/auth/google/callback',
+    callbackURL: 'https://www.fairshare.cloud /auth/google/callback',
     passReqToCallback: true
   },
    (req, accessToken, refreshToken,params, profile, done) => {

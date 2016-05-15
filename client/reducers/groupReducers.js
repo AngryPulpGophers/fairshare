@@ -167,8 +167,9 @@ export function groups(state = { isFetching: false, editGroup: {}, currentGroup:
     case ActionTypes.UPDATE_EXPENSE_SUCCESS:
       var activityIndex;
       for (var i = 0 ; i < state.activity.length ; i++){
-        if (action.id === state.activity[i].id){
+        if (action.id === state.activity[i].id && state.activity[i].type === 'expense'){
           activityIndex=i;
+
         }
       }
 
