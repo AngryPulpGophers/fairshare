@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import defaultPicture from '../images/fs-logo.png';
-
+import SocialModal from './socialPromptModal'
 import {prettyDate} from '../utility/groupViewHelper';
 
 
@@ -19,6 +19,10 @@ export default class GroupList extends Component {
   render(){
     return(
       <div>
+        <SocialModal
+          stopSocialModal = {this.props.stopSocialModal}
+          userInfo = {this.props.userInfo}
+        />
       <div>
          {this.props.groups.map(function(group){
             return (
@@ -54,5 +58,6 @@ export default class GroupList extends Component {
 
 GroupList.propTypes = {
   userInfo: PropTypes.object.isRequired,
+  stopSocialModal: PropTypes.object.isRequired
 }
 
