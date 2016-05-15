@@ -52,7 +52,7 @@ export default class GroupView extends Component {
       }
     }
     if(groupExists){
-      console.log('SAM WHAT BROKE',this)
+      console.log('SAM WHAT BROKE',this);
       showUserBalance=calcBalance.call(this); //this.calcBalance();
       localGroupObj=makeGroupObj.call(this); //this.makeGroupObj()
     }
@@ -77,7 +77,6 @@ export default class GroupView extends Component {
                     errorStatus={this.props.errorStatus}
                     errMessage={this.props.errMessage}
                   />
-
                 </div>
                 <div className="group-view-pad">
                 <div className="small-12 large-4 large-push-8 columns">
@@ -89,18 +88,16 @@ export default class GroupView extends Component {
                             return (
                               <div key={index+user.name}>
                                 {this.seeIfYou(user.name)} {this.seeIfYou(user.name) === 'You' ? " owe " + Object.keys(person) + " $" + (-1 * person[Object.keys(person)]).toFixed(2)
-                            : "owes " + this.seeIfYou(Object.keys(person)) +" $"+ (-1*person[Object.keys(person)]).toFixed(2)}
+                                : "owes " + this.seeIfYou(Object.keys(person)) +" $"+ (-1*person[Object.keys(person)]).toFixed(2)}
                               </div>
-                              )
-                            }.bind(this))
-                          }
+                            )
+                          }.bind(this))}
                         </span>
                       )
                     }.bind(this))
                   }
                 </div>
                 <div className="small-12 large-8 large-pull-4 columns">
-
 
                 <Modal isOpen={sessionStorage.getItem('success')}>
                   <div style={{textAlign:'center'}}>
@@ -249,6 +246,7 @@ export default class GroupView extends Component {
     )
   }
 }
+
 GroupView.propTypes = {
   makePayment: PropTypes.func.isRequired,
   usePaypal: PropTypes.func.isRequired,
@@ -257,5 +255,3 @@ GroupView.propTypes = {
   errorStatus: PropTypes.bool.isRequired,
   errMessage: PropTypes.string.isRequired,
 }
-
-
