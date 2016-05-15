@@ -5,12 +5,14 @@ import React from 'react';
 var SocialHelper = module.exports;
 
 SocialHelper.assignSpecificProps = (obj) => {
-  let socialObj = {};
-    socialObj.id = obj.id;
-    socialObj.primary = obj.primary;
-    socialObj.facebook = obj.facebook;
-    socialObj.google = obj.google;
-    socialObj.paypal = obj.paypal;
+  let socialObj = {
+    id:       obj.id,
+    primary:  obj.primary,
+    facebook: obj.facebook,
+    google:   obj.google,
+    paypal:   obj.paypal
+  };
+
   return socialObj;
 };
 

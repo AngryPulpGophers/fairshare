@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import defaultPicture from '../images/fs-logo.png';
-import SocialModal from './socialPromptModal'
+import SocialModal from './socialPromptModal';
 import {prettyDate} from '../utility/groupViewHelper';
 
 
