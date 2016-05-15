@@ -58,6 +58,6 @@ export default class GroupList extends Component {
 
 GroupList.propTypes = {
   userInfo: PropTypes.object.isRequired,
-  stopSocialModal: PropTypes.object.isRequired
+  stopSocialModal: PropTypes.func.isRequired
 }
 
