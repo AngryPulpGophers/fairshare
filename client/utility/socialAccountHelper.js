@@ -16,7 +16,6 @@ SocialHelper.assignSpecificProps = (obj) => {
 
 
 SocialHelper.makeButtons = (socialObj,key, context, fClass) => {
-  let smallKey = key.toLowerCase();
   let id = socialObj.id;
   let primary = socialObj.primary.toLowerCase();
 
