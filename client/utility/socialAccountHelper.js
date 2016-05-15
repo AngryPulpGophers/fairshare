@@ -16,12 +16,13 @@ SocialHelper.assignSpecificProps = (obj) => {
 
 
 SocialHelper.makeButtons = (socialObj,key, context, fClass) => {
+  let authSource = key;
   let id = socialObj.id;
   let primary = socialObj.primary.toLowerCase();
 
   if(primary !== key){
 	  return (
-      <button className= {fClass} onClick={()=> context.props.unlinkSocialAcc({id:id, provider:smallKey})}><i className="fa fa-lock"></i>{key}</button>
+      <button className= {fClass} onClick={()=> context.props.unlinkSocialAcc({id:id, provider:authSource})}><i className="fa fa-lock"></i>{key}</button>
     )
   }else{
   	return (
