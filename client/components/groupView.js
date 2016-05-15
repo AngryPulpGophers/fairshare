@@ -4,6 +4,7 @@ import { browserHistory, Router, Route,Link } from 'react-router';
 import GroupList from './groupList';
 import {prettyDate, calcBalance, makeGroupObj, test, showDebt} from '../utility/groupViewHelper';
 import Modal from './modal';
+import ReceiptModal from './receiptModal';
 import PaymentForm from './paymentForm';
 import PaymentError from './paymentError';
 import AddExpense from './addExpense';
@@ -11,12 +12,6 @@ import defaultPicture from '../images/defaultPicture.jpg';
 import UpdateExpense from './updateExpense';
 
 export default class GroupView extends Component {
-  constructor(props){
-    super(props);
-    this.state = ({
-      isModalOpen: false
-    });
-  }
   seeIfYou(name) {
     if (name===this.props.userInfo.name || name[0]===this.props.userInfo.name){
       return ('You');
@@ -186,24 +181,10 @@ export default class GroupView extends Component {
                               : null }
                               <div className={this.props.displayActive[index].display == "none" ? 'receipt-holder closed': 'receipt-holder'}>
                                 Reciept:
-                                <a onClick={()=> { this.setState({isModalOpen:true}) } }>
-                                  <img src={"/"+(activity.img_url.split('dist/')[1] ? activity.img_url.split('dist/')[1] : defaultPicture)} />
-                                </a>
-                                <Modal className='modal' isOpen={this.state.isModalOpen} transitionName="modal-anim">
-                                  <div className="row">
-                                    <div className="small-12 large-10 large-centered columns text-center">
-                                      <img src={"/"+(activity.img_url.split('dist/')[1] ? activity.img_url.split('dist/')[1] : defaultPicture)} />
-                                      <div className="row">
-                                        <div className="align-center">
-                                        <p>
-                                          <br />
-                                          <button onClick={ ()=> {this.setState({isModalOpen:false}) } } className="secondary button">Close</button>
-                                        </p>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </Modal>
+                                <ReceiptModal 
+                                  img_src= {"/"+(activity.img_url.split('dist/')[1] ? activity.img_url.split('dist/')[1] : defaultPicture)}
+                                  key={activity.id+'activityModal'}
+                                />
                               </div>
                         </div>
                       </div>
