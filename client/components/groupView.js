@@ -11,12 +11,6 @@ import defaultPicture from '../images/defaultPicture.jpg';
 import UpdateExpense from './updateExpense';
 
 export default class GroupView extends Component {
-  constructor(props){
-    super(props);
-    this.state = ({
-      isModalOpen: false
-    });
-  }
   seeIfYou(name) {
     if (name===this.props.userInfo.name || name[0]===this.props.userInfo.name){
       return ('You');
