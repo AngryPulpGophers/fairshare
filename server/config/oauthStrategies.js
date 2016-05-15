@@ -129,7 +129,7 @@ Strategies.facebook_strat = new FacebookStrategy({
 Strategies.google_strat = new GoogleStrategy({
     clientID: GoogleID,
     clientSecret: GoogleSecret,
-    callbackURL: 'https://www.fairshare.cloud/auth/google/callback',
+    callbackURL: 'https://www.fairshare.cloud /auth/google/callback',
     passReqToCallback: true
   },
    (req, accessToken, refreshToken,params, profile, done) => {
