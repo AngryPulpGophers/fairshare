@@ -7,7 +7,7 @@ export default class SocialAccounts extends Component {
   render() {
     // console.log('info in render method:', this.props.userInfo)
     let userInfo = this.props.userInfo;
-    let [buttons,anchors] = SocialHelper.createLinkedAccounts(userInfo, SocialHelper.makeButtons, SocialHelper.makeAnchors,this);
+    let [buttons,anchors] = SocialHelper.createLinkedAccounts(userInfo, this);
     return(
       <div>
         {[...buttons]}
