@@ -82,7 +82,22 @@ export default class GroupView extends Component {
                 <div className="group-view-pad">
                 <div className="small-12 large-4 large-push-8 columns">
                   <h3>Balance</h3>
-                  { showDebt.call(this,showUserBalance) }
+                    {showUserBalance.map(function(user){
+                      return (
+                        <span key={user.user_id}>
+                          {user.owed.map(function(person, index){
+                            return (
+                              <div key={index+user.name}>
+                                {this.seeIfYou(user.name)} {this.seeIfYou(user.name) === 'You' ? " owe " + Object.keys(person) + " $" + (-1 * person[Object.keys(person)]).toFixed(2)
+                            : "owes " + this.seeIfYou(Object.keys(person)) +" $"+ (-1*person[Object.keys(person)]).toFixed(2)}
+                              </div>
+                              )
+                            }.bind(this))
+                          }
+                        </span>
+                      )
+                    }.bind(this))
+                  }
                 </div>
                 <div className="small-12 large-8 large-pull-4 columns">
 
