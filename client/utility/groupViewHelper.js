@@ -73,7 +73,9 @@ let [payments,expenses] = splitActivities(this.props.activity);
     act.members.filter( person => person.id !== act.paid_by)
     .forEach( (person,idx) => {
       let portion = round(act.amount/act.members.length)
-      let pennies = round(act.amount) - (round(act.amount/act.members.length) * act.members.length);
+      console.log('portion in expense:', portion);
+      let pennies = round(act.amount) - (round((act.amount/act.members.length) * act.members.length));
+      console.log('pennies in expense:', pennies);
       if(idx === act.members.length - 1){
         groupObj[person.id].balance = round(groupObj[person.id].balance) - (portion + pennies);
       }else{
