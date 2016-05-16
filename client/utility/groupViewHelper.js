@@ -231,7 +231,7 @@ Helper.showDebt = function(showUserBalance){
     return (
       <div>Your group has a $0 balance</div>)
   }
-
+  console.log('*^&*%^%*%&*&^*&%*&%got into the show user balance func')
   return showUserBalance.map(function(user){
     return (
       <span key={user.user_id}>
