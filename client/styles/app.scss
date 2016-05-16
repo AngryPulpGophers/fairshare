@@ -152,7 +152,8 @@ input[type='search']{
 .activity-header,.group-header{
   clear: both;
   overflow: hidden;
-  h2,h3{
+  h2{margin-left: 20px;float: left;}
+  h3{
     float:none;
     margin-right: 10px;
   }
@@ -216,8 +217,12 @@ input[type='search']{
 .label{
   white-space: normal;
 }
-
-
+.guest {
+  img{
+    margin: 20px 0;
+  }
+}
+.expense-user{float:left;}
 
 @media screen and (min-width: 40em) {
   .activity-header,.group-header{
