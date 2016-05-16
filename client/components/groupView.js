@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { browserHistory, Router, Route,Link } from 'react-router';
 import GroupList from './groupList';
-import {prettyDate, calcBalance, makeGroupObj, test, showDebt} from '../utility/groupViewHelper';
+import {prettyDate, calcBalance, makeGroupObj, test, showDebt, getImage} from '../utility/groupViewHelper';
 import Modal from './modal';
 import ReceiptModal from './receiptModal';
 import PaymentForm from './paymentForm';
@@ -66,6 +66,11 @@ export default class GroupView extends Component {
                     <h2>{this.props.currGroup.name}</h2>
                     {this.props.currGroup.created_by == this.props.userInfo.id ?
                     <Link className="edit-group" to={{pathname:'/create-group',query:{ id: this.props.currentGroup.id }}}><i className="fa fa-cog"></i></Link> : null}
+                    <div className="row">
+                      <div className="small-12 columns">
+                        <h5>{this.props.currGroup.desc}</h5>
+                      </div>
+                    </div>
                   </div>
                   <PaymentError
                     clearError={this.props.clearError}
@@ -77,8 +82,11 @@ export default class GroupView extends Component {
                 <div className="small-12 large-4 large-push-8 columns">
                   <h3>Balance</h3>
                     {showUserBalance.map(function(user){
+                      console.log('*^&*%^%*%&*&^*&%*&%got into the show user balance func')
+
                       return (
                         <span key={user.user_id}>
+
                           {user.owed.map(function(person, index){
                             return (
                               <div key={index+user.name}>
@@ -146,7 +154,7 @@ export default class GroupView extends Component {
                     {activity.type==='expense' ?
                       <div className="row">
                         <div className="small-9 columns">
-                          <div>
+                            {getImage(activity, activity.members)}
                             <h5 className="item-title">{this.seeIfYou(localGroupObj[activity.paid_by].name)} spent ${activity.amount} on {activity.title}<a onClick={()=>this.props.toggleDisplay(index)}> details</a></h5>
                             <span className="small-aside">{prettyDate(activity.created_at)}</span>
                             <div className={this.props.displayActive[index].display == "none" ? 'details closed': 'details'}>
@@ -162,7 +170,7 @@ export default class GroupView extends Component {
                                 </div>
                               </div>
                             </div>
-                          </div>
+
                         </div>
                         <div className="small-3 columns">
                           { this.props.userInfo.id === activity.paid_by ?
@@ -190,24 +198,23 @@ export default class GroupView extends Component {
                       </div>
                       :
                       <div className="row">
-                        <div className="small-12 columns">
+                        <div className="small-12 large-9 columns">
+                          <img className="roundCorner-image expense-user" src={ localGroupObj[activity.payee].img_url} />
                           <h5 className="item-title">{this.seeIfYou(localGroupObj[activity.payee].name)} paid {this.seeIfYou(localGroupObj[activity.recipient].name)} ${activity.amount} <a title="groupView" className="" onClick={()=>this.props.toggleDisplay(index)}> details</a></h5>
-
-                            <span className="small-aside">{prettyDate(activity.created_at)}</span>
+                          <span className="small-aside">{prettyDate(activity.created_at)}</span>
 
                         </div>
-
-                        <div className="small-12 columns">
+                        <div className="small-12 large-3 columns">
                           {activity.pending ?
-                          <span>
-                            <button className="button success tiny button" disabled={this.props.userInfo.id !== activity.recipient} onClick={()=>this.props.updatePaymentStatus({group_id: +ID[1], id:activity.id, pending:0})}><i className="fa fa-check circle"></i>Received</button> <span className="small-aside">Pending recipient approval</span>
-                          </span>
-                          :
-                          <span>
-                            <i className="fa fa-check-circle-o" aria-hidden="true"></i> Received
-                          </span>
+                              <span className="float-right text-right">
+                              <button className="button success tiny button" disabled={this.props.userInfo.id !== activity.recipient} onClick={()=>this.props.updatePaymentStatus({group_id: +ID[1], id:activity.id, pending:0})}><i className="fa fa-check circle"></i>Received</button><br /> <span className="small-aside">Pending approval</span>
+                              </span>
+                              :
+                              <span>
+                                <i className="fa fa-check-circle-o" aria-hidden="true"></i> Received
+                              </span>
                           }
-                        </div>
+                        </div>                        
                       </div>
                     }
                   </div>

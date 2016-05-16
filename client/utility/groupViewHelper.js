@@ -226,7 +226,7 @@ Helper.showDebt = function(showUserBalance){
       <div>Your group has a $0 balance</div>
     )
   }
-
+  console.log('*^&*%^%*%&*&^*&%*&%got into the show user balance func')
   return showUserBalance.map(function(user){
     return (
       <span key={user.user_id}>
@@ -242,4 +242,15 @@ Helper.showDebt = function(showUserBalance){
       </span>
     )
   }.bind(this))
+}
+
+Helper.getImage = function(activity,members){
+  let img;
+  members.forEach(member => {
+    if(member.id == activity.paid_by){
+      // console.log('here is the image:', member.img_url)
+      img = member.img_url;
+    }
+  })
+  return <img className="roundCorner-image expense-user" src={img} />;
 }
