@@ -66,6 +66,11 @@ export default class GroupView extends Component {
                     <h2>{this.props.currGroup.name}</h2>
                     {this.props.currGroup.created_by == this.props.userInfo.id ?
                     <Link className="edit-group" to={{pathname:'/create-group',query:{ id: this.props.currentGroup.id }}}><i className="fa fa-cog"></i></Link> : null}
+                    <div className="row">
+                      <div className="small-12 columns">
+                        <h5>{this.props.currGroup.desc}</h5>
+                      </div>
+                    </div>
                   </div>
                   <PaymentError
                     clearError={this.props.clearError}
@@ -77,6 +82,8 @@ export default class GroupView extends Component {
                 <div className="small-12 large-4 large-push-8 columns">
                   <h3>Balance</h3>
                     {showUserBalance.map(function(user){
+                      console.log('*^&*%^%*%&*&^*&%*&%got into the show user balance func')
+
                       return (
                         <span key={user.user_id}>
 
