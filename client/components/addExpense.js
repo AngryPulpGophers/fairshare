@@ -119,7 +119,7 @@ export default class AddExpense extends Component {
         this.setState({isModalOpen:false})
         this.props.destroyForm();
         this.props.addExpense(JSON.stringify(obj));
-
+        //browserHistory.push('/groupView?id='+obj.group_id);
         //location.replace(baseURL+'/groupView?id='+ID[1]);
     }
     }
