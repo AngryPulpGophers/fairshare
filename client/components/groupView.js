@@ -12,6 +12,20 @@ import defaultPicture from '../images/defaultPicture.jpg';
 import UpdateExpense from './updateExpense';
 
 export default class GroupView extends Component {
+
+
+  constructor(props){
+    super(props);
+    this.state = ({userBalance: []});
+    //this.state = ({initialValue: true})
+    
+  
+  }
+
+  setBalance = (obj) => {
+      this.setState({userBalance: obj})
+  }
+
   seeIfYou(name) {
     if (name===this.props.userInfo.name || name[0]===this.props.userInfo.name){
       return ('You');
@@ -23,7 +37,39 @@ export default class GroupView extends Component {
 
   componentWillUnmount(){
     this.props.clearActivity();
+
   }
+
+  deepEquals(a, b){
+  var flag = true
+  
+  function inner(a,b){
+        if(Array.isArray(a)!=Array.isArray(b)){
+          flag=false
+        }
+        for (var holly in a){
+          if(typeof a[holly]==='object' && typeof b[holly]==='object'){
+            console.log('pjpj',a[holly])
+            inner(a[holly],b[holly])
+          }
+          else if (b[holly]!==a[holly]){
+            flag =false
+          }
+        }
+        for (var holly in b){
+          if (typeof a[holly]==='object' && typeof b[holly]==='object'){
+            inner(a[holly],b[holly])
+          }
+          else if (b[holly]!==a[holly]){
+            flag = false
+          }
+        }
+      }
+      inner(a,b)
+    return flag
+    };  
+
+
 
   render() {
     // get the current group id
@@ -49,6 +95,10 @@ export default class GroupView extends Component {
     if(groupExists){
       console.log('SAM WHAT BROKE',this);
       showUserBalance=calcBalance.call(this); //this.calcBalance();
+
+      if (!this.deepEquals(this.state.userBalance,showUserBalance)){
+        this.setBalance.call(this,showUserBalance)
+      }
       localGroupObj=makeGroupObj.call(this); //this.makeGroupObj()
     }
 
@@ -81,7 +131,7 @@ export default class GroupView extends Component {
                 <div className="group-view-pad">
                 <div className="small-12 large-4 large-push-8 columns">
                   <h3>Balance</h3>
-                    {showUserBalance.map(function(user){
+                    {this.state.userBalance.map(function(user){
                       console.log('*^&*%^%*%&*&^*&%*&%got into the show user balance func')
 
                       return (
