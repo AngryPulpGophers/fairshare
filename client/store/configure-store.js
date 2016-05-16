@@ -1,4 +1,4 @@
-if (process.env.NODE_ENV === 'production' || false) {
+if (process.env.NODE_ENV === 'production' || true) {
   console.log('our production enviro');
   module.exports = require('./configure-store.prod');
 } else {
