@@ -35,6 +35,7 @@ Helper.prettyDate = function(milliseconds){
 };
 
 /*
+  add this picture to any document 
   <div classname = 'groupView'>
     <img src="http://i.imgur.com/4GXzMQB.jpg" />
   </div>
