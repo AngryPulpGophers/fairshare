@@ -12,12 +12,14 @@ export default class Login extends Component {
               <h3>Want to track your expenses? You gotta' login!</h3>
               <p>We've made it easy on you. No need to remember another password. Just use one of these three options and off you go:</p>
               <div className="row">
-                <div className="small-12 large-4 columns">
-                  <a href= 'auth/facebook' className="large primary button"><i className="fa fa-facebook-square"></i> Facebook</a>
+                <div className="small-12 columns">
+                  <a href= 'auth/facebook' className="large expanded primary button"><i className="fa fa-facebook-square"></i> Facebook</a>
+                  <a href='auth/google' className="large expanded success button"><i className="fa fa-google-plus-square"></i> Google +</a>
+                  <br />
+                  - or -
+                  <br />
                 </div>
-                <div className="small-12 large-4 columns">
-                  <a href='auth/google' className="large alert button"><i className="fa fa-google-plus-square"></i> Google +</a>
-                </div>
+                
                 {/*<div className="small-12 large-4 columns">
                   <a href='auth/paypal' className="large secondary button"><i className='fa fa-paypal'></i> PayPal</a>
                 </div>*/}
