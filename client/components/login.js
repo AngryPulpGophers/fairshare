@@ -18,9 +18,9 @@ export default class Login extends Component {
                 <div className="small-12 large-4 columns">
                   <a href='auth/google' className="large alert button"><i className="fa fa-google-plus-square"></i> Google +</a>
                 </div>
-                <div className="small-12 large-4 columns">
+                {/*<div className="small-12 large-4 columns">
                   <a href='auth/paypal' className="large secondary button"><i className='fa fa-paypal'></i> PayPal</a>
-                </div>
+                </div>*/}
               </div>
             </div>
           </div>
