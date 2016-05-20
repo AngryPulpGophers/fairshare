@@ -145,6 +145,7 @@ input[type='search']{
 }
 .group-avatar{
   height: 40px;
+  width: 40px;
   border-radius: 50%;
   border: 1px solid $white;
   float: right;
@@ -193,6 +194,7 @@ input[type='search']{
   margin-bottom: 10px;
   border-left:10px solid #ccc;
 }
+
 .note, .details,.receipt-holder {
   overflow-y: hidden;
   max-height: 500px; /* approximate max height */

@@ -82,7 +82,7 @@ export default class PaymentForm extends Component{
               <button type="submit" onClick={()=>sessionStorage.setItem('cash',true)} className='button primary button ' disabled={submitting}>
                 {submitting ? <i/> : <i/>} Register Cash Payment
               </button>
-              <button type='submit' onClick={()=>sessionStorage.setItem('paypal',true)} className = 'success button ' disabled={submitting}><i className= 'fa fa-paypal' style={{marginRight:'2px'}}></i>Settle up through PayPal</button>
+              
               <button onClick={this.closeModal} className="button secondary button">Cancel</button>
 
             </div>
