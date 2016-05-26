@@ -10,7 +10,7 @@ SocialHelper.assignSpecificProps = (obj) => {
     primary:  obj.primary,
     facebook: obj.facebook,
     google:   obj.google,
-    paypal:   obj.paypal
+    //paypal:   obj.paypal
   };
 
   return socialObj;
