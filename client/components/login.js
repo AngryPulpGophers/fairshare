@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import SignUpForm from './signUpForm';
 
 export default class Login extends Component {
   
@@ -18,11 +19,13 @@ export default class Login extends Component {
                   <br />
                   - or -
                   <br />
+                  <p>use your <span onClick={()=>this.props.localSignIn()} style={{color:'blue'}}>email</span></p>
                 </div>
-                
-                {/*<div className="small-12 large-4 columns">
-                  <a href='auth/paypal' className="large secondary button"><i className='fa fa-paypal'></i> PayPal</a>
-                </div>*/}
+                {this.props.signIn ?
+                  <SignUpForm
+                   signUp={this.props.signUp}
+                  />
+                 : null } 
               </div>
             </div>
           </div>
@@ -30,6 +33,12 @@ export default class Login extends Component {
       </div>
     )
   }
+}
+
+Login.propTypes = {
+  signIn: PropTypes.bool.isRequired,
+  signUp: PropTypes.func.isRequired,
+  localSignIn: PropTypes.func.isRequired,
 }
 
 

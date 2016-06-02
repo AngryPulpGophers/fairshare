@@ -1,15 +1,17 @@
 "use strict";
 
 var GoogleStrategy    = require('passport-google-oauth2').Strategy;
-var PayPalStrategy    = require('../../passport-paypal-oauth').Strategy;
 var FacebookStrategy  = require('passport-facebook').Strategy;
+var LocalStrategy     = require('passport-local').Strategy;
+var bcrypt            = require('bcrypt');
+var Promise           = require('bluebird');
 var User              = require('../models/users');
 var Identity          = require('../models/Identity');
 var nodemailer        = require('nodemailer');
 var wellknown         = require('nodemailer-wellknown');
 
 if (process.env.NODE_ENV !== 'production'){
-  var Credentials       = require('./auth_secrets.js');
+  var Credentials     = require('./auth_secrets.js');
 }
 
 var Strategies = module.exports;
@@ -30,8 +32,6 @@ let FacebookID     = process.env.FACEBOOK_APP_ID     || Credentials.facebook.ID;
 let FacebookSecret = process.env.FACEBOOK_APP_SECRET || Credentials.facebook.SECRET;
 let GoogleID       = process.env.GOOGLE_APP_ID       || Credentials.google.ID;
 let GoogleSecret   = process.env.GOOGLE_APP_SECRET   || Credentials.google.SECRET;
-let PaypalID       = process.env.PAYPAL_APP_ID       || Credentials.paypal.ID;
-let PaypalSecret   = process.env.PAYPAL_APP_SECRET   || Credentials.paypal.SECRET;
 
 
 /*To allow mutiple Oauth strategies without creating duplicate records
@@ -48,12 +48,12 @@ single user can have multiple identities--all of which can be used to sign in. *
 
 
 Strategies.facebook_strat = new FacebookStrategy({
-    clientID: FacebookID,
-    clientSecret: FacebookSecret,
-    callbackURL: '/auth/facebook/callback',
-    profileFields: ['id', 'displayName', 'picture.type(large)','email'],
-    passReqToCallback: true
-  },
+  clientID: FacebookID,
+  clientSecret: FacebookSecret,
+  callbackURL: '/auth/facebook/callback',
+  profileFields: ['id', 'displayName', 'picture.type(large)','email'],
+  passReqToCallback: true
+},
   (req, accessToken, refreshToken,params, profile, done) => {
     // console.log('params at start of strategy:', params)
 
@@ -72,11 +72,11 @@ Strategies.facebook_strat = new FacebookStrategy({
             name: profile.displayName,
             username: profile.emails[0].value.split('@')[0],
             email: profile.emails[0].value,
+            password: "",
             img_url: profile.photos[0].value,
             primary: 'Facebook',
             facebook: 1,
             google: 0,
-            paypal: 0,
             showModal: 1
           };
 
@@ -150,12 +150,12 @@ Strategies.google_strat = new GoogleStrategy({
           let userProfile = {
             name: profile.displayName,
             username:profile.emails[0].value.split('@')[0],
+            password:"",
             email: profile.emails[0].value,
             img_url: profile.photos[0].value,
             primary: 'Google',
             facebook: 0,
             google: 1,
-            paypal: 0,
             showModal: 1
           };
 
@@ -205,79 +205,69 @@ Strategies.google_strat = new GoogleStrategy({
   }
 });
 
-Strategies.paypal_strat = new PayPalStrategy({
-    clientID: PaypalID,
-    clientSecret: PaypalSecret,
-    callbackURL: 'https://www.fairshare.cloud/auth/paypal/callback',
-    passReqToCallback: true
-  },
-  (req, accessToken, refreshToken, params, profile, done) => {
-    //check DB for user--IF exists, execute cb->line 68
-    //ELSE create profile, store in DB, execute cb->lines 70-85
-    console.log("req.user in paypal", req.user);
-  if(!req.user){
-    Identity.getByProviderID(profile.id)
-      .then( userObj => {
-        if(userObj[0]){
-          User.getById({id:userObj[0].user_id})
-            .then( profile => done(null, profile[0]))
-            .catch( err => console.warn(err));
-        }else{
-          let userProfile = {
-              name: profile.name,
-              username:profile._json.email.split('@')[0],
-              email: profile._json.email,
-              img_url:"",
-              primary: 'PayPal',
-              facebook: 0,
-              google: 0,
-              paypal: 1,
-              showModal: 1
-            };
-          let config = wellknown('GandiMail');
-          config.auth = {
-            user: 'info@fairshare.cloud',
-            pass: 'AeK6yxhT'
-          };
-          let transporter = nodemailer.createTransport(config);
+let hash = Promise.promisify(bcrypt.hash,{context:bcrypt});
+let compare = Promise.promisify(bcrypt.compare,{context:bcrypt});
 
-          let mailOptions = {
-            from: '"Info" <info@fairshare.cloud>',
-            to: '<'+ profile._json.email +'>',
-            subject: "Welcome to Fairshare",
-            text: 'Thank you for joining!',
-          };
-
-          transporter.sendMail(mailOptions, function(err, info){
-            if(err){
-                return console.log(err);
-            }
-            console.log('Message sent: ' + info.response);
-          });
+Strategies.sign_up = new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password',
+  session: true
+},
+(email,password,done) => { 
+  User.getByEmail(email)
+    .then(user => {
+      if(user[0]){
+        done(null,false,'user already exists')
+      }else{
+        hash(password,1)
+          .then(hashed => {
+            let userProfile = {
+            name: "",
+            username: email.split('@')[0],
+            email: email,
+            password: hashed,
+            img_url: 'http://cliparts.co/cliparts/8cG/Eyz/8cGEyzg4i.png',
+            primary: 'Local',
+            facebook: 0,
+            google: 0,
+            showModal: 1
+          }
+          console.log('profile in create:', userProfile)
           User.create(userProfile)
-            .then( id => {
-          //attach app ID to userProfile for use in fn serializeUser->line 34
+            .then(id => {
               userProfile.id = id[0];
-              let ID = identityEntry(id[0], profile.id,params,'paypal');
-                Identity.create(ID)
-                  .then( () => done(null, userProfile))
-                  .catch( err => console.warn(err));
+              done(null,userProfile);
             })
-            .catch(err => {
-              console.log("err:", err);
-            });
-        }
-      })
-      .catch( err => console.warn('Error @paypal strategy:', err));
-  }else{
-    let ID = identityEntry(req.user.id, profile.id, params,'paypal');
-    req.user.paypal = 1;
-    User.editProfile(req.user)
-      .then( () => {
-        Identity.create(ID)
-          .then( () => done(null, req.user))
-          .catch( err => console.warn(err));
-      })
-      .catch( err => console.warn(err));
-    }
-});
+            .catch(err => console.warn(err))
+          })
+          .catch(err => console.warn(err))
+      }
+    })
+    .catch(err => console.warn(err));
+})
+
+Strategies.sign_in = new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password',
+  session: true
+},
+(email,password,done) => {
+  console.log('password in login:', password);
+  User.getByEmail(email)
+    .then(user => {
+      console.log('user in login:', user);
+      if(user[0]){
+        compare(password, user[0].password)
+          .then(match => {
+            if(match) done(null,user[0]);
+            else done(null, false, 'password is incorrect')
+          })
+          .catch(err => console.warn(err));
+      }else{
+        done(null,false,'email does not exist')
+      }
+    })
+    .catch(err => console.warn(err))
+})
+
+

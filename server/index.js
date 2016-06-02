@@ -11,7 +11,7 @@ var auth       = require('./routes/auth.js');
 var users      = require('./routes/users.js');
 var groups     = require('./routes/groups.js');
 var dashboard  = require('./routes/dashboard.js');
-var payment    = require('./routes/payment.js');
+var cred       = require('./routes/cred.js');
 var routes     = require('./routes/index.js');
 var fs         = require('fs');
 var https      = require('https');
@@ -52,7 +52,7 @@ if (process.env.NODE_ENV !== 'test') {
   app.use('/users', users);
   app.use('/groups', groups);
   app.use('/dashboard', dashboard);
-  app.use('/payment', payment);
+  app.use('/cred', cred);
   app.use('/', routes);
 
   // Start the server!

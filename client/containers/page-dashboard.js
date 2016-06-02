@@ -5,6 +5,7 @@ import { getGroups } from '../actions/groupActions';
 import { getDashboard } from '../actions/dashActions';
 import { stopSocialModal } from '../actions/authActions';
 import Dashboard from '../components/dashboard';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class PageDashboard extends Component {
   componentWillMount(){
@@ -12,6 +13,7 @@ class PageDashboard extends Component {
   }
   render() {
     return (
+        <ReactCSSTransitionGroup transitionName='example' transitionAppear={true}  transitionEnterTimeout={500} transitionLeaveTimeout={300}>
           <Dashboard
             url={this.props.url}
             callouts={this.props.callouts}
@@ -23,6 +25,7 @@ class PageDashboard extends Component {
             userInfo={this.props.userInfo}
             stopSocialModal={this.props.stopSocialModal}
           />
+        </ReactCSSTransitionGroup>
     )
   }
 }

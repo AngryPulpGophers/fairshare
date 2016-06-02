@@ -3,6 +3,7 @@ import { CALL_API } from '../middleware';
 export const USER_REQUEST = 'USER_REQUEST';
 export const USER_SUCCESS = 'USER_SUCCESS';
 export const USER_FAILURE = 'USER_FAILURE';
+
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
@@ -17,8 +18,67 @@ export function getUserInfo (){
 	};
 }
 
+export const SIGNUP_LOCAL = 'SIGNUP_LOCAL';
+
+export function localSignIn (){
+  console.log('called local signin')
+  return {
+    type: SIGNUP_LOCAL,
+  }
+}
+
+export const LOGIN_ATTEMPT = 'LOGIN_ATTEMPT';
+
+export function openLogin (){
+  console.log('called local signin')
+  return {
+    type: 'LOGIN_ATTEMPT'
+  }
+}
+
+export const LOCAL_LOGIN = 'LOCAL_LOGIN';
+export const LOCAL_SUCCESS = 'LOCAL_SUCCESS';
+export const LOCAL_FAILURE = 'LOCAL_FAILURE';
+
+export function localLogIn(formData){
+  console.log('called local login with', formData);
+  return {
+    [CALL_API]:{
+      endpoint: 'auth/signin',
+      req: 'POST',
+      body: JSON.stringify(formData),
+      types: [LOCAL_LOGIN, LOCAL_SUCCESS, LOCAL_FAILURE]
+    }
+  }
+}
+
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+
+export function clearLoginError(){
+  return {
+    type: LOGIN_ERROR
+  }
+}
+
+export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
+
+export function signUp (formData){
+  console.log('called signUp with following:', formData);
+  return {
+    [CALL_API]:{
+      endpoint: 'auth/signup',
+      req: 'POST',
+      body: JSON.stringify(formData),
+      types:[SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE]
+    }
+  }
+}
+
 export function logoutUser (){
   //make sure local storage is cleared
+  window.localStorage.clear();
 	return {
 		[CALL_API]:{
 			endpoint: 'auth/logout',
@@ -65,6 +125,37 @@ export function stopSocialModal(obj){
     }
   };
 }
+
+export const OPEN_EMAIL = 'OPEN_EMAIL';
+
+export function openEmailModal(){
+  return {
+    type: OPEN_EMAIL
+  }
+}
+
+export const SEND_EMAIL = 'SEND_EMAIL';
+export const SEND_SUCCESS = 'SEND_SUCCESS';
+export const SEND_FAILURE = 'SEND_FAILURE';
+
+export function sendEmail(email){
+  return {
+    [CALL_API]:{
+      endpoint: 'cred/sendEmail',
+      req:'POST',
+      body: JSON.stringify(email),
+      types:[SEND_EMAIL, SEND_SUCCESS, SEND_FAILURE]
+    }
+  }
+}
+export const CLEAR_EMAIL = 'CLEAR_EMAIL'
+
+export function clearEmailSuccess(){
+  return{
+    type: CLEAR_EMAIL
+  }
+}
+
 export const UNLINK_REQUEST = 'UNLINK_REQUEST';
 export const UNLINK_SUCCESS = 'UNLINK_SUCCESS';
 export const UNLINK_FAILURE = 'UNLINK_FAILURE';

@@ -5,12 +5,12 @@ exports.up = function(knex, Promise){
       table.increments('id').primary();
       table.string('name', 40);
       table.string('username', 30).unique();
+      table.string('password');
       table.string('email');
       table.string('img_url');
       table.string('primary');
       table.integer('facebook');
       table.integer('google');
-      table.integer('paypal');
       table.integer('showModal');
     }),
 

@@ -6,6 +6,8 @@ import Friend from '../components/friendProfileView';
 import { getFriendProfile } from '../actions/userActions';
 import { getGroups } from '../actions/groupActions';
 import {updateUserInfo, resetAlert, unlinkSocialAcc, stopSocialModal} from '../actions/authActions';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+
 
 class PageProfile extends Component {
 
@@ -46,8 +48,8 @@ class PageProfile extends Component {
     };
 
     return !isFriend ? (
-
-     <Profile
+    <ReactCSSTransitionGroup transitionName='example' transitionAppear={true}  transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+      <Profile
         {...myInitialValues}
         userInfo = {this.props.userInfo}
         updateUserInfo = {this.props.updateUserInfo}
@@ -55,13 +57,17 @@ class PageProfile extends Component {
         resetAlert = {this.props.resetAlert}
         unlinkSocialAcc = {this.props.unlinkSocialAcc}
         stopSocialModal = {this.props.stopSocialModal}
-     />
+      />
+    </ReactCSSTransitionGroup>
     ) :
-    (<Friend
-      friendProfile = {this.props.friendProfile}
-      groups = { this.props.groups }
-      userInfo = {this.props.userInfo}
-    />
+    (
+    <ReactCSSTransitionGroup transitionName='example' transitionAppear={true}  transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+      <Friend
+        friendProfile = {this.props.friendProfile}
+        groups = { this.props.groups }
+        userInfo = {this.props.userInfo}
+      />
+    </ReactCSSTransitionGroup>
     )
   }
 }

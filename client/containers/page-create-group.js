@@ -6,6 +6,8 @@ import { addMember, removeMember, clearMembers } from '../actions/memberActions'
 import { createGroup, getGroup, clearEdit, updateGroup, deleteGroup } from '../actions/groupActions';
 import { formatData } from '../utility/createGroupHelper';
 import CreateGroup from '../components/createGroup';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+
 
 class PageCreateGroup extends Component {
 
@@ -52,6 +54,7 @@ class PageCreateGroup extends Component {
   render() {
     let formData = formatData(this.props.editGroup,this.props.currUser);
     return (
+    <ReactCSSTransitionGroup transitionName='example' transitionAppear={true}  transitionEnterTimeout={500} transitionLeaveTimeout={300}>
       <div className="create-group">
         <CreateGroup
           getUsers={this.props.getUsers}
@@ -73,6 +76,7 @@ class PageCreateGroup extends Component {
           deleteGroup = {this.props.deleteGroup}
         />
       </div>
+     </ReactCSSTransitionGroup>   
     );
   }
 }
