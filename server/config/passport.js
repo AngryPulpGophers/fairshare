@@ -30,12 +30,15 @@ module.exports = (app,express) => {
   app.use(cookieParser('kitkat'));
 
   passport.serializeUser((user, done) => {
+    console.log('in serialize');
     return done(null, user.id);
   });
 
   passport.deserializeUser((id, done) => {
+    console.log('in deserialize')
     User.getById({id: id})
     .then( userObj => {
+      console.log('userObj in deser:', userObj);
       return done(null, userObj[0]);
     })
     .catch( err => {
@@ -43,7 +46,8 @@ module.exports = (app,express) => {
     });
   });
 
-  passport.use(Strategies.facebook_strat);
-  passport.use(Strategies.google_strat);
-  passport.use(Strategies.paypal_strat);
+  passport.use('facebook', Strategies.facebook_strat);
+  passport.use('google', Strategies.google_strat);
+  passport.use('sign_up', Strategies.sign_up);
+  passport.use('sign_in', Strategies.sign_in);
 };

@@ -19,7 +19,6 @@ export default class SocialAccounts extends Component {
 }
 
 //unlinkSocialAcc--fires async action that clears database of auth token issued by provider
-//href in lines 37,41,and 45 sends user through respective Oauth strategy(facebook,google+ or paypal)
 
 SocialAccounts.propTypes = {
   unlinkSocialAcc : PropTypes.func.isRequired,

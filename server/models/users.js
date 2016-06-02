@@ -13,6 +13,12 @@ Users.getByUsername = function(username){
     .where('users.username', '=', username);
 };
 
+Users.getByEmail = function(email){
+  return db('users')
+    .select('id','name','username', 'password','email','img_url')
+    .where('users.email', '=', email);
+}
+
 Users.getById = function(reqObj){
   return db('users')
     .select()

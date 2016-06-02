@@ -61,7 +61,6 @@ SocialHelper.createModalAnchors = (obj) => {
 	let [socialAccounts,links] = [{},[]];
 	socialAccounts.facebook = obj.facebook;
 	socialAccounts.google = obj.google;
-	socialAccounts.paypal = obj.paypal;
 	for(let key in socialAccounts){
 		if(!socialAccounts[key]){
 			links.push(SocialHelper.makeAnchors(key,"button info button extended block"));
