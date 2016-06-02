@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import EmailNewUser from './emailNewUser';
 import defaultPicture from '../images/fs-logo.png';
+import SignInForm from './signInForm';
 
 
 export default class Navigation extends Component {
@@ -57,6 +58,18 @@ export default class Navigation extends Component {
             <Link to='/' title="Dashboard"><h1> Fairshare</h1></Link>
           </div>
         </div>
+          {!this.props.logIn ? 
+          <button className='signin button tiny primary float-right' onClick={()=> this.props.openLogin()}>Sign in</button>
+          : <SignInForm 
+             loginError = {this.props.loginError}
+             clearLoginError = {this.props.clearLoginError}
+             localLogIn = {this.props.localLogIn}
+             emailPass = {this.props.emailPass}
+             openEmailModal = {this.props.openEmailModal}
+             sendEmail = {this.props.sendEmail}
+             emailSuccess = {this.props.emailSuccess}
+             clearEmailSuccess = {this.props.clearEmailSuccess}
+            />}
       </div>
     )
   }
@@ -65,5 +78,15 @@ export default class Navigation extends Component {
 Navigation.propTypes = {
   isAuthed: PropTypes.bool.isRequired,
   userInfo: PropTypes.object.isRequired,
-  logoutUser: PropTypes.func.isRequired
+  logoutUser: PropTypes.func.isRequired,
+  openLogin: PropTypes.func.isRequired,
+  logIn: PropTypes.bool.isRequired,
+  localLogIn: PropTypes.func.isRequired,
+  loginError: PropTypes.string.isRequired,
+  clearLoginError: PropTypes.func.isRequired,
+  openEmailModal: PropTypes.func.isRequired,
+  emailPass: PropTypes.bool.isRequired,
+  sendEmail: PropTypes.func.isRequired,
+  emailSuccess: PropTypes.bool.isRequired,
+  clearEmailSuccess: PropTypes.func.isRequired
 }

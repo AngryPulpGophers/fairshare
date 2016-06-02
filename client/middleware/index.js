@@ -72,7 +72,8 @@ export default store => next => action => {
       id: id
     }),
     error => next({
-      type: errorType
+      error,
+      type: errorType,
     })
   );
 };
