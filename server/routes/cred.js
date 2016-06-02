@@ -26,7 +26,7 @@ router.post('/sendEmail', function(req,res){
             from: '"Info" <info@fairshare.cloud>',
             to: '<'+ email +'>',
             subject: "Click the following link to reset your Fairshare password",
-            html: '<a href=' + 'http://localhost:3000/resetPassword>Reset Password</a>'
+            html: '<a href=' + 'https://www.fairshare.cloud/resetPassword>Reset Password</a>'
           };
 
         transporter.sendMail(mailOptions, function(err, info){
