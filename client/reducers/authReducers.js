@@ -1,12 +1,10 @@
 import * as ActionTypes from '../actions/authActions';
 //import { GROUPS_REQUEST, GROUPS_SUCCESS, GROUPS_FAILURE} from '../actions';
 import update from 'react-addons-update';
-console.log(ActionTypes);
-export function auth(state = {isFetching: false, isAuthed: false, isOpen: true, signIn: false, 
-  logIn:false, loginError: '', emailPass: false, emailSuccess: false, userInfo: {}}, action){
-	
+export function auth(state = {isFetching: false, isAuthed: false, isOpen: true, 
+  signIn: false, logIn:false, loginError: '', emailPass: false, 
+  emailSuccess: false, resetOpen: true, resetSuccess: false, resetFailure: "", userInfo: {}}, action){
   switch (action.type){
-
     case ActionTypes.OPEN_EMAIL:
       return update(state,{
         emailPass: {$set:true}
@@ -49,7 +47,6 @@ export function auth(state = {isFetching: false, isAuthed: false, isOpen: true, 
     window.location = '/';
       return update(state,{
         isFetching: {$set: false},
-        isAuthed: {$set: true}
       })
     case ActionTypes.SIGNUP_FAILURE:
       return update(state,{
@@ -63,7 +60,6 @@ export function auth(state = {isFetching: false, isAuthed: false, isOpen: true, 
     window.location = '/';
       return update(state,{
         isFetching: {$set: false},
-        isAuthed: {$set: true}
       })
     case ActionTypes.LOCAL_FAILURE:
       return update(state,{
@@ -74,15 +70,38 @@ export function auth(state = {isFetching: false, isAuthed: false, isOpen: true, 
       return update(state,{
         loginError: {$set: ""}
       })
+    case ActionTypes.RESET_PASSWORD:
+      return update(state,{
+        isFetching: {$set: true}
+      })
+    case ActionTypes.RESET_PASSWORD_SUCCESS:
+    console.log('in reset success', action);
+      return update(state,{
+        isFetching: {$set: false},
+        resetSuccess: {$set: true},
+      })
+    case ActionTypes.RESET_PASSWORD_FAILURE:
+      return update(state,{
+        isFetching: {$set: false},
+        resetFailure: {$set: action.error}
+      })
+    case ActionTypes.CLEAR_RESET_FAILURE:
+      return update(state,{
+        resetFailure: {$set: ""}
+      })
+    case ActionTypes.CLEAR_RESET_SUCCESS:
+    console.log('in reset success', action)
+      return update(state,{
+        resetSuccess:{$set: false},
+        resetOpen: {$set: false}
+      })
 		case ActionTypes.USER_LOGIN:
 		console.log('in auth reducer');
 		  return update(state, {
         isFetching:{$set: true},
 			  isAuthed: {$set:false},
 		  });
-
     case ActionTypes.USER_SUCCESS:
-    //console.log('action.response in USER_SUCCESS:', action.response);
     //take advantage of localstorage
     window.localStorage.setItem("isAuthed", true);
       return update(state, {
@@ -120,7 +139,6 @@ export function auth(state = {isFetching: false, isAuthed: false, isOpen: true, 
       });
 
     case ActionTypes.UPDATE_USER_SUCCESS:
-    // console.log("Action.response  in authReducers.js", action.response);
       return update(state, {
         isFetching: {$set: false},
         userInfo: {$set: JSON.parse(action.response)},

@@ -9,6 +9,7 @@ export const fields = ['email','password'];
 export default class SignUpForm extends Component{
 
   handleSubmit = (formData) => {
+    this.props.destroyForm();
     this.props.signUp(formData);
   }
 

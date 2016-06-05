@@ -10,6 +10,7 @@ export const fields = ['email','password'];
 export default class SignInForm extends Component{
 
   handleSubmit = (formData) => {
+    this.props.destroyForm();
     this.props.localLogIn(formData);
   }
 
@@ -40,7 +41,9 @@ export default class SignInForm extends Component{
               <button type="submit" className='tiny expanded info button'  disabled={submitting}>
                 {submitting ? <i/> : <i/>} Login
               </button>
-              <small onClick={()=>this.props.openEmailModal()}>Forgot password?</small>
+            <div className='text-center'>
+              <small onClick={()=>this.props.openEmailModal()} style={{cursor: 'pointer'}}>Forgot password?</small>
+            </div>
           </form>
           <EmailReset
             sendEmail = {this.props.sendEmail}

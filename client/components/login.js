@@ -19,7 +19,7 @@ export default class Login extends Component {
                   <br />
                   - or -
                   <br />
-                  <p>use your <span onClick={()=>this.props.localSignIn()} style={{color:'blue'}}>email</span></p>
+                  <p>use your <span onClick={()=>this.props.localSignIn()} style={{color:'blue', cursor:'pointer'}}>email</span></p>
                 </div>
                 {this.props.signIn ?
                   <SignUpForm

@@ -129,7 +129,7 @@ Strategies.facebook_strat = new FacebookStrategy({
 Strategies.google_strat = new GoogleStrategy({
     clientID: GoogleID,
     clientSecret: GoogleSecret,
-    callbackURL: 'http://localhost:3000/auth/google/callback',
+    callbackURL: 'https://www.fairshare.cloud/auth/google/callback',
     passReqToCallback: true
   },
    (req, accessToken, refreshToken,params, profile, done) => {
@@ -252,10 +252,8 @@ Strategies.sign_in = new LocalStrategy({
   session: true
 },
 (email,password,done) => {
-  console.log('password in login:', password);
   User.getByEmail(email)
     .then(user => {
-      console.log('user in login:', user);
       if(user[0]){
         compare(password, user[0].password)
           .then(match => {
