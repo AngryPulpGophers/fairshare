@@ -2,6 +2,7 @@ import React, { Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import { reduxForm } from 'redux-form';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import LoginError from './loginError'
 
 
 export const fields = ['email','password'];
@@ -29,6 +30,11 @@ export default class SignUpForm extends Component{
               <input type='text' pattern='^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$' style={{padding:'2px'}} required {...email}/>
             <small>password--6-8 characters-use letters and numbers</small>
               <input type="password" pattern='^(?=.*\d).{6,8}$' required {...password}/>
+              {this.props.loginError !== "" ?
+                <LoginError
+                  loginError = {this.props.loginError}
+                  clearLoginError = {this.props.clearLoginError}
+                  /> : null}
               <button type="submit" className='expanded info button' disabled={submitting}>
                 {submitting ? <i/> : <i/>} Sign Up
               </button>
@@ -44,7 +50,9 @@ SignUpForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   resetForm: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
-  signUp: PropTypes.func.isRequired
+  signUp: PropTypes.func.isRequired,
+  loginError: PropTypes.string.isRequired,
+  clearLoginError: PropTypes.func.isRequired
 }
 
 

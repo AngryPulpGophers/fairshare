@@ -23,7 +23,9 @@ export default class Login extends Component {
                 </div>
                 {this.props.signIn ?
                   <SignUpForm
-                   signUp={this.props.signUp}
+                   signUp = {this.props.signUp}
+                   loginError = {this.props.loginError}
+                   clearLoginError = {this.props.clearLoginError}
                   />
                  : null } 
               </div>
@@ -39,6 +41,8 @@ Login.propTypes = {
   signIn: PropTypes.bool.isRequired,
   signUp: PropTypes.func.isRequired,
   localSignIn: PropTypes.func.isRequired,
+  loginError: PropTypes.string.isRequired,
+  clearLoginError: PropTypes.func.isRequired
 }
 
 

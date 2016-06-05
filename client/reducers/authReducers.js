@@ -49,8 +49,10 @@ export function auth(state = {isFetching: false, isAuthed: false, isOpen: true,
         isFetching: {$set: false},
       })
     case ActionTypes.SIGNUP_FAILURE:
+    console.log('in signup fail', action)
       return update(state,{
-        isFetching: {$set: false}
+        isFetching: {$set: false},
+        loginError:{$set: action.error}
       })
     case ActionTypes.LOCAL_LOGIN:
       return update(state,{
@@ -75,22 +77,17 @@ export function auth(state = {isFetching: false, isAuthed: false, isOpen: true,
         isFetching: {$set: true}
       })
     case ActionTypes.RESET_PASSWORD_SUCCESS:
-    console.log('in reset success', action);
       return update(state,{
         isFetching: {$set: false},
         resetSuccess: {$set: true},
       })
     case ActionTypes.RESET_PASSWORD_FAILURE:
+    console.log('in reset failure:', action)
       return update(state,{
         isFetching: {$set: false},
-        resetFailure: {$set: action.error}
-      })
-    case ActionTypes.CLEAR_RESET_FAILURE:
-      return update(state,{
-        resetFailure: {$set: ""}
+        loginError: {$set: action.error}
       })
     case ActionTypes.CLEAR_RESET_SUCCESS:
-    console.log('in reset success', action)
       return update(state,{
         resetSuccess:{$set: false},
         resetOpen: {$set: false}

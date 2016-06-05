@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { reduxForm } from 'redux-form';
 import Modal from './modal'
 import ResetPwordSuccess from './resetPasswordSuccess'
+import LoginError from './loginError'
 
 export const fields = ['email','password', 'confirm'];
 
@@ -38,6 +39,12 @@ export default class ResetModal extends Component{
 		              clearResetSuccess = {this.props.clearResetSuccess}
 		            /> 
 		            : null}
+              {this.props.loginError !== '' ? 
+                <LoginError 
+                  clearLoginError = {this.props.clearLoginError}
+                  loginError = {this.props.loginError}
+                /> 
+                : null}  
               <button type="submit" className='expanded info button' disabled={submitting}>
                 {submitting ? <i/> : <i/>} Reset Password
               </button>
@@ -57,7 +64,7 @@ ResetModal.propTypes = {
   sendReset: PropTypes.func.isRequired,
   clearResetSuccess: PropTypes.func.isRequired,
   resetSuccess: PropTypes.bool.isRequired,
-  resetFailure: PropTypes.string.isRequired
+  loginError: PropTypes.string.isRequired
 }
 
 export default reduxForm({
