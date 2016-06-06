@@ -54,7 +54,6 @@ class App extends Component {
   }
 
  componentWillMount(){
-  console.log('this.props in app.js:', this.props)
   this.props.getUserInfo();
 }
 

@@ -1,5 +1,4 @@
 import React, { Component, PropTypes} from 'react';
-import ReactDOM from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 export default class LoginError extends Component{
@@ -10,11 +9,11 @@ export default class LoginError extends Component{
 
 	render(){
 		return(
-    <ReactCSSTransitionGroup transitionName='example' transitionAppear={true}  transitionEnterTimeout={500} transitionLeaveTimeout={300}>
-			<div className= 'text-center expanded' style={{backgroundColor:'#ffb3b3'}}>
-			  {this.props.loginError}
-			</div>
-		</ReactCSSTransitionGroup>
+	    <ReactCSSTransitionGroup transitionName='example' transitionAppear={true}  transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+				<div className= 'text-center expanded' style={{backgroundColor:'#ffb3b3'}}>
+				  {this.props.loginError}
+				</div>
+			</ReactCSSTransitionGroup>
 		)
 	}
 }
