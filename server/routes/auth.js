@@ -18,9 +18,17 @@ router.get('/google', passport.authenticate('google', {scope:['email', 'profile'
 router.get('/google/callback', passport.authenticate('google',
   {failureRedirect: '/google', successRedirect: '/'}));
 
-router.post('/signup', passport.authenticate('sign_up', {failureRedirect:'/login'}), function(req,res){
-  console.log('in signup after authentication');
-  res.redirect('/');
+router.post('/signup', function(req,res,next){
+  passport.authenticate('sign_up', function(err,user,info){
+    console.log('info in auth:', info);
+    if(err) return next(err)
+    if(!user) return res.status(401).send(info);
+    
+    req.login(user,function(err){
+      if(err) return res.status(401).send(info);
+      res.redirect('/')
+    });
+  })(req,res,next)
 });
 
 router.post('/signin', function(req,res,next){

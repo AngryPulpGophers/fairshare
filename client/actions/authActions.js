@@ -148,13 +148,45 @@ export function sendEmail(email){
     }
   }
 }
-export const CLEAR_EMAIL = 'CLEAR_EMAIL'
+export const CLEAR_EMAIL = 'CLEAR_EMAIL';
 
 export function clearEmailSuccess(){
   return{
     type: CLEAR_EMAIL
   }
 }
+
+export const RESET_PASSWORD = 'RESET_PASSWORD';
+export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
+export const RESET_PASSWORD_FAILURE = 'RESET_PASSWORD_FAILURE';
+
+export function sendReset(formData){
+  return {
+    [CALL_API]:{
+      endpoint: 'cred/reset',
+      req:'PUT',
+      body: JSON.stringify(formData),
+      types:[RESET_PASSWORD, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE]
+    }
+  }
+}
+
+export const CLEAR_RESET_SUCCESS = 'CLEAR_RESET_SUCCESS';
+
+export function clearResetSuccess(){
+  return {
+    type: CLEAR_RESET_SUCCESS
+  }
+}
+
+export const ClEAR_RESET_FAILURE = 'ClEAR_RESET_FAILURE';
+
+export function clearResetFailure(){
+  return {
+    type: ClEAR_RESET_FAILURE
+  }
+}
+
 
 export const UNLINK_REQUEST = 'UNLINK_REQUEST';
 export const UNLINK_SUCCESS = 'UNLINK_SUCCESS';

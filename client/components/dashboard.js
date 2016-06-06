@@ -8,9 +8,13 @@ import ScreenShot from '../images/screen-shot.png';
 
 export default class Dashboard extends Component {
 
+  // shouldComponentUpdate(nextProps, nextState){
+  //   return nextProps.isAuthed !== this.props.isAuthed;
+  // }
+
   render() {
   // setting this to bypas the need for authentication
-  const isAuthed = this.props.isAuthed;
+  const isAuthed = localStorage.getItem('isAuthed');
 
     return isAuthed ? (
       <div className="dashboard">

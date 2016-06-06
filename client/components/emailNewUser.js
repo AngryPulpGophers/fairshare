@@ -21,29 +21,11 @@ export default class EmailNewUser extends Component {
     this.setState({isModalOpen: false})
   }
 
-  componentWillMount(){
-    // console.log('currentURL type',typeof window.location.href )
-    //call our get groups function only if we haven't called it yet
-    // var currentURL = window.location.href;
-    // console.log(currentURL);
-    // var ID = currentURL.split('id=');
-    //ID= ID[1].split('&')
-    // this.props.getUserByGroup(ID[1]);
-    //console.log('maybe work33', this.props.currentGroupUsers);
-    console.log(this,'this');
-  }
-
 
   handleSubmit(data) {
     if (this.props.userInfo){
       //ID= ID[1].split('&')
         var obj = {};
-        //obj.members = []
-        //hard coded to 10, which is number of hard coded members max
-
-        //obj.paid_by = this.props.userInfo.id;
-        //obj.title = data.title;
-       // obj.amount = Number(Number(data.amount).toFixed(2))
         obj.email = data.email;
         obj.note = data.note;
         //obj.group_id = Number(ID[1]);
@@ -63,9 +45,6 @@ export default class EmailNewUser extends Component {
 
 
   render(){
-    //console.log('maybe work444',this.props.currentGroupUsers);
-
-    {console.log('EXPENSEcurrent user:', this.props.userInfo);}
 
     const {
 

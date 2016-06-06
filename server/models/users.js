@@ -19,9 +19,16 @@ Users.getByEmail = function(email){
     .where('users.email', '=', email);
 }
 
+Users.resetPassword = function(reqObj){
+  console.log('reqObj in util', reqObj);
+  return db('users')
+    .where('users.email', '=', reqObj.email)
+    .update(reqObj);
+}
+
 Users.getById = function(reqObj){
   return db('users')
-    .select()
+    .select('id','name','username','email','img_url', 'facebook', 'google', 'showModal')
     .where('id', '=', reqObj.id);
 };
 

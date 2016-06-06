@@ -252,10 +252,8 @@ Strategies.sign_in = new LocalStrategy({
   session: true
 },
 (email,password,done) => {
-  console.log('password in login:', password);
   User.getByEmail(email)
     .then(user => {
-      console.log('user in login:', user);
       if(user[0]){
         compare(password, user[0].password)
           .then(match => {
