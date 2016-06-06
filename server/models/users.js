@@ -28,7 +28,7 @@ Users.resetPassword = function(reqObj){
 
 Users.getById = function(reqObj){
   return db('users')
-    .select('id','name','username','email','img_url')
+    .select('id','name','username','email','img_url', 'facebook', 'google', 'showModal')
     .where('id', '=', reqObj.id);
 };
 
