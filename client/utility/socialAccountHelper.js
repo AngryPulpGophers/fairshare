@@ -63,7 +63,7 @@ SocialHelper.createModalAnchors = (obj) => {
 	socialAccounts.google = obj.google;
 	for(let key in socialAccounts){
 		if(!socialAccounts[key]){
-			links.push(SocialHelper.makeAnchors(key,"button info button extended block"));
+			links.push(SocialHelper.makeAnchors(key,"button info extended block"));
 		}
 	}
 	return links;
