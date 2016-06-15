@@ -16,18 +16,13 @@ export default class Login extends Component {
                 <div className="small-12 columns">
                   <a href= 'auth/facebook' className="large expanded primary button"><i className="fa fa-facebook-square"></i> Facebook</a>
                   <a href='auth/google' className="large expanded success button"><i className="fa fa-google-plus-square"></i> Google +</a>
-                  <br />
                   - or -
-                  <br />
-                  <p>use your <span onClick={()=>this.props.localSignIn()} style={{color:'blue', cursor:'pointer'}}>email</span></p>
-                </div>
-                {this.props.signIn ?
                   <SignUpForm
                    signUp = {this.props.signUp}
                    loginError = {this.props.loginError}
                    clearLoginError = {this.props.clearLoginError}
                   />
-                 : null } 
+                </div>
               </div>
             </div>
           </div>

@@ -9,6 +9,10 @@ export function auth(state = {isFetching: false, isAuthed: false, isOpen: true,
       return update(state,{
         emailPass: {$set:true}
       })
+    case ActionTypes.CLOSE_EMAIL:
+      return update(state,{
+        emailPass: {$set:false}
+      })
 
     case ActionTypes.SEND_EMAIL:
       return update(state,{
@@ -37,6 +41,11 @@ export function auth(state = {isFetching: false, isAuthed: false, isOpen: true,
     case ActionTypes.LOGIN_ATTEMPT:
       return update(state,{
         logIn: {$set:true}
+      })
+    case ActionTypes.LOGIN_CLOSE:
+      console.log('hit it!')
+      return update(state,{
+        logIn: {$set:false}
       })
 
     case ActionTypes.SIGNUP_REQUEST:

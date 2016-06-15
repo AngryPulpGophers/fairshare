@@ -15,6 +15,7 @@ export default class Dashboard extends Component {
   render() {
   // setting this to bypas the need for authentication
   const isAuthed = localStorage.getItem('isAuthed');
+  console.log('auth',localStorage)
 
     return isAuthed ? (
       <div className="dashboard">

@@ -30,9 +30,16 @@ export function localSignIn (){
 export const LOGIN_ATTEMPT = 'LOGIN_ATTEMPT';
 
 export function openLogin (){
-  console.log('called local signin')
   return {
     type: 'LOGIN_ATTEMPT'
+  }
+}
+
+export const LOGIN_CLOSE = 'LOGIN_CLOSE';
+
+export function closeLogin (){
+  return {
+    type: 'LOGIN_CLOSE'
   }
 }
 
@@ -131,6 +138,14 @@ export const OPEN_EMAIL = 'OPEN_EMAIL';
 export function openEmailModal(){
   return {
     type: OPEN_EMAIL
+  }
+}
+
+export const CLOSE_EMAIL = 'CLOSE_EMAIL';
+
+export function closeEmailModal(){
+  return {
+    type: CLOSE_EMAIL
   }
 }
 
