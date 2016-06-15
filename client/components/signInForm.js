@@ -25,7 +25,11 @@ export default class SignInForm extends Component{
     return(
       <ReactCSSTransitionGroup transitionName='example' transitionAppear={true}  transitionEnterTimeout={500} transitionLeaveTimeout={300}>
         <div className='signin'>
-          <form  className='form'onSubmit={this.props.handleSubmit(this.handleSubmit)}>
+          <a href= 'auth/facebook' className="tiny expanded primary button"><i className="fa fa-facebook-square"></i> Facebook</a>
+          <a href='auth/google' className="tiny expanded success button"><i className="fa fa-google-plus-square"></i> Google +</a>
+          <p className="text-center">- or -</p>
+          
+          <form className='form' onSubmit={this.props.handleSubmit(this.handleSubmit)}>
               <div>
               </div>
                   <small>email</small>
@@ -46,6 +50,7 @@ export default class SignInForm extends Component{
             </div>
           </form>
           <EmailReset
+            closeEmailModal = {this.props.closeEmailModal}
             sendEmail = {this.props.sendEmail}
             emailPass = {this.props.emailPass}
             loginError = {this.props.loginError}
@@ -53,6 +58,9 @@ export default class SignInForm extends Component{
             emailSuccess = {this.props.emailSuccess}
             clearEmailSuccess = {this.props.clearEmailSuccess}
           />
+          <div className="text-center">
+            <small style={{cursor: 'pointer'}} onClick={()=> this.props.closeLogin()}> [x] Cancel</small>
+          </div>
         </div>
       </ReactCSSTransitionGroup>
 		  )

@@ -26,9 +26,9 @@ export default class SignUpForm extends Component{
       <ReactCSSTransitionGroup transitionName='example' transitionAppear={true}  transitionEnterTimeout={500} transitionLeaveTimeout={300}>
         <div className='text-left'>
           <form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
-            <small>email</small>
-              <input type='text' pattern='^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$' style={{padding:'2px'}} required {...email}/>
-            <small>password--6-8 characters-use letters and numbers</small>
+            <label>Email</label>
+              <input type='text' pattern='^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$' required {...email}/>
+            <label>Password (6-8 characters -use letters and numbers)</label>
               <input type="password" pattern='^(?=.*\d).{6,8}$' required {...password}/>
               {this.props.loginError !== "" ?
                 <LoginError
