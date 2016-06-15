@@ -27,8 +27,14 @@ export default class EmailReset extends Component{
 	  	<Modal className = 'modal' isOpen={this.props.emailPass} transitionName='modal-anim'>
 	      <div className='text-left'>
 	        <form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
-	          <small>Enter your email address</small>
-	            <input type='text' pattern='^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$' style={{padding:'2px'}} required {...email}/>
+            <h3> Oops! Memory isn't quite what it used to be eh?</h3>
+            <p>No problem! Just type in your email address and we'll help you out.</p>
+            <input type='text' pattern='^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$' required {...email}/>
+            <button type="submit" className='button' disabled={submitting}>
+              {submitting ? <i/> : <i/>} Send
+            </button>
+            <button onClick={()=>this.props.closeEmailModal()} className="secondary button">Cancel</button>
+
 	              {this.props.loginError !== '' ? 
                     <LoginError 
                       clearLoginError = {this.props.clearLoginError}
@@ -40,9 +46,7 @@ export default class EmailReset extends Component{
                     clearEmailSuccess = {this.props.clearEmailSuccess}
                   />
                   : null}
-	            <button type="submit" className='expanded info button' disabled={submitting}>
-	              {submitting ? <i/> : <i/>} Send Email
-	            </button>
+	            
 	        </form>
 	      </div>  
 	    </Modal>

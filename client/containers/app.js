@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Navigation from '../components/navigation';
 import { createCallout } from '../actions/calloutActions';
-import { getUserInfo, logoutUser, openLogin, localLogIn, 
-       clearLoginError, openEmailModal, sendEmail, clearEmailSuccess} from '../actions/authActions';
+import { getUserInfo, logoutUser, openLogin, closeLogin, localLogIn, 
+       clearLoginError, openEmailModal, closeEmailModal, sendEmail, clearEmailSuccess} from '../actions/authActions';
 import { emailNewUser } from '../actions/userActions';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import '../styles/index.css';
@@ -33,11 +33,13 @@ class App extends Component {
             logoutUser ={this.props.logoutUser} 
             emailNewUser = {this.props.emailNewUser}
             openLogin = {this.props.openLogin}
+            closeLogin = {this.props.closeLogin}
             logIn = {this.props.logIn}
             localLogIn = {this.props.localLogIn}
             loginError = {this.props.loginError}
             clearLoginError = {this.props.clearLoginError}
             openEmailModal = {this.props.openEmailModal}
+            closeEmailModal = {this.props.closeEmailModal}
             emailPass = {this.props.emailPass}
             sendEmail = {this.props.sendEmail}
             emailSuccess = {this.props.emailSuccess}
@@ -75,6 +77,7 @@ App.propTypes = {
   loginError: PropTypes.string.isRequired,
   clearLoginError: PropTypes.func.isRequired,
   openEmailModal: PropTypes.func.isRequired,
+  closeEmailModal: PropTypes.func.isRequired,
   sendEmail: PropTypes.func.isRequired,
   clearEmailSuccess: PropTypes.func.isRequired,
   emailSuccess: PropTypes.bool.isRequired
@@ -98,9 +101,11 @@ export default connect(mapStateToProps, {
   logoutUser,
   emailNewUser,
   openLogin,
+  closeLogin,
   localLogIn,
   clearLoginError,
   openEmailModal,
+  closeEmailModal,
   sendEmail,
   clearEmailSuccess
 })(App)

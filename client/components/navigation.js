@@ -57,19 +57,27 @@ export default class Navigation extends Component {
           <div className="top-bar-title">
             <Link to='/' title="Dashboard"><h1> Fairshare</h1></Link>
           </div>
-        </div>
           {!this.props.logIn ? 
-          <button className='signin button tiny primary float-right' onClick={()=> this.props.openLogin()}>Sign in</button>
+          <div className="top-bar-right">
+            <ul className="menu">
+              <li><button className='button primary' onClick={()=> this.props.openLogin()}>Sign in</button></li>
+            </ul>
+          </div>
           : <SignInForm 
+             closeLogin = {this.props.closeLogin}
              loginError = {this.props.loginError}
              clearLoginError = {this.props.clearLoginError}
              localLogIn = {this.props.localLogIn}
              emailPass = {this.props.emailPass}
              openEmailModal = {this.props.openEmailModal}
+             closeEmailModal = {this.props.closeEmailModal}
              sendEmail = {this.props.sendEmail}
              emailSuccess = {this.props.emailSuccess}
              clearEmailSuccess = {this.props.clearEmailSuccess}
-            />}
+            />
+            }
+        </div>
+          
       </div>
     )
   }
@@ -80,11 +88,13 @@ Navigation.propTypes = {
   userInfo: PropTypes.object.isRequired,
   logoutUser: PropTypes.func.isRequired,
   openLogin: PropTypes.func.isRequired,
+  closeLogin: PropTypes.func.isRequired,
   logIn: PropTypes.bool.isRequired,
   localLogIn: PropTypes.func.isRequired,
   loginError: PropTypes.string.isRequired,
   clearLoginError: PropTypes.func.isRequired,
   openEmailModal: PropTypes.func.isRequired,
+  closeEmailModal: PropTypes.func.isRequired,
   emailPass: PropTypes.bool.isRequired,
   sendEmail: PropTypes.func.isRequired,
   emailSuccess: PropTypes.bool.isRequired,
