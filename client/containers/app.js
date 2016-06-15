@@ -27,8 +27,10 @@ class App extends Component {
     return (
       <ReactCSSTransitionGroup transitionName='example' transitionAppear={true}  transitionEnterTimeout={500} transitionLeaveTimeout={300}>
         <div>
-          <Navigation createCallout={this.props.createCallout} 
-            isAuthed={this.props.isAuthed} 
+          <Navigation 
+            createCallout={this.props.createCallout} 
+            gotResp={this.props.gotResp} 
+            isAuthed = {this.props.isAuthed}
             userInfo = {this.props.userInfo} 
             logoutUser ={this.props.logoutUser} 
             emailNewUser = {this.props.emailNewUser}
@@ -55,10 +57,6 @@ class App extends Component {
     )
   }
 
- componentWillMount(){
-  this.props.getUserInfo();
-}
-
   componentDidMount() {
     $(document).foundation()
   }
@@ -69,6 +67,7 @@ App.propTypes = {
   children: PropTypes.node,
   getUserInfo: PropTypes.func.isRequired,
   isAuthed: PropTypes.bool.isRequired,
+  gotResp: PropTypes.bool.isRequired,
   userInfo: PropTypes.object.isRequired,
   logoutUser: PropTypes.func.isRequired,
   openLogin: PropTypes.func.isRequired,
@@ -86,6 +85,7 @@ App.propTypes = {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    gotResp: state.auth.gotResp,
     isAuthed: state.auth.isAuthed,
     userInfo: state.auth.userInfo,
     logIn: state.auth.logIn,

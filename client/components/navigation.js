@@ -1,15 +1,16 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import EmailNewUser from './emailNewUser';
 import defaultPicture from '../images/fs-logo.png';
 import SignInForm from './signInForm';
 
 
 export default class Navigation extends Component {
+  
   render() {
     const instance = this;
-    const isAuthed = this.props.isAuthed;
-    return isAuthed ? (
+    let {gotResp} = this.props;
+    return gotResp ? (
       <div>
         <div className="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
           <button className="menu-icon" type="button" data-toggle></button>
@@ -22,7 +23,7 @@ export default class Navigation extends Component {
           <div className="top-bar-left">
             <ul className="menu">
               <li>
-                <Link to='/' title="Dashboard">Dashboard</Link>
+                <Link to='/home' title="Dashboard">Dashboard</Link>
               </li>
               <li>
                 <EmailNewUser

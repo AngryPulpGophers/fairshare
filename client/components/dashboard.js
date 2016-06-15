@@ -1,23 +1,22 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import GroupList from './groupList';
 import Overview from './overview';
 import ScreenShot from '../images/screen-shot.png';
+import { getUserInfo } from '../actions/authActions';
 
 
 export default class Dashboard extends Component {
 
-  // shouldComponentUpdate(nextProps, nextState){
-  //   return nextProps.isAuthed !== this.props.isAuthed;
-  // }
+  componentWillReceiveProps(nextProps){
+    if(!nextProps.isAuthed){
+      browserHistory.push('/');
+    }
+  }
 
   render() {
-  // setting this to bypas the need for authentication
-  const isAuthed = localStorage.getItem('isAuthed');
-  console.log('auth',localStorage)
-
-    return isAuthed ? (
+    return(
       <div className="dashboard">
         <div className="component-wrapper">
           <Overview 
@@ -31,20 +30,6 @@ export default class Dashboard extends Component {
             userInfo={this.props.userInfo}
             stopSocialModal={this.props.stopSocialModal}
           />
-        </div>
-      </div>
-      )
-      : (
-      <div className="dashboard guest">
-        <div className="row">
-          <div className="small-12 large-7 large-centered columns text-center">
-            <div className="component-wrapper">
-              <h1>Welcome to Fairshare</h1>
-              <p>We know it's hard to keep track of expenses with friends &amp; roommates. Sometimes you just need a little help! Sign in add your shared bills and let us do the rest.</p>
-              <img src={ScreenShot} />
-              <Link to='/login' title="Get Started" className="button primary"><i className="fa fa-balance-scale"></i>Get Started</Link>
-            </div>
-          </div>
         </div>
       </div>
     )
