@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { removeCallout } from '../actions/calloutActions';
 import { getGroups } from '../actions/groupActions';
 import { getDashboard } from '../actions/dashActions';
@@ -8,9 +9,11 @@ import Dashboard from '../components/dashboard';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class PageDashboard extends Component {
+  
   componentWillMount(){
     this.props.getDashboard();
   }
+  
   render() {
     return (
         <ReactCSSTransitionGroup transitionName='example' transitionAppear={true}  transitionEnterTimeout={500} transitionLeaveTimeout={300}>
