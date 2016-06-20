@@ -7,12 +7,18 @@ import ScreenShot from '../images/screen-shot.png';
 
 export default class Welcome extends Component{
 
-	componentWillReceiveProps(nextProps){
-		if(nextProps.isAuthed){
-			this.props.getUserInfo();
-			browserHistory.push('/home');
-		}
-	}
+  componentWillMount(){
+    if(this.props.isAuthed){
+      browserHistory.push('/home');
+    }
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.isAuthed){
+      this.props.getUserInfo();
+      browserHistory.push('/home');
+    }
+  }	
 
   render(){
   	return(

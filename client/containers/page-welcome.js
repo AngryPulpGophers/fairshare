@@ -8,6 +8,7 @@ import ScreenShot from '../images/screen-shot.png';
 
 
 class WelcomePage extends Component{
+
 	render(){
 		return(
 		  <Welcome

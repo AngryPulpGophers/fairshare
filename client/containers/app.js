@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import Navigation from '../components/navigation';
 import { createCallout } from '../actions/calloutActions';
 import { getUserInfo, logoutUser, openLogin, closeLogin, localLogIn, 
@@ -57,6 +58,10 @@ class App extends Component {
     )
   }
 
+  componentWillMount(){
+    this.props.getUserInfo(); 
+  }
+  
   componentDidMount() {
     $(document).foundation()
   }

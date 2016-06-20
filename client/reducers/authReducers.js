@@ -108,6 +108,7 @@ export function auth(state = {isFetching: false, isAuthed: false, isOpen: true,
       return update(state, {
     	  isFetching:{$set: false},
 	      gotResp: {$set: true},
+        isAuthed: {$set: true},
 	      userInfo: {$set: JSON.parse(action.response)}
 	    });
 
