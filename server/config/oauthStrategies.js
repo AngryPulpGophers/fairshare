@@ -222,7 +222,7 @@ Strategies.sign_up = new LocalStrategy({
         hash(password,1)
           .then(hashed => {
             let userProfile = {
-            name: "",
+            name: email.split('@')[0],
             username: email.split('@')[0],
             email: email,
             password: hashed,

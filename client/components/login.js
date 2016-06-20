@@ -1,8 +1,15 @@
 import React, { Component, PropTypes } from 'react';
+import {browserHistory} from 'react-router';
 import SignUpForm from './signUpForm';
 
 export default class Login extends Component {
   
+  componentWillReceiveProps(nextProps){
+    if(nextProps.isAuthed){
+      this.props.getUserInfo();
+      browserHistory.push('/home');
+    }
+  }
 
   render() {
     return (
