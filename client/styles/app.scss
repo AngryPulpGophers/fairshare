@@ -21,6 +21,23 @@ h5,h6 {font-family: 'Helvetica Neue', sans-serif;}
   padding: 20px 40px;
 }
 
+.top-bar{
+  .signin{
+    right: 20px;
+    top:70px;
+    position:absolute;
+    background-color:white;
+    padding:20px;
+    a.expanded {
+      color: #fff !important;
+    }
+    .form{
+      border-radius: 2px;
+    }
+  }
+}
+
+
 .login,.create-group,.profile,.group-view{
   margin-top: 40px;
 }

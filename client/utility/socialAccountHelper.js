@@ -36,7 +36,7 @@ SocialHelper.makeButtons = (socialObj,key, context, fClass) => {
 SocialHelper.makeAnchors = (key, fClass) => {
 	let ref = 'auth/'+key.toLowerCase();
 	return(
-	  <a href= {ref} className={fClass}><i className="fa fa-unlock"></i>{key}</a>
+	  <a href= {ref} key={key} className={fClass}><i className="fa fa-unlock"></i>{key}</a>
   )
 }
 
@@ -61,10 +61,9 @@ SocialHelper.createModalAnchors = (obj) => {
 	let [socialAccounts,links] = [{},[]];
 	socialAccounts.facebook = obj.facebook;
 	socialAccounts.google = obj.google;
-	socialAccounts.paypal = obj.paypal;
 	for(let key in socialAccounts){
 		if(!socialAccounts[key]){
-			links.push(SocialHelper.makeAnchors(key,"button info button extended block"));
+			links.push(SocialHelper.makeAnchors(key,"button info extended block"));
 		}
 	}
 	return links;

@@ -8,6 +8,7 @@ export default class SocialAccounts extends Component {
     // console.log('info in render method:', this.props.userInfo)
     let userInfo = this.props.userInfo;
     let [buttons,anchors] = SocialHelper.createLinkedAccounts(userInfo, this);
+    console.log('buttons', anchors);
     return(
       <div>
         {[...buttons]}
@@ -19,7 +20,6 @@ export default class SocialAccounts extends Component {
 }
 
 //unlinkSocialAcc--fires async action that clears database of auth token issued by provider
-//href in lines 37,41,and 45 sends user through respective Oauth strategy(facebook,google+ or paypal)
 
 SocialAccounts.propTypes = {
   unlinkSocialAcc : PropTypes.func.isRequired,

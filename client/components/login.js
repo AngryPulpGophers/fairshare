@@ -1,7 +1,15 @@
 import React, { Component, PropTypes } from 'react';
+import {browserHistory} from 'react-router';
+import SignUpForm from './signUpForm';
 
 export default class Login extends Component {
   
+  componentWillReceiveProps(nextProps){
+    if(nextProps.isAuthed){
+      this.props.getUserInfo();
+      browserHistory.push('/home');
+    }
+  }
 
   render() {
     return (
@@ -15,14 +23,13 @@ export default class Login extends Component {
                 <div className="small-12 columns">
                   <a href= 'auth/facebook' className="large expanded primary button"><i className="fa fa-facebook-square"></i> Facebook</a>
                   <a href='auth/google' className="large expanded success button"><i className="fa fa-google-plus-square"></i> Google +</a>
-                  <br />
                   - or -
-                  <br />
+                  <SignUpForm
+                   signUp = {this.props.signUp}
+                   loginError = {this.props.loginError}
+                   clearLoginError = {this.props.clearLoginError}
+                  />
                 </div>
-                
-                {/*<div className="small-12 large-4 columns">
-                  <a href='auth/paypal' className="large secondary button"><i className='fa fa-paypal'></i> PayPal</a>
-                </div>*/}
               </div>
             </div>
           </div>
@@ -30,6 +37,14 @@ export default class Login extends Component {
       </div>
     )
   }
+}
+
+Login.propTypes = {
+  signIn: PropTypes.bool.isRequired,
+  signUp: PropTypes.func.isRequired,
+  localSignIn: PropTypes.func.isRequired,
+  loginError: PropTypes.string.isRequired,
+  clearLoginError: PropTypes.func.isRequired
 }
 
 

@@ -1,14 +1,16 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import EmailNewUser from './emailNewUser';
 import defaultPicture from '../images/fs-logo.png';
+import SignInForm from './signInForm';
 
 
 export default class Navigation extends Component {
+  
   render() {
     const instance = this;
-    const isAuthed = this.props.isAuthed;
-    return isAuthed ? (
+    let {gotResp} = this.props;
+    return gotResp ? (
       <div>
         <div className="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
           <button className="menu-icon" type="button" data-toggle></button>
@@ -21,7 +23,7 @@ export default class Navigation extends Component {
           <div className="top-bar-left">
             <ul className="menu">
               <li>
-                <Link to='/' title="Dashboard">Dashboard</Link>
+                <Link to='/home' title="Dashboard">Dashboard</Link>
               </li>
               <li>
                 <EmailNewUser
@@ -56,7 +58,27 @@ export default class Navigation extends Component {
           <div className="top-bar-title">
             <Link to='/' title="Dashboard"><h1> Fairshare</h1></Link>
           </div>
+          {!this.props.logIn ? 
+          <div className="top-bar-right">
+            <ul className="menu">
+              <li><button className='button primary' onClick={()=> this.props.openLogin()}>Sign in</button></li>
+            </ul>
+          </div>
+          : <SignInForm 
+             closeLogin = {this.props.closeLogin}
+             loginError = {this.props.loginError}
+             clearLoginError = {this.props.clearLoginError}
+             localLogIn = {this.props.localLogIn}
+             emailPass = {this.props.emailPass}
+             openEmailModal = {this.props.openEmailModal}
+             closeEmailModal = {this.props.closeEmailModal}
+             sendEmail = {this.props.sendEmail}
+             emailSuccess = {this.props.emailSuccess}
+             clearEmailSuccess = {this.props.clearEmailSuccess}
+            />
+            }
         </div>
+          
       </div>
     )
   }
@@ -65,5 +87,17 @@ export default class Navigation extends Component {
 Navigation.propTypes = {
   isAuthed: PropTypes.bool.isRequired,
   userInfo: PropTypes.object.isRequired,
-  logoutUser: PropTypes.func.isRequired
+  logoutUser: PropTypes.func.isRequired,
+  openLogin: PropTypes.func.isRequired,
+  closeLogin: PropTypes.func.isRequired,
+  logIn: PropTypes.bool.isRequired,
+  localLogIn: PropTypes.func.isRequired,
+  loginError: PropTypes.string.isRequired,
+  clearLoginError: PropTypes.func.isRequired,
+  openEmailModal: PropTypes.func.isRequired,
+  closeEmailModal: PropTypes.func.isRequired,
+  emailPass: PropTypes.bool.isRequired,
+  sendEmail: PropTypes.func.isRequired,
+  emailSuccess: PropTypes.bool.isRequired,
+  clearEmailSuccess: PropTypes.func.isRequired
 }
