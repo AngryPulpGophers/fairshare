@@ -11,19 +11,19 @@ var hash = Promise.promisify(bcrypt.hash, {context:bcrypt});
 module.exports = router;
 
 router.post('/sendEmail', function(req,res){
-  
+
   var email = req.body.email;
-  
+
   User.getByEmail(email)
     .then(user => {
       if(user[0]){
-        
+
         var config = wellknown('GandiMail');
           config.auth = {
             user: 'info@fairshare.cloud',
             pass: 'AeK6yxhT'
           };
-        
+
         var transporter = nodemailer.createTransport(config);
         var mailOptions = {
             from: '"Info" <info@fairshare.cloud>',
@@ -40,14 +40,14 @@ router.post('/sendEmail', function(req,res){
           }
         });
       }else{
-        res.status(401).send('Email is not registered')
+        res.status(401).send('Email is not registered');
       }
     })
-    .catch(err => console.warn(err))
-})
+    .catch(err => console.warn(err));
+});
 
 router.put('/reset', function(req,res){
-  
+
   var credentials = req.body;
 
   User.getByEmail(credentials.email)
@@ -59,12 +59,12 @@ router.put('/reset', function(req,res){
             credentials.password = hash;
             User.resetPassword(credentials)
               .then( () => res.status(200).send('password reset successful'))
-              .catch( err => res.status(400).send(err))
+              .catch( err => res.status(400).send(err));
           })
-          .catch( err => res.status(400).send(err))
+          .catch( err => res.status(400).send(err));
       }else{
-        res.status(400).send('Email address is not registered')
+        res.status(400).send('Email address is not registered');
       }
     })
-    .catch( err => console.warn(err))
-})
+    .catch( err => console.warn(err));
+});

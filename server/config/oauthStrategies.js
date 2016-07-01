@@ -60,70 +60,73 @@ Strategies.facebook_strat = new FacebookStrategy({
     //check DB for user--IF exists, execute cb->line 68
     //ELSE create profile, store in DB, execute cb->lines 70-85
     console.log("req.user in facebook", req.user);
-  if(!req.user){
-    Identity.getByProviderID(profile.id)
-      .then( userObj => {
-        if(userObj[0]){
-          User.getById({id:userObj[0].user_id})
-            .then( profile => done(null, profile[0]))
-            .catch( err => console.warn(err));
-        }else{
-          let userProfile = {
-            name: profile.displayName,
-            username: profile.emails[0].value.split('@')[0],
-            email: profile.emails[0].value,
-            password: "",
-            img_url: profile.photos[0].value,
-            primary: 'Facebook',
-            facebook: 1,
-            google: 0,
-            showModal: 1
-          };
 
-          let config = wellknown('GandiMail');
-          config.auth = {
-            user: 'info@fairshare.cloud',
-            pass: 'AeK6yxhT'
-          };
-          let transporter = nodemailer.createTransport(config);
+    process.nextTick(function(){
+    if(!req.user){
+      Identity.getByProviderID(profile.id)
+        .then( userObj => {
+          if(userObj[0]){
+            User.getById({id:userObj[0].user_id})
+              .then( profile => done(null, profile[0]))
+              .catch( err => console.warn(err));
+          }else{
+            let userProfile = {
+              name: profile.displayName,
+              username: profile.emails[0].value.split('@')[0],
+              email: profile.emails[0].value,
+              password: "",
+              img_url: profile.photos[0].value,
+              primary: 'Facebook',
+              facebook: 1,
+              google: 0,
+              showModal: 1
+            };
 
-          let mailOptions = {
-            from: '"Info" <info@fairshare.cloud>',
-            to: '<'+ profile.emails[0].value +'>',
-            subject: "Welcome to Fairshare",
-            text: 'Thank you for joining!',
-          };
+            let config = wellknown('GandiMail');
+            config.auth = {
+              user: 'info@fairshare.cloud',
+              pass: 'AeK6yxhT'
+            };
+            let transporter = nodemailer.createTransport(config);
 
-          transporter.sendMail(mailOptions, function(err, info){
-            if(err){
-                return console.log(err);
-            }
-            console.log('Message sent: ' + info.response);
-          });
+            let mailOptions = {
+              from: '"Info" <info@fairshare.cloud>',
+              to: '<'+ profile.emails[0].value +'>',
+              subject: "Welcome to Fairshare",
+              text: 'Thank you for joining!',
+            };
 
-          User.create(userProfile)
-            .then( id => {
-          //attach app ID to userProfile for use in fn serializeUser->line 34
-              userProfile.id = id[0];
-              let ID = identityEntry(id[0], profile.id,params,'facebook');
-                Identity.create(ID)
-                  .then( () => done(null, userProfile))
-                  .catch( err => console.warn(err));
+            transporter.sendMail(mailOptions, function(err, info){
+              if(err){
+                  return console.log(err);
+              }
+              console.log('Message sent: ' + info.response);
             });
+
+            User.create(userProfile)
+              .then( id => {
+            //attach app ID to userProfile for use in fn serializeUser->line 34
+                userProfile.id = id[0];
+                let ID = identityEntry(id[0], profile.id,params,'facebook');
+                  Identity.create(ID)
+                    .then( () => done(null, userProfile))
+                    .catch( err => console.warn(err));
+              });
         }
       })
       .catch( err => console.warn('Error @facebook strategy:', err));
-  }else{
-    let ID = identityEntry(req.user.id, profile.id, params,'facebook');
-    req.user.facebook = 1;
-    User.editProfile(req.user)
-      .then( () => {
-        Identity.create(ID)
-          .then( () => done(null, req.user))
-          .catch( err => console.warn(err));
-      })
-      .catch( err => console.warn(err));
-  }
+    } else{
+      let ID = identityEntry(req.user.id, profile.id, params,'facebook');
+      req.user.facebook = 1;
+      User.editProfile(req.user)
+        .then( () => {
+          Identity.create(ID)
+            .then( () => done(null, req.user))
+            .catch( err => console.warn(err));
+        })
+        .catch( err => console.warn(err));
+      }
+  });
 });
 
 Strategies.google_strat = new GoogleStrategy({
@@ -139,70 +142,73 @@ Strategies.google_strat = new GoogleStrategy({
     // console.log('profile from google:', profile);
     console.log('profile in google strat:', profile);
     console.log("req.user in google", req.user);
-  if(!req.user){
-    Identity.getByProviderID(profile.id)
-      .then( userObj => {
-        if(userObj[0]){
-          User.getById({id:userObj[0].user_id})
-            .then( profile => done(null, profile[0]))
-            .catch( err => console.warn(err));
-        }else{
-          let userProfile = {
-            name: profile.displayName,
-            username:profile.emails[0].value.split('@')[0],
-            password:"",
-            email: profile.emails[0].value,
-            img_url: profile.photos[0].value,
-            primary: 'Google',
-            facebook: 0,
-            google: 1,
-            showModal: 1
-          };
 
-          let config = wellknown('GandiMail');
-          config.auth = {
-            user: 'info@fairshare.cloud',
-            pass: 'AeK6yxhT'
-          };
-          let transporter = nodemailer.createTransport(config);
+    process.nextTick(function(){
+    if(!req.user){
+      Identity.getByProviderID(profile.id)
+        .then( userObj => {
+          if(userObj[0]){
+            User.getById({id:userObj[0].user_id})
+              .then( profile => done(null, profile[0]))
+              .catch( err => console.warn(err));
+          }else{
+            let userProfile = {
+              name: profile.displayName,
+              username:profile.emails[0].value.split('@')[0],
+              password:"",
+              email: profile.emails[0].value,
+              img_url: profile.photos[0].value,
+              primary: 'Google',
+              facebook: 0,
+              google: 1,
+              showModal: 1
+            };
 
-          let mailOptions = {
-            from: '"Fairshare" <info@fairshare.cloud>',
-            to: '<'+ profile.emails[0].value +'>',
-            subject: "Welcome to Fairshare",
-            text: 'Thank you for joining!',
-          };
+            let config = wellknown('GandiMail');
+            config.auth = {
+              user: 'info@fairshare.cloud',
+              pass: 'AeK6yxhT'
+            };
+            let transporter = nodemailer.createTransport(config);
 
-          transporter.sendMail(mailOptions, function(err, info){
-            if(err){
-                return console.log(err);
-            }
-            console.log('Message sent: ' + info.response);
-          });
+            let mailOptions = {
+              from: '"Fairshare" <info@fairshare.cloud>',
+              to: '<'+ profile.emails[0].value +'>',
+              subject: "Welcome to Fairshare",
+              text: 'Thank you for joining!',
+            };
 
-          User.create(userProfile)
-            .then( id => {
-          //attach app ID to userProfile for use in fn serializeUser->line 34
-              userProfile.id = id[0];
-              let ID = identityEntry(id[0], profile.id,params,'google');
-                Identity.create(ID)
-                  .then( () => done(null, userProfile))
-                  .catch( err => console.warn(err));
+            transporter.sendMail(mailOptions, function(err, info){
+              if(err){
+                  return console.log(err);
+              }
+              console.log('Message sent: ' + info.response);
             });
+
+            User.create(userProfile)
+              .then( id => {
+            //attach app ID to userProfile for use in fn serializeUser->line 34
+                userProfile.id = id[0];
+                let ID = identityEntry(id[0], profile.id,params,'google');
+                  Identity.create(ID)
+                    .then( () => done(null, userProfile))
+                    .catch( err => console.warn(err));
+              });
         }
       })
       .catch( err => console.warn('Error @google strategy:', err));
-  }else{
-    let ID = identityEntry(req.user.id, profile.id, params,'google');
-    req.user.google = 1;
-    User.editProfile(req.user)
-      .then( () => {
-        Identity.create(ID)
-          .then( () => done(null, req.user))
-          .catch( err => console.warn(err));
-      })
-      .catch( err => console.warn(err));
-  }
+    } else{
+      let ID = identityEntry(req.user.id, profile.id, params,'google');
+      req.user.google = 1;
+      User.editProfile(req.user)
+        .then( () => {
+          Identity.create(ID)
+            .then( () => done(null, req.user))
+            .catch( err => console.warn(err));
+        })
+        .catch( err => console.warn(err));
+    }
+  });
 });
 
 let hash = Promise.promisify(bcrypt.hash,{context:bcrypt});
@@ -213,11 +219,11 @@ Strategies.sign_up = new LocalStrategy({
   passwordField: 'password',
   session: true
 },
-(email,password,done) => { 
+(email,password,done) => {
   User.getByEmail(email)
     .then(user => {
       if(user[0]){
-        done(null,false,'user already exists')
+        done(null,false,'user already exists');
       }else{
         hash(password,1)
           .then(hashed => {
@@ -231,20 +237,20 @@ Strategies.sign_up = new LocalStrategy({
             facebook: 0,
             google: 0,
             showModal: 1
-          }
-          console.log('profile in create:', userProfile)
+          };
+          console.log('profile in create:', userProfile);
           User.create(userProfile)
             .then(id => {
               userProfile.id = id[0];
               done(null,userProfile);
             })
-            .catch(err => console.warn(err))
+            .catch(err => console.warn(err));
           })
-          .catch(err => console.warn(err))
+          .catch(err => console.warn(err));
       }
     })
     .catch(err => console.warn(err));
-})
+});
 
 Strategies.sign_in = new LocalStrategy({
   usernameField: 'email',
@@ -257,15 +263,19 @@ Strategies.sign_in = new LocalStrategy({
       if(user[0]){
         compare(password, user[0].password)
           .then(match => {
-            if(match) done(null,user[0]);
-            else done(null, false, 'password is incorrect')
+            if(match) {
+              done(null,user[0]);
+            }
+            else {
+              done(null, false, 'password is incorrect');
+            }
           })
           .catch(err => console.warn(err));
       }else{
-        done(null,false,'email does not exist')
+        done(null,false,'email does not exist');
       }
     })
-    .catch(err => console.warn(err))
-})
+    .catch(err => console.warn(err));
+});
 
 
