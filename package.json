@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon server/",
     "dev": "webpack-dev-server",
-    "postinstall": "webpack -p",
+    "prod": "webpack -p --config webpack.prod.config.js",
+    "postinstall": "npm run prod",
     "test": "NODE_ENV=test ./scripts/test"
   },
   "repository": {
