@@ -8,20 +8,20 @@ import Dashboard from './containers/page-dashboard';
 import NotFound from './containers/page-not-found';
 import GroupView from './containers/page-groupView';
 import Profile from './containers/page-profile';
-import ResetPassword from './containers/page-reset'
+import ResetPassword from './containers/page-reset';
 import friendProfileView from './components/friendProfileView';
 
 
 export default (
-  <Route path="/" component={App}>
-    <IndexRedirect to='/welcome'/> 
+  <Route path='/' component={App}>
+    <IndexRedirect to='/welcome'/>
     <Route path='/welcome' component={WelcomePage}/>
-    <Route path="/login" component={Login} />
+    <Route path='/login' component={Login} />
     <Route path='/home' component={Dashboard}/>
-    <Route path="/create-group" component={CreateGroup} />
-    <Route path = "/groupView" component = {GroupView} />
-    <Route path="/profile" component={Profile} />
+    <Route path='/create-group' component={CreateGroup} />
+    <Route path='/groupView' component = {GroupView} />
+    <Route path='/profile' component={Profile} />
     <Route path='/resetPassword' component={ResetPassword}/>
-    <Route path="*" component={NotFound} />
+    <Route path='*' component={NotFound} />
   </Route>
 )
