@@ -8,6 +8,7 @@
     "dev": "webpack-dev-server",
     "prod": "webpack -p --config webpack.prod.config.js",
     "postinstall": "npm run prod",
+    "postprod": "cp favicon.ico dist/",
     "test": "NODE_ENV=test ./scripts/test"
   },
   "repository": {
