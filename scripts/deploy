@@ -4,6 +4,7 @@ ssh fairshare@158.69.200.249 <<EOF
   cd fairshare
   git pull
   npm install --production
+  npm run build
   forever restartall
   exit
 EOF
