@@ -17,10 +17,10 @@ Webpack Redux Passport.js Knex.js Mocha/Chai/Enzyme
 * `npm test` will run all available server and client tests
 
 ## Contributing
-[Contributing](https://github.com/angrypulpgophers/fairshare/blob/master/CONTRIBUTING.md)
+[Contributing](https://github.com/AngryPulpGophers/fairshare/blob/development/CONTRIBUTING.md)
 
 ## Style Guide
-[Style Guide](https://github.com/angrypulpgophers/fairshare/blob/master/STYLE-GUIDE.md)
+[Style Guide](https://github.com/AngryPulpGophers/fairshare/blob/development/STYLE-GUIDE.md)
 
 ## Credits
 * [Sam Fitz](https://github.com/abigwonderful)
