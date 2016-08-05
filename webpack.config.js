@@ -6,7 +6,8 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: __dirname + '/client/index.html',
   filename: 'index.html',
-  inject: 'body'
+  inject: 'body',
+  favicon: path.join(__dirname, 'client/images/favicon.ico')
 });
 
 module.exports = {

@@ -4,12 +4,15 @@
   "description": "Keep track of IOUs within a group of friends",
   "main": "server/index.js",
   "scripts": {
+    "build": "webpack -p --config webpack.prod.config.js",
+    "build-dev": "webpack",
     "start": "nodemon server/",
     "dev": "webpack-dev-server",
-    "prod": "webpack -p --config webpack.prod.config.js",
-    "postinstall": "npm run prod",
-    "postprod": "cp favicon.ico dist/",
-    "test": "NODE_ENV=test ./scripts/test"
+    "postprod": "npm run start",
+    "preprod": "NODE_ENV=production",
+    "pretest": "NODE_ENV=test",
+    "prod": "npm run build",
+    "test": "./scripts/test"
   },
   "repository": {
     "type": "git",
